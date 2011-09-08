@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{222FC27A-6D9C-4200-BEFA-15F5C94A3F4E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Mi.PE</RootNamespace>
+    <AssemblyName>Mi.PE</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Profile2</TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Serialization" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Cli\ClrHeader.cs" />
+    <Compile Include="Cli\ClrHeaderReader.cs" />
+    <Compile Include="Cli\ClrImageFlags.cs" />
+    <Compile Include="Cli\ClrMetadata.cs" />
+    <Compile Include="Cli\ClrMetadataFlags.cs" />
+    <Compile Include="Cli\ClrMetadataSignature.cs" />
+    <Compile Include="Cli\StreamHeader.cs" />
+    <Compile Include="Cli\Tables\TableKind.cs" />
+    <Compile Include="Cli\TableStream.cs" />
+    <Compile Include="Import\ImportDescriptor.cs" />
+    <Compile Include="Internal\BinaryStreamReader.cs" />
+    <Compile Include="Internal\Format.cs" />
+    <Compile Include="PEFile.cs" />
+    <Compile Include="PEFileReader.cs" />
+    <Compile Include="PEFileWriter.cs" />
+    <Compile Include="PEFormat\PESignature.cs" />
+    <Compile Include="PEFormat\DataDirectory.cs" />
+    <Compile Include="PEFormat\DataDirectoryKind.cs" />
+    <Compile Include="PEFormat\DllCharacteristics.cs" />
+    <Compile Include="PEFormat\DosHeader.cs" />
+    <Compile Include="PEFormat\ImageCharacteristics.cs" />
+    <Compile Include="PEFormat\ImageTimestamp.cs" />
+    <Compile Include="PEFormat\Machine.cs" />
+    <Compile Include="PEFormat\OptionalHeader.cs" />
+    <Compile Include="PEFormat\PEHeader.cs" />
+    <Compile Include="PEFormat\PEMagic.cs" />
+    <Compile Include="PEFormat\MZSignature.cs" />
+    <Compile Include="PEFormat\RvaStream.cs" />
+    <Compile Include="PEFormat\SectionHeader.cs" />
+    <Compile Include="PEFormat\SectionCharacteristics.cs" />
+    <Compile Include="PEFormat\Subsystem.cs" />
+    <Compile Include="PEFormat\TargetArchitecture.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

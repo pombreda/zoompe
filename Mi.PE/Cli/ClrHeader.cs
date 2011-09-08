@@ -1,0 +1,63 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace Mi.PE.Cli
+{
+    using Mi.PE.PEFormat;
+    
+    public sealed class ClrHeader
+    {
+        public const uint Size = 72;
+
+        public uint Cb { get; set; }
+
+        public ushort MajorRuntimeVersion { get; set; }
+        public ushort MinorRuntimeVersion { get; set; }
+
+        public DataDirectory MetaData { get; set; }
+
+        public ClrImageFlags Flags { get; set; }
+
+        /// <summary>
+        /// The main program if it is an EXE (not used if a DLL?)
+        /// If COMIMAGE_FLAGS_NATIVE_ENTRYPOINT is not set, EntryPointToken represents a managed entrypoint.
+        /// If COMIMAGE_FLAGS_NATIVE_ENTRYPOINT is set, EntryPointRVA represents an RVA to a native entrypoint
+        /// (depricated for DLLs, use modules constructors intead).
+        /// </summary>
+        public uint EntryPointToken { get; set; }
+
+
+        /// <summary>
+        /// This is the blob of managed resources. Fetched using code:AssemblyNative.GetResource and
+        /// code:PEFile.GetResource and accessible from managed code from
+        /// System.Assembly.GetManifestResourceStream.  The meta data has a table that maps names to offsets into
+        /// this blob, so logically the blob is a set of resources.
+        /// </summary>
+        public DataDirectory Resources { get; set; }
+
+        /// <summary>
+        /// IL assemblies can be signed with a public-private key to validate who created it.  The signature goes
+        /// here if this feature is used.
+        /// </summary>
+        public DataDirectory StrongNameSignature { get; set; }
+
+        /// <summary>
+        /// Depricated, not used.
+        /// </summary>
+        public DataDirectory CodeManagerTable { get; set; }
+
+        /// <summary>
+        /// Used for manged codee that has unmaanaged code inside it (or exports methods as unmanaged entry points)
+        /// </summary>
+        public DataDirectory VTableFixups { get; set; }
+
+        public DataDirectory ExportAddressTableJumps { get; set; }
+
+        /// <summary>
+        /// null for ordinary IL images.  NGEN images it points at a code:CORCOMPILE_HEADER structure
+        /// </summary>
+        public DataDirectory ManagedNativeHeader { get; set; }
+    }
+}
