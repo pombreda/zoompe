@@ -19,7 +19,7 @@ namespace Mi.PE.Internal
                 throw new ArgumentNullException("stream");
             if (buffer == null)
                 throw new ArgumentNullException("buffer");
-            if (buffer.Length <= 8)
+            if (buffer.Length < 8)
                 throw new ArgumentException("Too short buffer, needs to fit at least sizeof(long).", "buffer");
 
             this.stream = stream;
@@ -100,8 +100,11 @@ namespace Mi.PE.Internal
             return unchecked((ulong)this.ReadInt64());
         }
 
-        public string ReadFixedZeroFilledString(int size)
+        public string ReadFixedZeroFilledUtf8String(int size)
         {
+            if (size < 0)
+                throw new ArgumentOutOfRangeException("Negative size is not allowed for string length.", "size");
+
             if (size <= 8 || size <= this.bufferDataSize)
             {
                 EnsurePopulatedData(size);
@@ -123,66 +126,39 @@ namespace Mi.PE.Internal
             }
             else
             {
-                int actualSize = 0;
-                for (int i = 0; i < this.bufferDataSize; i++)
-                {
-                    if (this.buffer[this.bufferDataPosition + i] != 0)
-                        actualSize = i + 1;
-                }
+                byte[] byteBuffer = new byte[size];
+                Array.Copy(
+                    this.buffer, this.bufferDataPosition,
+                    byteBuffer, 0,
+                    this.bufferDataSize);
+                int byteBufferLegth = this.bufferDataSize;
 
-                var byteBuffer = new MemoryStream();
-                byteBuffer.Write(this.buffer, this.bufferDataPosition, this.bufferDataSize);
                 this.bufferDataPosition = 0;
                 this.bufferDataSize = 0;
 
                 while (true)
                 {
-                    int readCount = this.stream.Read(this.buffer, 0, this.buffer.Length);
+                    int readCount = this.stream.Read(byteBuffer, 0, byteBuffer.Length - byteBufferLegth);
 
                     if (readCount <= 0)
                         throw new EndOfStreamException();
 
-                    int processCount = Math.Min(readCount, size - unchecked((int)byteBuffer.Length));
+                    byteBufferLegth += readCount;
 
-                    for (int i = 0; i < processCount; i++)
-                    {
-                        if (this.buffer[i] != 0)
-                            actualSize = unchecked((int)byteBuffer.Length) + i;
-                    }
-
-                    byteBuffer.Write(this.buffer, 0, processCount);
-
-                    if (readCount >= processCount)
-                    {
-                        this.bufferDataPosition = readCount - processCount;
-                        if (readCount > processCount)
-                            this.bufferDataPosition = processCount;
-                        else
-                            this.bufferDataPosition = 0;
+                    if (byteBufferLegth == size)
                         break;
-                    }
                 }
 
-                string result = Encoding.UTF8.GetString(byteBuffer.ToArray(), 0, actualSize);
+                int actualSize = 0;
+                for (int i = 0; i < size; i++)
+                {
+                    if (byteBuffer[i] != 0)
+                        actualSize = i + 1;
+                }
+
+                string result = Encoding.UTF8.GetString(byteBuffer, 0, actualSize);
 
                 return result;
-            }
-        }
-
-        public void ReadBytes(byte[] bytes, int offset, int size)
-        {
-            if (size <= 8 || this.bufferDataSize <= size)
-            {
-                EnsurePopulatedData(size);
-                Array.Copy(
-                    this.buffer, this.bufferDataPosition,
-                    bytes, offset,
-                    size);
-                SkipUnchecked(size);
-            }
-            else
-            {
-
             }
         }
 

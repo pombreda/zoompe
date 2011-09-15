@@ -55,7 +55,7 @@ namespace Mi.PE.PEFormat
         /// This value must be greater than or equal to the FileAlignment member.
         /// The default value is the page size for the system.
         /// </summary>
-        public int SectionAlignment { get; set; }
+        public uint SectionAlignment { get; set; }
 
         /// <summary>
         /// The alignment of the raw data of sections in the image file, in bytes.
@@ -104,13 +104,13 @@ namespace Mi.PE.PEFormat
         /// <summary>
         /// The size of the image, in bytes, including all headers. Must be a multiple of <see cref="SectionAlignment"/>.
         /// </summary>
-        public int SizeOfImage { get; set; }
+        public uint SizeOfImage { get; set; }
 
         /// <summary>
         /// The combined size of the MS-DOS stub, the PE header, and the section headers,
         /// rounded to a multiple of the value specified in the FileAlignment member.
         /// </summary>
-        public int SizeOfHeaders { get; set; }
+        public uint SizeOfHeaders { get; set; }
 
         /// <summary>
         /// The image file checksum.
@@ -164,7 +164,7 @@ namespace Mi.PE.PEFormat
         /// The number of directory entries in the remainder of the optional header.
         /// Each entry describes a location and size.
         /// </summary>
-        public int NumberOfRvaAndSizes { get; set; }
+        public uint NumberOfRvaAndSizes { get; set; }
 
         public DataDirectory[] DataDirectories { get; set; }
 

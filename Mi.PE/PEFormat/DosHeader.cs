@@ -35,21 +35,6 @@ namespace Mi.PE.PEFormat
 
         public uint lfanew { get; set; }
 
-        internal static readonly byte[] DefaultStub = new byte[]
-        {
-            0x0E, 0x1F, 0xBA, 0x0E, 0x00, 0xB4, 0x09, 0xCD, 0x21, 0xB8, 0x01, 0x4C, 0xCD, 0x21,
-            (byte)'T', (byte)'h', (byte)'i', (byte)'s', (byte)' ',
-            (byte)'p', (byte)'r', (byte)'o', (byte)'g', (byte)'r', (byte)'a', (byte)'m', (byte)' ',
-            (byte)'c', (byte)'a', (byte)'n', (byte)'n', (byte)'o', (byte)'t', (byte)' ',
-            (byte)'b', (byte)'e', (byte)' ',
-            (byte)'r', (byte)'u', (byte)'n', (byte)' ',
-            (byte)'i', (byte)'n', (byte)' ',
-            (byte)'D', (byte)'O', (byte)'S', (byte)'o',
-            (byte)'m', (byte)'o', (byte)'d', (byte)'e', (byte)'.',
-            (byte)'\r', (byte)'\r', (byte)'\n', (byte)'$',
-            0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-        };
-
         #region ToString
         public override string ToString()
         {

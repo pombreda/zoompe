@@ -14,28 +14,55 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "(Tests)", "(Tests)", "{BA3B
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mi.PE.Tests", "(Tests)\Mi.PE.Tests\Mi.PE.Tests.csproj", "{00FC2050-A097-488B-9588-ED72F548EB15}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "(SamplePEs)", "(SamplePEs)", "{2EE060E1-DD6E-4C65-962E-61F1B67990F9}"
+	ProjectSection(SolutionItems) = preProject
+		(Tests)\(SamplePEs)\console.anycpu.exe = (Tests)\(SamplePEs)\console.anycpu.exe
+		(Tests)\(SamplePEs)\console.bat = (Tests)\(SamplePEs)\console.bat
+		(Tests)\(SamplePEs)\console.cs = (Tests)\(SamplePEs)\console.cs
+		(Tests)\(SamplePEs)\console.itanium.exe = (Tests)\(SamplePEs)\console.itanium.exe
+		(Tests)\(SamplePEs)\console.x64.exe = (Tests)\(SamplePEs)\console.x64.exe
+		(Tests)\(SamplePEs)\console.x86.exe = (Tests)\(SamplePEs)\console.x86.exe
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = (Tests)\Zoom.PE.vsmdi
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Debug|Mixed Platforms = Debug|Mixed Platforms
+		Debug|x86 = Debug|x86
 		Release|Any CPU = Release|Any CPU
+		Release|Mixed Platforms = Release|Mixed Platforms
+		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{222FC27A-6D9C-4200-BEFA-15F5C94A3F4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{222FC27A-6D9C-4200-BEFA-15F5C94A3F4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{222FC27A-6D9C-4200-BEFA-15F5C94A3F4E}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{222FC27A-6D9C-4200-BEFA-15F5C94A3F4E}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{222FC27A-6D9C-4200-BEFA-15F5C94A3F4E}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{222FC27A-6D9C-4200-BEFA-15F5C94A3F4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{222FC27A-6D9C-4200-BEFA-15F5C94A3F4E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{222FC27A-6D9C-4200-BEFA-15F5C94A3F4E}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{222FC27A-6D9C-4200-BEFA-15F5C94A3F4E}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{222FC27A-6D9C-4200-BEFA-15F5C94A3F4E}.Release|x86.ActiveCfg = Release|Any CPU
 		{00FC2050-A097-488B-9588-ED72F548EB15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{00FC2050-A097-488B-9588-ED72F548EB15}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{00FC2050-A097-488B-9588-ED72F548EB15}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{00FC2050-A097-488B-9588-ED72F548EB15}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{00FC2050-A097-488B-9588-ED72F548EB15}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{00FC2050-A097-488B-9588-ED72F548EB15}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{00FC2050-A097-488B-9588-ED72F548EB15}.Release|Any CPU.Build.0 = Release|Any CPU
+		{00FC2050-A097-488B-9588-ED72F548EB15}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{00FC2050-A097-488B-9588-ED72F548EB15}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{00FC2050-A097-488B-9588-ED72F548EB15}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{00FC2050-A097-488B-9588-ED72F548EB15} = {BA3B4CFD-8D95-444A-9C00-13912217AB9B}
+		{2EE060E1-DD6E-4C65-962E-61F1B67990F9} = {BA3B4CFD-8D95-444A-9C00-13912217AB9B}
 	EndGlobalSection
 EndGlobal
