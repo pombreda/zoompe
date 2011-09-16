@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Mi.PE.PEFormat
 {
-    public struct ImageTimestamp : IComparable<ImageTimestamp>, IComparable, IEquatable<ImageTimestamp>
+    public struct ImageTimestamp : IComparable<ImageTimestamp>, IComparable, IEquatable<ImageTimestamp>, IFormattable
     {
         public static readonly DateTime EpochUTC = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc); 
 
@@ -26,11 +26,6 @@ namespace Mi.PE.PEFormat
             this.SecondsSinceEpochUTC = checked((uint)secondsFromEpoch);
         }
 
-        public ImageTimestamp(DateTimeOffset dateTime)
-            : this(dateTime.ToUniversalTime().DateTime)
-        {
-        }
-
         public DateTime ToDateTime()
         {
             return EpochUTC.AddSeconds(SecondsSinceEpochUTC);
@@ -39,6 +34,11 @@ namespace Mi.PE.PEFormat
         public override string ToString()
         {
             return ToDateTime().ToString();
+        }
+
+        public string ToString(string format, IFormatProvider formatProvider)
+        {
+            return ToDateTime().ToString(format, formatProvider);
         }
 
         #region IComparable, IEquatable, [in]equality operators
@@ -62,7 +62,7 @@ namespace Mi.PE.PEFormat
         {
             return
                 obj is ImageTimestamp
-                && Equals((ImageTimestamp)obj);
+                && this.SecondsSinceEpochUTC == ((ImageTimestamp)obj).SecondsSinceEpochUTC;
         }
 
         public override int GetHashCode()
@@ -73,7 +73,7 @@ namespace Mi.PE.PEFormat
 
         public static bool operator==(ImageTimestamp timestamp1, ImageTimestamp timestamp2)
         {
-            return timestamp1.Equals(timestamp2);
+            return timestamp1.SecondsSinceEpochUTC == timestamp2.SecondsSinceEpochUTC;
         }
 
         public static bool operator !=(ImageTimestamp timestamp1, ImageTimestamp timestamp2)

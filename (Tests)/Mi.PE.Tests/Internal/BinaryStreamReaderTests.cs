@@ -286,5 +286,87 @@ namespace Mi.PE.Internal
             reader.ReadByte();
             reader.ReadFixedZeroFilledUtf8String(20);
         }
+
+        [TestMethod]
+        public void ReadBytes_123()
+        {
+            var reader = new BinaryStreamReader(new MemoryStream(new byte[] { 1, 2, 3, }), new byte[20]);
+            byte[] result = new byte[3];
+            reader.ReadBytes(result, 0, 3);
+            Assert.AreEqual(1, result[0]);
+            Assert.AreEqual(2, result[1]);
+            Assert.AreEqual(3, result[2]);
+        }
+
+        [ExpectedException(typeof(ArgumentNullException))]
+        [TestMethod]
+        public void ReadBytes_NullBuffer()
+        {
+            var reader = new BinaryStreamReader(new MemoryStream(), new byte[20]);
+            reader.ReadBytes(null, 0, 1);
+        }
+
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [TestMethod]
+        public void ReadBytes_NegativeOffset()
+        {
+            var reader = new BinaryStreamReader(new MemoryStream(), new byte[20]);
+            reader.ReadBytes(new byte[3], -1, 1);
+        }
+
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [TestMethod]
+        public void ReadBytes_TooLargeOffset()
+        {
+            var reader = new BinaryStreamReader(new MemoryStream(), new byte[20]);
+            reader.ReadBytes(new byte[3], 10, 1);
+        }
+
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [TestMethod]
+        public void ReadBytes_NegativeLength()
+        {
+            var reader = new BinaryStreamReader(new MemoryStream(), new byte[20]);
+            reader.ReadBytes(new byte[3], 0, -1);
+        }
+
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [TestMethod]
+        public void ReadBytes_TooLargeLength()
+        {
+            var reader = new BinaryStreamReader(new MemoryStream(), new byte[20]);
+            reader.ReadBytes(new byte[3], 0, 10);
+        }
+
+        [TestMethod]
+        public void ReadBytes_Gradual()
+        {
+            byte[] input =new byte[10];
+            for (int i = 0; i < input.Length; i++)
+			{
+                input[i] = (byte)i;
+			}
+            var stream = new GradualReadMemoryStream(input, 3, 7);
+            var reader = new BinaryStreamReader(stream, new byte[8]);
+            byte[] output = new byte[input.Length];
+            reader.ReadBytes(output, 0, output.Length);
+
+            Assert.AreEqual(input.Length, output.Length);
+            for (int i = 0; i < output.Length; i++)
+            {
+                Assert.AreEqual(input[i], output[i], "output[" + i + "]");
+            }
+        }
+
+        [ExpectedException(typeof(EndOfStreamException))]
+        [TestMethod]
+        public void ReadBytes_Gradual_EOF()
+        {
+            byte[] input = new byte[10];
+            var stream = new GradualReadMemoryStream(input, 3, 7);
+            var reader = new BinaryStreamReader(stream, new byte[8]);
+            byte[] output = new byte[input.Length + 5];
+            reader.ReadBytes(output, 0, output.Length);
+        }
     }
 }

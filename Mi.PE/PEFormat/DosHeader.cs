@@ -5,6 +5,8 @@ using System.Text;
 
 namespace Mi.PE.PEFormat
 {
+    using Mi.PE.Internal;
+    
     public sealed class DosHeader
     {
         public const int Size = 64;
@@ -39,8 +41,10 @@ namespace Mi.PE.PEFormat
         public override string ToString()
         {
             var result = new StringBuilder("[");
-            if(this.Signature!=MZSignature.MZ)
-                result.Append("Signature:"+((int)this.Signature).ToString("X"));
+            if (this.Signature == MZSignature.MZ)
+                result.Append("MZ");
+            else
+                result.Append("Signature:"+Format.ToString((ushort)this.Signature));
 
             result.Append("].lfanew=");
             result.Append(this.lfanew.ToString("X"));

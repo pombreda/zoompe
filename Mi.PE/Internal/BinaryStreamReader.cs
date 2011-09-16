@@ -115,10 +115,10 @@ namespace Mi.PE.Internal
                         actualSize = i + 1;
                 }
 
-                if (actualSize == 0)
-                    return string.Empty;
-
-                string result = Encoding.UTF8.GetString(this.buffer, this.bufferDataPosition, actualSize);
+                string result =
+                    actualSize == 0 ?
+                    string.Empty :
+                    Encoding.UTF8.GetString(this.buffer, this.bufferDataPosition, actualSize);
 
                 SkipUnchecked(size);
 
@@ -159,6 +159,50 @@ namespace Mi.PE.Internal
                 string result = Encoding.UTF8.GetString(byteBuffer, 0, actualSize);
 
                 return result;
+            }
+        }
+
+        public void ReadBytes(byte[] buffer, int offset, int length)
+        {
+            if (buffer == null)
+                throw new ArgumentNullException("buffer");
+            if (offset < 0 || offset >= buffer.Length)
+                throw new ArgumentOutOfRangeException("Offset should point within the buffer.", "offset");
+            if (length < 0 || offset + length > buffer.Length)
+                throw new ArgumentOutOfRangeException("Length should be positive and point within the buffer.", "length");
+
+            if (length < 8 || length < this.bufferDataSize)
+            {
+                EnsurePopulatedData(length);
+
+                Array.Copy(
+                    this.buffer, this.bufferDataPosition,
+                    buffer, offset,
+                    length);
+
+                SkipUnchecked(length);
+            }
+            else
+            {
+                Array.Copy(
+                    this.buffer, this.bufferDataPosition,
+                    buffer, offset,
+                    this.bufferDataSize);
+
+                int readCount = this.bufferDataSize;
+
+                this.bufferDataPosition = 0;
+                this.bufferDataSize = 0;
+
+                while (readCount < length)
+                {
+                    int chunkSize = stream.Read(buffer, offset + readCount, length - readCount);
+
+                    if (chunkSize <= 0)
+                        throw new EndOfStreamException();
+
+                    readCount += chunkSize;
+                }
             }
         }
 

@@ -53,6 +53,24 @@ namespace Mi.PE.PEFormat
         /// <summary> Write is not supported, will throw. </summary>
         public override void Write(byte[] buffer, int offset, int count) { throw new NotSupportedException(); }
 
+        /// <summary> BeginWrite is not supported, will throw. </summary>
+        public override IAsyncResult BeginWrite(byte[] buffer, int offset, int count, AsyncCallback callback, object state) { throw new NotSupportedException(); }
+
+        /// <summary> BeginWrite is not supported, will throw. </summary>
+        public override void EndWrite(IAsyncResult asyncResult) { throw new NotSupportedException(); }
+
+        /// <summary> Forwarding to the underlying raw stream. </summary>
+        public override bool CanTimeout { get { return rawStream.CanTimeout; } }
+
+        /// <summary> Forwarding to the underlying raw stream. </summary>
+        public override int ReadTimeout { get { return rawStream.ReadTimeout; } set { rawStream.ReadTimeout = value; } }
+
+        /// <summary> Forwarding to the underlying raw stream. </summary>
+        public override IAsyncResult BeginRead(byte[] buffer, int offset, int count, AsyncCallback callback, object state) { return this.rawStream.BeginRead(buffer, offset, GetReadSize(count), callback, state); }
+
+        /// <summary> Forwarding to the underlying raw stream. </summary>
+        public override int EndRead(IAsyncResult asyncResult) { return this.rawStream.EndRead(asyncResult); }
+
         public override long Length
         {
             get
@@ -124,16 +142,6 @@ namespace Mi.PE.PEFormat
             }
 
             throw new IOException(RawStreamIsNotPositionedWithinAnyOfTheSections);
-        }
-
-        public override IAsyncResult BeginRead(byte[] buffer, int offset, int count, AsyncCallback callback, object state)
-        {
-            return this.rawStream.BeginRead(buffer, offset, GetReadSize(count), callback, state);
-        }
-
-        public override int EndRead(IAsyncResult asyncResult)
-        {
-            return this.rawStream.EndRead(asyncResult);
         }
 
         public override long Seek(long offset, SeekOrigin origin)

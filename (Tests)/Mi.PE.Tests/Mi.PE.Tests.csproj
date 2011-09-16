@@ -45,6 +45,9 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PEFormat\ImageTimestampTests.cs" />
+    <Compile Include="PEFormat\RvaStreamTests.cs" />
+    <Compile Include="ToStringTests.cs" />
     <Compile Include="EmitSamplePEs.cs" />
     <Compile Include="Internal\BinaryStreamReaderTests.cs" />
     <Compile Include="PEFileReaderTests.cs" />

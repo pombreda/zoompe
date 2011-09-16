@@ -14,7 +14,7 @@ namespace Mi.PE
     [TestClass]
     public class PEFileReaderTests
     {
-        internal static readonly byte[] DefaultStub = new byte[]
+        static readonly byte[] DefaultStub = new byte[]
         {
             0x0E, 0x1F, 0xBA, 0x0E, 0x00, 0xB4, 0x09, 0xCD, 0x21, 0xB8, 0x01, 0x4C, 0xCD, 0x21,
             (byte)'T', (byte)'h', (byte)'i', (byte)'s', (byte)' ',
@@ -23,7 +23,7 @@ namespace Mi.PE
             (byte)'b', (byte)'e', (byte)' ',
             (byte)'r', (byte)'u', (byte)'n', (byte)' ',
             (byte)'i', (byte)'n', (byte)' ',
-            (byte)'D', (byte)'O', (byte)'S', (byte)'o',
+            (byte)'D', (byte)'O', (byte)'S', (byte)' ',
             (byte)'m', (byte)'o', (byte)'d', (byte)'e', (byte)'.',
             (byte)'\r', (byte)'\r', (byte)'\n', (byte)'$',
             0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
@@ -35,77 +35,74 @@ namespace Mi.PE
             var reader = new PEFileReader();
         }
 
+        [ExpectedException(typeof(BadImageFormatException))]
         [TestMethod]
-        public void PreReadAnyCPU_AssertDosHeader()
+        public void ReadDosHeader_InvalidMZ()
         {
-            AssertDosHeader(PreReadSamplePEs.Console.AnyCPU.DosHeader);
+            var reader = new PEFileReader();
+            reader.ReadMetadata(new MemoryStream(new byte[10]));
         }
 
         [TestMethod]
-        public void PreReadX86_AssertDosHeader()
+        public void ReadDosHeader_NoDosStub()
         {
-            AssertDosHeader(PreReadSamplePEs.Console.X86.DosHeader);
+            byte[] bytes = Properties.Resources.console_anycpu;
+            
+            uint lfaNew = (uint)BitConverter.ToInt32(bytes, DosHeader.Size - 4);
+            byte[] modifiedLfaNewBytes = BitConverter.GetBytes(DosHeader.Size);
+
+            Array.Copy(
+                modifiedLfaNewBytes, 0,
+                bytes, DosHeader.Size - 4,
+                4);
+
+            Array.Copy(
+                bytes, lfaNew,
+                bytes, DosHeader.Size,
+                bytes.Length - lfaNew);
+
+            var stream = new MemoryStream(bytes, 0, bytes.Length - ((int)lfaNew - DosHeader.Size), false);
+
+            var reader = new PEFileReader();
+            var pe = reader.ReadMetadata(stream);
+
+            Assert.AreEqual((uint)DosHeader.Size, pe.DosHeader.lfanew);
+            Assert.IsNull(pe.DosStub);
         }
 
+        [ExpectedException(typeof(BadImageFormatException))]
         [TestMethod]
-        public void PreReadX64_AssertDosHeader()
+        public void ReadOptionalHeader_InvalidPEMagic()
         {
-            AssertDosHeader(PreReadSamplePEs.Console.X64.DosHeader);
+            byte[] bytes = Properties.Resources.console_anycpu;
+            bytes[152] = 0;
+
+            var reader = new PEFileReader();
+            reader.ReadMetadata(new MemoryStream(bytes));
         }
 
-        [TestMethod]
-        public void PreREadItanium_AssertDosHeader()
-        {
-            AssertDosHeader(PreReadSamplePEs.Console.Itanium.DosHeader);
-        }
+        [TestMethod] public void PreReadAnyCPU_AssertDosStub() { AssertDosStub(PreReadSamplePEs.Console.AnyCPU.DosStub); }
+        [TestMethod] public void PreReadX86_AssertDosStub() { AssertDosStub(PreReadSamplePEs.Console.X86.DosStub); }
+        [TestMethod] public void PreReadX64_AssertDosStub() { AssertDosStub(PreReadSamplePEs.Console.X64.DosStub); }
+        [TestMethod] public void PreReadItanium_AssertDosStub() { AssertDosStub(PreReadSamplePEs.Console.Itanium.DosStub); }
+        [TestMethod] public void EmitAnyCPU_AssertDosStub() { AssertDosStub(EmitSamplePEs.Library.AnyCPU.DosStub); }
+        [TestMethod] public void EmitX86_AssertDosStub() { AssertDosStub(EmitSamplePEs.Library.X86.DosStub); }
+        [TestMethod] public void EmitX64_AssertDosStub() { AssertDosStub(EmitSamplePEs.Library.X64.DosStub); }
+        [TestMethod] public void EmitItanium_AssertDosStub() { AssertDosStub(EmitSamplePEs.Library.Itanium.DosStub); }
 
-        [TestMethod]
-        public void EmitAnyCPU_AssertDosHeader()
-        {
-            AssertDosHeader(EmitSamplePEs.Library.AnyCPU.DosHeader);
-        }
+        [TestMethod] public void PreReadAnyCPU_AssertDosHeader() { AssertDosHeader(PreReadSamplePEs.Console.AnyCPU.DosHeader); }
+        [TestMethod] public void PreReadX86_AssertDosHeader() { AssertDosHeader(PreReadSamplePEs.Console.X86.DosHeader); }
+        [TestMethod] public void PreReadX64_AssertDosHeader() { AssertDosHeader(PreReadSamplePEs.Console.X64.DosHeader); }
+        [TestMethod] public void PreREadItanium_AssertDosHeader() { AssertDosHeader(PreReadSamplePEs.Console.Itanium.DosHeader); }
+        [TestMethod] public void EmitAnyCPU_AssertDosHeader() { AssertDosHeader(EmitSamplePEs.Library.AnyCPU.DosHeader); }
+        [TestMethod] public void EmitX86_AssertDosHeader() { AssertDosHeader(EmitSamplePEs.Library.X86.DosHeader); }
+        [TestMethod] public void EmitX64_AssertDosHeader() { AssertDosHeader(EmitSamplePEs.Library.X64.DosHeader); }
+        [TestMethod] public void EmitItanium_AssertDosHeader() { AssertDosHeader(EmitSamplePEs.Library.Itanium.DosHeader); }
 
-        [TestMethod]
-        public void EmitX86_AssertDosHeader()
-        {
-            AssertDosHeader(EmitSamplePEs.Library.X86.DosHeader);
-        }
-
-        [TestMethod]
-        public void EmitX64_AssertDosHeader()
-        {
-            AssertDosHeader(EmitSamplePEs.Library.X64.DosHeader);
-        }
-
-        [TestMethod]
-        public void EmitItanium_AssertDosHeader()
-        {
-            AssertDosHeader(EmitSamplePEs.Library.Itanium.DosHeader);
-        }
-
-        [TestMethod]
-        public void EmitAnyCPU_AssertPEHeader()
-        {
-            AssertPEHeader(EmitSamplePEs.Library.AnyCPU.PEHeader, Machine.I386);
-        }
-
-        [TestMethod]
-        public void Emitx86_AssertPEHeader()
-        {
-            AssertPEHeader(EmitSamplePEs.Library.X86.PEHeader, Machine.I386);
-        }
-
-        [TestMethod]
-        public void Emitx64_AssertPEHeader()
-        {
-            AssertPEHeader(EmitSamplePEs.Library.X64.PEHeader, Machine.AMD64);
-        }
-
-        [TestMethod]
-        public void EmitItanium_AssertPEHeader()
-        {
-            AssertPEHeader(EmitSamplePEs.Library.Itanium.PEHeader, Machine.IA64);
-        }
+        [TestMethod] public void EmitAnyCPU_AssertPEHeader() { AssertPEHeader(EmitSamplePEs.Library.AnyCPU.PEHeader, Machine.I386); }
+        [TestMethod] public void Emitx86_AssertPEHeader() { AssertPEHeader(EmitSamplePEs.Library.X86.PEHeader, Machine.I386); }
+        [TestMethod] public void Emitx64_AssertPEHeader() { AssertPEHeader(EmitSamplePEs.Library.X64.PEHeader, Machine.AMD64); }
+        [TestMethod] public void EmitItanium_AssertPEHeader() { AssertPEHeader(EmitSamplePEs.Library.Itanium.PEHeader, Machine.IA64); }
 
         [TestMethod]
         public void EmitAnyCPU_AssertOptionalHeader()
@@ -236,7 +233,7 @@ namespace Mi.PE
             Assert.AreEqual((uint)0x6000, optionalHeader.SizeOfImage);
         }
 
-        private void AssertOptionalHeader(OptionalHeader optionalHeader)
+        static void AssertOptionalHeader(OptionalHeader optionalHeader)
         {
             Assert.AreEqual((byte)8, optionalHeader.MajorLinkerVersion);
             Assert.AreEqual((byte)0, optionalHeader.MinorLinkerVersion);
@@ -261,7 +258,7 @@ namespace Mi.PE
             Assert.AreEqual((uint)16, optionalHeader.NumberOfRvaAndSizes);
         }
 
-        private void AssertPEHeader(PEHeader header, Machine machine)
+        static void AssertPEHeader(PEHeader header, Machine machine)
         {
             Assert.AreEqual(PESignature.PE00, header.PESignature);
             Assert.AreEqual(machine, header.Machine);
@@ -282,7 +279,7 @@ namespace Mi.PE
             Assert.AreEqual(expectedCharacteristics, header.Characteristics);
         }
 
-        private static void AssertDosHeader(DosHeader dosHeader)
+        static void AssertDosHeader(DosHeader dosHeader)
         {
             Assert.AreEqual(MZSignature.MZ, dosHeader.Signature);
             Assert.AreEqual(144, dosHeader.cblp);
@@ -309,21 +306,13 @@ namespace Mi.PE
             Assert.AreEqual((uint)128, dosHeader.lfanew);
         }
 
-        //[TestMethod]
-        //public void ConsoleExeAnyCPU_AssertPEHeader()
-        //{
-        //    var reader = new PEFileReader();
-        //    var stream = new MemoryStream(File.ReadAllBytes(typeof(SamplePEs.ConsoleExeAnyCPU.Program).Assembly.Location));
-        //    var peFile = reader.ReadMetadata(stream);
-
-        //    Assert.AreEqual(MZSignature.MZ, peFile.Signature);
-        //    Assert.AreEqual(144, peFile.cblp);
-        //    Assert.AreEqual(3, peFile.cp);
-        //    Assert.AreEqual(0, peFile.crlc);
-        //    Assert.AreEqual(4, peFile.cparhdr);
-        //    Assert.AreEqual(0, peFile.minalloc);
-        //    Assert.AreEqual(65535, peFile.maxalloc);
-        //    Assert.AreEqual(0, peFile.ss);
-        //}
+        static void AssertDosStub(byte[] dosStub)
+        {
+            Assert.AreEqual(DefaultStub.Length, dosStub.Length, "DOS stub of wrong size.");
+            for (int i = 0; i < dosStub.Length; i++)
+            {
+                Assert.AreEqual(DefaultStub[i], dosStub[i], "DOS stub[" + i + "]");
+            }
+        }
     }
 }
