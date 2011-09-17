@@ -78,7 +78,7 @@ namespace Mi.PE.PEFormat
                 long length = 0;
                 for (int i = 0; i < sectionRanges.Length; i++)
                 {
-                    length += sectionRanges[i].Size;
+                    length = Math.Max(length, sectionRanges[i].VirtualAddress + sectionRanges[i].Size);
                 }
                 return length;
             }

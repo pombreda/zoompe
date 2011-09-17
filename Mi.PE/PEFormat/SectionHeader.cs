@@ -45,7 +45,7 @@ namespace Mi.PE.PEFormat
         /// The file address.
         /// This field overlaps with <see cref="VirtualSize"/>.
         /// </summary>
-        public uint PhysicalAddress { get { return this.VirtualAddress; } set { this.VirtualAddress = value; } }
+        public uint PhysicalAddress { get { return this.VirtualSize; } set { this.VirtualSize = value; } }
 
         /// <summary>
         /// The address of the first byte of the section when loaded into memory, relative to the image base.

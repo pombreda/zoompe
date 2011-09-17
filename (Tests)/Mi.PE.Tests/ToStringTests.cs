@@ -105,5 +105,20 @@ namespace Mi.PE
 
             Assert.AreEqual("I386 Bit32Machine Sections[0]", peh.ToString());
         }
+
+        [TestMethod]
+        public void SectionHeader()
+        {
+            var sh = new SectionHeader
+            {
+                Name = "Dummy",
+                PointerToRawData = 0x14e,
+                SizeOfRawData = 0x1aff0,
+                VirtualAddress = 0x1234c0,
+                VirtualSize = 0x320ff
+            };
+
+            Assert.AreEqual("Dummy [14E:1AFF0h]=>Virtual[1234C0:320FFh]", sh.ToString());
+        }
     }
 }

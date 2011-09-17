@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="PEFormat\ImageTimestampTests.cs" />
     <Compile Include="PEFormat\RvaStreamTests.cs" />
+    <Compile Include="PEFormat\SectionHeaderTests.cs" />
     <Compile Include="ToStringTests.cs" />
     <Compile Include="EmitSamplePEs.cs" />
     <Compile Include="Internal\BinaryStreamReaderTests.cs" />

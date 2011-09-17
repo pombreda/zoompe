@@ -162,6 +162,17 @@ namespace Mi.PE.PEFormat
             Assert.AreEqual(34 + 4, (int)stream.Position);
         }
 
+        [ExpectedException(typeof(IOException))]
+        [TestMethod]
+        public void Read_AtWrongOffset()
+        {
+            var rawStream = new MemoryStream(new byte[5]);
+            var stream = new RvaStream(rawStream, new RvaStream.Range { PhysicalAddress = 2, VirtualAddress = 34, Size = 3 });
+            rawStream.Position = 34;
+            byte[] result = new byte[4];
+            stream.Read(result, 0, 4);
+        }
+
         [TestMethod]
         public void BeginEndRead_CorrectResult()
         {
@@ -232,13 +243,26 @@ namespace Mi.PE.PEFormat
         }
 
         [TestMethod]
-        public void ReadTimeout()
+        public void GetReadTimeout()
         {
             var stream = new RvaStream(
                 new ReadTimeoutStream { ReadTimeout = 314 },
                 new RvaStream.Range { PhysicalAddress = 0, VirtualAddress = 0, Size = 5 });
 
             Assert.AreEqual(314, stream.ReadTimeout);
+        }
+
+        [TestMethod]
+        public void SetReadTimeout()
+        {
+            var rawStream = new ReadTimeoutStream();
+            var stream = new RvaStream(
+                rawStream,
+                new RvaStream.Range { PhysicalAddress = 0, VirtualAddress = 0, Size = 5 });
+
+            stream.ReadTimeout = 214;
+
+            Assert.AreEqual(214, rawStream.ReadTimeout);
         }
 
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
@@ -264,6 +288,57 @@ namespace Mi.PE.PEFormat
             Assert.AreEqual(4, (int)rawStream.Position);
         }
 
+        [TestMethod]
+        public void Seek_Begin()
+        {
+            byte[] bytes = new byte[] { 1, 200, 3, 4, 5 };
+            var rawStream = new MemoryStream(bytes);
+            var stream = new RvaStream(
+                rawStream,
+                new RvaStream.Range { PhysicalAddress = 0, VirtualAddress = 34, Size = 3 },
+                new RvaStream.Range { PhysicalAddress = 3, VirtualAddress = 40, Size = 2 });
+
+            stream.Seek(41, SeekOrigin.Begin);
+            Assert.AreEqual(4, (int)rawStream.Position);
+        }
+
+        [TestMethod]
+        public void Seek_Current()
+        {
+            byte[] bytes = new byte[] { 1, 200, 3, 4, 5 };
+            var rawStream = new MemoryStream(bytes);
+            var stream = new RvaStream(
+                rawStream,
+                new RvaStream.Range { PhysicalAddress = 0, VirtualAddress = 34, Size = 3 },
+                new RvaStream.Range { PhysicalAddress = 3, VirtualAddress = 40, Size = 2 });
+
+            stream.Position = 40;
+            stream.Seek(1, SeekOrigin.Current);
+            Assert.AreEqual(4, (int)rawStream.Position);
+        }
+
+        [TestMethod]
+        public void Seek_End()
+        {
+            byte[] bytes = new byte[] { 1, 200, 3, 4, 5 };
+            var rawStream = new MemoryStream(bytes);
+            var stream = new RvaStream(
+                rawStream,
+                new RvaStream.Range { PhysicalAddress = 0, VirtualAddress = 34, Size = 3 },
+                new RvaStream.Range { PhysicalAddress = 3, VirtualAddress = 40, Size = 2 });
+
+            stream.Seek(-1, SeekOrigin.End);
+            Assert.AreEqual(4, (int)rawStream.Position);
+        }
+
+        [ExpectedException(typeof(ArgumentException))]
+        [TestMethod]
+        public void Seek_Invalid()
+        {
+            var stream = new RvaStream(new MemoryStream(new byte[5]), new RvaStream.Range { PhysicalAddress = 0, VirtualAddress = 0, Size = 5 });
+            stream.Seek(10, (SeekOrigin)21633);
+        }
+
         [ExpectedException(typeof(IOException))]
         [TestMethod]
         public void GetPosition_OutsideOfRange()
@@ -285,6 +360,18 @@ namespace Mi.PE.PEFormat
 
             rawStream.Position = 4;
             Assert.AreEqual(41, (int)stream.Position);
+        }
+
+        [TestMethod]
+        public void Length()
+        {
+            var rawStream = new MemoryStream(new byte[200]);
+            var stream = new RvaStream(
+                rawStream,
+                new RvaStream.Range { PhysicalAddress = 0, VirtualAddress = 34, Size = 3 },
+                new RvaStream.Range { PhysicalAddress = 3, VirtualAddress = 40, Size = 2 });
+
+            Assert.AreEqual(42, (int)stream.Length);
         }
     }
 }
