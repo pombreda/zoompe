@@ -67,7 +67,7 @@ namespace Mi.PE
             var pe = reader.ReadMetadata(stream);
 
             Assert.AreEqual((uint)DosHeader.Size, pe.DosHeader.lfanew);
-            Assert.IsNull(pe.DosStub);
+            Assert.AreEqual(0, pe.DosHeader.Stub.Length);
         }
 
         [ExpectedException(typeof(BadImageFormatException))]
@@ -81,14 +81,14 @@ namespace Mi.PE
             reader.ReadMetadata(new MemoryStream(bytes));
         }
 
-        [TestMethod] public void PreReadAnyCPU_AssertDosStub() { AssertDosStub(PreReadSamplePEs.Console.AnyCPU.DosStub); }
-        [TestMethod] public void PreReadX86_AssertDosStub() { AssertDosStub(PreReadSamplePEs.Console.X86.DosStub); }
-        [TestMethod] public void PreReadX64_AssertDosStub() { AssertDosStub(PreReadSamplePEs.Console.X64.DosStub); }
-        [TestMethod] public void PreReadItanium_AssertDosStub() { AssertDosStub(PreReadSamplePEs.Console.Itanium.DosStub); }
-        [TestMethod] public void EmitAnyCPU_AssertDosStub() { AssertDosStub(EmitSamplePEs.Library.AnyCPU.DosStub); }
-        [TestMethod] public void EmitX86_AssertDosStub() { AssertDosStub(EmitSamplePEs.Library.X86.DosStub); }
-        [TestMethod] public void EmitX64_AssertDosStub() { AssertDosStub(EmitSamplePEs.Library.X64.DosStub); }
-        [TestMethod] public void EmitItanium_AssertDosStub() { AssertDosStub(EmitSamplePEs.Library.Itanium.DosStub); }
+        [TestMethod] public void PreReadAnyCPU_AssertDosStub() { AssertDosStub(PreReadSamplePEs.Console.AnyCPU.DosHeader.Stub); }
+        [TestMethod] public void PreReadX86_AssertDosStub() { AssertDosStub(PreReadSamplePEs.Console.X86.DosHeader.Stub); }
+        [TestMethod] public void PreReadX64_AssertDosStub() { AssertDosStub(PreReadSamplePEs.Console.X64.DosHeader.Stub); }
+        [TestMethod] public void PreReadItanium_AssertDosStub() { AssertDosStub(PreReadSamplePEs.Console.Itanium.DosHeader.Stub); }
+        [TestMethod] public void EmitAnyCPU_AssertDosStub() { AssertDosStub(EmitSamplePEs.Library.AnyCPU.DosHeader.Stub); }
+        [TestMethod] public void EmitX86_AssertDosStub() { AssertDosStub(EmitSamplePEs.Library.X86.DosHeader.Stub); }
+        [TestMethod] public void EmitX64_AssertDosStub() { AssertDosStub(EmitSamplePEs.Library.X64.DosHeader.Stub); }
+        [TestMethod] public void EmitItanium_AssertDosStub() { AssertDosStub(EmitSamplePEs.Library.Itanium.DosHeader.Stub); }
 
         [TestMethod] public void PreReadAnyCPU_AssertDosHeader() { AssertDosHeader(PreReadSamplePEs.Console.AnyCPU.DosHeader); }
         [TestMethod] public void PreReadX86_AssertDosHeader() { AssertDosHeader(PreReadSamplePEs.Console.X86.DosHeader); }

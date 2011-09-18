@@ -116,7 +116,7 @@ namespace Mi.PE.PEFormat
                     }
                 }
 
-                throw new ArgumentOutOfRangeException("Position is not within any of the section ranges.", "value");
+                throw new ArgumentOutOfRangeException("value", "Position is not within any of the section ranges.");
             }
         }
 

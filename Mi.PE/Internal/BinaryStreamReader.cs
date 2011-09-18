@@ -103,7 +103,7 @@ namespace Mi.PE.Internal
         public string ReadFixedZeroFilledUtf8String(int size)
         {
             if (size < 0)
-                throw new ArgumentOutOfRangeException("Negative size is not allowed for string length.", "size");
+                throw new ArgumentOutOfRangeException("size", "Negative size is not allowed for string length.");
 
             if (size <= 8 || size <= this.bufferDataSize)
             {
@@ -166,10 +166,10 @@ namespace Mi.PE.Internal
         {
             if (buffer == null)
                 throw new ArgumentNullException("buffer");
-            if (offset < 0 || offset >= buffer.Length)
-                throw new ArgumentOutOfRangeException("Offset should point within the buffer.", "offset");
+            if (offset < 0 || offset > buffer.Length)
+                throw new ArgumentOutOfRangeException("offset", "Offset should point within the buffer.");
             if (length < 0 || offset + length > buffer.Length)
-                throw new ArgumentOutOfRangeException("Length should be positive and point within the buffer.", "length");
+                throw new ArgumentOutOfRangeException("length", "Length should be positive and point within the buffer.");
 
             if (length < 8 || length < this.bufferDataSize)
             {

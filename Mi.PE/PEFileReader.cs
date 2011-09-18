@@ -29,17 +29,6 @@ namespace Mi.PE
         {
             var dosHeader = ReadDosHeader(reader);
             
-            byte[] dosStub;
-            if (dosHeader.lfanew > DosHeader.Size)
-            {
-                dosStub = new byte[dosHeader.lfanew - DosHeader.Size];
-                reader.ReadBytes(dosStub, 0, dosStub.Length);
-            }
-            else
-            {
-                dosStub = null;
-            }
-
             reader.Position = dosHeader.lfanew;
             var peHeader = ReadPEHeader(reader);
             var optionalHeader = ReadOptionalHeader(reader);
@@ -57,7 +46,6 @@ namespace Mi.PE
             return new PEFile
             {
                 DosHeader = dosHeader,
-                DosStub = dosStub,
                 PEHeader = peHeader,
                 OptionalHeader = optionalHeader,
                 Sections = sections
@@ -70,7 +58,7 @@ namespace Mi.PE
             if (mz != MZSignature.MZ)
                 throw new BadImageFormatException("MZ signature expected, "+Format.ToString((ushort)mz)+" found.");
 
-            return new DosHeader
+            var dosHeader = new DosHeader
             {
                 Signature = mz,
                 cblp = reader.ReadUInt16(),
@@ -100,6 +88,11 @@ namespace Mi.PE
 
                 lfanew = reader.ReadUInt32()
             };
+
+            if (dosHeader.Stub!=null)
+                reader.ReadBytes(dosHeader.Stub, 0, dosHeader.Stub.Length);
+
+            return dosHeader;
         }
 
         private static PEHeader ReadPEHeader(BinaryStreamReader reader)
