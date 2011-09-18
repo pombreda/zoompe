@@ -13,15 +13,19 @@ namespace Mi.PE
         const int BufferSize = 1024;
         readonly byte[] buffer = new byte[BufferSize];
 
+        public PEFileReader()
+        {
+        }
+
+        public bool PopulateSectionContent { get; set; }
+
         public PEFile ReadMetadata(Stream stream)
         {
             var reader = new BinaryStreamReader(stream, this.buffer);
             return ReadMetadata(reader);
         }
 
-        public bool PopulateSectionContent { get; set; }
-
-        public static PEFile ReadMetadata(BinaryStreamReader reader)
+        public PEFile ReadMetadata(BinaryStreamReader reader)
         {
             var dosHeader = ReadDosHeader(reader);
             
@@ -39,10 +43,15 @@ namespace Mi.PE
             reader.Position = dosHeader.lfanew;
             var peHeader = ReadPEHeader(reader);
             var optionalHeader = ReadOptionalHeader(reader);
-            SectionHeader[] sectionHeaders = new SectionHeader[peHeader.NumberOfSections];
-            for (int i = 0; i < sectionHeaders.Length; i++)
+            SectionHeader[] sections = new SectionHeader[peHeader.NumberOfSections];
+            for (int i = 0; i < sections.Length; i++)
             {
-                sectionHeaders[i] = ReadSectionHeader(reader);
+                sections[i] = ReadSectionHeader(reader);
+            }
+
+            if (this.PopulateSectionContent)
+            {
+                ReadSectionsContent(reader, sections);
             }
 
             return new PEFile
@@ -51,7 +60,7 @@ namespace Mi.PE
                 DosStub = dosStub,
                 PEHeader = peHeader,
                 OptionalHeader = optionalHeader,
-                SectionHeaders = sectionHeaders
+                SectionHeaders = sections
             };
         }
 
@@ -203,6 +212,19 @@ namespace Mi.PE
                 NumberOfLinenumbers = reader.ReadUInt16(),
                 Characteristics = (SectionCharacteristics)reader.ReadUInt32()
             };
+        }
+
+        private static void ReadSectionsContent(BinaryStreamReader reader, SectionHeader[] sections)
+        {
+            foreach (var s in sections)
+            {
+                if ((s.Characteristics & SectionCharacteristics.ContainsUninitializedData) == 0
+                    && s.SizeOfRawData > 0)
+                {
+                    reader.Position = s.PointerToRawData;
+                    reader.ReadBytes(s.Content, 0, checked((int)s.SizeOfRawData));
+                }
+            }
         }
     }
 }
