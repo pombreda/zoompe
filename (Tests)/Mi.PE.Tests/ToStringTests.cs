@@ -68,7 +68,7 @@ namespace Mi.PE
                 PEMagic = PEMagic.NT32,
                 Subsystem = Subsystem.WindowsCUI,
                 DllCharacteristics = DllCharacteristics.TerminalServerAware,
-                DataDirectories = new DataDirectory[4]
+                NumberOfRvaAndSizes = 4
             };
 
             Assert.AreEqual("NT32 WindowsCUI TerminalServerAware", oh.ToString());
@@ -82,14 +82,13 @@ namespace Mi.PE
                 PEMagic = PEMagic.NT32,
                 Subsystem = Subsystem.WindowsCUI,
                 DllCharacteristics = DllCharacteristics.TerminalServerAware,
-                DataDirectories = new[]
-                {
-                    new DataDirectory { Size = 5 },
-                    new DataDirectory { Size = 6 },
-                    new DataDirectory { Size = 100 },
-                    new DataDirectory { VirtualAddress = 10, Size = 20 }
-                }
+                NumberOfRvaAndSizes = 4
             };
+
+            oh.DataDirectories[0] = new DataDirectory { Size = 5 };
+            oh.DataDirectories[1] = new DataDirectory { Size = 6 };
+            oh.DataDirectories[2] = new DataDirectory { Size = 100 };
+            oh.DataDirectories[3] = new DataDirectory { VirtualAddress = 10, Size = 20 };
 
             Assert.AreEqual("NT32 WindowsCUI TerminalServerAware DataDirectories[ExportSymbols,ImportSymbols,Resources,Exception]", oh.ToString());
         }

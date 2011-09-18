@@ -13,6 +13,9 @@ namespace Mi.PE.PEFormat
             public const int NT64 = 112;
         }
 
+        uint m_NumberOfRvaAndSizes;
+        DataDirectory[] m_DataDirectories;
+
         public PEMagic PEMagic { get; set; }
         public byte MajorLinkerVersion { get; set; }
         public byte MinorLinkerVersion { get; set; }
@@ -164,9 +167,32 @@ namespace Mi.PE.PEFormat
         /// The number of directory entries in the remainder of the optional header.
         /// Each entry describes a location and size.
         /// </summary>
-        public uint NumberOfRvaAndSizes { get; set; }
+        public uint NumberOfRvaAndSizes
+        {
+            get { return m_NumberOfRvaAndSizes; }
+            set
+            {
+                if (value == this.NumberOfRvaAndSizes)
+                    return;
 
-        public DataDirectory[] DataDirectories { get; set; }
+                this.m_NumberOfRvaAndSizes = value;
+
+                if (this.m_DataDirectories != null
+                    && this.m_DataDirectories.Length != value)
+                    this.m_DataDirectories = null;
+            }
+        }
+
+        public DataDirectory[] DataDirectories
+        {
+            get
+            {
+                if (this.m_DataDirectories == null)
+                    this.m_DataDirectories = new DataDirectory[this.NumberOfRvaAndSizes];
+
+                return this.m_DataDirectories;
+            }
+        }
 
         #region ToString
         public override string ToString()

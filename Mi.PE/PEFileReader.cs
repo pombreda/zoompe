@@ -172,18 +172,13 @@ namespace Mi.PE
             optionalHeader.LoaderFlags = reader.ReadUInt32();
             optionalHeader.NumberOfRvaAndSizes = reader.ReadUInt32();
 
-            if (optionalHeader.NumberOfRvaAndSizes > 0)
+            for (int i = 0; i < optionalHeader.DataDirectories.Length; i++)
             {
-                var directories = new DataDirectory[optionalHeader.NumberOfRvaAndSizes];
-                for (int i = 0; i < directories.Length; i++)
+                optionalHeader.DataDirectories[i] = new DataDirectory
                 {
-                    directories[i] = new DataDirectory
-                    {
-                        VirtualAddress = reader.ReadUInt32(),
-                        Size = reader.ReadUInt32()
-                    };
-                }
-                optionalHeader.DataDirectories = directories;
+                    VirtualAddress = reader.ReadUInt32(),
+                    Size = reader.ReadUInt32()
+                };
             }
 
             return optionalHeader;
