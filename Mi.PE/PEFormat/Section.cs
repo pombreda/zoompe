@@ -75,7 +75,7 @@ namespace Mi.PE.PEFormat
                 m_SizeOfRawData = value;
 
                 if (m_Content != null
-                    || value != m_Content.Length)
+                    && value != m_Content.Length)
                     m_Content = null;
             }
         }

@@ -11,6 +11,16 @@ namespace Mi.PE.PEFormat
     {
         public const int Size = 64;
 
+        enum StubSizeImplication
+        {
+            UpdateStubFromLfanew,
+            UpdateLfanewFromStub,
+            Consistent
+        }
+
+        uint m_lfanew;
+        byte[] m_Stub;
+
         public MZSignature Signature { get; set; }
         public ushort cblp { get; set; }
         public ushort cp { get; set; }
@@ -35,7 +45,33 @@ namespace Mi.PE.PEFormat
         public uint ReservedNumber3 { get; set; }
         public uint ReservedNumber4 { get; set; }
 
-        public uint lfanew { get; set; }
+        public uint lfanew
+        {
+            get { return m_lfanew; }
+            set
+            {
+                if (value == this.lfanew)
+                    return;
+
+                this.m_lfanew = value;
+
+                if (this.m_Stub != null
+                    && this.m_Stub.Length != value)
+                    this.m_Stub = null;
+            }
+        }
+
+        public byte[] Stub
+        {
+            get
+            {
+                if (m_Stub == null
+                    && this.lfanew - DosHeader.Size >= 0)
+                    m_Stub = new byte[this.lfanew - DosHeader.Size];
+
+                return this.m_Stub;
+            }
+        }
 
         #region ToString
         public override string ToString()
