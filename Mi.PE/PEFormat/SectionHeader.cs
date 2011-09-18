@@ -7,7 +7,18 @@ namespace Mi.PE.PEFormat
 {
     public sealed class SectionHeader
     {
+        enum DataSizeImplication
+        {
+            UpdateContentFromSize,
+            UpdateSizeFromContent,
+            Consistent
+        }
+        
         public const int Size = 40;
+
+        uint m_SizeOfRawData;
+        byte[] m_Content;
+        DataSizeImplication impliedDataSize = DataSizeImplication.UpdateContentFromSize;
 
         const int MaxNameLength = 8;
         string m_Name;
@@ -61,7 +72,25 @@ namespace Mi.PE.PEFormat
         /// the remainder of the section is filled with zeroes.
         /// If the section contains only uninitialized data, the member is zero.
         /// </summary>
-        public uint SizeOfRawData { get; set; }
+        public uint SizeOfRawData
+        {
+            get
+            {
+                if (this.impliedDataSize == DataSizeImplication.UpdateSizeFromContent)
+                {
+                    this.m_SizeOfRawData = unchecked((uint)this.m_Content.Length);
+                    this.impliedDataSize = DataSizeImplication.Consistent;
+                }
+
+                return this.m_SizeOfRawData;
+            }
+
+            set
+            {
+                this.impliedDataSize = DataSizeImplication.UpdateContentFromSize;
+                this.m_SizeOfRawData = value;
+            }
+        }
 
         /// <summary>
         /// A file pointer to the first page within the COFF file.
@@ -99,6 +128,40 @@ namespace Mi.PE.PEFormat
         /// </summary>
         public SectionCharacteristics Characteristics { get; set; }
 
+        public byte[] Content
+        {
+            get
+            {
+                if (this.impliedDataSize == DataSizeImplication.UpdateContentFromSize)
+                {
+                    byte[] newContent = new byte[this.m_SizeOfRawData];
+
+                    if (m_Content != null && m_Content.Length > 0)
+                    {
+                        Array.Copy(
+                            this.m_Content,
+                            newContent,
+                            Math.Min(newContent.Length, m_Content.Length));
+                    }
+
+                    this.m_Content = newContent;
+
+                    this.impliedDataSize = DataSizeImplication.Consistent;
+                }
+
+                return m_Content;
+            }
+
+            set
+            {
+                if (value == null)
+                    throw new ArgumentNullException("value");
+
+                this.m_Content = value;
+                this.impliedDataSize = DataSizeImplication.UpdateSizeFromContent;
+            }
+        }
+
         #region ToString
         public override string ToString()
         {
@@ -109,7 +172,5 @@ namespace Mi.PE.PEFormat
                 "Virtual[" + this.VirtualAddress.ToString("X") + ":" + this.VirtualSize.ToString("X") + "h" + "]";
         }
         #endregion
-
-        public byte[] Content { get; set; }
     }
 }
