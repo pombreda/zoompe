@@ -7,7 +7,7 @@ namespace Mi.PE.PEFormat
 {
     public sealed class Section
     {
-        enum DataSizeImplication
+        enum ContentSizeImplication
         {
             UpdateContentFromSize,
             UpdateSizeFromContent,
@@ -18,7 +18,7 @@ namespace Mi.PE.PEFormat
 
         uint m_SizeOfRawData;
         byte[] m_Content;
-        DataSizeImplication impliedDataSize = DataSizeImplication.UpdateContentFromSize;
+        ContentSizeImplication impliedDataSize = ContentSizeImplication.UpdateContentFromSize;
 
         const int MaxNameLength = 8;
         string m_Name;
@@ -76,10 +76,10 @@ namespace Mi.PE.PEFormat
         {
             get
             {
-                if (this.impliedDataSize == DataSizeImplication.UpdateSizeFromContent)
+                if (this.impliedDataSize == ContentSizeImplication.UpdateSizeFromContent)
                 {
                     this.m_SizeOfRawData = unchecked((uint)this.m_Content.Length);
-                    this.impliedDataSize = DataSizeImplication.Consistent;
+                    this.impliedDataSize = ContentSizeImplication.Consistent;
                 }
 
                 return this.m_SizeOfRawData;
@@ -87,7 +87,7 @@ namespace Mi.PE.PEFormat
 
             set
             {
-                this.impliedDataSize = DataSizeImplication.UpdateContentFromSize;
+                this.impliedDataSize = ContentSizeImplication.UpdateContentFromSize;
                 this.m_SizeOfRawData = value;
             }
         }
@@ -132,7 +132,7 @@ namespace Mi.PE.PEFormat
         {
             get
             {
-                if (this.impliedDataSize == DataSizeImplication.UpdateContentFromSize)
+                if (this.impliedDataSize == ContentSizeImplication.UpdateContentFromSize)
                 {
                     byte[] newContent = new byte[this.m_SizeOfRawData];
 
@@ -146,7 +146,7 @@ namespace Mi.PE.PEFormat
 
                     this.m_Content = newContent;
 
-                    this.impliedDataSize = DataSizeImplication.Consistent;
+                    this.impliedDataSize = ContentSizeImplication.Consistent;
                 }
 
                 return m_Content;
@@ -158,7 +158,7 @@ namespace Mi.PE.PEFormat
                     throw new ArgumentNullException("value");
 
                 this.m_Content = value;
-                this.impliedDataSize = DataSizeImplication.UpdateSizeFromContent;
+                this.impliedDataSize = ContentSizeImplication.UpdateSizeFromContent;
             }
         }
 
