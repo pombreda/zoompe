@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="PEFormat\DosHeaderTests.cs" />
     <Compile Include="PEFormat\ImageTimestampTests.cs" />
+    <Compile Include="PEFormat\OptionalHeaderTests.cs" />
     <Compile Include="PEFormat\RvaStreamTests.cs" />
     <Compile Include="PEFormat\SectionTests.cs" />
     <Compile Include="ToStringTests.cs" />
