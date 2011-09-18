@@ -7,18 +7,10 @@ namespace Mi.PE.PEFormat
 {
     public sealed class Section
     {
-        enum ContentSizeImplication
-        {
-            UpdateContentFromSize,
-            UpdateSizeFromContent,
-            Consistent
-        }
-        
         public const int Size = 40;
 
         uint m_SizeOfRawData;
         byte[] m_Content;
-        ContentSizeImplication impliedDataSize = ContentSizeImplication.UpdateContentFromSize;
 
         const int MaxNameLength = 8;
         string m_Name;
@@ -74,21 +66,17 @@ namespace Mi.PE.PEFormat
         /// </summary>
         public uint SizeOfRawData
         {
-            get
-            {
-                if (this.impliedDataSize == ContentSizeImplication.UpdateSizeFromContent)
-                {
-                    this.m_SizeOfRawData = unchecked((uint)this.m_Content.Length);
-                    this.impliedDataSize = ContentSizeImplication.Consistent;
-                }
-
-                return this.m_SizeOfRawData;
-            }
-
+            get { return this.m_SizeOfRawData; }
             set
             {
-                this.impliedDataSize = ContentSizeImplication.UpdateContentFromSize;
-                this.m_SizeOfRawData = value;
+                if(value == this.SizeOfRawData)
+                    return;
+
+                m_SizeOfRawData = value;
+
+                if (m_Content != null
+                    || value != m_Content.Length)
+                    m_Content = null;
             }
         }
 
@@ -132,33 +120,10 @@ namespace Mi.PE.PEFormat
         {
             get
             {
-                if (this.impliedDataSize == ContentSizeImplication.UpdateContentFromSize)
-                {
-                    byte[] newContent = new byte[this.m_SizeOfRawData];
-
-                    if (m_Content != null && m_Content.Length > 0)
-                    {
-                        Array.Copy(
-                            this.m_Content,
-                            newContent,
-                            Math.Min(newContent.Length, m_Content.Length));
-                    }
-
-                    this.m_Content = newContent;
-
-                    this.impliedDataSize = ContentSizeImplication.Consistent;
-                }
+                if (this.m_Content==null)
+                    this.m_Content = new byte[this.SizeOfRawData];
 
                 return m_Content;
-            }
-
-            set
-            {
-                if (value == null)
-                    throw new ArgumentNullException("value");
-
-                this.m_Content = value;
-                this.impliedDataSize = ContentSizeImplication.UpdateSizeFromContent;
             }
         }
 
