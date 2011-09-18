@@ -66,8 +66,8 @@ namespace Mi.PE.PEFormat
             get
             {
                 if (m_Stub == null
-                    && this.lfanew - DosHeader.Size >= 0)
-                    m_Stub = new byte[this.lfanew - DosHeader.Size];
+                    && (int)this.lfanew - DosHeader.Size >= 0)
+                    m_Stub = new byte[(int)this.lfanew - DosHeader.Size];
 
                 return this.m_Stub;
             }

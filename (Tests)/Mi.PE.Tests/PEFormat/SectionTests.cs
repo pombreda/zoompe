@@ -36,5 +36,48 @@ namespace Mi.PE.PEFormat
             sh.Name = null;
             Assert.AreEqual(null, sh.Name);
         }
+
+        [TestMethod]
+        public void Content_EmptyByDefaut()
+        {
+            var sh = new Section();
+            Assert.AreEqual(0, sh.Content.Length);
+        }
+
+        [TestMethod]
+        public void SetSizeOfRawData_Positive_CreatesContent()
+        {
+            var sh = new Section();
+            sh.SizeOfRawData = 4;
+            Assert.AreEqual(4, sh.Content.Length);
+        }
+
+        [TestMethod]
+        public void SetSizeOfRawData_Zero_EmptiesContent()
+        {
+            var sh = new Section();
+            sh.SizeOfRawData = 0;
+            Assert.AreEqual(0, sh.Content.Length);
+        }
+
+        [TestMethod]
+        public void SetSizeOfRawData_Different_ClearsContent()
+        {
+            var sh = new Section();
+            sh.SizeOfRawData = 4;
+            sh.Content[0] = 254;
+            sh.SizeOfRawData = 3;
+            Assert.AreEqual((byte)0, sh.Content[0]);
+        }
+
+        [TestMethod]
+        public void SetSizeOfRawData_Same_KeepsContent()
+        {
+            var sh = new Section();
+            sh.SizeOfRawData = 4;
+            sh.Content[0] = 254;
+            sh.SizeOfRawData = 4;
+            Assert.AreEqual((byte)254, sh.Content[0]);
+        }
     }
 }

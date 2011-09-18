@@ -45,6 +45,7 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PEFormat\DosHeaderTests.cs" />
     <Compile Include="PEFormat\ImageTimestampTests.cs" />
     <Compile Include="PEFormat\RvaStreamTests.cs" />
     <Compile Include="PEFormat\SectionTests.cs" />
