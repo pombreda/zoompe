@@ -43,7 +43,7 @@ namespace Mi.PE
             reader.Position = dosHeader.lfanew;
             var peHeader = ReadPEHeader(reader);
             var optionalHeader = ReadOptionalHeader(reader);
-            SectionHeader[] sections = new SectionHeader[peHeader.NumberOfSections];
+            Section[] sections = new Section[peHeader.NumberOfSections];
             for (int i = 0; i < sections.Length; i++)
             {
                 sections[i] = ReadSectionHeader(reader);
@@ -60,7 +60,7 @@ namespace Mi.PE
                 DosStub = dosStub,
                 PEHeader = peHeader,
                 OptionalHeader = optionalHeader,
-                SectionHeaders = sections
+                Sections = sections
             };
         }
 
@@ -196,10 +196,10 @@ namespace Mi.PE
             return optionalHeader;
         }
 
-        private static SectionHeader ReadSectionHeader(BinaryStreamReader reader)
+        private static Section ReadSectionHeader(BinaryStreamReader reader)
         {
             // TODO: intern well-known strings?
-            return new SectionHeader
+            return new Section
             {
                 Name = reader.ReadFixedZeroFilledUtf8String(8),
                 VirtualSize = reader.ReadUInt32(),
@@ -214,7 +214,7 @@ namespace Mi.PE
             };
         }
 
-        private static void ReadSectionsContent(BinaryStreamReader reader, SectionHeader[] sections)
+        private static void ReadSectionsContent(BinaryStreamReader reader, Section[] sections)
         {
             foreach (var s in sections)
             {

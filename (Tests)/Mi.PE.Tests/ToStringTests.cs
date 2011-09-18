@@ -107,9 +107,9 @@ namespace Mi.PE
         }
 
         [TestMethod]
-        public void SectionHeader()
+        public void Section()
         {
-            var sh = new SectionHeader
+            var sh = new Section
             {
                 Name = "Dummy",
                 PointerToRawData = 0x14e,

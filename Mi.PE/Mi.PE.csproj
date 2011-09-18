@@ -69,7 +69,7 @@
     <Compile Include="PEFormat\PEMagic.cs" />
     <Compile Include="PEFormat\MZSignature.cs" />
     <Compile Include="PEFormat\RvaStream.cs" />
-    <Compile Include="PEFormat\SectionHeader.cs" />
+    <Compile Include="PEFormat\Section.cs" />
     <Compile Include="PEFormat\SectionCharacteristics.cs" />
     <Compile Include="PEFormat\Subsystem.cs" />
     <Compile Include="PEFormat\TargetArchitecture.cs" />

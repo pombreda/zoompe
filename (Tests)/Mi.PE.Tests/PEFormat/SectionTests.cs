@@ -7,20 +7,20 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Mi.PE.PEFormat
 {
     [TestClass]
-    public class SectionHeaderTests
+    public class SectionTests
     {
         [ExpectedException(typeof(ArgumentException))]
         [TestMethod]
         public void Name_TooLong()
         {
-            var sh = new SectionHeader();
+            var sh = new Section();
             sh.Name = "123456789";
         }
 
         [TestMethod]
         public void PhysicalAddress_EqualsVirtualSize()
         {
-            var sh = new SectionHeader();
+            var sh = new Section();
             sh.VirtualSize = 23121222;
             Assert.AreEqual((uint)23121222, sh.PhysicalAddress);
             sh.PhysicalAddress = 94;
@@ -30,7 +30,7 @@ namespace Mi.PE.PEFormat
         [TestMethod]
         public void NameSet()
         {
-            var sh = new SectionHeader();
+            var sh = new Section();
             sh.Name = "a";
             Assert.AreEqual("a", sh.Name);
             sh.Name = null;

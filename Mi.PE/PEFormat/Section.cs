@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Mi.PE.PEFormat
 {
-    public sealed class SectionHeader
+    public sealed class Section
     {
         enum DataSizeImplication
         {
