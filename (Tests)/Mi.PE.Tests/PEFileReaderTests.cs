@@ -233,6 +233,17 @@ namespace Mi.PE
             Assert.AreEqual((uint)0x6000, optionalHeader.SizeOfImage);
         }
 
+        [TestMethod]
+        public void PopulateSectionContent()
+        {
+            var reader = new PEFileReader { PopulateSectionContent = true };
+
+            var pe = reader.ReadMetadata(new MemoryStream(Properties.Resources.console_anycpu));
+
+            Assert.AreEqual(3, pe.Sections.Length);
+            Assert.AreEqual((byte)72, pe.Sections[0].Content[8]);
+        }
+
         static void AssertOptionalHeader(OptionalHeader optionalHeader)
         {
             Assert.AreEqual((byte)8, optionalHeader.MajorLinkerVersion);
