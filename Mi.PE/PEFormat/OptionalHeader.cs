@@ -197,7 +197,7 @@ namespace Mi.PE.PEFormat
         #region ToString
         public override string ToString()
         {
-            string dataDirectories = this.DataDirectories == null ? "" :
+            string dataDirectories =
                 string.Join(
                     ",",
                     this.DataDirectories
