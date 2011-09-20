@@ -80,7 +80,7 @@ namespace Mi.PE.PEFormat
             if (this.Signature == MZSignature.MZ)
                 result.Append("MZ");
             else
-                result.Append("Signature:"+Format.ToString((ushort)this.Signature));
+                result.Append("Signature:"+((ushort)this.Signature).ToString("X4")+"h");
 
             result.Append("].lfanew=");
             result.Append(this.lfanew.ToString("X"));

@@ -44,7 +44,7 @@ namespace Mi.PE
                 lfanew = 0x102
             };
 
-            Assert.AreEqual("[Signature:00'A'h].lfanew=102h", dh.ToString());
+            Assert.AreEqual("[Signature:0041h].lfanew=102h", dh.ToString());
         }
 
         [TestMethod]

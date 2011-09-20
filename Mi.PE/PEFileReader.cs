@@ -56,7 +56,7 @@ namespace Mi.PE
         {
             var mz = (MZSignature)reader.ReadInt16();
             if (mz != MZSignature.MZ)
-                throw new BadImageFormatException("MZ signature expected, "+Format.ToString((ushort)mz)+" found.");
+                throw new BadImageFormatException("MZ signature expected, "+((ushort)mz).ToString("X4")+"h found.");
 
             var dosHeader = new DosHeader
             {
