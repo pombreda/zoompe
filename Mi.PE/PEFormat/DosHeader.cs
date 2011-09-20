@@ -9,7 +9,7 @@ namespace Mi.PE.PEFormat
     
     public sealed class DosHeader
     {
-        public const int Size = 64;
+        public const int HeaderSize = 64;
 
         enum StubSizeImplication
         {
@@ -66,8 +66,8 @@ namespace Mi.PE.PEFormat
             get
             {
                 if (m_Stub == null
-                    && (int)this.lfanew - DosHeader.Size >= 0)
-                    m_Stub = new byte[(int)this.lfanew - DosHeader.Size];
+                    && (int)this.lfanew - DosHeader.HeaderSize >= 0)
+                    m_Stub = new byte[(int)this.lfanew - DosHeader.HeaderSize];
 
                 return this.m_Stub;
             }

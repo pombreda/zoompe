@@ -48,25 +48,25 @@ namespace Mi.PE
         {
             byte[] bytes = Properties.Resources.console_anycpu;
             
-            uint lfaNew = (uint)BitConverter.ToInt32(bytes, DosHeader.Size - 4);
-            byte[] modifiedLfaNewBytes = BitConverter.GetBytes(DosHeader.Size);
+            uint lfaNew = (uint)BitConverter.ToInt32(bytes, DosHeader.HeaderSize - 4);
+            byte[] modifiedLfaNewBytes = BitConverter.GetBytes(DosHeader.HeaderSize);
 
             Array.Copy(
                 modifiedLfaNewBytes, 0,
-                bytes, DosHeader.Size - 4,
+                bytes, DosHeader.HeaderSize - 4,
                 4);
 
             Array.Copy(
                 bytes, lfaNew,
-                bytes, DosHeader.Size,
+                bytes, DosHeader.HeaderSize,
                 bytes.Length - lfaNew);
 
-            var stream = new MemoryStream(bytes, 0, bytes.Length - ((int)lfaNew - DosHeader.Size), false);
+            var stream = new MemoryStream(bytes, 0, bytes.Length - ((int)lfaNew - DosHeader.HeaderSize), false);
 
             var reader = new PEFileReader();
             var pe = reader.ReadMetadata(stream);
 
-            Assert.AreEqual((uint)DosHeader.Size, pe.DosHeader.lfanew);
+            Assert.AreEqual((uint)DosHeader.HeaderSize, pe.DosHeader.lfanew);
             Assert.AreEqual(0, pe.DosHeader.Stub.Length);
         }
 
