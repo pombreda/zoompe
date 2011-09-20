@@ -27,12 +27,14 @@ namespace Mi.PE
 
         public PEFile ReadMetadata(BinaryStreamReader reader)
         {
-            var dosHeader = ReadDosHeader(reader);
+            var pe = new PEFile();
+
+            ReadDosHeader(reader, pe.DosHeader);
             
-            reader.Position = dosHeader.lfanew;
-            var peHeader = ReadPEHeader(reader);
-            var optionalHeader = ReadOptionalHeader(reader);
-            Section[] sections = new Section[peHeader.NumberOfSections];
+            reader.Position = pe.DosHeader.lfanew;
+            ReadPEHeader(reader, pe.PEHeader);
+            ReadOptionalHeader(reader, pe.OptionalHeader);
+            Section[] sections = new Section[pe.PEHeader.NumberOfSections];
             for (int i = 0; i < sections.Length; i++)
             {
                 sections[i] = ReadSectionHeader(reader);
@@ -43,74 +45,60 @@ namespace Mi.PE
                 ReadSectionsContent(reader, sections);
             }
 
-            return new PEFile
-            {
-                DosHeader = dosHeader,
-                PEHeader = peHeader,
-                OptionalHeader = optionalHeader,
-                Sections = sections
-            };
+            pe.Sections = sections;
+
+            return pe;
         }
 
-        private static DosHeader ReadDosHeader(BinaryStreamReader reader)
+        static void ReadDosHeader(BinaryStreamReader reader, DosHeader dosHeader)
         {
-            var mz = (MZSignature)reader.ReadInt16();
-            if (mz != MZSignature.MZ)
-                throw new BadImageFormatException("MZ signature expected, "+((ushort)mz).ToString("X4")+"h found.");
+            dosHeader.Signature = (MZSignature)reader.ReadInt16();
+            if (dosHeader.Signature != MZSignature.MZ)
+                throw new BadImageFormatException("MZ signature expected, "+((ushort)dosHeader.Signature).ToString("X4")+"h found.");
 
-            var dosHeader = new DosHeader
-            {
-                Signature = mz,
-                cblp = reader.ReadUInt16(),
-                cp = reader.ReadUInt16(),
-                crlc = reader.ReadUInt16(),
-                cparhdr = reader.ReadUInt16(),
-                minalloc = reader.ReadUInt16(),
-                maxalloc = reader.ReadUInt16(),
-                ss = reader.ReadUInt16(),
-                sp = reader.ReadUInt16(),
-                csum = reader.ReadUInt16(),
-                ip = reader.ReadUInt16(),
-                cs = reader.ReadUInt16(),
-                lfarlc = reader.ReadUInt16(),
-                ovno = reader.ReadUInt16(),
+            dosHeader.cblp = reader.ReadUInt16();
+            dosHeader.cp = reader.ReadUInt16();
+            dosHeader.crlc = reader.ReadUInt16();
+            dosHeader.cparhdr = reader.ReadUInt16();
+            dosHeader.minalloc = reader.ReadUInt16();
+            dosHeader.maxalloc = reader.ReadUInt16();
+            dosHeader.ss = reader.ReadUInt16();
+            dosHeader.sp = reader.ReadUInt16();
+            dosHeader.csum = reader.ReadUInt16();
+            dosHeader.ip = reader.ReadUInt16();
+            dosHeader.cs = reader.ReadUInt16();
+            dosHeader.lfarlc = reader.ReadUInt16();
+            dosHeader.ovno = reader.ReadUInt16();
 
-                res1 = reader.ReadUInt64(),
+            dosHeader.res1 = reader.ReadUInt64();
+            
+            dosHeader.oemid = reader.ReadUInt16();
+            dosHeader.oeminfo = reader.ReadUInt16();
 
-                oemid = reader.ReadUInt16(),
-                oeminfo = reader.ReadUInt16(),
-
-                ReservedNumber0 = reader.ReadUInt32(),
-                ReservedNumber1 = reader.ReadUInt32(),
-                ReservedNumber2 = reader.ReadUInt32(),
-                ReservedNumber3 = reader.ReadUInt32(),
-                ReservedNumber4 = reader.ReadUInt32(),
-
-                lfanew = reader.ReadUInt32()
-            };
+            dosHeader.ReservedNumber0 = reader.ReadUInt32();
+            dosHeader.ReservedNumber1 = reader.ReadUInt32();
+            dosHeader.ReservedNumber2 = reader.ReadUInt32();
+            dosHeader.ReservedNumber3 = reader.ReadUInt32();
+            dosHeader.ReservedNumber4 = reader.ReadUInt32();
+            dosHeader.lfanew = reader.ReadUInt32();
 
             if (dosHeader.Stub!=null)
                 reader.ReadBytes(dosHeader.Stub, 0, dosHeader.Stub.Length);
-
-            return dosHeader;
         }
 
-        private static PEHeader ReadPEHeader(BinaryStreamReader reader)
+        static void ReadPEHeader(BinaryStreamReader reader, PEHeader peHeader)
         {
-            return new PEHeader
-            {
-                PESignature = (PESignature)reader.ReadInt32(),
-                Machine = (Machine)reader.ReadInt16(),
-                NumberOfSections = reader.ReadUInt16(),
-                Timestamp = new ImageTimestamp(reader.ReadUInt32()),
-                PointerToSymbolTable = reader.ReadUInt32(),
-                NumberOfSymbols = reader.ReadUInt32(),
-                SizeOfOptionalHeader = reader.ReadUInt16(),
-                Characteristics = (ImageCharacteristics)reader.ReadInt16()
-            };
+            peHeader.PESignature = (PESignature)reader.ReadInt32();
+            peHeader.Machine = (Machine)reader.ReadInt16();
+            peHeader.NumberOfSections = reader.ReadUInt16();
+            peHeader.Timestamp = new ImageTimestamp(reader.ReadUInt32());
+            peHeader.PointerToSymbolTable = reader.ReadUInt32();
+            peHeader.NumberOfSymbols = reader.ReadUInt32();
+            peHeader.SizeOfOptionalHeader = reader.ReadUInt16();
+            peHeader.Characteristics = (ImageCharacteristics)reader.ReadInt16();
         }
 
-        private static OptionalHeader ReadOptionalHeader(BinaryStreamReader reader)
+        static void ReadOptionalHeader(BinaryStreamReader reader, OptionalHeader optionalHeader)
         {
             var peMagic = (PEMagic)reader.ReadInt16();
 
@@ -118,7 +106,6 @@ namespace Mi.PE
                 && peMagic != PEMagic.NT64)
                 throw new BadImageFormatException("Unsupported PE magic value " + peMagic + ".");
 
-            var optionalHeader = new OptionalHeader();
             optionalHeader.PEMagic = peMagic;
 
             optionalHeader.MajorLinkerVersion = reader.ReadByte();
@@ -180,11 +167,9 @@ namespace Mi.PE
                     Size = reader.ReadUInt32()
                 };
             }
-
-            return optionalHeader;
         }
 
-        private static Section ReadSectionHeader(BinaryStreamReader reader)
+        static Section ReadSectionHeader(BinaryStreamReader reader)
         {
             // TODO: intern well-known strings?
             return new Section
@@ -202,7 +187,7 @@ namespace Mi.PE
             };
         }
 
-        private static void ReadSectionsContent(BinaryStreamReader reader, Section[] sections)
+        static void ReadSectionsContent(BinaryStreamReader reader, Section[] sections)
         {
             foreach (var s in sections)
             {
