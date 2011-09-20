@@ -26,11 +26,9 @@ namespace Mi.PE
         [TestMethod]
         public void DosHeader()
         {
-            var dh = new DosHeader
-            {
-                Signature = MZSignature.MZ,
-                lfanew = 0x102
-            };
+            var dh = new PEFile().DosHeader;
+            dh.Signature = MZSignature.MZ;
+            dh.lfanew = 0x102;
 
             Assert.AreEqual("[MZ].lfanew=102h", dh.ToString());
         }
@@ -38,11 +36,9 @@ namespace Mi.PE
         [TestMethod]
         public void DosHeader_NotMZ()
         {
-            var dh = new DosHeader
-            {
-                Signature = (MZSignature)0x41,
-                lfanew = 0x102
-            };
+            var dh = new PEFile().DosHeader;
+            dh.Signature = (MZSignature)0x41;
+            dh.lfanew = 0x102;
 
             Assert.AreEqual("[Signature:0041h].lfanew=102h", dh.ToString());
         }
@@ -50,12 +46,10 @@ namespace Mi.PE
         [TestMethod]
         public void OptionalHeader()
         {
-            var oh = new OptionalHeader
-            {
-                PEMagic = PEMagic.NT32,
-                Subsystem = Subsystem.WindowsCUI,
-                DllCharacteristics = DllCharacteristics.TerminalServerAware
-            };
+            var oh = new PEFile().OptionalHeader;
+            oh.PEMagic = PEMagic.NT32;
+            oh.Subsystem = Subsystem.WindowsCUI;
+            oh.DllCharacteristics = DllCharacteristics.TerminalServerAware;
 
             Assert.AreEqual("NT32 WindowsCUI TerminalServerAware", oh.ToString());
         }
@@ -63,13 +57,11 @@ namespace Mi.PE
         [TestMethod]
         public void OptionalHeader_EmptyDataDirectories()
         {
-            var oh = new OptionalHeader
-            {
-                PEMagic = PEMagic.NT32,
-                Subsystem = Subsystem.WindowsCUI,
-                DllCharacteristics = DllCharacteristics.TerminalServerAware,
-                NumberOfRvaAndSizes = 4
-            };
+            var oh = new PEFile().OptionalHeader;
+            oh.PEMagic = PEMagic.NT32;
+            oh.Subsystem = Subsystem.WindowsCUI;
+            oh.DllCharacteristics = DllCharacteristics.TerminalServerAware;
+            oh.NumberOfRvaAndSizes = 4;
 
             Assert.AreEqual("NT32 WindowsCUI TerminalServerAware", oh.ToString());
         }
@@ -77,13 +69,11 @@ namespace Mi.PE
         [TestMethod]
         public void OptionalHeader_NonEmptyDataDirectories()
         {
-            var oh = new OptionalHeader
-            {
-                PEMagic = PEMagic.NT32,
-                Subsystem = Subsystem.WindowsCUI,
-                DllCharacteristics = DllCharacteristics.TerminalServerAware,
-                NumberOfRvaAndSizes = 4
-            };
+            var oh = new PEFile().OptionalHeader;
+            oh.PEMagic = PEMagic.NT32;
+            oh.Subsystem = Subsystem.WindowsCUI;
+            oh.DllCharacteristics = DllCharacteristics.TerminalServerAware;
+            oh.NumberOfRvaAndSizes = 4;
 
             oh.DataDirectories[0] = new DataDirectory { Size = 5 };
             oh.DataDirectories[1] = new DataDirectory { Size = 6 };
@@ -96,11 +86,9 @@ namespace Mi.PE
         [TestMethod]
         public void PEHeader()
         {
-            var peh = new PEHeader
-            {
-                Machine = Machine.I386,
-                Characteristics = ImageCharacteristics.Bit32Machine
-            };
+            var peh = new PEFile().PEHeader;
+            peh.Machine = Machine.I386;
+            peh.Characteristics = ImageCharacteristics.Bit32Machine;
 
             Assert.AreEqual("I386 Bit32Machine Sections[0]", peh.ToString());
         }
@@ -108,14 +96,15 @@ namespace Mi.PE
         [TestMethod]
         public void Section()
         {
-            var sh = new Section
-            {
-                Name = "Dummy",
-                PointerToRawData = 0x14e,
-                SizeOfRawData = 0x1aff0,
-                VirtualAddress = 0x1234c0,
-                VirtualSize = 0x320ff
-            };
+            var pe = new PEFile();
+            pe.PEHeader.NumberOfSections = 1;
+            var sh = pe.Sections[0];
+
+            sh.Name = "Dummy";
+            sh.PointerToRawData = 0x14e;
+            sh.SizeOfRawData = 0x1aff0;
+            sh.VirtualAddress = 0x1234c0;
+            sh.VirtualSize = 0x320ff;
 
             Assert.AreEqual("Dummy [14E:1AFF0h]=>Virtual[1234C0:320FFh]", sh.ToString());
         }

@@ -240,7 +240,7 @@ namespace Mi.PE
 
             var pe = reader.ReadMetadata(new MemoryStream(Properties.Resources.console_anycpu));
 
-            Assert.AreEqual(3, pe.Sections.Length);
+            Assert.AreEqual(3, pe.Sections.Count);
             Assert.AreEqual((byte)72, pe.Sections[0].Content[8]);
         }
 

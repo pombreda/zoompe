@@ -13,6 +13,10 @@ namespace Mi.PE.PEFormat
             public const int NT64 = 112;
         }
 
+        internal OptionalHeader()
+        {
+        }
+
         uint m_NumberOfRvaAndSizes;
         DataDirectory[] m_DataDirectories;
 

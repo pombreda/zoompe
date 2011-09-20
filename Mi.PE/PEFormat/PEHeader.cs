@@ -10,6 +10,14 @@ namespace Mi.PE.PEFormat
     {
         public const int Size = 28;
 
+        readonly PEFile ownerPEFile;
+        ushort m_NumberOfSections;
+
+        internal PEHeader(PEFile ownerPEFile)
+        {
+            this.ownerPEFile = ownerPEFile;
+        }
+
         public PESignature PESignature { get; set; }
         
         /// <summary>
@@ -22,7 +30,18 @@ namespace Mi.PE.PEFormat
         ///  Indicates the size of the section table, which immediately follows the headers.
         ///  Note that the Windows loader limits the number of sections to 96.
         /// </summary>
-        public ushort NumberOfSections { get; set; }
+        public ushort NumberOfSections
+        {
+            get { return m_NumberOfSections; }
+            set
+            {
+                if (value == this.NumberOfSections)
+                    return;
+
+                this.m_NumberOfSections = value;
+                ownerPEFile.m_Sections = null;
+            }
+        }
 
         /// <summary>
         /// The low 32 bits of the time stamp of the image.

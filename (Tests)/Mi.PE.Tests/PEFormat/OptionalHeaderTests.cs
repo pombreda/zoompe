@@ -12,14 +12,14 @@ namespace Mi.PE.PEFormat
         [TestMethod]
         public void Directories_EmptyByDefaut()
         {
-            var oh = new OptionalHeader();
+            var oh = new PEFile().OptionalHeader;
             Assert.AreEqual(0, oh.DataDirectories.Length);
         }
 
         [TestMethod]
         public void SetNumberOfRvaAndSizes_Positive_CreatesDataDirectories()
         {
-            var oh = new OptionalHeader();
+            var oh = new PEFile().OptionalHeader;
             oh.NumberOfRvaAndSizes = 4;
             Assert.AreEqual(4, oh.DataDirectories.Length);
         }
@@ -27,7 +27,7 @@ namespace Mi.PE.PEFormat
         [TestMethod]
         public void SetNumberOfRvaAndSizes_Zero_EmptiesDataDirectories()
         {
-            var oh = new OptionalHeader();
+            var oh = new PEFile().OptionalHeader;
             oh.NumberOfRvaAndSizes = 0;
             Assert.AreEqual(0, oh.DataDirectories.Length);
         }
@@ -35,7 +35,7 @@ namespace Mi.PE.PEFormat
         [TestMethod]
         public void SetNumberOfRvaAndSizes_Different_ClearsDataDirectories()
         {
-            var oh = new OptionalHeader();
+            var oh = new PEFile().OptionalHeader;
             oh.NumberOfRvaAndSizes = 4;
             oh.DataDirectories[0] = new DataDirectory { Size = 43 };
             oh.NumberOfRvaAndSizes = 3;
@@ -45,7 +45,7 @@ namespace Mi.PE.PEFormat
         [TestMethod]
         public void SetNumberOfRvaAndSizes_Same_KeepsDataDirectories()
         {
-            var oh = new OptionalHeader();
+            var oh = new PEFile().OptionalHeader;
             oh.NumberOfRvaAndSizes = 4;
             oh.DataDirectories[0] = new DataDirectory { Size = 234222 };
             oh.NumberOfRvaAndSizes = 4;

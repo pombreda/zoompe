@@ -13,14 +13,18 @@ namespace Mi.PE.PEFormat
         [TestMethod]
         public void Name_TooLong()
         {
-            var sh = new Section();
+            var pe = new PEFile();
+            pe.PEHeader.NumberOfSections = 1;
+            var sh = pe.Sections[0];
             sh.Name = "123456789";
         }
 
         [TestMethod]
         public void PhysicalAddress_EqualsVirtualSize()
         {
-            var sh = new Section();
+            var pe = new PEFile();
+            pe.PEHeader.NumberOfSections = 1;
+            var sh = pe.Sections[0];
             sh.VirtualSize = 23121222;
             Assert.AreEqual((uint)23121222, sh.PhysicalAddress);
             sh.PhysicalAddress = 94;
@@ -30,7 +34,9 @@ namespace Mi.PE.PEFormat
         [TestMethod]
         public void NameSet()
         {
-            var sh = new Section();
+            var pe = new PEFile();
+            pe.PEHeader.NumberOfSections = 1;
+            var sh = pe.Sections[0];
             sh.Name = "a";
             Assert.AreEqual("a", sh.Name);
             sh.Name = null;
@@ -40,14 +46,18 @@ namespace Mi.PE.PEFormat
         [TestMethod]
         public void Content_EmptyByDefaut()
         {
-            var sh = new Section();
+            var pe = new PEFile();
+            pe.PEHeader.NumberOfSections = 1;
+            var sh = pe.Sections[0];
             Assert.AreEqual(0, sh.Content.Length);
         }
 
         [TestMethod]
         public void SetSizeOfRawData_Positive_CreatesContent()
         {
-            var sh = new Section();
+            var pe = new PEFile();
+            pe.PEHeader.NumberOfSections = 1;
+            var sh = pe.Sections[0];
             sh.SizeOfRawData = 4;
             Assert.AreEqual(4, sh.Content.Length);
         }
@@ -55,7 +65,9 @@ namespace Mi.PE.PEFormat
         [TestMethod]
         public void SetSizeOfRawData_Zero_EmptiesContent()
         {
-            var sh = new Section();
+            var pe = new PEFile();
+            pe.PEHeader.NumberOfSections = 1;
+            var sh = pe.Sections[0];
             sh.SizeOfRawData = 0;
             Assert.AreEqual(0, sh.Content.Length);
         }
@@ -63,7 +75,9 @@ namespace Mi.PE.PEFormat
         [TestMethod]
         public void SetSizeOfRawData_Different_ClearsContent()
         {
-            var sh = new Section();
+            var pe = new PEFile();
+            pe.PEHeader.NumberOfSections = 1;
+            var sh = pe.Sections[0];
             sh.SizeOfRawData = 4;
             sh.Content[0] = 254;
             sh.SizeOfRawData = 3;
@@ -73,7 +87,9 @@ namespace Mi.PE.PEFormat
         [TestMethod]
         public void SetSizeOfRawData_Same_KeepsContent()
         {
-            var sh = new Section();
+            var pe = new PEFile();
+            pe.PEHeader.NumberOfSections = 1;
+            var sh = pe.Sections[0];
             sh.SizeOfRawData = 4;
             sh.Content[0] = 254;
             sh.SizeOfRawData = 4;

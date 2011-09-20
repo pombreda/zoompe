@@ -34,18 +34,23 @@ namespace Mi.PE
             reader.Position = pe.DosHeader.lfanew;
             ReadPEHeader(reader, pe.PEHeader);
             ReadOptionalHeader(reader, pe.OptionalHeader);
-            Section[] sections = new Section[pe.PEHeader.NumberOfSections];
-            for (int i = 0; i < sections.Length; i++)
+            
+            for (int i = 0; i < pe.Sections.Count; i++)
             {
-                sections[i] = ReadSectionHeader(reader);
+                ReadSectionHeader(reader, pe.Sections[i]);
             }
 
             if (this.PopulateSectionContent)
             {
-                ReadSectionsContent(reader, sections);
+                foreach (var s in pe.Sections)
+                {
+                    if (s.SizeOfRawData > 0)
+                    {
+                        reader.Position = s.PointerToRawData;
+                        reader.ReadBytes(s.Content, 0, checked((int)s.SizeOfRawData));
+                    }
+                }
             }
-
-            pe.Sections = sections;
 
             return pe;
         }
@@ -169,34 +174,18 @@ namespace Mi.PE
             }
         }
 
-        static Section ReadSectionHeader(BinaryStreamReader reader)
+        static void ReadSectionHeader(BinaryStreamReader reader, Section section)
         {
-            // TODO: intern well-known strings?
-            return new Section
-            {
-                Name = reader.ReadFixedZeroFilledUtf8String(8),
-                VirtualSize = reader.ReadUInt32(),
-                VirtualAddress = reader.ReadUInt32(),
-                SizeOfRawData = reader.ReadUInt32(),
-                PointerToRawData = reader.ReadUInt32(),
-                PointerToRelocations = reader.ReadUInt32(),
-                PointerToLinenumbers = reader.ReadUInt32(),
-                NumberOfRelocations = reader.ReadUInt16(),
-                NumberOfLinenumbers = reader.ReadUInt16(),
-                Characteristics = (SectionCharacteristics)reader.ReadUInt32()
-            };
-        }
-
-        static void ReadSectionsContent(BinaryStreamReader reader, Section[] sections)
-        {
-            foreach (var s in sections)
-            {
-                if (s.SizeOfRawData > 0)
-                {
-                    reader.Position = s.PointerToRawData;
-                    reader.ReadBytes(s.Content, 0, checked((int)s.SizeOfRawData));
-                }
-            }
+            section.Name = reader.ReadFixedZeroFilledUtf8String(8);
+            section.VirtualSize = reader.ReadUInt32();
+            section.VirtualAddress = reader.ReadUInt32();
+            section.SizeOfRawData = reader.ReadUInt32();
+            section.PointerToRawData = reader.ReadUInt32();
+            section.PointerToRelocations = reader.ReadUInt32();
+            section.PointerToLinenumbers = reader.ReadUInt32();
+            section.NumberOfRelocations = reader.ReadUInt16();
+            section.NumberOfLinenumbers = reader.ReadUInt16();
+            section.Characteristics = (SectionCharacteristics)reader.ReadUInt32();
         }
     }
 }

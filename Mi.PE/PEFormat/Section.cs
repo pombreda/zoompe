@@ -15,6 +15,10 @@ namespace Mi.PE.PEFormat
         const int MaxNameLength = 8;
         string m_Name;
 
+        internal Section()
+        {
+        }
+
         /// <summary>
         /// An 8-byte, null-padded UTF-8 string.
         /// There is no terminating null character if the string is exactly eight characters long.

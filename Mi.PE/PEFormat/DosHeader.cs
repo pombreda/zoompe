@@ -21,6 +21,10 @@ namespace Mi.PE.PEFormat
         uint m_lfanew;
         byte[] m_Stub;
 
+        internal DosHeader()
+        {
+        }
+
         public MZSignature Signature { get; set; }
         public ushort cblp { get; set; }
         public ushort cp { get; set; }
