@@ -206,8 +206,7 @@ namespace Mi.PE
         {
             foreach (var s in sections)
             {
-                if ((s.Characteristics & SectionCharacteristics.ContainsUninitializedData) == 0
-                    && s.SizeOfRawData > 0)
+                if (s.SizeOfRawData > 0)
                 {
                     reader.Position = s.PointerToRawData;
                     reader.ReadBytes(s.Content, 0, checked((int)s.SizeOfRawData));
