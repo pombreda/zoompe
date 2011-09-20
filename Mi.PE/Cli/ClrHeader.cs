@@ -44,7 +44,7 @@ namespace Mi.PE.Cli
         public DataDirectory StrongNameSignature { get; set; }
 
         /// <summary>
-        /// Depricated, not used.
+        /// Deprecated, not used.
         /// </summary>
         public DataDirectory CodeManagerTable { get; set; }
 

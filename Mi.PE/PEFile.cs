@@ -6,11 +6,13 @@ using System.Reflection;
 
 namespace Mi.PE
 {
+    using Mi.PE.PEFormat;
+
     public sealed class PEFile
     {
-        public PEFormat.DosHeader DosHeader { get; set; }
-        public PEFormat.PEHeader PEHeader { get; set; }
-        public PEFormat.OptionalHeader OptionalHeader { get; set; }
-        public PEFormat.Section[] Sections { get; set; }
+        public DosHeader DosHeader { get; set; }
+        public PEHeader PEHeader { get; set; }
+        public OptionalHeader OptionalHeader { get; set; }
+        public Section[] Sections { get; set; }
     }
 }

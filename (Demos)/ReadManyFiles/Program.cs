@@ -14,7 +14,10 @@ class Program
         {
             var reader = new PEFileReader();
 
-            var dllFiles = EnumerateClrCoreDllFiles().ToArray();
+            var dllFiles = 
+                (from f in EnumerateClrCoreDllFiles()
+                where IsDotNet(f)
+                select f).ToArray();
 
             MeasureManyFilesLoad(reader, dllFiles);
         }
@@ -46,11 +49,35 @@ class Program
 
         TimeSpan headersAndContent = DateTime.UtcNow - start;
 
+        start = DateTime.UtcNow;
+        foreach (var dll in dllFiles)
+        {
+            System.Reflection.Assembly.Load(File.ReadAllBytes(dll));
+        }
+
+        TimeSpan reflectionLoad = DateTime.UtcNow - start;
+
         Console.WriteLine(
             dllFiles.Length + " dlls\t" +
             "Headers only: " + headersOnly.TotalSeconds.ToString("#0.000") + " sec." +
             "  " +
-            "Headers and content: " + headersAndContent.TotalSeconds.ToString("#0.000") + " sec.");
+            "Headers and content: " + headersAndContent.TotalSeconds.ToString("#0.000") + " sec." +
+            "  " +
+            "Reflection: " + reflectionLoad.TotalSeconds.ToString("#0.000") + " sec." +
+            "");
+    }
+
+    static bool IsDotNet(string file)
+    {
+        try
+        {
+            System.Reflection.AssemblyName.GetAssemblyName(file);
+            return true;
+        }
+        catch (BadImageFormatException)
+        {
+            return false;
+        }
     }
 
     static IEnumerable<string> EnumerateClrCoreDllFiles()
