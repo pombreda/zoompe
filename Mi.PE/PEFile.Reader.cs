@@ -24,6 +24,7 @@ namespace Mi.PE
 
             public Reader()
             {
+                this.PopulateSectionContent = true;
             }
 
             public bool PopulateSectionContent { get; set; }
