@@ -35,12 +35,25 @@ namespace Mi.PE
             var reader = new PEFile.Reader();
         }
 
+        [TestMethod]
+        public void PEFileFromStream_SameAsExplicitReader()
+        {
+            byte[] bytes = Properties.Resources.console_anycpu;
+
+            var reader = new PEFile.Reader();
+            var explicitReaderPE = reader.Read(new MemoryStream(bytes));
+
+            var fromStreamPE = PEFile.FromStream(new MemoryStream(bytes));
+
+            Assert.AreEqual(explicitReaderPE.Sections.Count, fromStreamPE.Sections.Count);
+        }
+
         [ExpectedException(typeof(BadImageFormatException))]
         [TestMethod]
         public void ReadDosHeader_InvalidMZ()
         {
             var reader = new PEFile.Reader();
-            reader.ReadMetadata(new MemoryStream(new byte[10]));
+            reader.Read(new MemoryStream(new byte[10]));
         }
 
         [TestMethod]
@@ -64,7 +77,7 @@ namespace Mi.PE
             var stream = new MemoryStream(bytes, 0, bytes.Length - ((int)lfaNew - DosHeader.HeaderSize), false);
 
             var reader = new PEFile.Reader();
-            var pe = reader.ReadMetadata(stream);
+            var pe = reader.Read(stream);
 
             Assert.AreEqual((uint)DosHeader.HeaderSize, pe.DosHeader.lfanew);
             Assert.AreEqual(0, pe.DosHeader.Stub.Length);
@@ -78,7 +91,7 @@ namespace Mi.PE
             bytes[152] = 0;
 
             var reader = new PEFile.Reader();
-            reader.ReadMetadata(new MemoryStream(bytes));
+            reader.Read(new MemoryStream(bytes));
         }
 
         [TestMethod] public void PreReadAnyCPU_AssertDosStub() { AssertDosStub(PreReadSamplePEs.Console.AnyCPU.DosHeader.Stub); }
@@ -238,7 +251,7 @@ namespace Mi.PE
         {
             var reader = new PEFile.Reader { PopulateSectionContent = true };
 
-            var pe = reader.ReadMetadata(new MemoryStream(Properties.Resources.console_anycpu));
+            var pe = reader.Read(new MemoryStream(Properties.Resources.console_anycpu));
 
             Assert.AreEqual(3, pe.Sections.Count);
             Assert.AreEqual((byte)72, pe.Sections[0].Content[8]);

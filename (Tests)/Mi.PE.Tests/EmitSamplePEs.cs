@@ -11,10 +11,10 @@ namespace Mi.PE
     {
         public static class Library
         {
-            public static readonly PEFile AnyCPU = reader.ReadMetadata(new MemoryStream(EmitAssembly(PortableExecutableKinds.ILOnly, ImageFileMachine.I386)));
-            public static readonly PEFile X86 = reader.ReadMetadata(new MemoryStream(EmitAssembly(PortableExecutableKinds.Required32Bit, ImageFileMachine.I386)));
-            public static readonly PEFile X64 = reader.ReadMetadata(new MemoryStream(EmitAssembly(PortableExecutableKinds.PE32Plus, ImageFileMachine.AMD64)));
-            public static readonly PEFile Itanium = reader.ReadMetadata(new MemoryStream(EmitAssembly(PortableExecutableKinds.PE32Plus, ImageFileMachine.IA64)));
+            public static readonly PEFile AnyCPU = reader.Read(new MemoryStream(EmitAssembly(PortableExecutableKinds.ILOnly, ImageFileMachine.I386)));
+            public static readonly PEFile X86 = reader.Read(new MemoryStream(EmitAssembly(PortableExecutableKinds.Required32Bit, ImageFileMachine.I386)));
+            public static readonly PEFile X64 = reader.Read(new MemoryStream(EmitAssembly(PortableExecutableKinds.PE32Plus, ImageFileMachine.AMD64)));
+            public static readonly PEFile Itanium = reader.Read(new MemoryStream(EmitAssembly(PortableExecutableKinds.PE32Plus, ImageFileMachine.IA64)));
         }
 
         static readonly PEFile.Reader reader = new PEFile.Reader();

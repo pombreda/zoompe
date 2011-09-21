@@ -10,10 +10,10 @@ namespace Mi.PE
     {
         public static class Console
         {
-            public static readonly PEFile AnyCPU = reader.ReadMetadata(new MemoryStream(Properties.Resources.console_anycpu));
-            public static readonly PEFile X86 = reader.ReadMetadata(new MemoryStream(Properties.Resources.console_x86));
-            public static readonly PEFile X64 = reader.ReadMetadata(new MemoryStream(Properties.Resources.console_x64));
-            public static readonly PEFile Itanium = reader.ReadMetadata(new MemoryStream(Properties.Resources.console_itanium));
+            public static readonly PEFile AnyCPU = reader.Read(new MemoryStream(Properties.Resources.console_anycpu));
+            public static readonly PEFile X86 = reader.Read(new MemoryStream(Properties.Resources.console_x86));
+            public static readonly PEFile X64 = reader.Read(new MemoryStream(Properties.Resources.console_x64));
+            public static readonly PEFile Itanium = reader.Read(new MemoryStream(Properties.Resources.console_itanium));
         }
 
         static readonly PEFile.Reader reader = new PEFile.Reader();

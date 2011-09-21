@@ -13,7 +13,7 @@ namespace Mi.PE
         public static PEFile FromStream(Stream stream)
         {
             var reader = new Reader();
-            var pe = reader.ReadMetadata(stream);
+            var pe = reader.Read(stream);
             return pe;
         }
 
@@ -28,13 +28,13 @@ namespace Mi.PE
 
             public bool PopulateSectionContent { get; set; }
 
-            public PEFile ReadMetadata(Stream stream)
+            public PEFile Read(Stream stream)
             {
                 var reader = new BinaryStreamReader(stream, this.buffer);
-                return ReadMetadata(reader);
+                return Read(reader);
             }
 
-            public PEFile ReadMetadata(BinaryStreamReader reader)
+            public PEFile Read(BinaryStreamReader reader)
             {
                 var pe = new PEFile();
 
