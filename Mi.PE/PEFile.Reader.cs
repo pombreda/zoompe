@@ -57,7 +57,8 @@ namespace Mi.PE
                         if (s.SizeOfRawData > 0)
                         {
                             reader.Position = s.PointerToRawData;
-                            reader.ReadBytes(s.Content, 0, checked((int)s.SizeOfRawData));
+                            int size = checked((int)Math.Min(s.VirtualSize, s.SizeOfRawData));
+                            reader.ReadBytes(s.Content, 0, size);
                         }
                     }
                 }
