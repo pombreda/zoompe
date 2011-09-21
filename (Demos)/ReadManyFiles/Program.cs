@@ -31,7 +31,7 @@ class Program
         {
             using (var dllStream = File.OpenRead(dll))
             {
-                reader.ReadMetadata(dllStream);
+                reader.Read(dllStream);
             }
         }
 
@@ -43,7 +43,7 @@ class Program
         {
             using (var dllStream = File.OpenRead(dll))
             {
-                reader.ReadMetadata(dllStream);
+                reader.Read(dllStream);
             }
         }
 

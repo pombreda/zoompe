@@ -5,7 +5,18 @@ using System.IO;
 
 namespace Mi.PE
 {
-    public static class PEFileWriter
+    partial class PEFile
     {
+        public sealed class PEFileWriter
+        {
+            public PEFileWriter()
+            {
+            }
+
+            public void Write(PEFile pe, Stream stream)
+            {
+                throw new NotImplementedException();
+            }
+        }
     }
 }

@@ -52,6 +52,7 @@
     <Compile Include="Cli\TableStream.cs" />
     <Compile Include="Import\ImportDescriptor.cs" />
     <Compile Include="Internal\BinaryStreamReader.cs" />
+    <Compile Include="Internal\BinaryStreamWriter.cs" />
     <Compile Include="PEFile.cs" />
     <Compile Include="PEFile.Reader.cs" />
     <Compile Include="PEFileWriter.cs" />
