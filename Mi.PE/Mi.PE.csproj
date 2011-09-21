@@ -53,7 +53,7 @@
     <Compile Include="Import\ImportDescriptor.cs" />
     <Compile Include="Internal\BinaryStreamReader.cs" />
     <Compile Include="PEFile.cs" />
-    <Compile Include="PEFileReader.cs" />
+    <Compile Include="PEFile.Reader.cs" />
     <Compile Include="PEFileWriter.cs" />
     <Compile Include="PEFormat\PESignature.cs" />
     <Compile Include="PEFormat\DataDirectory.cs" />

@@ -9,7 +9,7 @@ namespace Mi.PE
 {
     using Mi.PE.PEFormat;
 
-    public sealed class PEFile
+    public sealed partial class PEFile
     {
         readonly DosHeader m_DosHeader = new DosHeader();
         readonly PEHeader m_PEHeader;

@@ -32,14 +32,14 @@ namespace Mi.PE
         [TestMethod]
         public void CallConstructor()
         {
-            var reader = new PEFileReader();
+            var reader = new PEFile.Reader();
         }
 
         [ExpectedException(typeof(BadImageFormatException))]
         [TestMethod]
         public void ReadDosHeader_InvalidMZ()
         {
-            var reader = new PEFileReader();
+            var reader = new PEFile.Reader();
             reader.ReadMetadata(new MemoryStream(new byte[10]));
         }
 
@@ -63,7 +63,7 @@ namespace Mi.PE
 
             var stream = new MemoryStream(bytes, 0, bytes.Length - ((int)lfaNew - DosHeader.HeaderSize), false);
 
-            var reader = new PEFileReader();
+            var reader = new PEFile.Reader();
             var pe = reader.ReadMetadata(stream);
 
             Assert.AreEqual((uint)DosHeader.HeaderSize, pe.DosHeader.lfanew);
@@ -77,7 +77,7 @@ namespace Mi.PE
             byte[] bytes = Properties.Resources.console_anycpu;
             bytes[152] = 0;
 
-            var reader = new PEFileReader();
+            var reader = new PEFile.Reader();
             reader.ReadMetadata(new MemoryStream(bytes));
         }
 
@@ -236,7 +236,7 @@ namespace Mi.PE
         [TestMethod]
         public void PopulateSectionContent()
         {
-            var reader = new PEFileReader { PopulateSectionContent = true };
+            var reader = new PEFile.Reader { PopulateSectionContent = true };
 
             var pe = reader.ReadMetadata(new MemoryStream(Properties.Resources.console_anycpu));
 

@@ -16,6 +16,6 @@ namespace Mi.PE
             public static readonly PEFile Itanium = reader.ReadMetadata(new MemoryStream(Properties.Resources.console_itanium));
         }
 
-        static readonly PEFileReader reader = new PEFileReader();
+        static readonly PEFile.Reader reader = new PEFile.Reader();
     }
 }

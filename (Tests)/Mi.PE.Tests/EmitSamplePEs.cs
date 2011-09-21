@@ -17,7 +17,7 @@ namespace Mi.PE
             public static readonly PEFile Itanium = reader.ReadMetadata(new MemoryStream(EmitAssembly(PortableExecutableKinds.PE32Plus, ImageFileMachine.IA64)));
         }
 
-        static readonly PEFileReader reader = new PEFileReader();
+        static readonly PEFile.Reader reader = new PEFile.Reader();
 
         private static byte[] EmitAssembly(PortableExecutableKinds peKind, ImageFileMachine machine)
         {

@@ -12,7 +12,7 @@ class Program
     {
         while (true)
         {
-            var reader = new PEFileReader();
+            var reader = new PEFile.Reader();
 
             var dllFiles = 
                 (from f in EnumerateClrCoreDllFiles()
@@ -23,7 +23,7 @@ class Program
         }
     }
 
-    private static void MeasureManyFilesLoad(PEFileReader reader, string[] dllFiles)
+    private static void MeasureManyFilesLoad(PEFile.Reader reader, string[] dllFiles)
     {
         var start = DateTime.UtcNow;
         reader.PopulateSectionContent = false;
