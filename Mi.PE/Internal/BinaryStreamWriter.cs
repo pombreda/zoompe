@@ -86,7 +86,7 @@ namespace Mi.PE.Internal
                 buf[i] = (byte)str[i];
             }
 
-            this.stream.Write(buf, 0, buf.Length);
+            this.stream.Write(buf, 0, str.Length);
             for (int i = 0; i < length - str.Length; i++)
 			{
                 this.stream.WriteByte(0);
