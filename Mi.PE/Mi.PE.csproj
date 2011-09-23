@@ -55,7 +55,7 @@
     <Compile Include="Internal\BinaryStreamWriter.cs" />
     <Compile Include="PEFile.cs" />
     <Compile Include="PEFile.Reader.cs" />
-    <Compile Include="PEFileWriter.cs" />
+    <Compile Include="PEFile.Writer.cs" />
     <Compile Include="PEFormat\PESignature.cs" />
     <Compile Include="PEFormat\DataDirectory.cs" />
     <Compile Include="PEFormat\DataDirectoryKind.cs" />

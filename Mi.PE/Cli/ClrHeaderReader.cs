@@ -53,7 +53,7 @@ namespace Mi.PE.Cli
             metadata.Reserved = reader.ReadUInt32();
 
             int versionLength = reader.ReadInt32();
-            string versionString = reader.ReadFixedZeroFilledUtf8String(versionLength);
+            string versionString = reader.ReadFixedZeroFilledAsciiString(versionLength);
 
             metadata.Version = versionString;
 

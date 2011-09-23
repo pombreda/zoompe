@@ -100,7 +100,7 @@ namespace Mi.PE.Internal
             return unchecked((ulong)this.ReadInt64());
         }
 
-        public string ReadFixedZeroFilledUtf8String(int size)
+        public string ReadFixedZeroFilledAsciiString(int size)
         {
             if (size < 0)
                 throw new ArgumentOutOfRangeException("size", "Negative size is not allowed for string length.");
@@ -115,10 +115,13 @@ namespace Mi.PE.Internal
                         actualSize = i + 1;
                 }
 
-                string result =
-                    actualSize == 0 ?
-                    string.Empty :
-                    Encoding.UTF8.GetString(this.buffer, this.bufferDataPosition, actualSize);
+                char[] strChars = new char[actualSize];
+                for (int i = 0; i < strChars.Length; i++)
+                {
+                    strChars[i] = (char)this.buffer[this.bufferDataPosition + i];
+                }
+
+                string result = new string(strChars);
 
                 SkipUnchecked(size);
 

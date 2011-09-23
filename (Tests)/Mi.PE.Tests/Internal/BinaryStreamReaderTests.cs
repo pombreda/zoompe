@@ -230,7 +230,7 @@ namespace Mi.PE.Internal
         public void ReadFixedZeroFilledString_0IsEmpty()
         {
             var reader = new BinaryStreamReader(new MemoryStream(), new byte[20]);
-            string str = reader.ReadFixedZeroFilledUtf8String(0);
+            string str = reader.ReadFixedZeroFilledAsciiString(0);
             Assert.AreEqual("", str);
         }
 
@@ -239,14 +239,14 @@ namespace Mi.PE.Internal
         public void ReadFixedZeroFilledString_Negative()
         {
             var reader = new BinaryStreamReader(new MemoryStream(), new byte[20]);
-            string str = reader.ReadFixedZeroFilledUtf8String(-1);
+            string str = reader.ReadFixedZeroFilledAsciiString(-1);
         }
 
         [TestMethod]
         public void ReadFixedZeroFilledString_FilledWithZero()
         {
             var reader = new BinaryStreamReader(new MemoryStream(new byte[1]), new byte[20]);
-            string str = reader.ReadFixedZeroFilledUtf8String(1);
+            string str = reader.ReadFixedZeroFilledAsciiString(1);
             Assert.AreEqual("", str);
         }
 
@@ -254,7 +254,7 @@ namespace Mi.PE.Internal
         public void ReadFixedZeroFilledString_A()
         {
             var reader = new BinaryStreamReader(new MemoryStream(new byte[] { 65 }), new byte[20]);
-            string str = reader.ReadFixedZeroFilledUtf8String(1);
+            string str = reader.ReadFixedZeroFilledAsciiString(1);
             Assert.AreEqual("A", str);
         }
 
@@ -264,7 +264,7 @@ namespace Mi.PE.Internal
             var stream = new GradualReadMemoryStream(Encoding.ASCII.GetBytes("*ABCDEFGHIJKLMNOPQRSTUVWXYZ"), 1);
             var reader = new BinaryStreamReader(stream, new byte[20]);
             reader.ReadByte();
-            string str = reader.ReadFixedZeroFilledUtf8String(26);
+            string str = reader.ReadFixedZeroFilledAsciiString(26);
             Assert.AreEqual("ABCDEFGHIJKLMNOPQRSTUVWXYZ", str);
         }
 
@@ -274,7 +274,7 @@ namespace Mi.PE.Internal
         {
             var stream = new MemoryStream();
             var reader = new BinaryStreamReader(stream, new byte[20]);
-            reader.ReadFixedZeroFilledUtf8String(8);
+            reader.ReadFixedZeroFilledAsciiString(8);
         }
 
         [ExpectedException(typeof(EndOfStreamException))]
@@ -284,7 +284,7 @@ namespace Mi.PE.Internal
             var stream = new GradualReadMemoryStream(Encoding.ASCII.GetBytes("*ABCD"), 1);
             var reader = new BinaryStreamReader(stream, new byte[20]);
             reader.ReadByte();
-            reader.ReadFixedZeroFilledUtf8String(20);
+            reader.ReadFixedZeroFilledAsciiString(20);
         }
 
         [TestMethod]

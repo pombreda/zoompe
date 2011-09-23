@@ -37,7 +37,7 @@ namespace Mi.PE.Internal
             this.stream.Write(this.buffer, 0, 4);
         }
 
-        public void WriteUInt32(ulong x)
+        public void WriteUInt64(ulong x)
         {
             this.buffer[0] = (byte)x;
             this.buffer[1] = (byte)(x >> 8);
@@ -48,6 +48,49 @@ namespace Mi.PE.Internal
             this.buffer[6] = (byte)(x >> 48);
             this.buffer[7] = (byte)(x >> 56);
             this.stream.Write(this.buffer, 0, 8);
+        }
+
+        public void WriteBytes(byte[] bytes, int offset, int length)
+        {
+            this.stream.Write(bytes, offset, length);
+        }
+
+        public long Position
+        {
+            get { return stream.Position; }
+            set
+            {
+                if (value == this.Position)
+                    return;
+
+                stream.Position = value;
+            }
+        }
+
+        public void WriteFixedZeroFilledAsciiString(string str, int length)
+        {
+            if(str==null)
+                str = string.Empty;
+
+            if (str.Length > length)
+                throw new ArgumentException("String is too long (" + str.Length + " chars) to fit in expected length (" + length + " bytes).", "str");
+
+            byte[] buf;
+            if (length < this.buffer.Length)
+                buf = this.buffer;
+            else
+                buf = new byte[length];
+
+            for (int i = 0; i < str.Length; i++)
+            {
+                buf[i] = (byte)str[i];
+            }
+
+            this.stream.Write(buf, 0, buf.Length);
+            for (int i = 0; i < length - str.Length; i++)
+			{
+                this.stream.WriteByte(0);
+			}
         }
     }
 }
