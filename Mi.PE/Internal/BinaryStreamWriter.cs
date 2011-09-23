@@ -86,11 +86,14 @@ namespace Mi.PE.Internal
                 buf[i] = (byte)str[i];
             }
 
-            this.stream.Write(buf, 0, str.Length);
-            for (int i = 0; i < length - str.Length; i++)
-			{
-                this.stream.WriteByte(0);
-			}
+            if (buf == this.buffer)
+            {
+                // zero out the remaining of the buffer
+                // except for when the buffer was just created anyway
+                Array.Clear(buf, str.Length, length - str.Length);
+            }
+
+            this.stream.Write(buf, 0, length);
         }
     }
 }
