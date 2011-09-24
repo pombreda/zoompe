@@ -30,6 +30,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "(Demos)", "(Demos)", "{4C3C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReadWriteRoundtrip", "(Demos)\ReadWriteRoundtrip\ReadWriteRoundtrip.csproj", "{1E5658F0-BF62-4719-9FC8-D4C375C0D9F1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InsaneSectionLayout", "(Demos)\InsaneSectionLayout\InsaneSectionLayout.csproj", "{F4BC8E16-8856-4825-844C-2F4530C35C3E}"
+EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = (Tests)\Zoom.PE.vsmdi
@@ -83,6 +85,16 @@ Global
 		{62B979D9-B769-4997-87B2-1723D5C59C88}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{62B979D9-B769-4997-87B2-1723D5C59C88}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{62B979D9-B769-4997-87B2-1723D5C59C88}.Release|x86.ActiveCfg = Release|Any CPU
+		{F4BC8E16-8856-4825-844C-2F4530C35C3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4BC8E16-8856-4825-844C-2F4530C35C3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4BC8E16-8856-4825-844C-2F4530C35C3E}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{F4BC8E16-8856-4825-844C-2F4530C35C3E}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{F4BC8E16-8856-4825-844C-2F4530C35C3E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F4BC8E16-8856-4825-844C-2F4530C35C3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4BC8E16-8856-4825-844C-2F4530C35C3E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4BC8E16-8856-4825-844C-2F4530C35C3E}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{F4BC8E16-8856-4825-844C-2F4530C35C3E}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{F4BC8E16-8856-4825-844C-2F4530C35C3E}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -92,5 +104,6 @@ Global
 		{1E5658F0-BF62-4719-9FC8-D4C375C0D9F1} = {4C3CF02B-52F7-43F6-BC8D-EAB6C4BE2B64}
 		{2EE060E1-DD6E-4C65-962E-61F1B67990F9} = {BA3B4CFD-8D95-444A-9C00-13912217AB9B}
 		{62B979D9-B769-4997-87B2-1723D5C59C88} = {4C3CF02B-52F7-43F6-BC8D-EAB6C4BE2B64}
+		{F4BC8E16-8856-4825-844C-2F4530C35C3E} = {4C3CF02B-52F7-43F6-BC8D-EAB6C4BE2B64}
 	EndGlobalSection
 EndGlobal
