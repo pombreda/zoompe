@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{CF304415-DEE7-4F82-A024-F8F64CE6B980}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Mi.PE.NET35</RootNamespace>
+    <AssemblyName>Mi.PE.NET35</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug35\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release35\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Cli\ClrHeader.cs" />
+    <Compile Include="Cli\ClrHeaderReader.cs" />
+    <Compile Include="Cli\ClrImageFlags.cs" />
+    <Compile Include="Cli\ClrMetadata.cs" />
+    <Compile Include="Cli\ClrMetadataFlags.cs" />
+    <Compile Include="Cli\ClrMetadataSignature.cs" />
+    <Compile Include="Cli\StreamHeader.cs" />
+    <Compile Include="Cli\TableStream.cs" />
+    <Compile Include="Cli\Tables\TableKind.cs" />
+    <Compile Include="Import\ImportDescriptor.cs" />
+    <Compile Include="Internal\BinaryStreamReader.cs" />
+    <Compile Include="Internal\BinaryStreamWriter.cs" />
+    <Compile Include="PEFile.cs" />
+    <Compile Include="PEFile.Reader.cs" />
+    <Compile Include="PEFile.Writer.cs" />
+    <Compile Include="PEFormat\DataDirectory.cs" />
+    <Compile Include="PEFormat\DataDirectoryKind.cs" />
+    <Compile Include="PEFormat\DllCharacteristics.cs" />
+    <Compile Include="PEFormat\DosHeader.cs" />
+    <Compile Include="PEFormat\ImageCharacteristics.cs" />
+    <Compile Include="PEFormat\ImageTimestamp.cs" />
+    <Compile Include="PEFormat\Machine.cs" />
+    <Compile Include="PEFormat\MZSignature.cs" />
+    <Compile Include="PEFormat\OptionalHeader.cs" />
+    <Compile Include="PEFormat\PEHeader.cs" />
+    <Compile Include="PEFormat\PEMagic.cs" />
+    <Compile Include="PEFormat\PESignature.cs" />
+    <Compile Include="PEFormat\RvaStream.cs" />
+    <Compile Include="PEFormat\Section.cs" />
+    <Compile Include="PEFormat\SectionCharacteristics.cs" />
+    <Compile Include="PEFormat\Subsystem.cs" />
+    <Compile Include="PEFormat\TargetArchitecture.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

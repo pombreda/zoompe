@@ -32,6 +32,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReadWriteRoundtrip", "(Demo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InsaneSectionLayout", "(Demos)\InsaneSectionLayout\InsaneSectionLayout.csproj", "{F4BC8E16-8856-4825-844C-2F4530C35C3E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mi.PE.NET35", "Mi.PE\Mi.PE.NET35.csproj", "{CF304415-DEE7-4F82-A024-F8F64CE6B980}"
+EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = (Tests)\Zoom.PE.vsmdi
@@ -71,6 +73,12 @@ Global
 		{62B979D9-B769-4997-87B2-1723D5C59C88}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{62B979D9-B769-4997-87B2-1723D5C59C88}.Release|Any CPU.Build.0 = Release|Any CPU
 		{62B979D9-B769-4997-87B2-1723D5C59C88}.Release|x86.ActiveCfg = Release|Any CPU
+		{CF304415-DEE7-4F82-A024-F8F64CE6B980}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF304415-DEE7-4F82-A024-F8F64CE6B980}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF304415-DEE7-4F82-A024-F8F64CE6B980}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{CF304415-DEE7-4F82-A024-F8F64CE6B980}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF304415-DEE7-4F82-A024-F8F64CE6B980}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF304415-DEE7-4F82-A024-F8F64CE6B980}.Release|x86.ActiveCfg = Release|Any CPU
 		{F4BC8E16-8856-4825-844C-2F4530C35C3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F4BC8E16-8856-4825-844C-2F4530C35C3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F4BC8E16-8856-4825-844C-2F4530C35C3E}.Debug|x86.ActiveCfg = Debug|Any CPU
