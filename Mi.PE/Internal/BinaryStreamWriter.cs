@@ -70,7 +70,9 @@ namespace Mi.PE.Internal
         public void WriteFixedZeroFilledAsciiString(string str, int length)
         {
             if(str==null)
-                str = string.Empty;
+                throw new ArgumentNullException("str");
+            if (length < 0)
+                throw new ArgumentOutOfRangeException("Length cannot be negative.", "length");
 
             if (str.Length > length)
                 throw new ArgumentException("String is too long (" + str.Length + " chars) to fit in expected length (" + length + " bytes).", "str");
