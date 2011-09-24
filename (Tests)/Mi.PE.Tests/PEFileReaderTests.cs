@@ -102,6 +102,10 @@ namespace Mi.PE
         [TestMethod] public void EmitX86_AssertDosStub() { AssertDosStub(EmitSamplePEs.Library.X86.DosHeader.Stub); }
         [TestMethod] public void EmitX64_AssertDosStub() { AssertDosStub(EmitSamplePEs.Library.X64.DosHeader.Stub); }
         [TestMethod] public void EmitItanium_AssertDosStub() { AssertDosStub(EmitSamplePEs.Library.Itanium.DosHeader.Stub); }
+        [TestMethod] public void EmitExeAnyCPU_AssertDosStub() { AssertDosStub(EmitSamplePEs.Console.AnyCPU.DosHeader.Stub); }
+        [TestMethod] public void EmitExeX86_AssertDosStub() { AssertDosStub(EmitSamplePEs.Console.X86.DosHeader.Stub); }
+        [TestMethod] public void EmitExeX64_AssertDosStub() { AssertDosStub(EmitSamplePEs.Console.X64.DosHeader.Stub); }
+        [TestMethod] public void EmitExeItanium_AssertDosStub() { AssertDosStub(EmitSamplePEs.Console.Itanium.DosHeader.Stub); }
 
         [TestMethod] public void PreReadAnyCPU_AssertDosHeader() { AssertDosHeader(PreReadSamplePEs.Console.AnyCPU.DosHeader); }
         [TestMethod] public void PreReadX86_AssertDosHeader() { AssertDosHeader(PreReadSamplePEs.Console.X86.DosHeader); }
@@ -111,11 +115,23 @@ namespace Mi.PE
         [TestMethod] public void EmitX86_AssertDosHeader() { AssertDosHeader(EmitSamplePEs.Library.X86.DosHeader); }
         [TestMethod] public void EmitX64_AssertDosHeader() { AssertDosHeader(EmitSamplePEs.Library.X64.DosHeader); }
         [TestMethod] public void EmitItanium_AssertDosHeader() { AssertDosHeader(EmitSamplePEs.Library.Itanium.DosHeader); }
+        [TestMethod] public void EmitExeAnyCPU_AssertDosHeader() { AssertDosHeader(EmitSamplePEs.Console.AnyCPU.DosHeader); }
+        [TestMethod] public void EmitExeX86_AssertDosHeader() { AssertDosHeader(EmitSamplePEs.Console.X86.DosHeader); }
+        [TestMethod] public void EmitExeX64_AssertDosHeader() { AssertDosHeader(EmitSamplePEs.Console.X64.DosHeader); }
+        [TestMethod] public void EmitExeItanium_AssertDosHeader() { AssertDosHeader(EmitSamplePEs.Console.Itanium.DosHeader); }
 
-        [TestMethod] public void EmitAnyCPU_AssertPEHeader() { AssertPEHeader(EmitSamplePEs.Library.AnyCPU.PEHeader, Machine.I386); }
-        [TestMethod] public void Emitx86_AssertPEHeader() { AssertPEHeader(EmitSamplePEs.Library.X86.PEHeader, Machine.I386); }
-        [TestMethod] public void Emitx64_AssertPEHeader() { AssertPEHeader(EmitSamplePEs.Library.X64.PEHeader, Machine.AMD64); }
-        [TestMethod] public void EmitItanium_AssertPEHeader() { AssertPEHeader(EmitSamplePEs.Library.Itanium.PEHeader, Machine.IA64); }
+        [TestMethod] public void PreReadAnyCPU_AssertPEHeader() { AssertPEHeader(PreReadSamplePEs.Console.AnyCPU.PEHeader, Machine.I386, 3, new DateTime(2011, 9, 14, 8, 25, 24), true); }
+        [TestMethod] public void PreReadX86_AssertPEHeader() { AssertPEHeader(PreReadSamplePEs.Console.X86.PEHeader, Machine.I386, 3, new DateTime(2011, 9, 14, 8, 25, 25), true); }
+        [TestMethod] public void PreReadX64_AssertPEHeader() { AssertPEHeader(PreReadSamplePEs.Console.X64.PEHeader, Machine.AMD64, 2, new DateTime(2011, 9, 14, 8, 25, 24), true); }
+        [TestMethod] public void PreReadItanium_AssertPEHeader() { AssertPEHeader(PreReadSamplePEs.Console.Itanium.PEHeader, Machine.IA64, 2, new DateTime(2011, 9, 14, 8, 25, 26), true); }
+        [TestMethod] public void EmitAnyCPU_AssertPEHeader() { AssertPEHeader(EmitSamplePEs.Library.AnyCPU.PEHeader, Machine.I386, 2, DateTime.UtcNow, false); }
+        [TestMethod] public void Emitx86_AssertPEHeader() { AssertPEHeader(EmitSamplePEs.Library.X86.PEHeader, Machine.I386, 2, DateTime.UtcNow, false); }
+        [TestMethod] public void Emitx64_AssertPEHeader() { AssertPEHeader(EmitSamplePEs.Library.X64.PEHeader, Machine.AMD64, 2, DateTime.UtcNow, false); }
+        [TestMethod] public void EmitItanium_AssertPEHeader() { AssertPEHeader(EmitSamplePEs.Library.Itanium.PEHeader, Machine.IA64, 2, DateTime.UtcNow, false); }
+        [TestMethod] public void EmitExeAnyCPU_AssertPEHeader() { AssertPEHeader(EmitSamplePEs.Console.AnyCPU.PEHeader, Machine.I386, 2, DateTime.UtcNow, true); }
+        [TestMethod] public void EmitExex86_AssertPEHeader() { AssertPEHeader(EmitSamplePEs.Console.X86.PEHeader, Machine.I386, 2, DateTime.UtcNow, true); }
+        [TestMethod] public void EmitExex64_AssertPEHeader() { AssertPEHeader(EmitSamplePEs.Console.X64.PEHeader, Machine.AMD64, 2, DateTime.UtcNow, true); }
+        [TestMethod] public void EmitExeItanium_AssertPEHeader() { AssertPEHeader(EmitSamplePEs.Console.Itanium.PEHeader, Machine.IA64, 2, DateTime.UtcNow, true); }
 
         [TestMethod]
         public void EmitAnyCPU_AssertOptionalHeader()
@@ -282,14 +298,16 @@ namespace Mi.PE
             Assert.AreEqual((uint)16, optionalHeader.NumberOfRvaAndSizes);
         }
 
-        static void AssertPEHeader(PEHeader header, Machine machine)
+        static void AssertPEHeader(PEHeader header, Machine machine, ushort expectedNumberOfSections, DateTime timestampOffset, bool isExe)
         {
-            Assert.AreEqual(PESignature.PE00, header.PESignature);
-            Assert.AreEqual(machine, header.Machine);
-            Assert.AreEqual((ushort)2, header.NumberOfSections);
-            Assert.IsTrue(Math.Abs((DateTime.UtcNow - header.Timestamp.ToDateTime()).TotalHours) < 2, "PE timestamp is off by more than 2 hours.");
-            Assert.AreEqual((uint)0, header.PointerToSymbolTable);
-            Assert.AreEqual((uint)0, header.NumberOfSymbols);
+            Assert.AreEqual(PESignature.PE00, header.PESignature, "PE signature");
+            Assert.AreEqual(machine, header.Machine, "machine");
+
+            Assert.AreEqual(expectedNumberOfSections, header.NumberOfSections, "number of sections");
+
+            Assert.IsTrue(Math.Abs((timestampOffset - header.Timestamp.ToDateTime()).TotalHours) < 2, "PE timestamp is " + header.Timestamp +", off by " + ((timestampOffset - header.Timestamp.ToDateTime()).TotalHours).ToString("0") + " hours.");
+            Assert.AreEqual((uint)0, header.PointerToSymbolTable, "pointer to symbol table");
+            Assert.AreEqual((uint)0, header.NumberOfSymbols, "number of symbols");
 
             uint expectedSizeOfOptionalHeader = machine == Machine.I386 ?
                 (uint)224 :
@@ -297,10 +315,10 @@ namespace Mi.PE
             Assert.AreEqual(expectedSizeOfOptionalHeader, header.SizeOfOptionalHeader);
 
             ImageCharacteristics expectedCharacteristics = machine == Machine.I386 ?
-                ImageCharacteristics.ExecutableImage | ImageCharacteristics.Bit32Machine | ImageCharacteristics.Dll :
-                ImageCharacteristics.ExecutableImage | ImageCharacteristics.LargeAddressAware | ImageCharacteristics.Dll;
+                ImageCharacteristics.ExecutableImage | ImageCharacteristics.Bit32Machine | (isExe ? 0 : ImageCharacteristics.Dll) :
+                ImageCharacteristics.ExecutableImage | ImageCharacteristics.LargeAddressAware | (isExe ? 0 : ImageCharacteristics.Dll);
 
-            Assert.AreEqual(expectedCharacteristics, header.Characteristics);
+            Assert.AreEqual(expectedCharacteristics, header.Characteristics, "characteristics");
         }
 
         static void AssertDosHeader(DosHeader dosHeader)
