@@ -4,436 +4,476 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
     xmlns:pe="http://mihailik.blogspot.com/pe"
+    xmlns:local="clr-namespace:PEViewer"
     mc:Ignorable="d" 
     d:DesignHeight="800" d:DesignWidth="300">
+    <UserControl.Resources>
+        <Style x:Key="TransparentTextBox" TargetType="{x:Type TextBox}">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style>
+        <Style x:Key="HeaderExpander" TargetType="{x:Type Expander}">
+            <Setter Property="IsExpanded" Value="True"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Expander}">
+                        <Border Background="Black" BorderBrush="Black" BorderThickness="2" CornerRadius="2">
+                            <StackPanel>
+                                <ToggleButton
+                                    IsChecked="{Binding IsExpanded, RelativeSource={RelativeSource TemplatedParent}}"
+                                    Content="{TemplateBinding Header}" ContentTemplate="{TemplateBinding HeaderTemplate}" Foreground="White" Margin="0,0,0,2">
+                                    <ToggleButton.Template>
+                                        <ControlTemplate TargetType="{x:Type ToggleButton}">
+                                            <Border Background="Transparent">
+                                                <ContentPresenter/>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </ToggleButton.Template>
+                                </ToggleButton>
+                                <Border Name="innerContent" BorderBrush="DarkGray" BorderThickness="1" Background="White">
+                                    <ContentControl Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" Foreground="White"/>
+                                </Border>
+                            </StackPanel>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsExpanded" Value="False">
+                                <Setter TargetName="innerContent" Property="Visibility" Value="Collapsed"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
     <StackPanel>
-        
-        <Border Background="Black" BorderBrush="Black" BorderThickness="2" CornerRadius="2">
-            <StackPanel>
-                <TextBlock Text="DosHeader" Foreground="White" Margin="0,0,0,2"/>
-                <Border DataContext="{Binding DosHeader}"
-                    BorderBrush="DarkGray" BorderThickness="1" Background="White">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        
-                        <Border
-                            Grid.ColumnSpan="4"
-                            Background="Gold" Opacity="0.4"/>
 
-                        <TextBlock Text="Signature "
-                            TextAlignment="Right" Opacity="0.5"/>
-                        <TextBox Text="{Binding Signature}"
-                            Grid.Column="1"
-                            Background="Transparent" BorderThickness="0"/>
+        <Expander Style="{StaticResource HeaderExpander}"
+            Header="DosHeader">
+            <Grid DataContext="{Binding DosHeader}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
 
-                        <TextBlock Text="cblp "
-                            Grid.Row="1"
-                            TextAlignment="Right" Opacity="0.5"/>
-                        <TextBox Text="{Binding cblp}"
-                            Grid.Column="1" Grid.Row="1"
-                            Background="Transparent" BorderThickness="0"/>
+                <Border
+                    Grid.ColumnSpan="4"
+                    Background="Gold" Opacity="0.4"/>
 
-                        <TextBlock Text="cp "
-                            Grid.Row="2"
-                            TextAlignment="Right" Opacity="0.5"/>
-                        <TextBox Text="{Binding cp}"
-                            Grid.Column="1" Grid.Row="2"
-                            Background="Transparent" BorderThickness="0"/>
+                <TextBlock Text="Signature "
+                    TextAlignment="Right" Opacity="0.5"/>
+                <TextBox Text="{Binding Signature}"
+                    Style="{StaticResource TransparentTextBox}"
+                    Grid.Column="1"/>
 
-                        <TextBlock Text="crlc "
-                            Grid.Column="2" Grid.Row="1"
-                            TextAlignment="Right" Opacity="0.5"/>
-                        <TextBox Text="{Binding crlc}"
-                            Grid.Column="3" Grid.Row="1"
-                            Background="Transparent" BorderThickness="0"/>
+                <TextBlock Text="cblp "
+                    ToolTip="Bytes on last page of file."
+                    Grid.Row="1"
+                    TextAlignment="Right" Opacity="0.5"/>
+                <TextBox Text="{Binding cblp}"
+                    Style="{StaticResource TransparentTextBox}"
+                    Grid.Column="1" Grid.Row="1"/>
 
-                        <TextBlock Text="cparhdr "
-                            Grid.Column="2" Grid.Row="2"
-                            TextAlignment="Right" Opacity="0.5"/>
-                        <TextBox Text="{Binding cparhdr}"
-                            Grid.Column="3" Grid.Row="2"
-                            Background="Transparent" BorderThickness="0"/>
+                <TextBlock Text="cp "
+                    ToolTip="Pages in file."
+                    Grid.Row="2"
+                    TextAlignment="Right" Opacity="0.5"/>
+                <TextBox Text="{Binding cp}"
+                    Style="{StaticResource TransparentTextBox}"
+                    Grid.Column="1" Grid.Row="2"/>
 
-                        <Border
-                            Grid.Row="3" Grid.RowSpan="2" Grid.ColumnSpan="2"
-                            Background="Yellow" Opacity="0.4" />
-                        
-                        <TextBlock Text="minalloc "
-                            Grid.Column="0" Grid.Row="3"
-                            TextAlignment="Right" Opacity="0.5"/>
-                        <TextBox Text="{Binding minalloc}"
-                            Grid.Column="1" Grid.Row="3"
-                            Background="Transparent" BorderThickness="0"/>
+                <TextBlock Text="crlc "
+                    ToolTip="Relocations."
+                    Grid.Column="2" Grid.Row="1"
+                    TextAlignment="Right" Opacity="0.5"/>
+                <TextBox Text="{Binding crlc}"
+                    Style="{StaticResource TransparentTextBox}"
+                    Grid.Column="3" Grid.Row="1"/>
 
-                        <TextBlock Text="maxalloc "
-                            Grid.Column="0" Grid.Row="4"
-                            TextAlignment="Right" Opacity="0.5"/>
-                        <TextBox Text="{Binding maxalloc}"
-                            Grid.Column="1" Grid.Row="4"
-                            Background="Transparent" BorderThickness="0"/>
+                <TextBlock Text="cparhdr "
+                    ToolTip="Size of header in paragraphs."
+                    Grid.Column="2" Grid.Row="2"
+                    TextAlignment="Right" Opacity="0.5"/>
+                <TextBox Text="{Binding cparhdr}"
+                    Style="{StaticResource TransparentTextBox}"
+                    Grid.Column="3" Grid.Row="2"/>
 
-                        <Border
-                            Grid.Column="2" Grid.Row="3" Grid.RowSpan="2" Grid.ColumnSpan="2"
-                            Background="Crimson" Opacity="0.4" />
+                <Border
+                    Grid.Row="3" Grid.RowSpan="2" Grid.ColumnSpan="2"
+                    Background="Yellow" Opacity="0.4" />
 
-                        <TextBlock Text="ss "
-                            Grid.Column="2" Grid.Row="3"
-                            TextAlignment="Right" Opacity="0.5"/>
-                        <TextBox Text="{Binding ss}"
-                            Grid.Column="3" Grid.Row="3"
-                            Background="Transparent" BorderThickness="0"/>
+                <TextBlock Text="minalloc "
+                    ToolTip="Minimum extra paragraphs needed."
+                    Grid.Column="0" Grid.Row="3"
+                    TextAlignment="Right" Opacity="0.5"/>
+                <TextBox Text="{Binding minalloc}"
+                    Style="{StaticResource TransparentTextBox}"
+                    Grid.Column="1" Grid.Row="3"/>
 
-                        <TextBlock Text="sp "
-                            Grid.Column="2" Grid.Row="4"
-                            TextAlignment="Right" Opacity="0.5"/>
-                        <TextBox Text="{Binding sp}"
-                            Grid.Column="3" Grid.Row="4"
-                            Background="Transparent" BorderThickness="0"/>
+                <TextBlock Text="maxalloc "
+                    ToolTip="Maximum extra paragraphs needed."
+                    Grid.Column="0" Grid.Row="4"
+                    TextAlignment="Right" Opacity="0.5"/>
+                <TextBox Text="{Binding maxalloc}"
+                    Style="{StaticResource TransparentTextBox}"
+                    Grid.Column="1" Grid.Row="4"/>
 
-                        <TextBlock Text="csum "
-                            Grid.Column="0" Grid.Row="5"
-                            TextAlignment="Right" Opacity="0.5"/>
-                        <TextBox Text="{Binding csum}"
-                            Grid.Column="1" Grid.Row="5"
-                            Background="Transparent" BorderThickness="0"/>
+                <Border
+                    Grid.Column="2" Grid.Row="3" Grid.RowSpan="2" Grid.ColumnSpan="2"
+                    Background="Crimson" Opacity="0.4" />
 
-                        <Border
-                            Grid.Column="0" Grid.Row="7" Grid.RowSpan="2" Grid.ColumnSpan="2"
-                            Background="Crimson" Opacity="0.4" />
+                <TextBlock Text="ss "
+                    ToolTip="Initial (relative) SS value."
+                    Grid.Column="2" Grid.Row="3"
+                    TextAlignment="Right" Opacity="0.5"/>
+                <TextBox Text="{Binding ss, Converter={local:HexConverter}}"
+                    Style="{StaticResource TransparentTextBox}"
+                    Grid.Column="3" Grid.Row="3"/>
 
-                        <TextBlock Text="ip "
-                            Grid.Column="0" Grid.Row="7"
-                            TextAlignment="Right" Opacity="0.5"/>
-                        <TextBox Text="{Binding ip}"
-                            Grid.Column="1" Grid.Row="7"
-                            Background="Transparent" BorderThickness="0"/>
+                <TextBlock Text="sp "
+                    ToolTip="Initial SP value."
+                    Grid.Column="2" Grid.Row="4"
+                    TextAlignment="Right" Opacity="0.5"/>
+                <TextBox Text="{Binding sp, Converter={local:HexConverter}}"
+                    Style="{StaticResource TransparentTextBox}"
+                    Grid.Column="3" Grid.Row="4"/>
 
-                        <TextBlock Text="cs "
-                            Grid.Column="0" Grid.Row="8"
-                            TextAlignment="Right" Opacity="0.5"/>
-                        <TextBox Text="{Binding cs}"
-                            Grid.Column="1" Grid.Row="8"
-                            Background="Transparent" BorderThickness="0"/>
+                <TextBlock Text="csum "
+                    ToolTip="Checksum."
+                    Grid.Column="0" Grid.Row="5"
+                    TextAlignment="Right" Opacity="0.5"/>
+                <TextBox Text="{Binding csum}"
+                    Style="{StaticResource TransparentTextBox}"
+                    Grid.Column="1" Grid.Row="5"/>
 
-                        <TextBlock Text="lfarlc "
-                            Grid.Column="2" Grid.Row="7"
-                            TextAlignment="Right" Opacity="0.5"/>
-                        <TextBox Text="{Binding lfarlc}"
-                            Grid.Column="3" Grid.Row="7"
-                            Background="Transparent" BorderThickness="0"/>
+                <Border
+                    Grid.Column="0" Grid.Row="7" Grid.RowSpan="2" Grid.ColumnSpan="2"
+                    Background="Crimson" Opacity="0.4" />
 
-                        <TextBlock Text="ovno "
-                            Grid.Column="2" Grid.Row="8"
-                            TextAlignment="Right" Opacity="0.5"/>
-                        <TextBox Text="{Binding ovno}"
-                            Grid.Column="3" Grid.Row="8"
-                            Background="Transparent" BorderThickness="0"/>
+                <TextBlock Text="ip "
+                    ToolTip="Initial IP value."
+                    Grid.Column="0" Grid.Row="7"
+                    TextAlignment="Right" Opacity="0.5"/>
+                <TextBox Text="{Binding ip, Converter={local:HexConverter}}"
+                    Style="{StaticResource TransparentTextBox}"
+                    Grid.Column="1" Grid.Row="7"/>
 
-                        <TextBlock Text="res1 "
-                            Grid.Column="0" Grid.Row="9"
-                            TextAlignment="Right" Opacity="0.5"/>
-                        <TextBox Text="{Binding res1}"
-                            Grid.Column="1" Grid.Row="9"
-                            Background="Transparent" BorderThickness="0"/>
+                <TextBlock Text="cs "
+                    ToolTip="Initial (relative) CS value."
+                    Grid.Column="0" Grid.Row="8"
+                    TextAlignment="Right" Opacity="0.5"/>
+                <TextBox Text="{Binding cs, Converter={local:HexConverter}}"
+                    Style="{StaticResource TransparentTextBox}"
+                    Grid.Column="1" Grid.Row="8"/>
 
-                        <Border
-                            Grid.Column="0" Grid.Row="10" Grid.ColumnSpan="4"
-                            Background="Yellow" Opacity="0.4" />
+                <TextBlock Text="lfarlc "
+                    ToolTip="File address of relocation table."
+                    Grid.Column="2" Grid.Row="7"
+                    TextAlignment="Right" Opacity="0.5"/>
+                <TextBox Text="{Binding lfarlc, Converter={local:HexConverter}}"
+                    Style="{StaticResource TransparentTextBox}"
+                    Grid.Column="3" Grid.Row="7"/>
 
-                        <TextBlock Text="oemid "
-                            Grid.Column="0" Grid.Row="10"
-                            TextAlignment="Right" Opacity="0.5"/>
-                        <TextBox Text="{Binding oemid}"
-                            Grid.Column="1" Grid.Row="10"
-                            Background="Transparent" BorderThickness="0"/>
+                <TextBlock Text="ovno "
+                    ToolTip="Overlay number."
+                    Grid.Column="2" Grid.Row="8"
+                    TextAlignment="Right" Opacity="0.5"/>
+                <TextBox Text="{Binding ovno}"
+                    Style="{StaticResource TransparentTextBox}"
+                    Grid.Column="3" Grid.Row="8"/>
 
-                        <TextBlock Text="oeminfo "
-                            Grid.Column="2" Grid.Row="10"
-                            TextAlignment="Right" Opacity="0.5"/>
-                        <TextBox Text="{Binding oeminfo}"
-                            Grid.Column="3" Grid.Row="10"
-                            Background="Transparent" BorderThickness="0"/>
-                        
-                        <UniformGrid
-                            Grid.Row="11"
-                            Rows="1">
-                            <TextBlock Text="R0 "
-                                TextAlignment="Right" Opacity="0.5"/>
-                            <TextBox Text="{Binding ReservedNumber0}"
-                                Background="Transparent" BorderThickness="0"/>
-                        </UniformGrid>
+                <TextBlock Text="res1 "
+                    Grid.Column="0" Grid.Row="9"
+                    TextAlignment="Right" Opacity="0.5"/>
+                <TextBox Text="{Binding res1}"
+                    Style="{StaticResource TransparentTextBox}"
+                    Grid.Column="1" Grid.Row="9"/>
 
-                        <UniformGrid
-                            Grid.Column="1" Grid.Row="11"
-                            Rows="1">
-                            <TextBlock Text="R1 "
-                                TextAlignment="Right" Opacity="0.5"/>
-                            <TextBox Text="{Binding ReservedNumber1}"
-                                Background="Transparent" BorderThickness="0"/>
-                        </UniformGrid>
+                <Border
+                    Grid.Column="0" Grid.Row="10" Grid.ColumnSpan="4"
+                    Background="Yellow" Opacity="0.4" />
 
-                        <UniformGrid
-                            Grid.Column="2" Grid.Row="11"
-                            Rows="1">
-                            <TextBlock Text="R2 "
-                                TextAlignment="Right" Opacity="0.5"/>
-                            <TextBox Text="{Binding ReservedNumber2}"
-                                Background="Transparent" BorderThickness="0"/>
-                        </UniformGrid>
+                <TextBlock Text="oemid "
+                    ToolTip="OEM identifier (for e_oeminfo)."
+                    Grid.Column="0" Grid.Row="10"
+                    TextAlignment="Right" Opacity="0.5"/>
+                <TextBox Text="{Binding oemid}"
+                    Style="{StaticResource TransparentTextBox}"
+                    Grid.Column="1" Grid.Row="10"/>
 
-                        <UniformGrid
-                            Grid.Column="3" Grid.Row="11"
-                            Rows="1">
-                            <TextBlock Text="R3 "
-                                TextAlignment="Right" Opacity="0.5"/>
-                            <TextBox Text="{Binding ReservedNumber3}"
-                                Background="Transparent" BorderThickness="0"/>
-                        </UniformGrid>
+                <TextBlock Text="oeminfo "
+                    ToolTip="OEM information; e_oemid specific."
+                    Grid.Column="2" Grid.Row="10"
+                    TextAlignment="Right" Opacity="0.5"/>
+                <TextBox Text="{Binding oeminfo}"
+                    Style="{StaticResource TransparentTextBox}"
+                    Grid.Column="3" Grid.Row="10"/>
 
-                        <Border
-                            Grid.Row="12" Grid.ColumnSpan="2"
-                            Background="Crimson" Opacity="0.4"/>
-                        
-                        <TextBlock Text="lfanew "
-                            Grid.Row="12"
-                            TextAlignment="Right" Opacity="0.5"/>
-                        <TextBox Text="{Binding lfanew}"
-                            Grid.Column="1" Grid.Row="12"
-                            Background="Transparent" BorderThickness="0"/>
+                <UniformGrid
+                    Grid.Row="11"
+                    Rows="1">
+                    <TextBlock Text="R0 "
+                        TextAlignment="Right" Opacity="0.5"/>
+                    <TextBox Text="{Binding ReservedNumber0}"
+                        Style="{StaticResource TransparentTextBox}"/>
+                </UniformGrid>
 
-                    </Grid>
-                </Border>
-            </StackPanel>            
-        </Border>
+                <UniformGrid
+                    Grid.Column="1" Grid.Row="11"
+                    Rows="1">
+                    <TextBlock Text="R1 "
+                        TextAlignment="Right" Opacity="0.5"/>
+                    <TextBox Text="{Binding ReservedNumber1}"
+                        Style="{StaticResource TransparentTextBox}"/>
+                </UniformGrid>
 
-        <Separator/>
-        
-        <Border Background="Black" BorderBrush="Black" BorderThickness="2" CornerRadius="2">
-            <StackPanel>
-                <TextBlock Text="PEHeader" Foreground="White" Margin="0,0,0,2"/>
-                <Border DataContext="{Binding PEHeader}"
-                    BorderBrush="DarkGray" BorderThickness="1" Background="White">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
+                <UniformGrid
+                    Grid.Column="2" Grid.Row="11"
+                    Rows="1">
+                    <TextBlock Text="R2 "
+                        TextAlignment="Right" Opacity="0.5"/>
+                    <TextBox Text="{Binding ReservedNumber2}"
+                        Style="{StaticResource TransparentTextBox}"/>
+                </UniformGrid>
 
-                        <Border
-                            Grid.ColumnSpan="4"
-                            Background="Gold" Opacity="0.4"/>
+                <UniformGrid
+                    Grid.Column="3" Grid.Row="11"
+                    Rows="1">
+                    <TextBlock Text="R3 "
+                        TextAlignment="Right" Opacity="0.5"/>
+                    <TextBox Text="{Binding ReservedNumber3}"
+                        Style="{StaticResource TransparentTextBox}"/>
+                </UniformGrid>
 
-                        <TextBlock Text="PESignature "
-                            TextAlignment="Right" Opacity="0.5"/>
-                        <TextBox Text="{Binding PESignature}"
-                            Grid.Column="1"
-                            Background="Transparent" BorderThickness="0"/>
+                <Border
+                    Grid.Row="12" Grid.ColumnSpan="2"
+                    Background="Crimson" Opacity="0.4"/>
 
-                        <TextBlock Text="Machine "
-                            Grid.Column="2" TextAlignment="Right" Opacity="0.5"/>
-                        <TextBox Text="{Binding Machine}"
-                            Grid.Column="3"
-                            Background="Transparent" BorderThickness="0"/>
+                <TextBlock Text="lfanew "
+                    ToolTip="File address of PE header."
+                    Grid.Row="12"
+                    TextAlignment="Right" Opacity="0.5"/>
+                <TextBox Text="{Binding lfanew, Converter={local:HexConverter}}"
+                    Grid.Column="1" Grid.Row="12"
+                    Style="{StaticResource TransparentTextBox}"/>
 
-                        <Border
-                            Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="2"
-                            Background="ForestGreen" Opacity="0.4"/>
-
-                        <TextBlock Text="NumberOfSections "
-                            Grid.Row="1"
-                            TextAlignment="Right" Opacity="0.5"/>
-                        <TextBox Text="{Binding NumberOfSections}"
-                            Grid.Column="1" Grid.Row="1"
-                            Background="Transparent" BorderThickness="0"/>
-
-                        <TextBlock Text="Timestamp "
-                            Grid.Row="2"
-                            TextAlignment="Right" Opacity="0.5"/>
-                        <TextBox Text="{Binding Timestamp}"
-                            Grid.Column="1" Grid.Row="2"
-                            Background="Silver" BorderThickness="0"/>
-
-                        <TextBlock Text="PointerToSymbolTable "
-                            Grid.Column="2" Grid.Row="1"
-                            TextAlignment="Right" Opacity="0.5"/>
-                        <DockPanel Grid.Column="3" Grid.Row="1">
-                            <TextBox Text="{Binding PointerToSymbolTable}"
-                                Background="Transparent" BorderThickness="0"/>
-                            <TextBlock Text="h"/>
-                        </DockPanel>
-
-                        <TextBlock Text="NumberOfSymbols "
-                            Grid.Column="2" Grid.Row="2"
-                            TextAlignment="Right" Opacity="0.5"/>
-                        <TextBox Text="{Binding NumberOfSymbols}"
-                            Grid.Column="3" Grid.Row="2"
-                            Background="Transparent" BorderThickness="0"/>
-
-                        <TextBlock Text="SizeOfOptionalHeader "
-                            Grid.Row="3"
-                            TextAlignment="Right" Opacity="0.5"/>
-                        <TextBox Text="{Binding SizeOfOptionalHeader}"
-                            Grid.Column="1" Grid.Row="3"
-                            Background="Transparent" BorderThickness="0"/>
-
-                        <Border
-                            Grid.Column="2" Grid.Row="3" Grid.ColumnSpan="2"
-                            Background="ForestGreen" Opacity="0.4"/>
-
-                        <TextBlock Text="Characteristics "
-                            Grid.Column="2" Grid.Row="3"
-                            TextAlignment="Right" Opacity="0.5"/>
-                        <TextBox Text="{Binding Characteristics}"
-                            Grid.Column="3" Grid.Row="3"
-                            Background="Transparent" BorderThickness="0"/>
-                        
-                    </Grid>
-                </Border>
-            </StackPanel>
-        </Border>
+            </Grid>
+        </Expander>
 
         <Separator/>
 
-        <Border Background="Black" BorderBrush="Black" BorderThickness="2" CornerRadius="2">
-            <StackPanel>
-                <TextBlock Text="OptionalHeader" Foreground="White" Margin="0,0,0,2"/>
-                <Border DataContext="{Binding OptionalHeader}"
-                    BorderBrush="DarkGray" BorderThickness="1" Background="White">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
+        <Expander Style="{StaticResource HeaderExpander}"
+            Header="PEHeader">
+            <Grid DataContext="{Binding PEHeader}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
 
-                        <Border
-                            Grid.ColumnSpan="4"
-                            Background="Gold" Opacity="0.4"/>
+                <Border
+                    Grid.ColumnSpan="4"
+                    Background="Gold" Opacity="0.4"/>
 
-                        <TextBlock Text="PEMagic "
-                            TextAlignment="Right" Opacity="0.5"/>
-                        <TextBox Text="{Binding PEMagic}"
-                            Grid.Column="1"
-                            Background="Transparent" BorderThickness="0"/>
+                <TextBlock Text="PESignature "
+                    TextAlignment="Right" Opacity="0.5"/>
+                <TextBox Text="{Binding PESignature}"
+                    Grid.Column="1"
+                    Background="Transparent" BorderThickness="0"/>
 
-                        <TextBlock Text="Machine "
-                            Grid.Column="2" TextAlignment="Right" Opacity="0.5"/>
-                        <TextBox Text="{Binding Machine}"
-                            Grid.Column="3"
-                            Background="Transparent" BorderThickness="0"/>
+                <TextBlock Text="Machine "
+                    Grid.Column="2" TextAlignment="Right" Opacity="0.5"/>
+                <TextBox Text="{Binding Machine}"
+                    Grid.Column="3"
+                    Background="Transparent" BorderThickness="0"/>
 
-                        <Border
-                            Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="2"
-                            Background="ForestGreen" Opacity="0.4"/>
+                <Border
+                    Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="2"
+                    Background="ForestGreen" Opacity="0.4"/>
 
-                        <TextBlock Text="NumberOfSections "
-                            Grid.Row="1"
-                            TextAlignment="Right" Opacity="0.5"/>
-                        <TextBox Text="{Binding NumberOfSections}"
-                            Grid.Column="1" Grid.Row="1"
-                            Background="Transparent" BorderThickness="0"/>
+                <TextBlock Text="NumberOfSections "
+                    Grid.Row="1"
+                    TextAlignment="Right" Opacity="0.5"/>
+                <TextBox Text="{Binding NumberOfSections}"
+                    Grid.Column="1" Grid.Row="1"
+                    Background="Transparent" BorderThickness="0"/>
 
-                        <TextBlock Text="Timestamp "
-                            Grid.Row="2"
-                            TextAlignment="Right" Opacity="0.5"/>
-                        <TextBox Text="{Binding Timestamp}"
-                            Grid.Column="1" Grid.Row="2"
-                            Background="Transparent" BorderThickness="0"/>
+                <TextBlock Text="Timestamp "
+                    Grid.Row="2"
+                    TextAlignment="Right" Opacity="0.5"/>
+                <TextBox Text="{Binding Timestamp}"
+                    Grid.Column="1" Grid.Row="2"
+                    Background="Silver" BorderThickness="0"/>
 
-                        <TextBlock Text="PointerToSymbolTable "
-                            Grid.Column="2" Grid.Row="1"
-                            TextAlignment="Right" Opacity="0.5"/>
-                        <DockPanel Grid.Column="3" Grid.Row="1">
-                            <TextBox Text="{Binding PointerToSymbolTable}"
-                                Background="Transparent" BorderThickness="0"/>
-                            <TextBlock Text="h"/>
-                        </DockPanel>
+                <TextBlock Text="PointerToSymbolTable "
+                    Grid.Column="2" Grid.Row="1"
+                    TextAlignment="Right" Opacity="0.5"/>
+                <DockPanel Grid.Column="3" Grid.Row="1">
+                    <TextBox Text="{Binding PointerToSymbolTable}"
+                        Background="Transparent" BorderThickness="0"/>
+                    <TextBlock Text="h"/>
+                </DockPanel>
 
-                        <TextBlock Text="NumberOfSymbols "
-                            Grid.Column="2" Grid.Row="2"
-                            TextAlignment="Right" Opacity="0.5"/>
-                        <TextBox Text="{Binding NumberOfSymbols}"
-                            Grid.Column="3" Grid.Row="2"
-                            Background="Transparent" BorderThickness="0"/>
+                <TextBlock Text="NumberOfSymbols "
+                    Grid.Column="2" Grid.Row="2"
+                    TextAlignment="Right" Opacity="0.5"/>
+                <TextBox Text="{Binding NumberOfSymbols}"
+                    Grid.Column="3" Grid.Row="2"
+                    Background="Transparent" BorderThickness="0"/>
 
-                        <TextBlock Text="SizeOfOptionalHeader "
-                            Grid.Row="3"
-                            TextAlignment="Right" Opacity="0.5"/>
-                        <TextBox Text="{Binding SizeOfOptionalHeader}"
-                            Grid.Column="1" Grid.Row="3"
-                            Background="Transparent" BorderThickness="0"/>
+                <TextBlock Text="SizeOfOptionalHeader "
+                    Grid.Row="3"
+                    TextAlignment="Right" Opacity="0.5"/>
+                <TextBox Text="{Binding SizeOfOptionalHeader}"
+                    Grid.Column="1" Grid.Row="3"
+                    Background="Transparent" BorderThickness="0"/>
 
-                        <Border
-                            Grid.Column="2" Grid.Row="3" Grid.ColumnSpan="2"
-                            Background="ForestGreen" Opacity="0.4"/>
+                <Border
+                    Grid.Column="2" Grid.Row="3" Grid.ColumnSpan="2"
+                    Background="ForestGreen" Opacity="0.4"/>
 
-                        <TextBlock Text="Characteristics "
-                            Grid.Column="2" Grid.Row="3"
-                            TextAlignment="Right" Opacity="0.5"/>
-                        <TextBox Text="{Binding Characteristics}"
-                            Grid.Column="3" Grid.Row="3"
-                            Background="Transparent" BorderThickness="0"/>
+                <TextBlock Text="Characteristics "
+                    Grid.Column="2" Grid.Row="3"
+                    TextAlignment="Right" Opacity="0.5"/>
+                <TextBox Text="{Binding Characteristics}"
+                    Grid.Column="3" Grid.Row="3"
+                    Background="Transparent" BorderThickness="0"/>
 
-                    </Grid>
-                </Border>
-            </StackPanel>
-        </Border>
+            </Grid>
+        </Expander>
+
+        <Separator/>
+
+        <Expander Style="{StaticResource HeaderExpander}"
+            Header="OptionalHeader">
+            <Grid DataContext="{Binding OptionalHeader}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Border
+                    Grid.ColumnSpan="4"
+                    Background="Gold" Opacity="0.4"/>
+
+                <TextBlock Text="PEMagic "
+                    TextAlignment="Right" Opacity="0.5"/>
+                <TextBox Text="{Binding PEMagic}"
+                    Grid.Column="1"
+                    Background="Transparent" BorderThickness="0"/>
+
+                <TextBlock Text="Machine "
+                    Grid.Column="2" TextAlignment="Right" Opacity="0.5"/>
+                <TextBox Text="{Binding Machine}"
+                    Grid.Column="3"
+                    Background="Transparent" BorderThickness="0"/>
+
+                <Border
+                    Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="2"
+                    Background="ForestGreen" Opacity="0.4"/>
+
+                <TextBlock Text="NumberOfSections "
+                    Grid.Row="1"
+                    TextAlignment="Right" Opacity="0.5"/>
+                <TextBox Text="{Binding NumberOfSections}"
+                    Grid.Column="1" Grid.Row="1"
+                    Background="Transparent" BorderThickness="0"/>
+
+                <TextBlock Text="Timestamp "
+                    Grid.Row="2"
+                    TextAlignment="Right" Opacity="0.5"/>
+                <TextBox Text="{Binding Timestamp}"
+                    Grid.Column="1" Grid.Row="2"
+                    Background="Transparent" BorderThickness="0"/>
+
+                <TextBlock Text="PointerToSymbolTable "
+                    Grid.Column="2" Grid.Row="1"
+                    TextAlignment="Right" Opacity="0.5"/>
+                <DockPanel Grid.Column="3" Grid.Row="1">
+                    <TextBox Text="{Binding PointerToSymbolTable}"
+                        Background="Transparent" BorderThickness="0"/>
+                    <TextBlock Text="h"/>
+                </DockPanel>
+
+                <TextBlock Text="NumberOfSymbols "
+                    Grid.Column="2" Grid.Row="2"
+                    TextAlignment="Right" Opacity="0.5"/>
+                <TextBox Text="{Binding NumberOfSymbols}"
+                    Grid.Column="3" Grid.Row="2"
+                    Background="Transparent" BorderThickness="0"/>
+
+                <TextBlock Text="SizeOfOptionalHeader "
+                    Grid.Row="3"
+                    TextAlignment="Right" Opacity="0.5"/>
+                <TextBox Text="{Binding SizeOfOptionalHeader}"
+                    Grid.Column="1" Grid.Row="3"
+                    Background="Transparent" BorderThickness="0"/>
+
+                <Border
+                    Grid.Column="2" Grid.Row="3" Grid.ColumnSpan="2"
+                    Background="ForestGreen" Opacity="0.4"/>
+
+                <TextBlock Text="Characteristics "
+                    Grid.Column="2" Grid.Row="3"
+                    TextAlignment="Right" Opacity="0.5"/>
+                <TextBox Text="{Binding Characteristics}"
+                    Grid.Column="3" Grid.Row="3"
+                    Background="Transparent" BorderThickness="0"/>
+
+            </Grid>
+        </Expander>
 
     </StackPanel>
 </UserControl>

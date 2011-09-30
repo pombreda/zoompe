@@ -33,6 +33,7 @@ namespace PEViewer
                     {
                         VerticalScrollBarVisibility = ScrollBarVisibility.Auto,
                         HorizontalScrollBarVisibility = ScrollBarVisibility.Auto,
+                        Padding = new Thickness(5),
                         Content = new PEFileView { DataContext = pe }
                     };
                     this.Title = e.SafeFileName;

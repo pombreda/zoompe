@@ -49,6 +49,7 @@
     <ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
+    <Compile Include="HexConverter.cs" />
     <Compile Include="PEFileView.xaml.cs">
       <DependentUpon>PEFileView.xaml</DependentUpon>
     </Compile>
