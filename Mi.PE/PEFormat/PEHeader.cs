@@ -50,7 +50,7 @@ namespace Mi.PE.PEFormat
         /// midnight (00:00:00), January 1, 1970, Universal Coordinated Time,
         /// according to the system clock.
         /// </summary>
-        public ImageTimestamp Timestamp { get; set; }
+        public DateTime Timestamp { get; set; }
 
         /// <summary>
         /// The offset of the symbol table, in bytes, or zero if no COFF symbol table exists.

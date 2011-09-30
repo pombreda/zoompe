@@ -80,7 +80,13 @@ namespace Mi.PE
                 writer.WriteUInt32((uint)peHeader.PESignature);
                 writer.WriteUInt16((ushort)peHeader.Machine);
                 writer.WriteUInt16(peHeader.NumberOfSections);
-                writer.WriteUInt32(peHeader.Timestamp.SecondsSinceEpochUTC);
+
+                double timestampDouble = (peHeader.Timestamp - TimestampEpochUTC).TotalSeconds;
+                uint timestampNum = checked((uint)timestampDouble);
+                if (timestampDouble - timestampNum > 0.5)
+                    timestampNum++;
+                writer.WriteUInt32(timestampNum);
+
                 writer.WriteUInt32(peHeader.PointerToSymbolTable);
                 writer.WriteUInt32(peHeader.NumberOfSymbols);
                 writer.WriteUInt16(peHeader.SizeOfOptionalHeader);

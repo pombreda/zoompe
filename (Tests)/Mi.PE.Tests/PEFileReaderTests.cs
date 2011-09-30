@@ -305,7 +305,7 @@ namespace Mi.PE
 
             Assert.AreEqual(expectedNumberOfSections, header.NumberOfSections, "number of sections");
 
-            Assert.IsTrue(Math.Abs((timestampOffset - header.Timestamp.ToDateTime()).TotalHours) < 2, "PE timestamp is " + header.Timestamp +", off by " + ((timestampOffset - header.Timestamp.ToDateTime()).TotalHours).ToString("0") + " hours.");
+            Assert.IsTrue(Math.Abs((timestampOffset - header.Timestamp).TotalHours) < 2, "PE timestamp is " + header.Timestamp +", off by " + ((timestampOffset - header.Timestamp).TotalHours).ToString("0") + " hours.");
             Assert.AreEqual((uint)0, header.PointerToSymbolTable, "pointer to symbol table");
             Assert.AreEqual((uint)0, header.NumberOfSymbols, "number of symbols");
 

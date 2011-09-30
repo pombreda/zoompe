@@ -62,7 +62,6 @@
     <Compile Include="PEFormat\DllCharacteristics.cs" />
     <Compile Include="PEFormat\DosHeader.cs" />
     <Compile Include="PEFormat\ImageCharacteristics.cs" />
-    <Compile Include="PEFormat\ImageTimestamp.cs" />
     <Compile Include="PEFormat\Machine.cs" />
     <Compile Include="PEFormat\OptionalHeader.cs" />
     <Compile Include="PEFormat\PEHeader.cs" />

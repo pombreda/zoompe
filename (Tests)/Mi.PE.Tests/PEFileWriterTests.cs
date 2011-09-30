@@ -27,9 +27,33 @@ namespace Mi.PE
         [TestMethod] public void EmitX64() { AssertReadWriteRoundtrip(EmitSamplePEs.Library.Bytes.X64); }
         [TestMethod] public void EmitItanium() { AssertReadWriteRoundtrip(EmitSamplePEs.Library.Bytes.Itanium); }
 
+        [TestMethod]
+        public void Timestamp_RoundDown()
+        {
+            AssertReadWriteRoundtrip(
+                EmitSamplePEs.Library.Bytes.Itanium,
+                pe => pe.PEHeader.Timestamp += TimeSpan.FromSeconds(0.45));
+        }
+
+        [TestMethod]
+        public void Timestamp_RoundUp()
+        {
+            AssertReadWriteRoundtrip(
+                EmitSamplePEs.Library.Bytes.Itanium,
+                pe => pe.PEHeader.Timestamp -= TimeSpan.FromSeconds(0.45));
+        }
+
         private static void AssertReadWriteRoundtrip(byte[] originalBytes)
         {
+            AssertReadWriteRoundtrip(originalBytes, null);
+        }
+
+        private static void AssertReadWriteRoundtrip(byte[] originalBytes, Action<PEFile> modifyPEFile)
+        {
             var pe = PEFile.FromStream(new MemoryStream(originalBytes));
+
+            if (modifyPEFile != null)
+                modifyPEFile(pe);
 
             var buf = new MemoryStream();
             pe.WriteTo(buf);

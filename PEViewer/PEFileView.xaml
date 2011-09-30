@@ -290,7 +290,7 @@
                             TextAlignment="Right" Opacity="0.5"/>
                         <TextBox Text="{Binding Timestamp}"
                             Grid.Column="1" Grid.Row="2"
-                            Background="Transparent" BorderThickness="0"/>
+                            Background="Silver" BorderThickness="0"/>
 
                         <TextBlock Text="PointerToSymbolTable "
                             Grid.Column="2" Grid.Row="1"

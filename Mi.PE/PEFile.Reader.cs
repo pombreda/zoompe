@@ -10,6 +10,8 @@ namespace Mi.PE
 
     partial class PEFile
     {
+        static readonly DateTime TimestampEpochUTC = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+        
         public static PEFile FromStream(Stream stream)
         {
             var reader = new Reader();
@@ -107,7 +109,8 @@ namespace Mi.PE
                 peHeader.PESignature = (PESignature)reader.ReadInt32();
                 peHeader.Machine = (Machine)reader.ReadInt16();
                 peHeader.NumberOfSections = reader.ReadUInt16();
-                peHeader.Timestamp = new ImageTimestamp(reader.ReadUInt32());
+                uint timestampNum = reader.ReadUInt32();
+                peHeader.Timestamp = TimestampEpochUTC.AddSeconds(timestampNum);
                 peHeader.PointerToSymbolTable = reader.ReadUInt32();
                 peHeader.NumberOfSymbols = reader.ReadUInt32();
                 peHeader.SizeOfOptionalHeader = reader.ReadUInt16();
