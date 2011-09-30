@@ -11,7 +11,7 @@ namespace Mi.PE.Cli
 
     public static class ClrHeaderReader
     {
-        public static ClrHeader ReadClrHeader(BinaryStreamReader reader)
+        public static ClrHeader ReadClrHeader(SectionContentReader reader)
         {
             var result = new ClrHeader();
 
@@ -135,7 +135,7 @@ namespace Mi.PE.Cli
             return Encoding.UTF8.GetString(bytes.ToArray(), 0, bytes.Count);
         }
 
-        static DataDirectory ReadDataDirectory(BinaryStreamReader reader)
+        static DataDirectory ReadDataDirectory(SectionContentReader reader)
         {
             return new DataDirectory
             {

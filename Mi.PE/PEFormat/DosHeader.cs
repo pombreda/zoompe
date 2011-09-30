@@ -25,22 +25,54 @@ namespace Mi.PE.PEFormat
         {
         }
 
+        /// <summary> Magic number. </summary>
         public MZSignature Signature { get; set; }
+
+        /// <summary> Bytes on last page of file. </summary>
         public ushort cblp { get; set; }
+
+        /// <summary> Pages in file. </summary>
         public ushort cp { get; set; }
+
+        /// <summary> Relocations. </summary>
         public ushort crlc { get; set; }
+
+        /// <summary> Size of header in paragraphs. </summary>
         public ushort cparhdr { get; set; }
+
+        /// <summary> Minimum extra paragraphs needed. </summary>
         public ushort minalloc { get; set; }
+
+        /// <summary> Maximum extra paragraphs needed. </summary>
         public ushort maxalloc { get; set; }
+
+        /// <summary> Initial (relative) SS value. </summary>
         public ushort ss { get; set; }
+
+        /// <summary> Initial SP value. </summary>
         public ushort sp { get; set; }
+
+        /// <summary> Checksum. </summary>
         public ushort csum { get; set; }
+
+        /// <summary>  Initial IP value. </summary>
         public ushort ip { get; set; }
+
+        /// <summary> Initial (relative) CS value. </summary>
         public ushort cs { get; set; }
+
+        /// <summary> File address of relocation table. </summary>
         public ushort lfarlc { get; set; }
+
+        /// <summary> Overlay number. </summary>
         public ushort ovno { get; set; }
+
         public ulong res1 { get; set; }
+
+        /// <summary> OEM identifier (for e_oeminfo). </summary>
         public ushort oemid { get; set; }
+
+        /// <summary> OEM information; e_oemid specific. </summary>
         public ushort oeminfo { get; set; }
 
         public uint ReservedNumber0 { get; set; }
@@ -49,6 +81,7 @@ namespace Mi.PE.PEFormat
         public uint ReservedNumber3 { get; set; }
         public uint ReservedNumber4 { get; set; }
 
+        /// <summary> File address of PE header. </summary>
         public uint lfanew
         {
             get { return m_lfanew; }

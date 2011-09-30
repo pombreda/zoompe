@@ -37,10 +37,6 @@
       <Project>{222fc27a-6d9c-4200-befa-15f5c94a3f4e}</Project>
       <Name>Mi.PE</Name>
     </ProjectReference>
-    <ProjectReference Include="..\InsaneSectionLayout\InsaneSectionLayout.csproj">
-      <Project>{f4bc8e16-8856-4825-844c-2f4530c35c3e}</Project>
-      <Name>InsaneSectionLayout</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
