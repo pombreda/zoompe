@@ -10,7 +10,7 @@
         <Win32:OpenFileDialog x:Key="openFile"
             Title="Open PE file..."
             DefaultExt=".dll"
-            Filter="*.dll,*.exe|DLL and EXE files|*.*|All files"
+            Filter="DLL and EXE files|*.dll;*.exe|All files|*.*"
             Multiselect="False"/>
     </UserControl.Resources>
     <Grid>
