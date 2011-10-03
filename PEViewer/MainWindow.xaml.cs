@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+
 using Mi.PE;
 
 namespace PEViewer
@@ -29,14 +30,19 @@ namespace PEViewer
                 using(var stream = e.OpenStream())
                 {
                     var pe = PEFile.FromStream(stream);
-                    this.Content = new ScrollViewer
-                    {
-                        VerticalScrollBarVisibility = ScrollBarVisibility.Auto,
-                        HorizontalScrollBarVisibility = ScrollBarVisibility.Auto,
-                        Padding = new Thickness(5),
-                        Content = new PEFileView { DataContext = pe }
-                    };
-                    this.Title = e.SafeFileName;
+                    this.tabControl1.Items.Add(new TabItem
+                        {
+                            Header = e.SafeFileName,
+                            Content =  new ScrollViewer
+                            {
+                                VerticalScrollBarVisibility = ScrollBarVisibility.Auto,
+                                HorizontalScrollBarVisibility = ScrollBarVisibility.Auto,
+                                Padding = new Thickness(5),
+                                Content = new PEFileView { DataContext = pe }
+                            }
+                        });
+
+                    this.tabControl1.SelectedIndex = this.tabControl1.Items.Count - 1;
                 }
             }
             catch (Exception openFileError)

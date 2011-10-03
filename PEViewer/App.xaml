@@ -3,7 +3,22 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
 
+                <ResourceDictionary Source="SharedStyles.xaml"/>
+                
+                <ResourceDictionary Source="DosHeaderView.xaml"/>
+                <ResourceDictionary Source="PEHeaderView.xaml"/>
+                <ResourceDictionary Source="OptionalHeaderView.xaml"/>
+                <ResourceDictionary Source="SectionView.xaml"/>
+                <ResourceDictionary Source="SectionView.xaml"/>
+                <ResourceDictionary Source="SectionView.xaml"/>
+                <ResourceDictionary Source="SectionView.xaml"/>
 
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
+    
+    
 </Application>

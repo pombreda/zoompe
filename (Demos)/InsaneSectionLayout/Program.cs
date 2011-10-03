@@ -54,20 +54,21 @@ namespace InsaneSectionLayout
                     s.Content.Length);
             }
 
-            pe.PEHeader.NumberOfSections = (ushort)(allSectionContent.Length / 512);
+            const uint sectionSize = 512;
+            pe.PEHeader.NumberOfSections = (ushort)(allSectionContent.Length / sectionSize);
             for (int i = 0; i < pe.Sections.Count; i++)
             {
                 pe.Sections[i].Name = "S"+i;
-                pe.Sections[i].VirtualAddress = lowestVirtualAddress + (uint)(i * 512);
-                pe.Sections[i].PointerToRawData = lowestPointerToRawData + (uint)(i * 512);
-                pe.Sections[i].VirtualSize = 512;
-                pe.Sections[i].SizeOfRawData = 512;
+                pe.Sections[i].VirtualAddress = lowestVirtualAddress + (uint)(i * sectionSize);
+                pe.Sections[i].PointerToRawData = lowestPointerToRawData + (uint)(i * sectionSize);
+                pe.Sections[i].VirtualSize = sectionSize;
+                pe.Sections[i].SizeOfRawData = sectionSize;
                 pe.Sections[i].Characteristics = SectionCharacteristics.MemoryRead;
 
                 Array.Copy(
-                    allSectionContent, i * 512,
+                    allSectionContent, i * sectionSize,
                     pe.Sections[i].Content, 0,
-                    512);
+                    sectionSize);
             }
         }
 

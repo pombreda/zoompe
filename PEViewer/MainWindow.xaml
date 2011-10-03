@@ -5,8 +5,12 @@
     x:Class="PEViewer.MainWindow"
     Title="PE Viewer" Height="350" Width="525">
     <Grid>
+        <TabControl Name="tabControl1">
 
-        <local:StartViewUserControl x:Name="startView"  OpenFile="startView_OpenFile"/>
+            <TabItem Header="Home">
+                <local:StartViewUserControl x:Name="startView"  OpenFile="startView_OpenFile"/>
+            </TabItem>
 
+        </TabControl>
     </Grid>
 </Window>

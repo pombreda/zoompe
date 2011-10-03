@@ -1,0 +1,357 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:pe="http://mihailik.blogspot.com/pe"
+    xmlns:local="clr-namespace:PEViewer">
+
+    <DataTemplate x:Key="OptionalHeaderView">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Border
+                Grid.ColumnSpan="4"
+                Background="Gold" Opacity="0.4"/>
+
+            <TextBlock Text="PEMagic "
+                TextAlignment="Right" Opacity="0.5"/>
+            <TextBox Text="{Binding PEMagic}"
+                Grid.Column="1"
+                Style="{StaticResource TransparentTextBox}"/>
+
+            <Border
+                Grid.Row="1" Grid.ColumnSpan="4"
+                Background="ForestGreen" Opacity="0.4"/>
+
+            <TextBlock Text="MajorLinkerVersion "
+                Grid.Row="1"
+                TextAlignment="Right" Opacity="0.5"/>
+            <TextBox Text="{Binding MajorLinkerVersion}"
+                Grid.Column="1" Grid.Row="1"
+                Style="{StaticResource TransparentTextBox}"/>
+
+            <TextBlock Text="MinorLinkerVersion "
+                Grid.Row="1" Grid.Column="2"
+                TextAlignment="Right" Opacity="0.5"/>
+            <TextBox Text="{Binding MinorLinkerVersion}"
+                Grid.Row="1" Grid.Column="3"
+                Style="{StaticResource TransparentTextBox}"/>
+
+            <TextBlock Text="SizeOfCode "
+                ToolTip="The size of the code section, in bytes, or the sum of all such sections if there are multiple code sections."
+                Grid.Row="2"
+                TextAlignment="Right" Opacity="0.5"/>
+            <TextBox Text="{Binding SizeOfCode}"
+                Grid.Column="1" Grid.Row="2"
+                Style="{StaticResource TransparentTextBox}"/>
+
+            <TextBlock Text="SizeOfInitializedData "
+                ToolTip="The size of the initialized data section, in bytes, or the sum of all such sections if there are multiple initialized data sections."
+                Grid.Row="3"
+                TextAlignment="Right" Opacity="0.5"/>
+            <TextBox Text="{Binding SizeOfInitializedData}"
+                Grid.Column="1" Grid.Row="3"
+                Style="{StaticResource TransparentTextBox}"/>
+
+            <TextBlock Text="SizeOfUninitializedData "
+                ToolTip="The size of the uninitialized data section, in bytes, or the sum of all such sections if there are multiple uninitialized data sections."
+                Grid.Row="4"
+                TextAlignment="Right" Opacity="0.5"/>
+            <TextBox Text="{Binding SizeOfUninitializedData}"
+                Grid.Column="1" Grid.Row="4"
+                Style="{StaticResource TransparentTextBox}"/>
+
+            <Border
+                Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2"
+                Background="Yellow" Opacity="0.4"/>
+
+            <TextBlock Text="AddressOfEntryPoint "
+                ToolTip="A pointer to the entry point function, relative to the image base address. For executable files, this is the starting address. For device drivers, this is the address of the initialization function. The entry point function is optional for DLLs. When no entry point is present, this member is zero."
+                Grid.Column="2" Grid.Row="2"
+                TextAlignment="Right" Opacity="0.5"/>
+            <TextBox Text="{Binding AddressOfEntryPoint, Converter={local:HexConverter}}"
+                Grid.Column="3" Grid.Row="2"
+                Style="{StaticResource TransparentTextBox}"/>
+
+            <Border
+                Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2" Grid.RowSpan="2"
+                Background="Crimson" Opacity="0.4"/>
+
+            <TextBlock Text="BaseOfCode "
+                ToolTip="A pointer to the beginning of the code section, relative to the image base."
+                Grid.Column="2" Grid.Row="3"
+                TextAlignment="Right" Opacity="0.5"/>
+            <TextBox Text="{Binding BaseOfCode, Converter={local:HexConverter}}"
+                Grid.Column="3" Grid.Row="3"
+                Style="{StaticResource TransparentTextBox}"/>
+
+            <TextBlock Text="BaseOfData "
+                ToolTip="A pointer to the beginning of the data section, relative to the image base."
+                Grid.Column="2" Grid.Row="4"
+                TextAlignment="Right" Opacity="0.5"/>
+            <TextBox Text="{Binding BaseOfData, Converter={local:HexConverter}}"
+                Grid.Column="3" Grid.Row="4"
+                Style="{StaticResource TransparentTextBox}"/>
+
+            <TextBlock Text="ImageBase "
+                ToolTip="The preferred address of the first byte of the image when it is loaded in memory. This value is a multiple of 64K bytes. The default value for DLLs is 0x10000000. The default value for applications is 0x00400000, except on Windows CE where it is 0x00010000."
+                Grid.Row="5"
+                TextAlignment="Right" Opacity="0.5"/>
+            <TextBox Text="{Binding ImageBase, Converter={local:HexConverter}}"
+                Grid.Column="1" Grid.Row="5"
+                Style="{StaticResource TransparentTextBox}"/>
+
+            <Border
+                Grid.Row="6" Grid.ColumnSpan="4"
+                Background="Crimson" Opacity="0.4"/>
+
+            <TextBlock Text="SectionAlignment "
+                ToolTip="The alignment of sections loaded in memory, in bytes. This value must be greater than or equal to the FileAlignment member. The default value is the page size for the system."
+                Grid.Row="6"
+                TextAlignment="Right" Opacity="0.5"/>
+            <TextBox Text="{Binding SectionAlignment, Converter={local:HexConverter}}"
+                Grid.Column="1" Grid.Row="6"
+                Style="{StaticResource TransparentTextBox}"/>
+
+            <TextBlock Text="FileAlignment "
+                ToolTip="The alignment of the raw data of sections in the image file, in bytes. The value should be a power of 2 between 512 and 64K (inclusive). The default is 512. If the SectionAlignment member is less than the system page size, this member must be the same as SectionAlignment."
+                Grid.Column="2" Grid.Row="6"
+                TextAlignment="Right" Opacity="0.5"/>
+            <TextBox Text="{Binding FileAlignment, Converter={local:HexConverter}}"
+                Grid.Column="3" Grid.Row="6"
+                Style="{StaticResource TransparentTextBox}"/>
+
+            <Border
+                Grid.Row="7" Grid.ColumnSpan="2" Grid.RowSpan="2"
+                Background="Green" Opacity="0.2"/>
+
+            <TextBlock Text="MajorOperatingSystemVersion "
+                ToolTip="The major version number of the required operating system."
+                Grid.Row="7"
+                TextAlignment="Right" Opacity="0.5"/>
+            <TextBox Text="{Binding MajorOperatingSystemVersion}"
+                Grid.Column="1" Grid.Row="7"
+                Style="{StaticResource TransparentTextBox}"/>
+
+            <TextBlock Text="MinorOperatingSystemVersion "
+                ToolTip="The minor version number of the required operating system."
+                Grid.Row="8"
+                TextAlignment="Right" Opacity="0.5"/>
+            <TextBox Text="{Binding MinorOperatingSystemVersion}"
+                Grid.Column="1" Grid.Row="8"
+                Style="{StaticResource TransparentTextBox}"/>
+
+            <Border
+                Grid.Row="9" Grid.ColumnSpan="2" Grid.RowSpan="2"
+                Background="Green" Opacity="0.3"/>
+
+            <TextBlock Text="MajorImageVersion "
+                ToolTip="The major version number of the image."
+                Grid.Row="9"
+                TextAlignment="Right" Opacity="0.5"/>
+            <TextBox Text="{Binding MajorImageVersion}"
+                Grid.Column="1" Grid.Row="9"
+                Style="{StaticResource TransparentTextBox}"/>
+
+            <TextBlock Text="MinorImageVersion "
+                ToolTip="The minor version number of the image."
+                Grid.Row="10"
+                TextAlignment="Right" Opacity="0.5"/>
+            <TextBox Text="{Binding MinorImageVersion}"
+                Grid.Column="1" Grid.Row="10"
+                Style="{StaticResource TransparentTextBox}"/>
+
+            <Border
+                Grid.Row="7" Grid.Column="2" Grid.ColumnSpan="2" Grid.RowSpan="2"
+                Background="Green" Opacity="0.4"/>
+
+            <TextBlock Text="MajorSubsystemVersion "
+                ToolTip="The major version number of the subsystem."
+                Grid.Column="2" Grid.Row="7"
+                TextAlignment="Right" Opacity="0.5"/>
+            <TextBox Text="{Binding MajorSubsystemVersion}"
+                Grid.Column="3" Grid.Row="7"
+                Style="{StaticResource TransparentTextBox}"/>
+
+            <TextBlock Text="MinorSubsystemVersion "
+                ToolTip="The minor version number of the subsystem."
+                Grid.Column="2" Grid.Row="8"
+                TextAlignment="Right" Opacity="0.5"/>
+            <TextBox Text="{Binding MinorSubsystemVersion}"
+                Grid.Column="3" Grid.Row="8"
+                Style="{StaticResource TransparentTextBox}"/>
+
+            <Border
+                Grid.Column="2" Grid.Row="9" Grid.ColumnSpan="2"
+                Background="Silver" Opacity="0.4" />
+
+            <TextBlock Text="Win32VersionValue "
+                ToolTip="This member is reserved and must be 0."
+                Grid.Column="2" Grid.Row="9"
+                TextAlignment="Right" Opacity="0.5"/>
+            <TextBox Text="{Binding Win32VersionValue}"
+                Grid.Column="3" Grid.Row="9"
+                Style="{StaticResource TransparentTextBox}"/>
+
+            <Border
+                Grid.Row="11" Grid.ColumnSpan="4"
+                Background="Yellow" Opacity="0.4"/>
+
+            <TextBlock Text="SizeOfImage "
+                ToolTip="The size of the image, in bytes, including all headers. Must be a multiple of SectionAlignment."
+                Grid.Row="11"
+                TextAlignment="Right" Opacity="0.5"/>
+            <TextBox Text="{Binding SizeOfImage}"
+                Grid.Column="1" Grid.Row="11"
+                Style="{StaticResource TransparentTextBox}"/>
+
+            <TextBlock Text="SizeOfHeaders "
+                ToolTip="The combined size of the MS-DOS stub, the PE header, and the section headers, rounded to a multiple of the value specified in the FileAlignment member."
+                Grid.Column="2" Grid.Row="11"
+                TextAlignment="Right" Opacity="0.5"/>
+            <TextBox Text="{Binding SizeOfHeaders}"
+                Grid.Column="3" Grid.Row="11"
+                Style="{StaticResource TransparentTextBox}"/>
+
+            <TextBlock Text="CheckSum "
+                ToolTip="The image file checksum. The following files are validated at load time: all drivers, any DLL loaded at boot time, and any DLL loaded into a critical system process."
+                Grid.Row="12"
+                TextAlignment="Right" Opacity="0.5"/>
+            <TextBox Text="{Binding CheckSum}"
+                Grid.Column="1" Grid.Row="12"
+                Style="{StaticResource TransparentTextBox}"/>
+
+            <Border
+                Grid.Row="13" Grid.ColumnSpan="4"
+                Background="Yellow" Opacity="0.4"/>
+
+            <TextBlock Text="Subsystem "
+                ToolTip="The subsystem required to run this image."
+                Grid.Row="13"
+                TextAlignment="Right" Opacity="0.5"/>
+            <TextBox Text="{Binding Subsystem}"
+                Grid.Column="1" Grid.Row="13"
+                Style="{StaticResource TransparentTextBox}"/>
+
+            <TextBlock Text="DllCharacteristics "
+                ToolTip="The DLL characteristics of the image."
+                Grid.Column="2" Grid.Row="13"
+                TextAlignment="Right" Opacity="0.5"/>
+            <TextBox Text="{Binding DllCharacteristics}"
+                Grid.Column="3" Grid.Row="13"
+                Style="{StaticResource TransparentTextBox}"/>
+
+            <TextBlock Text="SizeOfStackReserve "
+                ToolTip="The number of bytes to reserve for the stack. Only the memory specified by the SizeOfStackCommit member is committed at load time; the rest is made available one page at a time until this reserve size is reached."
+                Grid.Row="14"
+                TextAlignment="Right" Opacity="0.5"/>
+            <TextBox Text="{Binding SizeOfStackReserve}"
+                Grid.Column="1" Grid.Row="14"
+                Style="{StaticResource TransparentTextBox}"/>
+
+            <TextBlock Text="SizeOfStackCommit "
+                ToolTip="The number of bytes to commit for the stack."
+                Grid.Row="15"
+                TextAlignment="Right" Opacity="0.5"/>
+            <TextBox Text="{Binding SizeOfStackCommit}"
+                Grid.Column="1" Grid.Row="15"
+                Style="{StaticResource TransparentTextBox}"/>
+
+            <TextBlock Text="SizeOfHeapReserve "
+                ToolTip="The number of bytes to reserve for the local heap. Only the memory specified by the SizeOfHeapCommit member is committed at load time; the rest is made available one page at a time until this reserve size is reached."
+                Grid.Column="2" Grid.Row="14"
+                TextAlignment="Right" Opacity="0.5"/>
+            <TextBox Text="{Binding SizeOfHeapReserve}"
+                Grid.Column="3" Grid.Row="14"
+                Style="{StaticResource TransparentTextBox}"/>
+
+            <TextBlock Text="SizeOfHeapCommit "
+                ToolTip="The number of bytes to commit for the local heap."
+                Grid.Column="2" Grid.Row="15"
+                TextAlignment="Right" Opacity="0.5"/>
+            <TextBox Text="{Binding SizeOfHeapCommit}"
+                Grid.Column="3" Grid.Row="15"
+                Style="{StaticResource TransparentTextBox}"/>
+
+            <Border
+                Grid.Column="0" Grid.Row="16" Grid.ColumnSpan="4"
+                Background="Silver" Opacity="0.4" />
+
+            <TextBlock Text="LoaderFlags "
+                ToolTip="This member is obsolete."
+                Grid.Row="16"
+                TextAlignment="Right" Opacity="0.5"/>
+            <TextBox Text="{Binding LoaderFlags}"
+                Grid.Column="1" Grid.Row="16"
+                Style="{StaticResource TransparentTextBox}"/>
+
+            <TextBlock Text="NumberOfRvaAndSizes "
+                ToolTip="The number of directory entries in the remainder of the optional header. Each entry describes a location and size."
+                Grid.Row="17"
+                TextAlignment="Right" Opacity="0.5"/>
+            <TextBox Text="{Binding NumberOfRvaAndSizes}"
+                Grid.Column="1" Grid.Row="17"
+                Style="{StaticResource TransparentTextBox}"/>
+
+            <Grid Grid.ColumnSpan="4" Grid.Row="18">
+                <ItemsControl ItemsSource="{Binding DataDirectories}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                
+                                <TextBlock Text="VirtualAddress "
+                                    ToolTip="The relative virtual address of the table."
+                                    TextAlignment="Right" Opacity="0.5"/>
+                                <TextBox Text="{Binding VirtualAddress, Converter={local:HexConverter}}"
+                                    Grid.Column="1"
+                                    Style="{StaticResource TransparentTextBox}"/>
+
+                                <TextBlock Text="Size "
+                                    ToolTip="The size of the table, in bytes."
+                                    Grid.Column="2"
+                                    TextAlignment="Right" Opacity="0.5"/>
+                                <TextBox Text="{Binding Size}"
+                                    Grid.Column="3"
+                                    Style="{StaticResource TransparentTextBox}"/>
+
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </Grid>
+
+        </Grid>
+    </DataTemplate>
+</ResourceDictionary>
