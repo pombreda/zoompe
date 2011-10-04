@@ -36,31 +36,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetroFileDetails", "(Demos)
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrintImports", "(Demos)\PrintImports\PrintImports.csproj", "{35216C79-713F-4EF2-9DA3-45CF5A12A978}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PEViewer", "PEViewer\PEViewer.csproj", "{499EB58F-B93B-4DCD-AC3B-D6E408A0959E}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PEViewer.SL", "(Demos)\PEViewer\PEViewer.SL\PEViewer.SL.csproj", "{CA87FB12-76D7-46BC-BA7C-81F534704CCA}"
-EndProject
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "PEViewer.SL.Web", "http://localhost:55153", "{456B7431-6A0A-4033-8744-170D49BA650C}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Debug.AspNetCompiler.FixedNames = "false"
-		Debug.AspNetCompiler.ForceOverwrite = "true"
-		Debug.AspNetCompiler.PhysicalPath = "(Demos)\PEViewer\PEViewer.SL.Web\"
-		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_55153\"
-		Debug.AspNetCompiler.Updateable = "true"
-		Debug.AspNetCompiler.VirtualPath = "/localhost_55153"
-		DefaultWebSiteLanguage = "Visual C#"
-		Release.AspNetCompiler.Debug = "False"
-		Release.AspNetCompiler.FixedNames = "false"
-		Release.AspNetCompiler.ForceOverwrite = "true"
-		Release.AspNetCompiler.PhysicalPath = "(Demos)\PEViewer\PEViewer.SL.Web\"
-		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_55153\"
-		Release.AspNetCompiler.Updateable = "true"
-		Release.AspNetCompiler.VirtualPath = "/localhost_55153"
-		SlnRelativePath = "(Demos)\PEViewer\PEViewer.SL.Web\"
-		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5"
-		UseIISExpress = "true"
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
@@ -100,18 +76,6 @@ Global
 		{35216C79-713F-4EF2-9DA3-45CF5A12A978}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{35216C79-713F-4EF2-9DA3-45CF5A12A978}.Release|Any CPU.Build.0 = Release|Any CPU
 		{35216C79-713F-4EF2-9DA3-45CF5A12A978}.Release|x86.ActiveCfg = Release|Any CPU
-		{456B7431-6A0A-4033-8744-170D49BA650C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{456B7431-6A0A-4033-8744-170D49BA650C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{456B7431-6A0A-4033-8744-170D49BA650C}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{456B7431-6A0A-4033-8744-170D49BA650C}.Release|Any CPU.ActiveCfg = Debug|Any CPU
-		{456B7431-6A0A-4033-8744-170D49BA650C}.Release|Any CPU.Build.0 = Debug|Any CPU
-		{456B7431-6A0A-4033-8744-170D49BA650C}.Release|x86.ActiveCfg = Debug|Any CPU
-		{499EB58F-B93B-4DCD-AC3B-D6E408A0959E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{499EB58F-B93B-4DCD-AC3B-D6E408A0959E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{499EB58F-B93B-4DCD-AC3B-D6E408A0959E}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{499EB58F-B93B-4DCD-AC3B-D6E408A0959E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{499EB58F-B93B-4DCD-AC3B-D6E408A0959E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{499EB58F-B93B-4DCD-AC3B-D6E408A0959E}.Release|x86.ActiveCfg = Release|Any CPU
 		{59CD74E2-7A48-431E-80AA-B3501DC8D1F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{59CD74E2-7A48-431E-80AA-B3501DC8D1F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{59CD74E2-7A48-431E-80AA-B3501DC8D1F0}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
@@ -149,8 +113,6 @@ Global
 		{1E5658F0-BF62-4719-9FC8-D4C375C0D9F1} = {4C3CF02B-52F7-43F6-BC8D-EAB6C4BE2B64}
 		{2EE060E1-DD6E-4C65-962E-61F1B67990F9} = {BA3B4CFD-8D95-444A-9C00-13912217AB9B}
 		{35216C79-713F-4EF2-9DA3-45CF5A12A978} = {4C3CF02B-52F7-43F6-BC8D-EAB6C4BE2B64}
-		{456B7431-6A0A-4033-8744-170D49BA650C} = {4C3CF02B-52F7-43F6-BC8D-EAB6C4BE2B64}
-		{499EB58F-B93B-4DCD-AC3B-D6E408A0959E} = {4C3CF02B-52F7-43F6-BC8D-EAB6C4BE2B64}
 		{59CD74E2-7A48-431E-80AA-B3501DC8D1F0} = {4C3CF02B-52F7-43F6-BC8D-EAB6C4BE2B64}
 		{62B979D9-B769-4997-87B2-1723D5C59C88} = {4C3CF02B-52F7-43F6-BC8D-EAB6C4BE2B64}
 		{CA87FB12-76D7-46BC-BA7C-81F534704CCA} = {4C3CF02B-52F7-43F6-BC8D-EAB6C4BE2B64}
