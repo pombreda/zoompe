@@ -49,9 +49,13 @@
     <ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
+    <Compile Include="PEHeaderOffsetConverter.cs" />
     <Compile Include="HexConverter.cs" />
     <Compile Include="PEFileView.xaml.cs">
       <DependentUpon>PEFileView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PEFileView2.xaml.cs">
+      <DependentUpon>PEFileView2.xaml</DependentUpon>
     </Compile>
     <Compile Include="StartViewUserControl.xaml.cs">
       <DependentUpon>StartViewUserControl.xaml</DependentUpon>
@@ -75,6 +79,9 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="PEFileView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PEFileView2.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="PEHeaderView.xaml">

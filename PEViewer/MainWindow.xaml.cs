@@ -37,12 +37,26 @@ namespace PEViewer
                             {
                                 VerticalScrollBarVisibility = ScrollBarVisibility.Auto,
                                 HorizontalScrollBarVisibility = ScrollBarVisibility.Auto,
+                                Background = Brushes.White,
                                 Padding = new Thickness(5),
-                                Content = new PEFileView { DataContext = pe }
+                                Content = new PEFileView2 { DataContext = pe }
                             }
                         });
 
                     this.tabControl1.SelectedIndex = this.tabControl1.Items.Count - 1;
+
+                    this.tabControl1.Items.Add(new TabItem
+                    {
+                        Header = e.SafeFileName,
+                        Content = new ScrollViewer
+                        {
+                            VerticalScrollBarVisibility = ScrollBarVisibility.Auto,
+                            HorizontalScrollBarVisibility = ScrollBarVisibility.Auto,
+                            Background = Brushes.White,
+                            Padding = new Thickness(5),
+                            Content = new PEFileView { DataContext = pe }
+                        }
+                    });
                 }
             }
             catch (Exception openFileError)

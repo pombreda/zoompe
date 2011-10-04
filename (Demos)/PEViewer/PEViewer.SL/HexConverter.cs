@@ -5,23 +5,18 @@ using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Markup;
 
-namespace PEViewer
+namespace PEViewer.SL
 {
-    public sealed class HexConverter : MarkupExtension, IValueConverter
+    public sealed class HexConverter : IValueConverter
     {
-        public override object ProvideValue(IServiceProvider serviceProvider)
-        {
-            return this;
-        }
-
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value == null || Equals(value, string.Empty))
                 return string.Empty;
 
-            ulong num = System.Convert.ToUInt64(value);
+            ulong num = System.Convert.ToUInt64(value, culture);
 
-            return num.ToString("X") + "h";
+            return num.ToString("X", culture) + "h";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -31,7 +26,7 @@ namespace PEViewer
                 return null;
 
             str = str.Trim();
-            if(str.Length==0)
+            if (str.Length == 0)
                 return null;
 
             ulong num;
@@ -53,7 +48,7 @@ namespace PEViewer
                 }
             }
 
-            return System.Convert.ChangeType(num, targetType);
+            return System.Convert.ChangeType(num, targetType, culture);
         }
     }
 }
