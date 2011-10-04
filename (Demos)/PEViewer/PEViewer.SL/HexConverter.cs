@@ -16,7 +16,11 @@ namespace PEViewer.SL
 
             ulong num = System.Convert.ToUInt64(value, culture);
 
-            return num.ToString("X", culture) + "h";
+            string format = parameter as string;
+            if (string.IsNullOrEmpty(format))
+                format = "X";
+
+            return num.ToString(format, culture) + "h";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

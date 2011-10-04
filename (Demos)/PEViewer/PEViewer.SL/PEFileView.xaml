@@ -11,7 +11,6 @@
     <UserControl.Resources>
 
         <local:HexConverter x:Key="HexConverter"/>
-        <local:PEHeaderOffsetConverter x:Key="PEHeaderOffsetConverter"/>
         
         <System:Double x:Key="TinyFontSize">10</System:Double>
         <System:Double x:Key="TitleFontSize">20</System:Double>
@@ -270,7 +269,7 @@
                 FontWeight="Bold" Foreground="Silver"/>
         </Border>
 
-        <TextBlock Text="{Binding DosHeader.lfanew, Converter={StaticResource PEHeaderOffsetConverter}}"
+        <TextBlock Text="{Binding DosHeader.lfanew, Converter={StaticResource HexConverter}, ConverterParameter=X4}"
             Grid.Row="9"
             Style="{StaticResource HeaderAddress}" />
 
