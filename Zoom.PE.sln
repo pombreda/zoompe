@@ -36,7 +36,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetroFileDetails", "(Demos)
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrintImports", "(Demos)\PrintImports\PrintImports.csproj", "{35216C79-713F-4EF2-9DA3-45CF5A12A978}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PEViewer.SL", "(Demos)\PEViewer\PEViewer.SL\PEViewer.SL.csproj", "{CA87FB12-76D7-46BC-BA7C-81F534704CCA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PEViewer", "(Demos)\PEViewer\PEViewer.SL\PEViewer.csproj", "{CA87FB12-76D7-46BC-BA7C-81F534704CCA}"
 EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
