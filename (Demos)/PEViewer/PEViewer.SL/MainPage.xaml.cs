@@ -12,7 +12,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Mi.PE;
 
-namespace PEViewer.SL
+namespace PEViewer
 {
     public partial class MainPage : UserControl
     {
