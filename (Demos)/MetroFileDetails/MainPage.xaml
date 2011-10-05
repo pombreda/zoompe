@@ -4,10 +4,14 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    d:DesignHeight="300" d:DesignWidth="600">
+    d:DesignHeight="300" d:DesignWidth="600"
+    AllowDrop="True">
     
     <Grid x:Name="LayoutRoot" Background="#FF0C0C0C">
-        <Button Name="parseButton" Content="Parse" Click="parseButton_Click"/>
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Button Name="openFileButton" Content="Open" Click="openFileButton_Click"/>
+            <Button Name="parseButton" Content="Parse" Click="parseButton_Click"/>
+        </StackPanel>
     </Grid>
     
 </UserControl>
