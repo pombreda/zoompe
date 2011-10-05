@@ -100,7 +100,7 @@
     <None Include="Properties\AppManifest.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Mi.PE\Mi.PE.csproj">
+    <ProjectReference Include="..\..\Mi.PE\Mi.PE.csproj">
       <Project>{222fc27a-6d9c-4200-befa-15f5c94a3f4e}</Project>
       <Name>Mi.PE</Name>
     </ProjectReference>
