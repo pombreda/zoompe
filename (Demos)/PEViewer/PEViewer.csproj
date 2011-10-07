@@ -73,6 +73,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="FieldEditor.cs" />
     <Compile Include="HexEditor.cs" />
     <Compile Include="HexConverter.cs" />
     <Compile Include="MainPage.xaml.cs">

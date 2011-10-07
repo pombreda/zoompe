@@ -12,7 +12,7 @@
         <local:HexConverter x:Key="HexConverter"/>
         
         <System:Double x:Key="TinyFontSize">10</System:Double>
-        <System:Double x:Key="TitleFontSize">20</System:Double>
+        <System:Double x:Key="TitleFontSize">24</System:Double>
         <System:Double x:Key="DetailsFontSize">9</System:Double>
 
         <Style x:Key="HeaderAddress" TargetType="TextBlock">
@@ -44,12 +44,62 @@
             <Setter Property="BorderBrush" Value="Gold"/>
             <Setter Property="BorderThickness" Value="1"/>
         </Style>
-
+        
         <Style x:Key="CaptionTextBlock" TargetType="TextBlock">
             <Setter Property="FontSize" Value="{StaticResource DetailsFontSize}"/>
             <Setter Property="Margin" Value="0"/>
             <Setter Property="Padding" Value="5,0"/>
             <Setter Property="Opacity" Value="0.5"/>
+        </Style>
+
+        <Style x:Key="NumberEditor" TargetType="local:FieldEditor">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="local:FieldEditor">
+                        <Grid>
+                            <ContentControl
+                                Content="{TemplateBinding Header}"
+                                ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                Opacity="0.5"
+                                Padding="5,0"/>
+
+                            <local:NumberEditor
+                                Number="{Binding Content, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                Padding="5,0"
+                                Background="Transparent"
+                                BorderBrush="{x:Null}"
+                                BorderThickness="0"
+                                TextAlignment="Right"/>
+
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="HexEditor" TargetType="local:FieldEditor">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="local:FieldEditor">
+                        <Grid>
+                            <ContentControl
+                                Content="{TemplateBinding Header}"
+                                ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                Opacity="0.5"
+                                Padding="5,0"/>
+
+                            <local:HexEditor
+                                Number="{Binding Content, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                Padding="5,0"
+                                Background="Transparent"
+                                BorderBrush="{x:Null}"
+                                BorderThickness="0"
+                                TextAlignment="Right"/>
+
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
 
         <Style x:Key="ValueElement" TargetType="Control">
@@ -62,10 +112,6 @@
         </Style>
 
         <Style x:Key="ValueTextBox" TargetType="TextBox" BasedOn="{StaticResource ValueElement}">
-            <Setter Property="TextAlignment" Value="Right"/>
-        </Style>
-
-        <Style x:Key="ValueNumberEditor" TargetType="local:NumberEditor" BasedOn="{StaticResource ValueElement}">
             <Setter Property="TextAlignment" Value="Right"/>
         </Style>
 
@@ -119,104 +165,107 @@
             Style="{StaticResource HeaderTitle}"/>
 
         <Grid Grid.Column="1" Grid.Row="1">
-            <Border Style="{StaticResource YellowFill}"/>
-            <TextBlock Text="Signature" Style="{StaticResource CaptionTextBlock}"/>
-            <TextBox Text="{Binding DosHeader.Signature}" Style="{StaticResource ValueTextBox}"/>
+            <Border Grid.Column="1" Grid.Row="1" Style="{StaticResource YellowFill}"/>
+            <local:FieldEditor
+                Header="Signature"
+                Content="{Binding DosHeader.Signature, Mode=TwoWay}"/>
         </Grid>
 
-        <Grid Grid.Column="1" Grid.Row="2">
-            <TextBlock Text="cblp" Style="{StaticResource CaptionTextBlock}"/>
-            <TextBox Text="{Binding DosHeader.cblp}" Style="{StaticResource ValueTextBox}"/>
-        </Grid>
+        <local:FieldEditor Style="{StaticResource NumberEditor}"
+            Grid.Column="1" Grid.Row="2"
+            Header="cblp"
+            Content="{Binding DosHeader.cblp, Mode=TwoWay}"/>
 
-        <Grid Grid.Column="1" Grid.Row="3">
-            <TextBlock Text="cp" Style="{StaticResource CaptionTextBlock}"/>
-            <TextBox Text="{Binding DosHeader.cp}" Style="{StaticResource ValueTextBox}"/>
-        </Grid>
+        <local:FieldEditor Style="{StaticResource NumberEditor}"
+            Grid.Column="1" Grid.Row="3"
+            Header="cp"
+            Content="{Binding DosHeader.cp, Mode=TwoWay}"/>
 
-        <Grid Grid.Column="1" Grid.Row="4">
-            <TextBlock Text="crlc" Style="{StaticResource CaptionTextBlock}"/>
-            <TextBox Text="{Binding DosHeader.crlc}" Style="{StaticResource ValueTextBox}"/>
-        </Grid>
+        <local:FieldEditor Style="{StaticResource NumberEditor}"
+            Grid.Column="1" Grid.Row="4"
+            Header="crlc"
+            Content="{Binding DosHeader.crlc, Mode=TwoWay}"/>
 
-        <Grid Grid.Column="1" Grid.Row="5">
-            <TextBlock Text="cparhdr" Style="{StaticResource CaptionTextBlock}"/>
-            <TextBox Text="{Binding DosHeader.cparhdr}" Style="{StaticResource ValueTextBox}"/>
-        </Grid>
+        <local:FieldEditor Style="{StaticResource NumberEditor}"
+            Grid.Column="1" Grid.Row="5"
+            Header="cparhdr"
+            Content="{Binding DosHeader.cparhdr, Mode=TwoWay}"/>
 
-        <Grid Grid.Column="3" Grid.Row="1">
-            <TextBlock Text="minalloc" Style="{StaticResource CaptionTextBlock}"/>
-            <TextBox Text="{Binding DosHeader.minalloc}" Style="{StaticResource ValueTextBox}"/>
-        </Grid>
+        <local:FieldEditor Style="{StaticResource NumberEditor}"
+            Grid.Column="3" Grid.Row="1"
+            Header="minalloc"
+            Content="{Binding DosHeader.minalloc, Mode=TwoWay}"/>
 
-        <Grid Grid.Column="3" Grid.Row="2">
-            <TextBlock Text="maxalloc" Style="{StaticResource CaptionTextBlock}"/>
-            <TextBox Text="{Binding DosHeader.maxalloc}" Style="{StaticResource ValueTextBox}"/>
-        </Grid>
+        <local:FieldEditor Style="{StaticResource NumberEditor}"
+            Grid.Column="3" Grid.Row="2"
+            Header="maxalloc"
+            Content="{Binding DosHeader.maxalloc, Mode=TwoWay}"/>
 
         <Border Grid.Column="3" Grid.Row="3" Grid.RowSpan="2"
             Style="{StaticResource YellowBorder}"/>
 
-        <Grid Grid.Column="3" Grid.Row="3">
-            <TextBlock Text="ss" Style="{StaticResource CaptionTextBlock}"/>
-            <TextBox Text="{Binding DosHeader.ss, Converter={StaticResource HexConverter}}" Style="{StaticResource ValueTextBox}"/>
-        </Grid>
+        <local:FieldEditor Style="{StaticResource HexEditor}"
+            Grid.Column="3" Grid.Row="3"
+            Header="ss"
+            Content="{Binding DosHeader.ss, Mode=TwoWay}"/>
 
-        <Grid Grid.Column="3" Grid.Row="4">
-            <TextBlock Text="sp" Style="{StaticResource CaptionTextBlock}"/>
-            <TextBox Text="{Binding DosHeader.sp, Converter={StaticResource HexConverter}}" Style="{StaticResource ValueTextBox}"/>
-        </Grid>
+        <local:FieldEditor Style="{StaticResource HexEditor}"
+            Grid.Column="3" Grid.Row="4"
+            Header="sp"
+            Content="{Binding DosHeader.sp, Mode=TwoWay}"/>
 
-        <Grid Grid.Column="3" Grid.Row="5">
-            <TextBlock Text="csum" Style="{StaticResource CaptionTextBlock}"/>
-            <TextBox Text="{Binding DosHeader.csum}" Style="{StaticResource ValueTextBox}"/>
-        </Grid>
+        <local:FieldEditor Style="{StaticResource NumberEditor}"
+            Grid.Column="3" Grid.Row="5"
+            Header="csum"
+            Content="{Binding DosHeader.csum, Mode=TwoWay}"/>
 
         <Border Grid.Column="5" Grid.Row="1" Grid.RowSpan="2"
             Style="{StaticResource YellowBorder}"/>
 
-        <Grid Grid.Column="5" Grid.Row="1">
-            <TextBlock Text="cs" Style="{StaticResource CaptionTextBlock}"/>
-            <TextBox Text="{Binding DosHeader.cs, Converter={StaticResource HexConverter}}" Style="{StaticResource ValueTextBox}"/>
-        </Grid>
+        <local:FieldEditor Style="{StaticResource HexEditor}"
+            Grid.Column="5" Grid.Row="1"
+            Header="cs"
+            Content="{Binding DosHeader.cs, Mode=TwoWay}"/>
 
-        <Grid Grid.Column="5" Grid.Row="2">
-            <TextBlock Text="ip" Style="{StaticResource CaptionTextBlock}"/>
-            <TextBox Text="{Binding DosHeader.maxalloc, Converter={StaticResource HexConverter}}" Style="{StaticResource ValueTextBox}"/>
-        </Grid>
+        <local:FieldEditor Style="{StaticResource HexEditor}"
+            Grid.Column="5" Grid.Row="2"
+            Header="ip"
+            Content="{Binding DosHeader.ip, Mode=TwoWay}"/>
 
-        <Grid Grid.Column="5" Grid.Row="3">
-            <TextBlock Text="lfarlc" Style="{StaticResource CaptionTextBlock}"/>
-            <TextBox Text="{Binding DosHeader.lfarlc, Converter={StaticResource HexConverter}}" Style="{StaticResource ValueTextBox}"/>
-        </Grid>
+        <local:FieldEditor Style="{StaticResource HexEditor}"
+            Grid.Column="5" Grid.Row="3"
+            Header="lfarlc"
+            Content="{Binding DosHeader.lfarlc, Mode=TwoWay}"/>
 
-        <Grid Grid.Column="5" Grid.Row="4">
-            <TextBlock Text="ovno" Style="{StaticResource CaptionTextBlock}"/>
-            <TextBox Text="{Binding DosHeader.ovno}" Style="{StaticResource ValueTextBox}"/>
-        </Grid>
+        <local:FieldEditor Style="{StaticResource NumberEditor}"
+            Grid.Column="5" Grid.Row="4"
+            Header="ovno"
+            Content="{Binding DosHeader.ovno, Mode=TwoWay}"/>
 
-        <Grid Grid.Column="5" Grid.Row="5">
-            <TextBlock Text="res1" Style="{StaticResource CaptionTextBlock}"/>
-            <TextBox Text="{Binding DosHeader.res1}" Style="{StaticResource ValueTextBox}"/>
-        </Grid>
+        <local:FieldEditor Style="{StaticResource NumberEditor}"
+            Grid.Column="5" Grid.Row="5"
+            Header="res1"
+            Content="{Binding DosHeader.res1, Mode=TwoWay}"/>
 
-        <Grid Grid.Column="7" Grid.Row="1">
-            <TextBlock Text="oemid" Style="{StaticResource CaptionTextBlock}"/>
-            <TextBox Text="{Binding DosHeader.oemid}" Style="{StaticResource ValueTextBox}"/>
-        </Grid>
+        <local:FieldEditor Style="{StaticResource NumberEditor}"
+            Grid.Column="7" Grid.Row="1"
+            Header="oemid"
+            Content="{Binding DosHeader.oemid, Mode=TwoWay}"/>
 
-        <Grid Grid.Column="7" Grid.Row="2">
-            <TextBlock Text="oeminfo" Style="{StaticResource CaptionTextBlock}"/>
-            <TextBox Text="{Binding DosHeader.oeminfo}" Style="{StaticResource ValueTextBox}"/>
-        </Grid>
+        <local:FieldEditor Style="{StaticResource NumberEditor}"
+            Grid.Column="7" Grid.Row="2"
+            Header="oeminfo"
+            Content="{Binding DosHeader.oeminfo, Mode=TwoWay}"/>
 
+        
         <Grid Grid.Column="7" Grid.Row="3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <TextBlock Text="R0" Style="{StaticResource CaptionTextBlock}"/>
-            <TextBox Text="{Binding DosHeader.ReservedNumber0}" Style="{StaticResource ValueTextBox}"/>
+            <local:FieldEditor Style="{StaticResource NumberEditor}"
+                Header="R0"
+                Content="{Binding DosHeader.ReservedNumber0, Mode=TwoWay}"/>
         </Grid>
 
         <Grid Grid.Column="7" Grid.Row="4">
@@ -224,8 +273,9 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <TextBlock Text="R1" Style="{StaticResource CaptionTextBlock}"/>
-            <TextBox Text="{Binding DosHeader.ReservedNumber1}" Style="{StaticResource ValueTextBox}"/>
+            <local:FieldEditor Style="{StaticResource NumberEditor}"
+                Header="R1"
+                Content="{Binding DosHeader.ReservedNumber1, Mode=TwoWay}"/>
         </Grid>
 
         <Grid Grid.Column="7" Grid.Row="5">
@@ -233,8 +283,9 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <TextBlock Text="R2" Style="{StaticResource CaptionTextBlock}"/>
-            <TextBox Text="{Binding DosHeader.ReservedNumber2}" Style="{StaticResource ValueTextBox}"/>
+            <local:FieldEditor Style="{StaticResource NumberEditor}"
+                Header="R2"
+                Content="{Binding DosHeader.ReservedNumber2, Mode=TwoWay}"/>
         </Grid>
 
         <Grid Grid.Column="7" Grid.Row="3">
@@ -242,10 +293,10 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Grid Grid.Column="1">
-                <TextBlock Text="R3" Style="{StaticResource CaptionTextBlock}"/>
-                <TextBox Text="{Binding DosHeader.ReservedNumber3}" Style="{StaticResource ValueTextBox}"/>
-            </Grid>
+            <local:FieldEditor Style="{StaticResource NumberEditor}"
+                Grid.Column="1"
+                Header="R3"
+                Content="{Binding DosHeader.ReservedNumber3, Mode=TwoWay}"/>
         </Grid>
 
         <Grid Grid.Column="7" Grid.Row="4">
@@ -253,19 +304,19 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Grid Grid.Column="1">
-                <TextBlock Text="R4" Style="{StaticResource CaptionTextBlock}"/>
-                <TextBox Text="{Binding DosHeader.ReservedNumber4}" Style="{StaticResource ValueTextBox}"/>
-            </Grid>
+            <local:FieldEditor Style="{StaticResource NumberEditor}"
+                Grid.Column="1"
+                Header="R4"
+                Content="{Binding DosHeader.ReservedNumber4, Mode=TwoWay}"/>
         </Grid>
 
         <Border Style="{StaticResource HorizontalSeparatorBorder}"
             Grid.Column="1" Grid.Row="6"/>
 
-        <Grid Grid.Column="1" Grid.Row="7">
-            <TextBlock Text="lfanew" Style="{StaticResource CaptionTextBlock}"/>
-            <local:HexEditor Number="{Binding DosHeader.lfanew, Mode=TwoWay}" Style="{StaticResource ValueNumberEditor}"/>
-        </Grid>
+        <local:FieldEditor Style="{StaticResource HexEditor}"
+            Grid.Column="1" Grid.Row="7"
+            Header="lfanew"
+            Content="{Binding DosHeader.lfanew, Mode=TwoWay}"/>
 
         <Border
             Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="7"
@@ -285,28 +336,30 @@
 
         <Grid Grid.Column="1" Grid.Row="10">
             <Border Style="{StaticResource YellowFill}"/>
-            <TextBlock Text="Signature" Style="{StaticResource CaptionTextBlock}"/>
-            <TextBox Text="{Binding PEHeader.PESignature}" Style="{StaticResource ValueTextBox}"/>
+            <local:FieldEditor
+                Header="PESignature"
+                Content="{Binding PEHeader.PESignature, Mode=TwoWay}"/>
         </Grid>
 
-        <Grid Grid.Column="1" Grid.Row="11">
-            <TextBlock Text="Machine" Style="{StaticResource CaptionTextBlock}"/>
-            <TextBox Text="{Binding PEHeader.Machine}" Style="{StaticResource ValueTextBox}"/>
-        </Grid>
+        <local:FieldEditor
+            Grid.Column="1" Grid.Row="11"
+            Header="Machine"
+            Content="{Binding PEHeader.Machine, Mode=TwoWay}"/>
 
-        <Grid Grid.Column="1" Grid.Row="12">
-            <TextBlock Text="NumberOfSections" Style="{StaticResource CaptionTextBlock}"/>
-            <TextBox Text="{Binding PEHeader.NumberOfSections}" Style="{StaticResource ValueTextBox}"/>
-        </Grid>
+        <local:FieldEditor Style="{StaticResource NumberEditor}"
+            Grid.Column="1" Grid.Row="12"
+            Header="NumberOfSections"
+            Content="{Binding PEHeader.NumberOfSections, Mode=TwoWay}"/>
 
-        <Grid Grid.Column="1" Grid.Row="13">
-            <TextBlock Text="Timestamp" Style="{StaticResource CaptionTextBlock}"/>
-            <TextBox Text="{Binding PEHeader.Timestamp}" Style="{StaticResource ValueTextBox}"/>
-        </Grid>
+        <local:FieldEditor
+            Grid.Column="1" Grid.Row="13"
+            Header="Timestamp"
+            Content="{Binding PEHeader.Timestamp, Mode=TwoWay}"/>
 
-        <Grid Grid.Column="1" Grid.Row="14">
-            <TextBlock Text="SizeOfOptionalHeader" Style="{StaticResource CaptionTextBlock}"/>
-            <TextBox Text="{Binding PEHeader.SizeOfOptionalHeader}" Style="{StaticResource ValueTextBox}"/>
-        </Grid>
+        <local:FieldEditor
+            Grid.Column="1" Grid.Row="14"
+            Header="SizeOfOptionalHeader"
+            Content="{Binding PEHeader.SizeOfOptionalHeader, Mode=TwoWay}"/>
+
     </Grid>
 </UserControl>

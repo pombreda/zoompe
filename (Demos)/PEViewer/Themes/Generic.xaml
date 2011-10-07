@@ -13,10 +13,41 @@
                             BorderThickness="{TemplateBinding BorderThickness}">
                         <TextBox
                             Text="{Binding Text, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+                            Background="Transparent"
+                            BorderBrush="{x:Null}"
+                            BorderThickness="0"
+                            Padding="{TemplateBinding Padding}"
+                            Margin="0"
                             TextAlignment="{TemplateBinding TextAlignment}"/>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
+    
+    <Style TargetType="local:FieldEditor">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="local:FieldEditor">
+                    <Grid>
+                        <ContentControl
+                            Content="{TemplateBinding Header}"
+                            ContentTemplate="{TemplateBinding HeaderTemplate}"
+                            Opacity="0.5"
+                            Padding="5,0"/>
+
+                        <TextBox
+                            Text="{Binding Content, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                            Padding="5,0"
+                            Background="Transparent"
+                            BorderBrush="{x:Null}"
+                            BorderThickness="0"
+                            TextAlignment="Right"/>
+                        
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
 </ResourceDictionary>
