@@ -52,13 +52,20 @@
             <Setter Property="Opacity" Value="0.5"/>
         </Style>
 
-        <Style x:Key="ValueTextBox" TargetType="TextBox">
+        <Style x:Key="ValueElement" TargetType="Control">
             <Setter Property="FontSize" Value="{StaticResource DetailsFontSize}"/>
             <Setter Property="Margin" Value="0"/>
             <Setter Property="Padding" Value="5,0"/>
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="BorderBrush" Value="Transparent"/>
+        </Style>
+
+        <Style x:Key="ValueTextBox" TargetType="TextBox" BasedOn="{StaticResource ValueElement}">
+            <Setter Property="TextAlignment" Value="Right"/>
+        </Style>
+
+        <Style x:Key="ValueNumberEditor" TargetType="local:NumberEditor" BasedOn="{StaticResource ValueElement}">
             <Setter Property="TextAlignment" Value="Right"/>
         </Style>
 
@@ -257,7 +264,7 @@
 
         <Grid Grid.Column="1" Grid.Row="7">
             <TextBlock Text="lfanew" Style="{StaticResource CaptionTextBlock}"/>
-            <TextBox Text="{Binding DosHeader.lfanew, Converter={StaticResource HexConverter}}" Style="{StaticResource ValueTextBox}"/>
+            <local:HexEditor Number="{Binding DosHeader.lfanew, Mode=TwoWay}" Style="{StaticResource ValueNumberEditor}"/>
         </Grid>
 
         <Border
