@@ -10,22 +10,22 @@ using System.Windows.Controls;
 
 namespace PEViewer
 {
-    public class NumberEditor : Control
+    public class TypedEditor : Control
     {
         bool skipCoercion;
 
-        public NumberEditor()
+        public TypedEditor()
         {
-            this.DefaultStyleKey = typeof(NumberEditor);
+            this.DefaultStyleKey = typeof(TypedEditor);
         }
 
-        public object Number { get { return (object)GetValue(NumberProperty); } set { SetValue(NumberProperty, value); } }
-        #region NumberProperty = DependencyProperty.Register(...)
-        public static readonly DependencyProperty NumberProperty = DependencyProperty.Register(
-            "Number",
+        public object Value { get { return (object)GetValue(ValueProperty); } set { SetValue(ValueProperty, value); } }
+        #region ValueProperty = DependencyProperty.Register(...)
+        public static readonly DependencyProperty ValueProperty = DependencyProperty.Register(
+            "Value",
             typeof(object),
-            typeof(NumberEditor),
-            new PropertyMetadata((sender, e) => ((NumberEditor)sender).OnNumberChanged((object)e.OldValue)));
+            typeof(TypedEditor),
+            new PropertyMetadata((sender, e) => ((TypedEditor)sender).OnValueChanged((object)e.OldValue)));
         #endregion
 
         public string Text { get { return (string)GetValue(TextProperty); } set { SetValue(TextProperty, value); } }
@@ -33,8 +33,8 @@ namespace PEViewer
         public static readonly DependencyProperty TextProperty = DependencyProperty.Register(
             "Text",
             typeof(string),
-            typeof(NumberEditor),
-            new PropertyMetadata((sender, e) => ((NumberEditor)sender).OnTextChanged((string)e.OldValue)));
+            typeof(TypedEditor),
+            new PropertyMetadata((sender, e) => ((TypedEditor)sender).OnTextChanged((string)e.OldValue)));
         #endregion
 
         public TextAlignment TextAlignment { get { return (TextAlignment)GetValue(TextAlignmentProperty); } set { SetValue(TextAlignmentProperty, value); } }
@@ -42,11 +42,11 @@ namespace PEViewer
         public static readonly DependencyProperty TextAlignmentProperty = DependencyProperty.Register(
             "TextAlignment",
             typeof(TextAlignment),
-            typeof(NumberEditor),
+            typeof(TypedEditor),
             new PropertyMetadata((sender, e) => { }));
         #endregion
 
-        private void OnNumberChanged(object oldNumber)
+        private void OnValueChanged(object oldNumber)
         {
             if (skipCoercion)
                 return;
@@ -54,7 +54,7 @@ namespace PEViewer
             skipCoercion = true;
             try
             {
-                UpdateTextFromNumber();
+                UpdateTextFromValue();
             }
             finally
             {
@@ -70,14 +70,14 @@ namespace PEViewer
             skipCoercion = true;
             try
             {
-                UpdateNumberFromText();
+                UpdateValueFromText();
 
                 this.Dispatcher.BeginInvoke(delegate
                 {
                     skipCoercion = true;
                     try
                     {
-                        UpdateTextFromNumber();
+                        UpdateTextFromValue();
                     }
                     finally
                     {
@@ -110,15 +110,27 @@ namespace PEViewer
             }
         }
 
-        protected virtual void UpdateTextFromNumber()
+        protected virtual void UpdateTextFromValue()
         {
-            string newText = this.Number == null ? null : this.Number.ToString();
+            string newText = this.Value == null ? null : this.Value.ToString();
+
+            newText = newText == null ? null :
+                newText.Replace(" ", Environment.NewLine);
+
             this.Text = newText;
         }
 
-        protected virtual void UpdateNumberFromText()
+        protected virtual void UpdateValueFromText()
         {
-            this.Number = Convert.ChangeType(this.Text, this.Number.GetType(), CultureInfo.CurrentCulture);
+            try
+            {
+                this.Value = Convert.ChangeType(this.Text, this.Value.GetType(), CultureInfo.CurrentCulture);
+            }
+            catch
+            {
+                if (this.Value is Enum)
+                    this.Value = Enum.Parse(this.Value.GetType(), this.Text, true);
+            }
         }
     }
 }

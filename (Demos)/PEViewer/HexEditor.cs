@@ -10,29 +10,29 @@ using System.Windows.Markup;
 
 namespace PEViewer
 {
-    public class HexEditor : NumberEditor
+    public class HexEditor : TypedEditor
     {
-        protected override void UpdateTextFromNumber()
+        protected override void UpdateTextFromValue()
         {
-            if (this.Number == null)
+            if (this.Value == null)
             {
                 this.Text = null;
                 return;
             }
 
-            ulong extendedNumber = (ulong)Convert.ChangeType(this.Number, typeof(ulong), CultureInfo.CurrentCulture);
+            ulong extendedNumber = (ulong)Convert.ChangeType(this.Value, typeof(ulong), CultureInfo.CurrentCulture);
 
             string newText = extendedNumber.ToString("X") + "h";
 
             this.Text = newText;
         }
 
-        protected override void UpdateNumberFromText()
+        protected override void UpdateValueFromText()
         {
             string text = this.Text;
             if (text == null)
             {
-                this.Number = null;
+                this.Value = null;
                 return;
             }
 
@@ -43,7 +43,7 @@ namespace PEViewer
 
             ulong extendedNumber = ulong.Parse(text, NumberStyles.HexNumber);
 
-            this.Number = Convert.ChangeType(extendedNumber, this.Number.GetType(), CultureInfo.CurrentCulture);
+            this.Value = Convert.ChangeType(extendedNumber, this.Value.GetType(), CultureInfo.CurrentCulture);
         }
     }
 }

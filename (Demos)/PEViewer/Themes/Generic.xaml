@@ -4,10 +4,11 @@
     xmlns:local="clr-namespace:PEViewer">
 
 
-    <Style TargetType="local:NumberEditor">
+    <Style TargetType="local:TypedEditor">
+        <Setter Property="IsTabStop" Value="False"/>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="local:NumberEditor">
+                <ControlTemplate TargetType="local:TypedEditor">
                     <Border Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}">
@@ -17,6 +18,7 @@
                             BorderBrush="{x:Null}"
                             BorderThickness="0"
                             Padding="{TemplateBinding Padding}"
+                            TextWrapping="Wrap"
                             Margin="0"
                             TextAlignment="{TemplateBinding TextAlignment}"/>
                     </Border>
@@ -26,6 +28,7 @@
     </Style>
     
     <Style TargetType="local:FieldEditor">
+        <Setter Property="IsTabStop" Value="False"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="local:FieldEditor">
@@ -34,10 +37,11 @@
                             Content="{TemplateBinding Header}"
                             ContentTemplate="{TemplateBinding HeaderTemplate}"
                             Opacity="0.5"
-                            Padding="5,0"/>
+                            Padding="5,0"
+                            IsTabStop="False"/>
 
-                        <TextBox
-                            Text="{Binding Content, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                        <local:TypedEditor
+                            Value="{Binding Content, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                             Padding="5,0"
                             Background="Transparent"
                             BorderBrush="{x:Null}"

@@ -79,7 +79,7 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="NumberEditor.cs" />
+    <Compile Include="TypedEditor.cs" />
     <Compile Include="PEFileView.xaml.cs">
       <DependentUpon>PEFileView.xaml</DependentUpon>
     </Compile>
