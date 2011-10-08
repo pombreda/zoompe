@@ -351,7 +351,7 @@
 
         <local:FieldEditor
             Grid.Column="1" Grid.Row="15"
-            Header="SizeOfOptionalHeader"
+            Header="SzOptionalHeader"
             Content="{Binding PEHeader.SizeOfOptionalHeader, Mode=TwoWay}"/>
 
         <TextBlock Text="Characteristics"
@@ -360,7 +360,7 @@
             Opacity="0.5"/>
 
         <local:TypedEditor
-            Grid.Column="3" Grid.Row="11" Grid.RowSpan="7"
+            Grid.Column="3" Grid.Row="11" Grid.RowSpan="6"
             Value="{Binding PEHeader.Characteristics, Mode=TwoWay}"
             Padding="5,0"
             Background="Transparent"
@@ -382,20 +382,23 @@
                 Header="PEMagic"
                 Content="{Binding OptionalHeader.PEMagic, Mode=TwoWay}"/>
         </Grid>
+        
+        <Border Style="{StaticResource YellowBorder}"
+            Grid.Column="1" Grid.Row="19" Grid.RowSpan="2"/>
 
         <local:FieldEditor
             Grid.Column="1" Grid.Row="19"
-            Header="LinkerVer."
+            Header="LinkerVersion"
             Content="{Binding OptionalHeader.MajorLinkerVersion, Mode=TwoWay}"/>
 
         <local:FieldEditor
             Grid.Column="1" Grid.Row="20"
-            Header="LinkerVer."
+            Header="LinkerVersion"
             Content="{Binding OptionalHeader.MinorLinkerVersion, Mode=TwoWay}"/>
 
         <local:FieldEditor
             Grid.Column="1" Grid.Row="21"
-            Header="SizeOfCode"
+            Header="SzCode"
             Content="{Binding OptionalHeader.SizeOfCode, Mode=TwoWay}"/>
 
         <local:FieldEditor
@@ -438,49 +441,61 @@
             Header="FileAlignment"
             Content="{Binding OptionalHeader.FileAlignment, Mode=TwoWay}"/>
 
+        <Border Style="{StaticResource YellowBorder}"
+            Grid.Column="5" Grid.Row="18" Grid.RowSpan="2"
+            BorderThickness="1,1,1,0.2"/>
+
+        <Border Style="{StaticResource YellowBorder}"
+            Grid.Column="5" Grid.Row="20" Grid.RowSpan="2"
+            BorderThickness="1,0.2,1,0.2"/>
+
+        <Border Style="{StaticResource YellowBorder}"
+            Grid.Column="5" Grid.Row="22" Grid.RowSpan="2"
+            BorderThickness="1,0.2,1,1"/>
+
         <local:FieldEditor
             Grid.Column="5" Grid.Row="18"
-            Header="OSVer."
+            Header="OSVersion"
             Content="{Binding OptionalHeader.MajorOperatingSystemVersion, Mode=TwoWay}"/>
 
         <local:FieldEditor
             Grid.Column="5" Grid.Row="19"
-            Header="OSVer."
+            Header="OSVersion"
             Content="{Binding OptionalHeader.MinorOperatingSystemVersion, Mode=TwoWay}"/>
 
         <local:FieldEditor
             Grid.Column="5" Grid.Row="20"
-            Header="ImgVer."
+            Header="ImgVersion"
             Content="{Binding OptionalHeader.MajorImageVersion, Mode=TwoWay}"/>
 
         <local:FieldEditor
             Grid.Column="5" Grid.Row="21"
-            Header="ImgVer."
+            Header="ImgVersion"
             Content="{Binding OptionalHeader.MinorImageVersion, Mode=TwoWay}"/>
 
         <local:FieldEditor
             Grid.Column="5" Grid.Row="22"
-            Header="SubsystemVer."
+            Header="SubsystemVersion"
             Content="{Binding OptionalHeader.MajorSubsystemVersion, Mode=TwoWay}"/>
 
         <local:FieldEditor
             Grid.Column="5" Grid.Row="23"
-            Header="SubsystemVer."
+            Header="SubsystemVersion"
             Content="{Binding OptionalHeader.MinorSubsystemVersion, Mode=TwoWay}"/>
 
         <local:FieldEditor
             Grid.Column="7" Grid.Row="18"
-            Header="Win32Ver."
+            Header="Win32Version"
             Content="{Binding OptionalHeader.Win32VersionValue, Mode=TwoWay}"/>
 
         <local:FieldEditor
             Grid.Column="7" Grid.Row="19"
-            Header="SizeOfImage"
+            Header="SzImage"
             Content="{Binding OptionalHeader.SizeOfImage, Mode=TwoWay}"/>
 
         <local:FieldEditor
             Grid.Column="7" Grid.Row="20"
-            Header="SizeOfHeaders"
+            Header="SzHeaders"
             Content="{Binding OptionalHeader.SizeOfHeaders, Mode=TwoWay}"/>
 
         <local:FieldEditor
@@ -537,7 +552,7 @@
 
         <local:FieldEditor
             Grid.Column="7" Grid.Row="26"
-            Header="NumRvaSz"
+            Header="NumRvaAndSizes"
             Content="{Binding OptionalHeader.NumberOfRvaAndSizes, Mode=TwoWay}"/>
 
     </Grid>
