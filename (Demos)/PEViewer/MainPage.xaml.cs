@@ -69,7 +69,7 @@ namespace PEViewer
 
             tabControl.Items.Add(tabItem);
 
-            tabControl.SelectedIndex = tabControl.Items.Count;
+            tabControl.SelectedIndex = tabControl.Items.Count - 1;
         }
 
         private void openFileButton_Click(object sender, RoutedEventArgs e)
