@@ -20,6 +20,37 @@ namespace PEViewer
         {
             InitializeComponent();
 
+            var streamInfo = Application.GetResourceStream(new Uri("PEViewer.dll", UriKind.Relative));
+
+            var pe = PEFile.FromStream(streamInfo.Stream);
+
+
+            {
+                var tabControl = LayoutRoot.Children.OfType<TabControl>().FirstOrDefault();
+                if (tabControl == null)
+                {
+                    tabControl = new TabControl();
+                    LayoutRoot.Children.Add(tabControl);
+                }
+
+                var tabItem = new TabItem
+                {
+                    Header = "Self",
+                    Content = new ScrollViewer
+                    {
+                        VerticalScrollBarVisibility = ScrollBarVisibility.Auto,
+                        HorizontalScrollBarVisibility = ScrollBarVisibility.Auto,
+                        //Background = Brushes.White,
+                        Padding = new Thickness(5),
+                        Content = new PEFileView { DataContext = pe }
+                    }
+                };
+
+                tabControl.Items.Add(tabItem);
+
+                tabControl.SelectedIndex = tabControl.Items.Count - 1;
+            }
+
             this.Drop += new DragEventHandler(MainPage_Drop);
         }
 
