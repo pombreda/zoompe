@@ -3,5 +3,10 @@
   <OutOfBrowserSettings.WindowSettings>
     <WindowSettings Title="PE Viewer" />
   </OutOfBrowserSettings.WindowSettings>
-  <OutOfBrowserSettings.Icons />
+  <OutOfBrowserSettings.Icons>
+    <Icon Size="16,16">enamel-16.png</Icon>
+    <Icon Size="32,32">enamel-32.png</Icon>
+    <Icon Size="48,48">enamel-48.png</Icon>
+    <Icon Size="64,64">enamel-64.png</Icon>
+  </OutOfBrowserSettings.Icons>
 </OutOfBrowserSettings>

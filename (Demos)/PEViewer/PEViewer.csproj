@@ -22,7 +22,7 @@
     <XapFilename>PEViewer.xap</XapFilename>
     <SilverlightManifestTemplate>Properties\AppManifest.xml</SilverlightManifestTemplate>
     <SilverlightAppEntry>PEViewer.App</SilverlightAppEntry>
-    <TestPageFileName>PEViewer.SLTestPage.html</TestPageFileName>
+    <TestPageFileName>PEViewer.TestPage.html</TestPageFileName>
     <CreateTestPage>true</CreateTestPage>
     <ValidateXaml>true</ValidateXaml>
     <EnableOutOfBrowser>true</EnableOutOfBrowser>
@@ -115,8 +115,18 @@
     <None Include="Properties\OutOfBrowserSettings.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\..\%28Tests%29\%28SamplePEs%29\console.anycpu.exe">
-      <Link>console.anycpu.exe</Link>
+    <Content Include="enamel-16.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="enamel-32.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Resource Include="enamel-23.png" />
+    <Content Include="enamel-48.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="enamel-64.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
