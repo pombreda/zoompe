@@ -15,43 +15,5 @@ namespace Mi.PE.PEFormat
             var dosHeader = new PEFile().DosHeader;
             Assert.IsNull(dosHeader.Stub);
         }
-
-        [TestMethod]
-        public void SetLfanew_GreaterThanDosHeaderSize_CreatesStub()
-        {
-            var dosHeader = new PEFile().DosHeader;
-            dosHeader.lfanew = DosHeader.HeaderSize + 4;
-            Assert.AreEqual(4, dosHeader.Stub.Length, "Stub size");
-        }
-
-        [TestMethod]
-        public void SetLfanew_LesserThanDosHeaderSize_NullsStub()
-        {
-            var dosHeader = new PEFile().DosHeader;
-            dosHeader.lfanew = DosHeader.HeaderSize + 4;
-            dosHeader.Stub[0] = 123;
-            dosHeader.lfanew = DosHeader.HeaderSize - 4;
-            Assert.IsNull(dosHeader.Stub);
-        }
-
-        [TestMethod]
-        public void SetLfanew_Different_ClearStub()
-        {
-            var dosHeader = new PEFile().DosHeader;
-            dosHeader.lfanew = DosHeader.HeaderSize + 4;
-            dosHeader.Stub[0] = 123;
-            dosHeader.lfanew = DosHeader.HeaderSize + 3;
-            Assert.AreEqual(0, dosHeader.Stub[0], "Stub[0]");
-        }
-
-        [TestMethod]
-        public void SetLfanew_Same_KeepsStub()
-        {
-            var dosHeader = new PEFile().DosHeader;
-            dosHeader.lfanew = DosHeader.HeaderSize + 4;
-            dosHeader.Stub[0] = 123;
-            dosHeader.lfanew = DosHeader.HeaderSize + 4;
-            Assert.AreEqual((byte)123, dosHeader.Stub[0], "Stub[0]");
-        }
     }
 }

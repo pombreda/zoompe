@@ -80,7 +80,7 @@ namespace Mi.PE
             var pe = reader.Read(stream);
 
             Assert.AreEqual((uint)DosHeader.HeaderSize, pe.DosHeader.lfanew);
-            Assert.AreEqual(0, pe.DosHeader.Stub.Length);
+            Assert.IsNull(pe.DosHeader.Stub);
         }
 
         [ExpectedException(typeof(BadImageFormatException))]

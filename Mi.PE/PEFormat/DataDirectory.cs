@@ -7,10 +7,10 @@ namespace Mi.PE.PEFormat
     public struct DataDirectory
     {
         /// <summary> The relative virtual address of the table. </summary>
-        public uint VirtualAddress { get; set; }
+        public uint VirtualAddress;
 
         /// <summary> The size of the table, in bytes. </summary>
-        public uint Size { get; set; }
+        public uint Size;
 
         #region ToString
         public override string ToString()

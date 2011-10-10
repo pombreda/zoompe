@@ -100,8 +100,11 @@ namespace Mi.PE
                 dosHeader.ReservedNumber4 = reader.ReadUInt32();
                 dosHeader.lfanew = reader.ReadUInt32();
 
-                if (dosHeader.Stub != null)
+                if (dosHeader.lfanew > DosHeader.HeaderSize)
+                {
+                    dosHeader.Stub = new byte[dosHeader.lfanew - DosHeader.HeaderSize];
                     reader.ReadBytes(dosHeader.Stub, 0, dosHeader.Stub.Length);
+                }
             }
 
             static void ReadPEHeader(BinaryStreamReader reader, PEHeader peHeader)

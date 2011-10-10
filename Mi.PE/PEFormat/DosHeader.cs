@@ -11,104 +11,66 @@ namespace Mi.PE.PEFormat
     {
         public const int HeaderSize = 64;
 
-        enum StubSizeImplication
-        {
-            UpdateStubFromLfanew,
-            UpdateLfanewFromStub,
-            Consistent
-        }
-
-        uint m_lfanew;
-        byte[] m_Stub;
-
-        internal DosHeader()
-        {
-        }
-
         /// <summary> Magic number. </summary>
-        public MZSignature Signature { get; set; }
+        public MZSignature Signature;
 
         /// <summary> Bytes on last page of file. </summary>
-        public ushort cblp { get; set; }
+        public ushort cblp;
 
         /// <summary> Pages in file. </summary>
-        public ushort cp { get; set; }
+        public ushort cp;
 
         /// <summary> Relocations. </summary>
-        public ushort crlc { get; set; }
+        public ushort crlc;
 
         /// <summary> Size of header in paragraphs. </summary>
-        public ushort cparhdr { get; set; }
+        public ushort cparhdr;
 
         /// <summary> Minimum extra paragraphs needed. </summary>
-        public ushort minalloc { get; set; }
+        public ushort minalloc;
 
         /// <summary> Maximum extra paragraphs needed. </summary>
-        public ushort maxalloc { get; set; }
+        public ushort maxalloc;
 
         /// <summary> Initial (relative) SS value. </summary>
-        public ushort ss { get; set; }
+        public ushort ss;
 
         /// <summary> Initial SP value. </summary>
-        public ushort sp { get; set; }
+        public ushort sp;
 
         /// <summary> Checksum. </summary>
-        public ushort csum { get; set; }
+        public ushort csum;
 
         /// <summary>  Initial IP value. </summary>
-        public ushort ip { get; set; }
+        public ushort ip;
 
         /// <summary> Initial (relative) CS value. </summary>
-        public ushort cs { get; set; }
+        public ushort cs;
 
         /// <summary> File address of relocation table. </summary>
-        public ushort lfarlc { get; set; }
+        public ushort lfarlc;
 
         /// <summary> Overlay number. </summary>
-        public ushort ovno { get; set; }
+        public ushort ovno;
 
-        public ulong res1 { get; set; }
+        public ulong res1;
 
         /// <summary> OEM identifier (for e_oeminfo). </summary>
-        public ushort oemid { get; set; }
+        public ushort oemid;
 
         /// <summary> OEM information; e_oemid specific. </summary>
-        public ushort oeminfo { get; set; }
+        public ushort oeminfo;
 
-        public uint ReservedNumber0 { get; set; }
-        public uint ReservedNumber1 { get; set; }
-        public uint ReservedNumber2 { get; set; }
-        public uint ReservedNumber3 { get; set; }
-        public uint ReservedNumber4 { get; set; }
+        public uint ReservedNumber0;
+        public uint ReservedNumber1;
+        public uint ReservedNumber2;
+        public uint ReservedNumber3;
+        public uint ReservedNumber4;
 
         /// <summary> File address of PE header. </summary>
-        public uint lfanew
-        {
-            get { return m_lfanew; }
-            set
-            {
-                if (value == this.lfanew)
-                    return;
+        public uint lfanew;
 
-                this.m_lfanew = value;
-
-                if (this.m_Stub != null
-                    && this.m_Stub.Length != value)
-                    this.m_Stub = null;
-            }
-        }
-
-        public byte[] Stub
-        {
-            get
-            {
-                if (m_Stub == null
-                    && (int)this.lfanew - DosHeader.HeaderSize >= 0)
-                    m_Stub = new byte[(int)this.lfanew - DosHeader.HeaderSize];
-
-                return this.m_Stub;
-            }
-        }
+        public byte[] Stub;
 
         #region ToString
         public override string ToString()
