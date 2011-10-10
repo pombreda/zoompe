@@ -70,9 +70,9 @@ namespace Mi.PE
 
             static void ReadDosHeader(BinaryStreamReader reader, DosHeader dosHeader)
             {
-                dosHeader.Signature = (MZSignature)reader.ReadInt16();
-                if (dosHeader.Signature != MZSignature.MZ)
-                    throw new BadImageFormatException("MZ signature expected, " + ((ushort)dosHeader.Signature).ToString("X4") + "h found.");
+                var signature = (MZSignature)reader.ReadInt16();
+                if (signature != MZSignature.MZ)
+                    throw new BadImageFormatException("MZ signature expected, " + ((ushort)signature).ToString("X4") + "h found.");
 
                 dosHeader.cblp = reader.ReadUInt16();
                 dosHeader.cp = reader.ReadUInt16();

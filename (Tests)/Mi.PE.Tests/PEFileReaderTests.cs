@@ -323,7 +323,6 @@ namespace Mi.PE
 
         static void AssertDosHeader(DosHeader dosHeader)
         {
-            Assert.AreEqual(MZSignature.MZ, dosHeader.Signature);
             Assert.AreEqual(144, dosHeader.cblp);
             Assert.AreEqual(3, dosHeader.cp);
             Assert.AreEqual(0, dosHeader.crlc);

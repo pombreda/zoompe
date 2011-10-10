@@ -44,7 +44,7 @@ namespace Mi.PE
 
             static void WriteDosHeader(DosHeader dosHeader, BinaryStreamWriter writer)
             {
-                writer.WriteUInt16((ushort)dosHeader.Signature);
+                writer.WriteUInt16((ushort)MZSignature.MZ);
                 writer.WriteUInt16(dosHeader.cblp);
                 writer.WriteUInt16(dosHeader.cp);
                 writer.WriteUInt16(dosHeader.crlc);

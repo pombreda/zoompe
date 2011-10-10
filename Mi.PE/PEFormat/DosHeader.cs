@@ -11,9 +11,6 @@ namespace Mi.PE.PEFormat
     {
         public const int HeaderSize = 64;
 
-        /// <summary> Magic number. </summary>
-        public MZSignature Signature;
-
         /// <summary> Bytes on last page of file. </summary>
         public ushort cblp;
 
@@ -75,17 +72,7 @@ namespace Mi.PE.PEFormat
         #region ToString
         public override string ToString()
         {
-            var result = new StringBuilder("[");
-            if (this.Signature == MZSignature.MZ)
-                result.Append("MZ");
-            else
-                result.Append("Signature:"+((ushort)this.Signature).ToString("X4")+"h");
-
-            result.Append("].lfanew=");
-            result.Append(this.lfanew.ToString("X"));
-            result.Append('h');
-
-            return result.ToString();
+            return "[MZ].lfanew=" + this.lfanew.ToString("X") + "h";
         }
         #endregion
     }

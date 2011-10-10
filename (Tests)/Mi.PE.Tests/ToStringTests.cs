@@ -27,20 +27,9 @@ namespace Mi.PE
         public void DosHeader()
         {
             var dh = new PEFile().DosHeader;
-            dh.Signature = MZSignature.MZ;
             dh.lfanew = 0x102;
 
             Assert.AreEqual("[MZ].lfanew=102h", dh.ToString());
-        }
-
-        [TestMethod]
-        public void DosHeader_NotMZ()
-        {
-            var dh = new PEFile().DosHeader;
-            dh.Signature = (MZSignature)0x41;
-            dh.lfanew = 0x102;
-
-            Assert.AreEqual("[Signature:0041h].lfanew=102h", dh.ToString());
         }
 
         [TestMethod]
