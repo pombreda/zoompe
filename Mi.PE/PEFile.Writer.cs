@@ -77,7 +77,7 @@ namespace Mi.PE
 
             static void WritePEHeader(PEHeader peHeader, BinaryStreamWriter writer)
             {
-                writer.WriteUInt32((uint)peHeader.PESignature);
+                writer.WriteUInt32((uint)PESignature.PE00);
                 writer.WriteUInt16((ushort)peHeader.Machine);
                 writer.WriteUInt16(peHeader.NumberOfSections);
 

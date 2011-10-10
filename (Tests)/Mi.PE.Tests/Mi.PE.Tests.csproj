@@ -48,7 +48,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Internal\BinaryStreamWriterTests.cs" />
-    <Compile Include="PEFileTests.cs" />
     <Compile Include="PEFileWriterTests.cs" />
     <Compile Include="PEFormat\DosHeaderTests.cs" />
     <Compile Include="PEFormat\OptionalHeaderTests.cs" />

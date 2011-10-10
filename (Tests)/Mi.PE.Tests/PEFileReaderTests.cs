@@ -300,7 +300,6 @@ namespace Mi.PE
 
         static void AssertPEHeader(PEHeader header, Machine machine, ushort expectedNumberOfSections, DateTime timestampOffset, bool isExe)
         {
-            Assert.AreEqual(PESignature.PE00, header.PESignature, "PE signature");
             Assert.AreEqual(machine, header.Machine, "machine");
 
             Assert.AreEqual(expectedNumberOfSections, header.NumberOfSections, "number of sections");

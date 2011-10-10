@@ -12,13 +12,12 @@ namespace Mi.PE
     public sealed partial class PEFile
     {
         readonly DosHeader m_DosHeader = new DosHeader();
-        readonly PEHeader m_PEHeader;
+        readonly PEHeader m_PEHeader = new PEHeader();
         readonly OptionalHeader m_OptionalHeader = new OptionalHeader();
         internal ReadOnlyCollection<Section> m_Sections;
 
         public PEFile()
         {
-            this.m_PEHeader = new PEHeader(this);
         }
 
         public DosHeader DosHeader { get { return m_DosHeader; } }

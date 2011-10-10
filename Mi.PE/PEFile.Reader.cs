@@ -109,7 +109,10 @@ namespace Mi.PE
 
             static void ReadPEHeader(BinaryStreamReader reader, PEHeader peHeader)
             {
-                peHeader.PESignature = (PESignature)reader.ReadInt32();
+                var peSignature = (PESignature)reader.ReadUInt32();
+                if (peSignature != PESignature.PE00)
+                    throw new BadImageFormatException("PE00 signature expected, " + ((ushort)peSignature).ToString("X8") + "h found.");
+
                 peHeader.Machine = (Machine)reader.ReadInt16();
                 peHeader.NumberOfSections = reader.ReadUInt16();
                 uint timestampNum = reader.ReadUInt32();

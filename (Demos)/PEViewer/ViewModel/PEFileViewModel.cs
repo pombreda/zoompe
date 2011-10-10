@@ -16,18 +16,6 @@ namespace PEViewer.ViewModel
             this.m_PEFile = peFile;
         }
 
-        public MZSignature Signature
-        {
-            get { return m_PEFile.DosHeader.Signature; }
-            set
-            {
-                if (value == m_PEFile.DosHeader.Signature)
-                    return;
-
-                m_PEFile.DosHeader.Signature = value;
-                OnPropertyChanged("Signature");
-            }
-        }
         public ushort cblp
         {
             get { return m_PEFile.DosHeader.cblp; }
