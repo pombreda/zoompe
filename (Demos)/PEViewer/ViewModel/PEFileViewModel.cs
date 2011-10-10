@@ -9,7 +9,12 @@ namespace PEViewer.ViewModel
 {
     public sealed class PEFileViewModel : INotifyPropertyChanged
     {
-        PEFile m_PEFile;
+        readonly PEFile m_PEFile;
+
+        PEFileViewModel(PEFile peFile)
+        {
+            this.m_PEFile = peFile;
+        }
 
         public MZSignature Signature
         {
