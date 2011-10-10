@@ -164,38 +164,38 @@
                 <Border Grid.Column="1" Grid.Row="1" Style="{StaticResource YellowFill}"/>
                 <local:FieldEditor
                     Header="Signature"
-                    Content="{Binding DosHeader.Signature, Mode=TwoWay}"/>
+                    Content="{Binding Signature, Mode=TwoWay}"/>
             </Grid>
 
             <local:FieldEditor
                 Grid.Column="1" Grid.Row="2"
                 Header="cblp"
-                Content="{Binding DosHeader.cblp, Mode=TwoWay}"/>
+                Content="{Binding cblp, Mode=TwoWay}"/>
 
             <local:FieldEditor
                 Grid.Column="1" Grid.Row="3"
                 Header="cp"
-                Content="{Binding DosHeader.cp, Mode=TwoWay}"/>
+                Content="{Binding cp, Mode=TwoWay}"/>
 
             <local:FieldEditor
                 Grid.Column="1" Grid.Row="4"
                 Header="crlc"
-                Content="{Binding DosHeader.crlc, Mode=TwoWay}"/>
+                Content="{Binding crlc, Mode=TwoWay}"/>
 
             <local:FieldEditor
                 Grid.Column="1" Grid.Row="5"
                 Header="cparhdr"
-                Content="{Binding DosHeader.cparhdr, Mode=TwoWay}"/>
+                Content="{Binding cparhdr, Mode=TwoWay}"/>
 
             <local:FieldEditor
                 Grid.Column="3" Grid.Row="1"
                 Header="minalloc"
-                Content="{Binding DosHeader.minalloc, Mode=TwoWay}"/>
+                Content="{Binding minalloc, Mode=TwoWay}"/>
 
             <local:FieldEditor
                 Grid.Column="3" Grid.Row="2"
                 Header="maxalloc"
-                Content="{Binding DosHeader.maxalloc, Mode=TwoWay}"/>
+                Content="{Binding maxalloc, Mode=TwoWay}"/>
 
             <Border Grid.Column="3" Grid.Row="3" Grid.RowSpan="2"
                 Style="{StaticResource YellowBorder}"/>
@@ -203,17 +203,17 @@
             <local:FieldEditor Style="{StaticResource HexEditor}"
                 Grid.Column="3" Grid.Row="3"
                 Header="ss"
-                Content="{Binding DosHeader.ss, Mode=TwoWay}"/>
+                Content="{Binding ss, Mode=TwoWay}"/>
 
             <local:FieldEditor Style="{StaticResource HexEditor}"
                 Grid.Column="3" Grid.Row="4"
                 Header="sp"
-                Content="{Binding DosHeader.sp, Mode=TwoWay}"/>
+                Content="{Binding sp, Mode=TwoWay}"/>
 
             <local:FieldEditor
                 Grid.Column="3" Grid.Row="5"
                 Header="csum"
-                Content="{Binding DosHeader.csum, Mode=TwoWay}"/>
+                Content="{Binding csum, Mode=TwoWay}"/>
 
             <Border Grid.Column="5" Grid.Row="1" Grid.RowSpan="2"
                 Style="{StaticResource YellowBorder}"/>
@@ -221,37 +221,37 @@
             <local:FieldEditor Style="{StaticResource HexEditor}"
                 Grid.Column="5" Grid.Row="1"
                 Header="cs"
-                Content="{Binding DosHeader.cs, Mode=TwoWay}"/>
+                Content="{Binding cs, Mode=TwoWay}"/>
 
             <local:FieldEditor Style="{StaticResource HexEditor}"
                 Grid.Column="5" Grid.Row="2"
                 Header="ip"
-                Content="{Binding DosHeader.ip, Mode=TwoWay}"/>
+                Content="{Binding ip, Mode=TwoWay}"/>
 
             <local:FieldEditor Style="{StaticResource HexEditor}"
                 Grid.Column="5" Grid.Row="3"
                 Header="lfarlc"
-                Content="{Binding DosHeader.lfarlc, Mode=TwoWay}"/>
+                Content="{Binding lfarlc, Mode=TwoWay}"/>
 
             <local:FieldEditor
                 Grid.Column="5" Grid.Row="4"
                 Header="ovno"
-                Content="{Binding DosHeader.ovno, Mode=TwoWay}"/>
+                Content="{Binding ovno, Mode=TwoWay}"/>
 
             <local:FieldEditor
                 Grid.Column="5" Grid.Row="5"
                 Header="res1"
-                Content="{Binding DosHeader.res1, Mode=TwoWay}"/>
+                Content="{Binding res1, Mode=TwoWay}"/>
 
             <local:FieldEditor
                 Grid.Column="7" Grid.Row="1"
                 Header="oemid"
-                Content="{Binding DosHeader.oemid, Mode=TwoWay}"/>
+                Content="{Binding oemid, Mode=TwoWay}"/>
 
             <local:FieldEditor
                 Grid.Column="7" Grid.Row="2"
                 Header="oeminfo"
-                Content="{Binding DosHeader.oeminfo, Mode=TwoWay}"/>
+                Content="{Binding oeminfo, Mode=TwoWay}"/>
 
         
             <Grid Grid.Column="7" Grid.Row="3">
@@ -261,7 +261,7 @@
                 </Grid.ColumnDefinitions>
                 <local:FieldEditor
                     Header="R0"
-                    Content="{Binding DosHeader.ReservedNumber0, Mode=TwoWay}"/>
+                    Content="{Binding ReservedNumber0, Mode=TwoWay}"/>
             </Grid>
 
             <Grid Grid.Column="7" Grid.Row="4">
@@ -271,7 +271,7 @@
                 </Grid.ColumnDefinitions>
                 <local:FieldEditor
                     Header="R1"
-                    Content="{Binding DosHeader.ReservedNumber1, Mode=TwoWay}"/>
+                    Content="{Binding ReservedNumber1, Mode=TwoWay}"/>
             </Grid>
 
             <Grid Grid.Column="7" Grid.Row="5">
@@ -281,7 +281,7 @@
                 </Grid.ColumnDefinitions>
                 <local:FieldEditor
                     Header="R2"
-                    Content="{Binding DosHeader.ReservedNumber2, Mode=TwoWay}"/>
+                    Content="{Binding ReservedNumber2, Mode=TwoWay}"/>
             </Grid>
 
             <Grid Grid.Column="7" Grid.Row="3">
@@ -292,7 +292,7 @@
                 <local:FieldEditor
                     Grid.Column="1"
                     Header="R3"
-                    Content="{Binding DosHeader.ReservedNumber3, Mode=TwoWay}"/>
+                    Content="{Binding ReservedNumber3, Mode=TwoWay}"/>
             </Grid>
 
             <Grid Grid.Column="7" Grid.Row="4">
@@ -303,7 +303,7 @@
                 <local:FieldEditor
                     Grid.Column="1"
                     Header="R4"
-                    Content="{Binding DosHeader.ReservedNumber4, Mode=TwoWay}"/>
+                    Content="{Binding ReservedNumber4, Mode=TwoWay}"/>
             </Grid>
 
             <Border Style="{StaticResource HorizontalSeparatorBorder}"
@@ -312,7 +312,7 @@
             <local:FieldEditor Style="{StaticResource HexEditor}"
                 Grid.Column="1" Grid.Row="7"
                 Header="lfanew"
-                Content="{Binding DosHeader.lfanew, Mode=TwoWay}"/>
+                Content="{Binding lfanew, Mode=TwoWay}"/>
 
             <Border
                 Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="7"
@@ -322,7 +322,7 @@
                     FontWeight="Bold" Foreground="Silver"/>
             </Border>
 
-            <TextBlock Text="{Binding DosHeader.lfanew, Converter={StaticResource HexConverter}, ConverterParameter=X4}"
+            <TextBlock Text="{Binding lfanew, Converter={StaticResource HexConverter}, ConverterParameter=X4}"
                 Grid.Row="9"
                 Style="{StaticResource HeaderAddress}" />
 
@@ -334,18 +334,18 @@
                 <Border Style="{StaticResource YellowFill}"/>
                 <local:FieldEditor
                     Header="PESignature"
-                    Content="{Binding PEHeader.PESignature, Mode=TwoWay}"/>
+                    Content="{Binding PESignature, Mode=TwoWay}"/>
             </Grid>
 
             <local:FieldEditor
                 Grid.Column="1" Grid.Row="11"
                 Header="Machine"
-                Content="{Binding PEHeader.Machine, Mode=TwoWay}"/>
+                Content="{Binding Machine, Mode=TwoWay}"/>
 
             <local:FieldEditor
                 Grid.Column="1" Grid.Row="12"
                 Header="NumberOfSections"
-                Content="{Binding PEHeader.NumberOfSections, Mode=TwoWay}"/>
+                Content="{Binding NumberOfSections, Mode=TwoWay}"/>
 
             <TextBlock
                 Grid.Column="1" Grid.Row="13"
@@ -355,12 +355,12 @@
                 Grid.Column="1" Grid.Row="13"
                 Grid.RowSpan="2"
                 Header="Timestamp"
-                Content="{Binding PEHeader.Timestamp, Mode=TwoWay}"/>
+                Content="{Binding Timestamp, Mode=TwoWay}"/>
 
             <local:FieldEditor
                 Grid.Column="1" Grid.Row="15"
                 Header="SzOptionalHeader"
-                Content="{Binding PEHeader.SizeOfOptionalHeader, Mode=TwoWay}"/>
+                Content="{Binding SizeOfOptionalHeader, Mode=TwoWay}"/>
 
             <TextBlock Text="Characteristics"
                 Grid.Column="3" Grid.Row="10"
@@ -369,14 +369,14 @@
 
             <local:TypedEditor
                 Grid.Column="3" Grid.Row="11" Grid.RowSpan="6"
-                Value="{Binding PEHeader.Characteristics, Mode=TwoWay}"
+                Value="{Binding Characteristics, Mode=TwoWay}"
                 Padding="5,0"
                 Background="Transparent"
                 BorderBrush="{x:Null}"
                 BorderThickness="0"
                 TextAlignment="Right"/>
 
-            <TextBlock Text="{Binding DosHeader.lfanew, Converter={StaticResource HexConverter}, ConverterParameter=X4}"
+            <TextBlock Text="{Binding OptionalHeaderOffset, Converter={StaticResource HexConverter}, ConverterParameter=X4}"
                 Grid.Row="17"
                 Style="{StaticResource HeaderAddress}" />
 
@@ -388,7 +388,7 @@
                 <Border Grid.Column="1" Grid.Row="1" Style="{StaticResource YellowFill}"/>
                 <local:FieldEditor
                     Header="PEMagic"
-                    Content="{Binding OptionalHeader.PEMagic, Mode=TwoWay}"/>
+                    Content="{Binding PEMagic, Mode=TwoWay}"/>
             </Grid>
         
             <Border Style="{StaticResource YellowBorder}"
@@ -397,57 +397,57 @@
             <local:FieldEditor
                 Grid.Column="1" Grid.Row="19"
                 Header="LinkerVersion"
-                Content="{Binding OptionalHeader.MajorLinkerVersion, Mode=TwoWay}"/>
+                Content="{Binding MajorLinkerVersion, Mode=TwoWay}"/>
 
             <local:FieldEditor
                 Grid.Column="1" Grid.Row="20"
                 Header="LinkerVersion"
-                Content="{Binding OptionalHeader.MinorLinkerVersion, Mode=TwoWay}"/>
+                Content="{Binding MinorLinkerVersion, Mode=TwoWay}"/>
 
             <local:FieldEditor
                 Grid.Column="1" Grid.Row="21"
                 Header="SzCode"
-                Content="{Binding OptionalHeader.SizeOfCode, Mode=TwoWay}"/>
+                Content="{Binding SizeOfCode, Mode=TwoWay}"/>
 
             <local:FieldEditor
                 Grid.Column="1" Grid.Row="22"
                 Header="SzInitData"
-                Content="{Binding OptionalHeader.SizeOfInitializedData, Mode=TwoWay}"/>
+                Content="{Binding SizeOfInitializedData, Mode=TwoWay}"/>
 
             <local:FieldEditor
                 Grid.Column="1" Grid.Row="23"
                 Header="SzUninitData"
-                Content="{Binding OptionalHeader.SizeOfUninitializedData, Mode=TwoWay}"/>
+                Content="{Binding SizeOfUninitializedData, Mode=TwoWay}"/>
 
             <local:FieldEditor Style="{StaticResource HexEditor}"
                 Grid.Column="3" Grid.Row="18"
                 Header="AddrEntry"
-                Content="{Binding OptionalHeader.AddressOfEntryPoint, Mode=TwoWay}"/>
+                Content="{Binding AddressOfEntryPoint, Mode=TwoWay}"/>
 
             <local:FieldEditor Style="{StaticResource HexEditor}"
                 Grid.Column="3" Grid.Row="19"
                 Header="BaseOfCode"
-                Content="{Binding OptionalHeader.BaseOfCode, Mode=TwoWay}"/>
+                Content="{Binding BaseOfCode, Mode=TwoWay}"/>
 
             <local:FieldEditor Style="{StaticResource HexEditor}"
                 Grid.Column="3" Grid.Row="20"
                 Header="BaseOfData"
-                Content="{Binding OptionalHeader.BaseOfData, Mode=TwoWay}"/>
+                Content="{Binding BaseOfData, Mode=TwoWay}"/>
 
             <local:FieldEditor Style="{StaticResource HexEditor}"
                 Grid.Column="3" Grid.Row="21"
                 Header="ImageBase"
-                Content="{Binding OptionalHeader.ImageBase, Mode=TwoWay}"/>
+                Content="{Binding ImageBase, Mode=TwoWay}"/>
 
             <local:FieldEditor Style="{StaticResource HexEditor}"
                 Grid.Column="3" Grid.Row="22"
                 Header="SectionAlignment"
-                Content="{Binding OptionalHeader.SectionAlignment, Mode=TwoWay}"/>
+                Content="{Binding SectionAlignment, Mode=TwoWay}"/>
 
             <local:FieldEditor Style="{StaticResource HexEditor}"
                 Grid.Column="3" Grid.Row="23"
                 Header="FileAlignment"
-                Content="{Binding OptionalHeader.FileAlignment, Mode=TwoWay}"/>
+                Content="{Binding FileAlignment, Mode=TwoWay}"/>
 
             <Border Style="{StaticResource YellowBorder}"
                 Grid.Column="5" Grid.Row="18" Grid.RowSpan="2"
@@ -464,52 +464,52 @@
             <local:FieldEditor
                 Grid.Column="5" Grid.Row="18"
                 Header="OSVersion"
-                Content="{Binding OptionalHeader.MajorOperatingSystemVersion, Mode=TwoWay}"/>
+                Content="{Binding MajorOperatingSystemVersion, Mode=TwoWay}"/>
 
             <local:FieldEditor
                 Grid.Column="5" Grid.Row="19"
                 Header="OSVersion"
-                Content="{Binding OptionalHeader.MinorOperatingSystemVersion, Mode=TwoWay}"/>
+                Content="{Binding MinorOperatingSystemVersion, Mode=TwoWay}"/>
 
             <local:FieldEditor
                 Grid.Column="5" Grid.Row="20"
                 Header="ImgVersion"
-                Content="{Binding OptionalHeader.MajorImageVersion, Mode=TwoWay}"/>
+                Content="{Binding MajorImageVersion, Mode=TwoWay}"/>
 
             <local:FieldEditor
                 Grid.Column="5" Grid.Row="21"
                 Header="ImgVersion"
-                Content="{Binding OptionalHeader.MinorImageVersion, Mode=TwoWay}"/>
+                Content="{Binding MinorImageVersion, Mode=TwoWay}"/>
 
             <local:FieldEditor
                 Grid.Column="5" Grid.Row="22"
                 Header="SubsystemVersion"
-                Content="{Binding OptionalHeader.MajorSubsystemVersion, Mode=TwoWay}"/>
+                Content="{Binding MajorSubsystemVersion, Mode=TwoWay}"/>
 
             <local:FieldEditor
                 Grid.Column="5" Grid.Row="23"
                 Header="SubsystemVersion"
-                Content="{Binding OptionalHeader.MinorSubsystemVersion, Mode=TwoWay}"/>
+                Content="{Binding MinorSubsystemVersion, Mode=TwoWay}"/>
 
             <local:FieldEditor
                 Grid.Column="7" Grid.Row="18"
                 Header="Win32Version"
-                Content="{Binding OptionalHeader.Win32VersionValue, Mode=TwoWay}"/>
+                Content="{Binding Win32VersionValue, Mode=TwoWay}"/>
 
             <local:FieldEditor
                 Grid.Column="7" Grid.Row="19"
                 Header="SzImage"
-                Content="{Binding OptionalHeader.SizeOfImage, Mode=TwoWay}"/>
+                Content="{Binding SizeOfImage, Mode=TwoWay}"/>
 
             <local:FieldEditor
                 Grid.Column="7" Grid.Row="20"
                 Header="SzHeaders"
-                Content="{Binding OptionalHeader.SizeOfHeaders, Mode=TwoWay}"/>
+                Content="{Binding SizeOfHeaders, Mode=TwoWay}"/>
 
             <local:FieldEditor
                 Grid.Column="7" Grid.Row="21"
                 Header="CheckSum"
-                Content="{Binding OptionalHeader.CheckSum, Mode=TwoWay}"/>
+                Content="{Binding CheckSum, Mode=TwoWay}"/>
 
             <Border Style="{StaticResource HorizontalSeparatorBorder}"
                 Grid.Column="1" Grid.Row="24"/>
@@ -517,7 +517,7 @@
             <local:FieldEditor
                 Grid.Column="1" Grid.Row="25"
                 Header="Subsystem"
-                Content="{Binding OptionalHeader.Subsystem, Mode=TwoWay}"/>
+                Content="{Binding Subsystem, Mode=TwoWay}"/>
 
             <TextBlock Text="DllCharacteristics"
                 Grid.Column="3" Grid.Row="25"
@@ -526,7 +526,7 @@
 
             <local:TypedEditor
                 Grid.Column="3" Grid.Row="26" Grid.RowSpan="6"
-                Value="{Binding OptionalHeader.DllCharacteristics, Mode=TwoWay}"
+                Value="{Binding DllCharacteristics, Mode=TwoWay}"
                 Padding="5,0"
                 Background="Transparent"
                 BorderBrush="{x:Null}"
@@ -536,32 +536,32 @@
             <local:FieldEditor
                 Grid.Column="5" Grid.Row="25"
                 Header="SzStackReserve"
-                Content="{Binding OptionalHeader.SizeOfStackReserve, Mode=TwoWay}"/>
+                Content="{Binding SizeOfStackReserve, Mode=TwoWay}"/>
 
             <local:FieldEditor
                 Grid.Column="5" Grid.Row="26"
                 Header="SzStackCommit"
-                Content="{Binding OptionalHeader.SizeOfStackCommit, Mode=TwoWay}"/>
+                Content="{Binding SizeOfStackCommit, Mode=TwoWay}"/>
 
             <local:FieldEditor
                 Grid.Column="5" Grid.Row="27"
                 Header="SzHeapReserve"
-                Content="{Binding OptionalHeader.SizeOfHeapReserve, Mode=TwoWay}"/>
+                Content="{Binding SizeOfHeapReserve, Mode=TwoWay}"/>
 
             <local:FieldEditor
                 Grid.Column="5" Grid.Row="28"
                 Header="SzHeapCommit"
-                Content="{Binding OptionalHeader.SizeOfHeapCommit, Mode=TwoWay}"/>
+                Content="{Binding SizeOfHeapCommit, Mode=TwoWay}"/>
 
             <local:FieldEditor
                 Grid.Column="7" Grid.Row="25"
                 Header="LoaderFlags"
-                Content="{Binding OptionalHeader.LoaderFlags, Mode=TwoWay}"/>
+                Content="{Binding LoaderFlags, Mode=TwoWay}"/>
 
             <local:FieldEditor
                 Grid.Column="7" Grid.Row="26"
                 Header="NumRvaAndSizes"
-                Content="{Binding OptionalHeader.NumberOfRvaAndSizes, Mode=TwoWay}"/>
+                Content="{Binding NumberOfRvaAndSizes, Mode=TwoWay}"/>
 
         </Grid>
     </Grid>

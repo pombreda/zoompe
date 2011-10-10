@@ -11,7 +11,7 @@ namespace PEViewer.ViewModel
     {
         readonly PEFile m_PEFile;
 
-        PEFileViewModel(PEFile peFile)
+        public PEFileViewModel(PEFile peFile)
         {
             this.m_PEFile = peFile;
         }

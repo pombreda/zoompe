@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Mi.PE;
+using PEViewer.ViewModel;
 
 namespace PEViewer
 {
@@ -42,7 +43,7 @@ namespace PEViewer
                         HorizontalScrollBarVisibility = ScrollBarVisibility.Auto,
                         //Background = Brushes.White,
                         Padding = new Thickness(5),
-                        Content = new PEFileView { DataContext = pe }
+                        Content = new PEFileView { DataContext = new PEFileViewModel(pe) }
                     }
                 };
 
@@ -94,7 +95,7 @@ namespace PEViewer
                     HorizontalScrollBarVisibility = ScrollBarVisibility.Auto,
                     //Background = Brushes.White,
                     Padding = new Thickness(5),
-                    Content = new PEFileView { DataContext = pe }
+                    Content = new PEFileView { DataContext = new PEFileViewModel(pe) }
                 }
             };
 
