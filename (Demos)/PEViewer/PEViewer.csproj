@@ -116,6 +116,7 @@
     <None Include="Properties\OutOfBrowserSettings.xml" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="enamel-128.png" />
     <Content Include="enamel-16.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

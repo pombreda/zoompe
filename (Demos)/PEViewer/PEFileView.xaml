@@ -101,11 +101,12 @@
     </UserControl.Resources>
     <Grid>
 
-        <Image Source="enamel-64.png"
+        <Image Source="enamel-128.png"
             Grid.Column="8" Grid.ColumnSpan="8"
             VerticalAlignment="Top" HorizontalAlignment="Right"
-            Width="60"
-            Margin="6"/>
+            Width="70"
+            Margin="6"
+            Opacity="0.7"/>
 
         <Grid>
             <Grid.RowDefinitions>
