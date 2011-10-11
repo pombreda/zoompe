@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using Mi.PE;
+using Mi.PE.Internal;
 using Mi.PE.PEFormat;
 
 namespace InsaneSectionLayout
@@ -12,16 +13,29 @@ namespace InsaneSectionLayout
     {
         static void Main(string[] args)
         {
-            var pe = PEFile.FromStream(new MemoryStream(Properties.Resources.console_anycpu));
+            var pe = new PEFile();
+            var stream = new MemoryStream(Properties.Resources.console_anycpu);
+            var reader = new BinaryStreamReader(stream, new byte[1024]);
+            pe.ReadFrom(reader);
+            byte[][] sectionContent = new byte[pe.SectionHeaders.Length][];
+            for (int i = 0; i < sectionContent.Length; i++)
+			{
+                sectionContent[i] = new byte[pe.SectionHeaders[i].SizeOfRawData];
+                reader.Position = pe.SectionHeaders[i].PointerToRawData;
+                reader.ReadBytes(sectionContent[i], 0, sectionContent[i].Length);
+			}
 
-            CombineAllSections(pe);
+            byte[] combinedContent = CombineAllSections(pe, sectionContent);
 
             using (var peFileStream = File.Create("console.anycpu.insane.exe"))
             {
                 pe.WriteTo(peFileStream);
             }
 
-            var pe2 = PEFile.FromStream(new MemoryStream(Properties.Resources.console_anycpu));
+            var pe2 = new PEFile();
+            stream = new MemoryStream(Properties.Resources.console_anycpu);
+            reader = new BinaryStreamReader(stream, new byte[1024]);
+            pe2.ReadFrom(reader);
 
             BreakIntoSmallSections(pe2);
 
@@ -37,7 +51,7 @@ namespace InsaneSectionLayout
             uint lowestVirtualAddress = uint.MaxValue;
             uint highestVirtualAddress = 0;
 
-            foreach (var s in pe.Sections)
+            foreach (var s in pe.SectionHeaders)
             {
                 lowestPointerToRawData = Math.Min(lowestPointerToRawData, s.PointerToRawData);
                 lowestVirtualAddress = Math.Min(lowestVirtualAddress, s.VirtualAddress);
@@ -72,7 +86,7 @@ namespace InsaneSectionLayout
             }
         }
 
-        private static void CombineAllSections(PEFile pe)
+        private static byte[] CombineAllSections(PEFile pe, byte[][] sections)
         {
             uint lowestPointerToRawData = uint.MaxValue;
             uint lowestVirtualAddress = uint.MaxValue;

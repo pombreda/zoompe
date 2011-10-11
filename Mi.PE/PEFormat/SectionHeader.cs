@@ -5,19 +5,9 @@ using System.Text;
 
 namespace Mi.PE.PEFormat
 {
-    public sealed class Section
+    public sealed class SectionHeader
     {
         public const int Size = 40;
-
-        uint m_SizeOfRawData;
-        byte[] m_Content;
-
-        const int MaxNameLength = 8;
-        string m_Name;
-
-        internal Section()
-        {
-        }
 
         /// <summary>
         /// An 8-byte, null-padded UTF-8 string.
@@ -27,18 +17,7 @@ namespace Mi.PE.PEFormat
         /// Executable images do not use a string table
         /// and do not support section names longer than eight characters.
         /// </summary>
-        public string Name
-        {
-            get { return this.m_Name; }
-            set
-            {
-                if (value != null
-                    && value.Length > MaxNameLength)
-                    throw new ArgumentException("Too long a name of section.", "value");
-
-                this.m_Name = value;
-            }
-        }
+        public string Name;
 
         /// <summary>
         /// The total size of the section when loaded into memory, in bytes.
@@ -46,7 +25,7 @@ namespace Mi.PE.PEFormat
         /// This field is valid only for executable images and should be set to 0 for object files.
         /// This field overlaps with <see cref="PhysicalAddress"/>.
         /// </summary>
-        public uint VirtualSize { get; set; }
+        public uint VirtualSize;
 
         /// <summary>
         /// The file address.
@@ -58,7 +37,7 @@ namespace Mi.PE.PEFormat
         /// The address of the first byte of the section when loaded into memory, relative to the image base.
         /// For object files, this is the address of the first byte before relocation is applied.
         /// </summary>
-        public uint VirtualAddress { get; set; }
+        public uint VirtualAddress;
 
         /// <summary>
         /// The size of the initialized data on disk, in bytes.
@@ -68,21 +47,7 @@ namespace Mi.PE.PEFormat
         /// the remainder of the section is filled with zeroes.
         /// If the section contains only uninitialized data, the member is zero.
         /// </summary>
-        public uint SizeOfRawData
-        {
-            get { return this.m_SizeOfRawData; }
-            set
-            {
-                if(value == this.SizeOfRawData)
-                    return;
-
-                m_SizeOfRawData = value;
-
-                if (m_Content != null
-                    && value != m_Content.Length)
-                    m_Content = null;
-            }
-        }
+        public uint SizeOfRawData;
 
         /// <summary>
         /// A file pointer to the first page within the COFF file.
@@ -90,46 +55,35 @@ namespace Mi.PE.PEFormat
         /// of the <see cref="OptionalHeader"/> structure.
         /// If a section contains only uninitialized data, set this member is zero.
         /// </summary>
-        public uint PointerToRawData { get; set; }
+        public uint PointerToRawData;
 
         /// <summary>
         /// A file pointer to the beginning of the relocation entries for the section.
         /// If there are no relocations, this value is zero.
         /// </summary>
-        public uint PointerToRelocations { get; set; }
+        public uint PointerToRelocations;
 
         /// <summary>
         /// A file pointer to the beginning of the line-number entries for the section.
         /// If there are no COFF line numbers, this value is zero.
         /// </summary>
-        public uint PointerToLinenumbers { get; set; }
+        public uint PointerToLinenumbers;
 
         /// <summary>
         /// The number of relocation entries for the section.
         /// This value is zero for executable images.
         /// </summary>
-        public ushort NumberOfRelocations { get; set; }
+        public ushort NumberOfRelocations;
 
         /// <summary>
         /// The number of line-number entries for the section.
         /// </summary>
-        public ushort NumberOfLinenumbers { get; set; }
+        public ushort NumberOfLinenumbers;
 
         /// <summary>
         /// The characteristics of the image.
         /// </summary>
-        public SectionCharacteristics Characteristics { get; set; }
-
-        public byte[] Content
-        {
-            get
-            {
-                if (this.m_Content==null)
-                    this.m_Content = new byte[this.SizeOfRawData];
-
-                return m_Content;
-            }
-        }
+        public SectionCharacteristics Characteristics;
 
         #region ToString
         public override string ToString()

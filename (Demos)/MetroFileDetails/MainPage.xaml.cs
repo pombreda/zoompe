@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Mi.PE;
+using Mi.PE.Internal;
 using Windows.Foundation;
 using Windows.Storage.Pickers;
 using Windows.System.Threading;
@@ -22,7 +23,10 @@ namespace MetroFileDetails
 
         private async void parseButton_Click(object sender, RoutedEventArgs e)
         {
-            var pe = PEFile.FromStream(new MemoryStream(Convert.FromBase64String(encoded)));
+            var pe = new PEFile();
+            var stream = new MemoryStream(Convert.FromBase64String(encoded));
+            var reader = new BinaryStreamReader(stream, new byte[1024]);
+            pe.ReadFrom(reader);
             LayoutRoot.Children.Add(new PEFileView { DataContext = pe });
         }
 
@@ -58,7 +62,8 @@ namespace MetroFileDetails
 
                 var bufStream = new MemoryStream(buf);
 
-                var pe = PEFile.FromStream(bufStream);
+                var pe = new PEFile();
+                pe.ReadFrom(new BinaryStreamReader(bufStream, new byte[32]));
 
                 LayoutRoot.Children.Add(new PEFileView { DataContext = pe });
             }

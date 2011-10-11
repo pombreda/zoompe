@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Mi.PE;
+using Mi.PE.Internal;
 
 class Program
 {
@@ -12,33 +13,33 @@ class Program
     {
         while (true)
         {
-            var reader = new PEFile.Reader();
-
             var dllFiles = 
                 (from f in EnumerateClrCoreDllFiles()
                 where IsDotNet(f)
                 select f).ToArray();
 
-            MeasureManyFilesLoad(reader, dllFiles);
+            MeasureManyFilesLoad(dllFiles);
         }
     }
 
-    private static void MeasureManyFilesLoad(PEFile.Reader reader, string[] dllFiles)
+    private static void MeasureManyFilesLoad(string[] dllFiles)
     {
+        var buffer = new byte[1024];
+
         var start = DateTime.UtcNow;
-        reader.PopulateSectionContent = false;
         foreach (var dll in dllFiles)
         {
             using (var dllStream = File.OpenRead(dll))
             {
-                reader.Read(dllStream);
+                var pe = new PEFile();
+                pe.ReadFrom(new BinaryStreamReader(dllStream, buffer));
             }
         }
 
         TimeSpan headersOnly = DateTime.UtcNow - start;
 
         start = DateTime.UtcNow;
-        reader.PopulateSectionContent = true;
+        reader.ReadSectionContent = true;
         foreach (var dll in dllFiles)
         {
             using (var dllStream = File.OpenRead(dll))

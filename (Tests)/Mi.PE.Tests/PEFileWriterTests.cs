@@ -50,7 +50,7 @@ namespace Mi.PE
 
         private static void AssertReadWriteRoundtrip(byte[] originalBytes, Action<PEFile> modifyPEFile)
         {
-            var pe = PEFile.FromStream(new MemoryStream(originalBytes));
+            var pe = PEFile.ReadFrom(new MemoryStream(originalBytes));
 
             if (modifyPEFile != null)
                 modifyPEFile(pe);
