@@ -10,7 +10,7 @@ using Mi.PE.Internal;
 namespace Mi.PE
 {
     [TestClass]
-    public class PEFileWriterTests
+    public class PEFile_WriteTests
     {
         [TestMethod] public void PreReadAnyCPU() { AssertReadWriteRoundtrip(Properties.Resources.console_anycpu); }
         [TestMethod] public void PreReadX86() { AssertReadWriteRoundtrip(Properties.Resources.console_x86); }

@@ -13,7 +13,7 @@ using Mi.PE.Internal;
 namespace Mi.PE
 {
     [TestClass]
-    public class PEFile_ReaderTests
+    public class PEFile_ReadeTests
     {
         static readonly byte[] DefaultStub = new byte[]
         {
