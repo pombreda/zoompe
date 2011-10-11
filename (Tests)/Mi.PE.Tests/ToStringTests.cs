@@ -85,9 +85,7 @@ namespace Mi.PE
         [TestMethod]
         public void Section()
         {
-            var pe = new PEFile();
-            pe.PEHeader.NumberOfSections = 1;
-            var sh = pe.SectionHeaders[0];
+            var sh = new SectionHeader();
 
             sh.Name = "Dummy";
             sh.PointerToRawData = 0x14e;
