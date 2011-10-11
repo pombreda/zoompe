@@ -5,6 +5,7 @@ using System.Text;
 using System.Reflection;
 using System.IO;
 using System.Reflection.Emit;
+using Mi.PE.Internal;
 
 namespace Mi.PE
 {
@@ -36,13 +37,20 @@ namespace Mi.PE
                 public static readonly byte[] Itanium = EmitHelloWorldConsoleExeAssembly(PortableExecutableKinds.PE32Plus, ImageFileMachine.IA64);
             }
 
-            public static readonly PEFile AnyCPU = reader.Read(new MemoryStream(Bytes.AnyCPU));
-            public static readonly PEFile X86 = reader.Read(new MemoryStream(Bytes.X86));
-            public static readonly PEFile X64 = reader.Read(new MemoryStream(Bytes.X64));
-            public static readonly PEFile Itanium = reader.Read(new MemoryStream(Bytes.Itanium));
+            public static readonly PEFile AnyCPU = Read(Bytes.AnyCPU);
+            public static readonly PEFile X86 = Read(Bytes.X86);
+            public static readonly PEFile X64 = Read(Bytes.X64);
+            public static readonly PEFile Itanium = Read(Bytes.Itanium);
         }
 
-        static readonly PEFile.Reader reader = new PEFile.Reader();
+        static PEFile Read(byte[] bytes)
+        {
+            var stream = new MemoryStream(bytes);
+            var reader = new BinaryStreamReader(stream, new byte[32]);
+            var pe = new PEFile();
+            pe.ReadFrom(reader);
+            return pe;
+        }
 
         private static byte[] EmitLibraryAssembly(PortableExecutableKinds peKind, ImageFileMachine machine)
         {

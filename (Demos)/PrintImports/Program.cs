@@ -38,7 +38,7 @@ namespace PrintImports
 
         private static Mi.PE.Unmanaged.Import[] GetImportsFor(string file)
         {
-            var pe = PEFile.FromStream(new MemoryStream(File.ReadAllBytes(file)));
+            var pe = PEFile.ReadFrom(new MemoryStream(File.ReadAllBytes(file)));
 
             var importDirectory = pe.OptionalHeader.DataDirectories[(int)DataDirectoryKind.ImportSymbols];
 

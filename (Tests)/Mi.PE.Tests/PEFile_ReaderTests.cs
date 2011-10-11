@@ -8,11 +8,12 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using Mi.PE.PEFormat;
 using System.Reflection;
+using Mi.PE.Internal;
 
 namespace Mi.PE
 {
     [TestClass]
-    public class PEFileReaderTests
+    public class PEFile_ReaderTests
     {
         static readonly byte[] DefaultStub = new byte[]
         {
@@ -29,31 +30,12 @@ namespace Mi.PE
             0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
         };
 
-        [TestMethod]
-        public void CallConstructor()
-        {
-            var reader = new PEFile.Reader();
-        }
-
-        [TestMethod]
-        public void PEFileFromStream_SameAsExplicitReader()
-        {
-            byte[] bytes = Properties.Resources.console_anycpu;
-
-            var reader = new PEFile.Reader();
-            var explicitReaderPE = reader.Read(new MemoryStream(bytes));
-
-            var fromStreamPE = PEFile.FromStream(new MemoryStream(bytes));
-
-            Assert.AreEqual(explicitReaderPE.Sections.Count, fromStreamPE.Sections.Count);
-        }
-
         [ExpectedException(typeof(BadImageFormatException))]
         [TestMethod]
         public void ReadDosHeader_InvalidMZ()
         {
-            var reader = new PEFile.Reader();
-            reader.Read(new MemoryStream(new byte[10]));
+            var pe = new PEFile();
+            pe.ReadFrom(new BinaryStreamReader(new MemoryStream(new byte[10]), new byte[32]));
         }
 
         [TestMethod]
@@ -76,11 +58,11 @@ namespace Mi.PE
 
             var stream = new MemoryStream(bytes, 0, bytes.Length - ((int)lfaNew - DosHeader.HeaderSize), false);
 
-            var reader = new PEFile.Reader();
-            var pe = reader.Read(stream);
+            var pe = new PEFile();
+            pe.ReadFrom(new BinaryStreamReader(stream, new byte[32]));
 
             Assert.AreEqual((uint)DosHeader.HeaderSize, pe.DosHeader.lfanew);
-            Assert.IsNull(pe.DosHeader.Stub);
+            Assert.IsNull(pe.DosStub);
         }
 
         [ExpectedException(typeof(BadImageFormatException))]
@@ -90,22 +72,22 @@ namespace Mi.PE
             byte[] bytes = Properties.Resources.console_anycpu;
             bytes[152] = 0;
 
-            var reader = new PEFile.Reader();
-            reader.Read(new MemoryStream(bytes));
+            var pe = new PEFile();
+            pe.ReadFrom(new BinaryStreamReader(new MemoryStream(bytes), new byte[32]));
         }
 
-        [TestMethod] public void PreReadAnyCPU_AssertDosStub() { AssertDosStub(PreReadSamplePEs.Console.AnyCPU.DosHeader.Stub); }
-        [TestMethod] public void PreReadX86_AssertDosStub() { AssertDosStub(PreReadSamplePEs.Console.X86.DosHeader.Stub); }
-        [TestMethod] public void PreReadX64_AssertDosStub() { AssertDosStub(PreReadSamplePEs.Console.X64.DosHeader.Stub); }
-        [TestMethod] public void PreReadItanium_AssertDosStub() { AssertDosStub(PreReadSamplePEs.Console.Itanium.DosHeader.Stub); }
-        [TestMethod] public void EmitAnyCPU_AssertDosStub() { AssertDosStub(EmitSamplePEs.Library.AnyCPU.DosHeader.Stub); }
-        [TestMethod] public void EmitX86_AssertDosStub() { AssertDosStub(EmitSamplePEs.Library.X86.DosHeader.Stub); }
-        [TestMethod] public void EmitX64_AssertDosStub() { AssertDosStub(EmitSamplePEs.Library.X64.DosHeader.Stub); }
-        [TestMethod] public void EmitItanium_AssertDosStub() { AssertDosStub(EmitSamplePEs.Library.Itanium.DosHeader.Stub); }
-        [TestMethod] public void EmitExeAnyCPU_AssertDosStub() { AssertDosStub(EmitSamplePEs.Console.AnyCPU.DosHeader.Stub); }
-        [TestMethod] public void EmitExeX86_AssertDosStub() { AssertDosStub(EmitSamplePEs.Console.X86.DosHeader.Stub); }
-        [TestMethod] public void EmitExeX64_AssertDosStub() { AssertDosStub(EmitSamplePEs.Console.X64.DosHeader.Stub); }
-        [TestMethod] public void EmitExeItanium_AssertDosStub() { AssertDosStub(EmitSamplePEs.Console.Itanium.DosHeader.Stub); }
+        [TestMethod] public void PreReadAnyCPU_AssertDosStub() { AssertDosStub(PreReadSamplePEs.Console.AnyCPU.DosStub); }
+        [TestMethod] public void PreReadX86_AssertDosStub() { AssertDosStub(PreReadSamplePEs.Console.X86.DosStub); }
+        [TestMethod] public void PreReadX64_AssertDosStub() { AssertDosStub(PreReadSamplePEs.Console.X64.DosStub); }
+        [TestMethod] public void PreReadItanium_AssertDosStub() { AssertDosStub(PreReadSamplePEs.Console.Itanium.DosStub); }
+        [TestMethod] public void EmitAnyCPU_AssertDosStub() { AssertDosStub(EmitSamplePEs.Library.AnyCPU.DosStub); }
+        [TestMethod] public void EmitX86_AssertDosStub() { AssertDosStub(EmitSamplePEs.Library.X86.DosStub); }
+        [TestMethod] public void EmitX64_AssertDosStub() { AssertDosStub(EmitSamplePEs.Library.X64.DosStub); }
+        [TestMethod] public void EmitItanium_AssertDosStub() { AssertDosStub(EmitSamplePEs.Library.Itanium.DosStub); }
+        [TestMethod] public void EmitExeAnyCPU_AssertDosStub() { AssertDosStub(EmitSamplePEs.Console.AnyCPU.DosStub); }
+        [TestMethod] public void EmitExeX86_AssertDosStub() { AssertDosStub(EmitSamplePEs.Console.X86.DosStub); }
+        [TestMethod] public void EmitExeX64_AssertDosStub() { AssertDosStub(EmitSamplePEs.Console.X64.DosStub); }
+        [TestMethod] public void EmitExeItanium_AssertDosStub() { AssertDosStub(EmitSamplePEs.Console.Itanium.DosStub); }
 
         [TestMethod] public void PreReadAnyCPU_AssertDosHeader() { AssertDosHeader(PreReadSamplePEs.Console.AnyCPU.DosHeader); }
         [TestMethod] public void PreReadX86_AssertDosHeader() { AssertDosHeader(PreReadSamplePEs.Console.X86.DosHeader); }
@@ -260,17 +242,6 @@ namespace Mi.PE
             Assert.AreEqual((uint)0x2000, optionalHeader.SizeOfHeapCommit);
             Assert.AreEqual((uint)0x600, optionalHeader.SizeOfInitializedData);
             Assert.AreEqual((uint)0x6000, optionalHeader.SizeOfImage);
-        }
-
-        [TestMethod]
-        public void PopulateSectionContent()
-        {
-            var reader = new PEFile.Reader { PopulateSectionContent = true };
-
-            var pe = reader.Read(new MemoryStream(Properties.Resources.console_anycpu));
-
-            Assert.AreEqual(3, pe.Sections.Count);
-            Assert.AreEqual((byte)72, pe.Sections[0].Content[8]);
         }
 
         static void AssertOptionalHeader(OptionalHeader optionalHeader)

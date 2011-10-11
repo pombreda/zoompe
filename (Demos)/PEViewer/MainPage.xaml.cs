@@ -24,7 +24,7 @@ namespace PEViewer
 
             var streamInfo = Application.GetResourceStream(new Uri("PEViewer.dll", UriKind.Relative));
 
-            var pe = PEFile.FromStream(streamInfo.Stream);
+            var pe = PEFile.ReadFrom(streamInfo.Stream);
 
             {
                 var tabControl = LayoutRoot.Children.OfType<TabControl>().FirstOrDefault();
@@ -97,7 +97,7 @@ namespace PEViewer
             PEFile pe;
             using (var stream = fi.OpenRead())
             {
-                pe = PEFile.FromStream(stream);
+                pe = PEFile.ReadFrom(stream);
             }
 
             var tabItem = new TabItem

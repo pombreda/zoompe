@@ -67,8 +67,6 @@ namespace Mi.PE.PEFormat
         /// <summary> File address of PE header. </summary>
         public uint lfanew;
 
-        public byte[] Stub;
-
         #region ToString
         public override string ToString()
         {
