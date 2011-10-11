@@ -32,6 +32,9 @@ namespace Mi.PE
 
         void ReadDosHeader(BinaryStreamReader reader)
         {
+            if (this.DosHeader == null)
+                this.DosHeader = new DosHeader();
+
             var signature = (MZSignature)reader.ReadInt16();
             if (signature != MZSignature.MZ)
                 throw new BadImageFormatException("MZ signature expected, " + ((ushort)signature).ToString("X4") + "h found.");
@@ -71,6 +74,9 @@ namespace Mi.PE
 
         void ReadPEHeader(BinaryStreamReader reader)
         {
+            if (this.PEHeader == null)
+                this.PEHeader = new PEHeader();
+
             var peSignature = (PESignature)reader.ReadUInt32();
             if (peSignature != PESignature.PE00)
                 throw new BadImageFormatException("PE00 signature expected, " + ((ushort)peSignature).ToString("X8") + "h found.");
@@ -87,6 +93,9 @@ namespace Mi.PE
 
         void ReadOptionalHeader(BinaryStreamReader reader)
         {
+            if (this.OptionalHeader == null)
+                this.OptionalHeader = new OptionalHeader();
+
             var peMagic = (PEMagic)reader.ReadInt16();
 
             if (peMagic != PEMagic.NT32
