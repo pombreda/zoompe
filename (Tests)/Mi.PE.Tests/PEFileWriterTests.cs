@@ -5,17 +5,13 @@ using System.Linq;
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+using Mi.PE.Internal;
+
 namespace Mi.PE
 {
     [TestClass]
     public class PEFileWriterTests
     {
-        [TestMethod]
-        public void Constructor()
-        {
-            new PEFile.Writer();
-        }
-
         [TestMethod] public void PreReadAnyCPU() { AssertReadWriteRoundtrip(Properties.Resources.console_anycpu); }
         [TestMethod] public void PreReadX86() { AssertReadWriteRoundtrip(Properties.Resources.console_x86); }
         
@@ -50,13 +46,19 @@ namespace Mi.PE
 
         private static void AssertReadWriteRoundtrip(byte[] originalBytes, Action<PEFile> modifyPEFile)
         {
-            var pe = PEFile.ReadFrom(new MemoryStream(originalBytes));
+            var pe = new PEFile();
+            var stream = new MemoryStream(originalBytes);
+            var reader = new BinaryStreamReader(stream, new byte[32]);
+            pe.ReadFrom(reader);
+            int pos = (int)reader.Position;
 
             if (modifyPEFile != null)
                 modifyPEFile(pe);
 
             var buf = new MemoryStream();
-            pe.WriteTo(buf);
+            var writer = new BinaryStreamWriter(buf);
+            pe.WriteTo(writer);
+            buf.Write(originalBytes, pos, originalBytes.Length - pos);
 
             byte[] outputBytes = buf.ToArray();
             Assert.AreEqual(originalBytes.Length, outputBytes.Length, "outputBytes.Length");

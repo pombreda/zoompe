@@ -13,7 +13,7 @@ namespace Mi.PE.Unmanaged
         public uint FunctionOrdinal { get; set; }
         public string DllName { get; set; }
 
-        public static Import[] ReadImports(SectionContentReader reader)
+        public static Import[] ReadImports(BinaryStreamReader reader)
         {
             var resultList = new List<Import>();
 
@@ -33,12 +33,12 @@ namespace Mi.PE.Unmanaged
                 if (thunkAddressPosition == 0)
                     break;
 
-                int savePosition = reader.VirtualPosition;
+                long savePosition = reader.Position;
                 try
                 {
                     while (true)
                     {
-                        reader.VirtualPosition = (int)thunkAddressPosition;
+                        reader.Position = thunkAddressPosition;
 
                         uint importPosition = reader.ReadUInt32();
                         if (importPosition == 0)
@@ -56,7 +56,7 @@ namespace Mi.PE.Unmanaged
                         }
                         else
                         {
-                            reader.VirtualPosition = (int)importPosition;
+                            reader.Position = (int)importPosition;
 
                             uint hint = reader.ReadUInt16();
                             string fname = ReadAsciiZ(reader);
@@ -76,28 +76,28 @@ namespace Mi.PE.Unmanaged
                 }
                 finally
                 {
-                    reader.VirtualPosition = savePosition;
+                    reader.Position = savePosition;
                 }
             }
 
             return resultList.ToArray();
         }
 
-        private static string ReadAsciiZAt(SectionContentReader reader, uint nameRva)
+        private static string ReadAsciiZAt(BinaryStreamReader reader, uint nameRva)
         {
-            int savePosition = reader.VirtualPosition;
-            reader.VirtualPosition = (int)nameRva;
+            long savePosition = reader.Position;
+            reader.Position = (int)nameRva;
             try
             {
                 return ReadAsciiZ(reader);
             }
             finally
             {
-                reader.VirtualPosition = savePosition;
+                reader.Position = savePosition;
             }
         }
 
-        private static string ReadAsciiZ(SectionContentReader reader)
+        private static string ReadAsciiZ(BinaryStreamReader reader)
         {
             var result = new StringBuilder();
             while (true)

@@ -87,7 +87,7 @@ namespace Mi.PE
         {
             var pe = new PEFile();
             pe.PEHeader.NumberOfSections = 1;
-            var sh = pe.Sections[0];
+            var sh = pe.SectionHeaders[0];
 
             sh.Name = "Dummy";
             sh.PointerToRawData = 0x14e;

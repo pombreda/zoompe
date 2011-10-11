@@ -10,9 +10,8 @@ namespace Mi.PE
 
     partial class PEFile
     {
-        public void WriteTo(Stream stream)
+        public void WriteTo(BinaryStreamWriter writer)
         {
-            var writer = new BinaryStreamWriter(stream);
             WriteDosHeader(this.DosHeader, writer);
 
             if (this.DosStub != null)
@@ -24,13 +23,6 @@ namespace Mi.PE
             foreach (var s in this.SectionHeaders)
             {
                 WriteSectionHeader(writer, s);
-            }
-
-            foreach (var s in this.SectionHeaders)
-            {
-                writer.Position = s.PointerToRawData;
-
-                writer.WriteBytes(s.Content, 0, s.Content.Length);
             }
         }
 

@@ -13,10 +13,19 @@ namespace ReadWriteRoundtrip
         static void Main(string[] args)
         {
             var pe = new PEFile();
-            pe.ReadFrom(new BinaryStreamReader(new MemoryStream(Properties.Resources.console_anycpu), new byte[1024]));
+            var originalBytes = Properties.Resources.console_anycpu;
+            var reader = new BinaryStreamReader(new MemoryStream(originalBytes), new byte[1024]);
+            pe.ReadFrom(reader);
+
             using (var output = File.Create("console.anycpu.exe"))
             {
-                pe.WriteTo(output);
+                var writer = new BinaryStreamWriter(output);
+                pe.WriteTo(writer);
+
+                while (reader.Position < originalBytes.Length)
+                {
+                    writer.WriteByte(reader.ReadByte());
+                }
             }
         }
     }

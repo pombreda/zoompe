@@ -38,14 +38,25 @@ namespace PrintImports
 
         private static Mi.PE.Unmanaged.Import[] GetImportsFor(string file)
         {
-            var pe = PEFile.ReadFrom(new MemoryStream(File.ReadAllBytes(file)));
+            var stream = new MemoryStream(File.ReadAllBytes(file));
+            var reader = new BinaryStreamReader(stream, new byte[1024]);
+            var pe = new PEFile();
+            pe.ReadFrom(reader);
 
             var importDirectory = pe.OptionalHeader.DataDirectories[(int)DataDirectoryKind.ImportSymbols];
 
-            var relevantSection = pe.Sections.First(s => importDirectory.VirtualAddress >= s.VirtualAddress && importDirectory.VirtualAddress < s.VirtualAddress + s.VirtualSize);
+            var rvaStream = new RvaStream(
+                stream,
+                pe.SectionHeaders.Select(
+                s => new RvaStream.Range
+                {
+                    PhysicalAddress = s.PointerToRawData,
+                    Size = s.VirtualSize,
+                    VirtualAddress = s.VirtualAddress
+                })
+                .ToArray());
 
-            var sectionReader = new SectionContentReader(relevantSection.Content, (int)relevantSection.VirtualAddress);
-            sectionReader.VirtualPosition = (int)importDirectory.VirtualAddress;
+            var sectionReader = new BinaryStreamReader(rvaStream);
 
             var imports = Mi.PE.Unmanaged.Import.ReadImports(sectionReader);
             return imports;

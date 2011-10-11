@@ -38,13 +38,21 @@ class Program
 
         TimeSpan headersOnly = DateTime.UtcNow - start;
 
+        byte[] buf = new byte[1024];
+        byte[] contentBuf = new byte[1024*1024];
         start = DateTime.UtcNow;
-        reader.ReadSectionContent = true;
         foreach (var dll in dllFiles)
         {
             using (var dllStream = File.OpenRead(dll))
             {
-                reader.Read(dllStream);
+                var pe = new PEFile();
+                var reader = new BinaryStreamReader(dllStream, buf);
+                pe.ReadFrom(reader);
+
+                while(reader.Position<dllStream.Length)
+                {
+                    reader.ReadBytes(contentBuf, 0, (int)Math.Min(contentBuf.Length, dllStream.Length - reader.Position));
+                }
             }
         }
 

@@ -49,10 +49,8 @@
   <ItemGroup>
     <Compile Include="Internal\BinaryStreamWriterTests.cs" />
     <Compile Include="PEFileWriterTests.cs" />
-    <Compile Include="PEFormat\DosHeaderTests.cs" />
     <Compile Include="PEFormat\OptionalHeaderTests.cs" />
     <Compile Include="PEFormat\RvaStreamTests.cs" />
-    <Compile Include="PEFormat\SectionTests.cs" />
     <Compile Include="ToStringTests.cs" />
     <Compile Include="EmitSamplePEs.cs" />
     <Compile Include="Internal\BinaryStreamReaderTests.cs" />
