@@ -155,6 +155,10 @@ namespace Mi.PE
             this.OptionalHeader.LoaderFlags = reader.ReadUInt32();
             this.OptionalHeader.NumberOfRvaAndSizes = reader.ReadUInt32();
 
+            if (this.OptionalHeader.DataDirectories == null
+                || this.OptionalHeader.DataDirectories.Length != this.OptionalHeader.NumberOfRvaAndSizes)
+                this.OptionalHeader.DataDirectories = new DataDirectory[this.OptionalHeader.NumberOfRvaAndSizes];
+
             for (int i = 0; i < this.OptionalHeader.DataDirectories.Length; i++)
             {
                 this.OptionalHeader.DataDirectories[i] = new DataDirectory

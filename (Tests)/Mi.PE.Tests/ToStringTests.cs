@@ -26,7 +26,7 @@ namespace Mi.PE
         [TestMethod]
         public void DosHeader()
         {
-            var dh = new PEFile().DosHeader;
+            var dh = new DosHeader();
             dh.lfanew = 0x102;
 
             Assert.AreEqual("[MZ].lfanew=102h", dh.ToString());
@@ -35,7 +35,7 @@ namespace Mi.PE
         [TestMethod]
         public void OptionalHeader()
         {
-            var oh = new PEFile().OptionalHeader;
+            var oh = new OptionalHeader();
             oh.PEMagic = PEMagic.NT32;
             oh.Subsystem = Subsystem.WindowsCUI;
             oh.DllCharacteristics = DllCharacteristics.TerminalServerAware;
@@ -46,7 +46,7 @@ namespace Mi.PE
         [TestMethod]
         public void OptionalHeader_EmptyDataDirectories()
         {
-            var oh = new PEFile().OptionalHeader;
+            var oh = new OptionalHeader();
             oh.PEMagic = PEMagic.NT32;
             oh.Subsystem = Subsystem.WindowsCUI;
             oh.DllCharacteristics = DllCharacteristics.TerminalServerAware;
@@ -58,11 +58,13 @@ namespace Mi.PE
         [TestMethod]
         public void OptionalHeader_NonEmptyDataDirectories()
         {
-            var oh = new PEFile().OptionalHeader;
+            var oh = new OptionalHeader();
             oh.PEMagic = PEMagic.NT32;
             oh.Subsystem = Subsystem.WindowsCUI;
             oh.DllCharacteristics = DllCharacteristics.TerminalServerAware;
             oh.NumberOfRvaAndSizes = 4;
+
+            oh.DataDirectories = new DataDirectory[4];
 
             oh.DataDirectories[0] = new DataDirectory { Size = 5 };
             oh.DataDirectories[1] = new DataDirectory { Size = 6 };
@@ -75,7 +77,7 @@ namespace Mi.PE
         [TestMethod]
         public void PEHeader()
         {
-            var peh = new PEFile().PEHeader;
+            var peh = new PEHeader();
             peh.Machine = Machine.I386;
             peh.Characteristics = ImageCharacteristics.Bit32Machine;
 
