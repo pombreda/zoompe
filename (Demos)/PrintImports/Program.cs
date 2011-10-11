@@ -56,7 +56,7 @@ namespace PrintImports
                 })
                 .ToArray());
 
-            var sectionReader = new BinaryStreamReader(rvaStream);
+            var sectionReader = new BinaryStreamReader(rvaStream, new byte[32]);
 
             var imports = Mi.PE.Unmanaged.Import.ReadImports(sectionReader);
             return imports;

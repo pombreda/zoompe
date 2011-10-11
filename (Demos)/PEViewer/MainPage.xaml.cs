@@ -12,6 +12,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using Mi.PE;
+using Mi.PE.Internal;
 using PEViewer.ViewModel;
 
 namespace PEViewer
@@ -24,7 +25,10 @@ namespace PEViewer
 
             var streamInfo = Application.GetResourceStream(new Uri("PEViewer.dll", UriKind.Relative));
 
-            var pe = PEFile.ReadFrom(streamInfo.Stream);
+            var reader = new BinaryStreamReader(streamInfo.Stream, new byte[32]);
+
+            var pe = new PEFile();
+            pe.ReadFrom(reader);
 
             {
                 var tabControl = LayoutRoot.Children.OfType<TabControl>().FirstOrDefault();
@@ -97,7 +101,9 @@ namespace PEViewer
             PEFile pe;
             using (var stream = fi.OpenRead())
             {
-                pe = PEFile.ReadFrom(stream);
+                var reader = new BinaryStreamReader(stream, new byte[32]);
+                pe = new PEFile();
+                pe.ReadFrom(reader);
             }
 
             var tabItem = new TabItem
