@@ -10,6 +10,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using Mi.PE;
 using PEViewer.ViewModel;
 
@@ -24,7 +25,6 @@ namespace PEViewer
             var streamInfo = Application.GetResourceStream(new Uri("PEViewer.dll", UriKind.Relative));
 
             var pe = PEFile.FromStream(streamInfo.Stream);
-
 
             {
                 var tabControl = LayoutRoot.Children.OfType<TabControl>().FirstOrDefault();
@@ -53,6 +53,20 @@ namespace PEViewer
             }
 
             this.Drop += new DragEventHandler(MainPage_Drop);
+
+            if (Application.Current.IsRunningOutOfBrowser)
+            {
+                var timer = new DispatcherTimer
+                {
+                    Interval = TimeSpan.FromSeconds(1)
+                };
+                timer.Tick += delegate
+                {
+                    timer.Stop();
+
+                    Application.Current.CheckAndDownloadUpdateAsync();
+                };
+            }
         }
 
         void MainPage_Drop(object sender, DragEventArgs e)
