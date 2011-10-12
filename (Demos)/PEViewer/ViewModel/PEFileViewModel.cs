@@ -280,6 +280,7 @@ namespace PEViewer.ViewModel
                 OnPropertyChanged("lfanew");
                 OnPropertyChanged("IsDosStubPresent");
                 OnPropertyChanged("OptionalHeaderOffset");
+                OnPropertyChanged("DosStub");
             }
         }
 
@@ -297,6 +298,11 @@ namespace PEViewer.ViewModel
             {
                 return m_PEFile.DosHeader.lfanew + PEHeader.Size;
             }
+        }
+
+        public byte[] DosStub
+        {
+            get { return m_PEFile.DosStub; }
         }
 
         public Machine Machine

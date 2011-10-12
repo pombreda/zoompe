@@ -54,4 +54,18 @@
         </Setter>
     </Style>
     
+
+    <Style TargetType="local:BinaryEditor">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="local:BinaryEditor">
+                    <TextBox Name="PART_TextBox"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}">
+                    </TextBox>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>
