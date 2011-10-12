@@ -5,7 +5,7 @@ using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Markup;
 
-namespace PEViewer
+namespace PEHeaderViewer
 {
     public sealed class HexConverter : IValueConverter
     {

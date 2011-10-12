@@ -5,7 +5,7 @@ using System.Linq;
 using Mi.PE;
 using Mi.PE.PEFormat;
 
-namespace PEViewer.ViewModel
+namespace PEHeaderViewer.ViewModel
 {
     public sealed class PEFileViewModel : INotifyPropertyChanged
     {
@@ -277,6 +277,24 @@ namespace PEViewer.ViewModel
                     return;
 
                 m_PEFile.DosHeader.lfanew = value;
+
+                int dosStubSize = (int)(value - DosHeader.HeaderSize);
+                if (dosStubSize > 0)
+                {
+                    if(m_PEFile.DosStub!=null)
+                    {
+                        Array.Resize(ref m_PEFile.DosStub, dosStubSize);
+                    }
+                    else
+                    {
+                        m_PEFile.DosStub = new byte[dosStubSize];
+                    }
+                }
+                else
+                {
+                    m_PEFile.DosStub = null;
+                }
+
                 OnPropertyChanged("lfanew");
                 OnPropertyChanged("IsDosStubPresent");
                 OnPropertyChanged("OptionalHeaderOffset");

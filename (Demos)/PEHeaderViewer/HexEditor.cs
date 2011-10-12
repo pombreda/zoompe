@@ -8,7 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Markup;
 
-namespace PEViewer
+namespace PEHeaderViewer
 {
     public class HexEditor : TypedEditor
     {

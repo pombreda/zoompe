@@ -8,7 +8,7 @@ using System.Windows.Data;
 using System.Windows.Markup;
 using System.Windows.Controls;
 
-namespace PEViewer
+namespace PEHeaderViewer
 {
     public class TypedEditor : Control
     {

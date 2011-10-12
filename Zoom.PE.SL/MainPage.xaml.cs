@@ -10,11 +10,11 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 
-namespace PEViewer
+namespace Zoom.PE
 {
-    public partial class PEFileView : UserControl
+    public partial class MainPage : UserControl
     {
-        public PEFileView()
+        public MainPage()
         {
             InitializeComponent();
         }

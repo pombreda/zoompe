@@ -11,7 +11,7 @@ using System.Windows.Input;
 using System.Windows.Markup;
 using System.Windows.Media;
 
-namespace PEViewer
+namespace PEHeaderViewer
 {
     [TemplatePart(Name = BinaryEditor.TextBoxName, Type = typeof(TextBox))]
     public class BinaryEditor : Control

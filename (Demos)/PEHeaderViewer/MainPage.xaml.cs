@@ -13,9 +13,9 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using Mi.PE;
 using Mi.PE.Internal;
-using PEViewer.ViewModel;
+using PEHeaderViewer.ViewModel;
 
-namespace PEViewer
+namespace PEHeaderViewer
 {
     public partial class MainPage : UserControl
     {
@@ -23,7 +23,7 @@ namespace PEViewer
         {
             InitializeComponent();
 
-            var streamInfo = Application.GetResourceStream(new Uri("PEViewer.dll", UriKind.Relative));
+            var streamInfo = Application.GetResourceStream(new Uri("PEHeaderViewer.dll", UriKind.Relative));
 
             var reader = new BinaryStreamReader(streamInfo.Stream, new byte[32]);
 

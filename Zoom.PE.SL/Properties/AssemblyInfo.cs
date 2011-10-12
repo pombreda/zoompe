@@ -5,12 +5,10 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("PEViewer")]
+[assembly: AssemblyTitle("Zoom.PE")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("PEViewer")]
-[assembly: AssemblyCopyright("")]
+[assembly: AssemblyProduct("Zoom.PE")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,7 +18,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("4ccba5b3-0960-4a89-a1dd-66d858a695e2")]
+[assembly: Guid("5c877341-2cd6-4cb7-9d2d-972b40fa44a7")]
 
 // Version information for an assembly consists of the following four values:
 //
