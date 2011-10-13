@@ -14,7 +14,6 @@ namespace Zoom.PE
 {
     public partial class App : Application
     {
-
         public App()
         {
             this.Startup += this.Application_Startup;

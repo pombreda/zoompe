@@ -1,0 +1,73 @@
+﻿<UserControl x:Class="Zoom.PE.PEFileView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="440" d:DesignWidth="322">
+    
+    <Border>
+        <Border.Background>
+            <LinearGradientBrush
+                EndPoint="0.7, 1">
+                <GradientStop Offset="0" Color="White"/>
+                <GradientStop Offset="1" Color="#FF6E7B93"/>
+            </LinearGradientBrush>    
+        </Border.Background>
+        
+        <Grid x:Name="LayoutRoot">
+            <Grid.Background>
+                <LinearGradientBrush
+                    EndPoint="2,0.2"
+                    MappingMode="Absolute"
+                    SpreadMethod="Reflect">
+                    <GradientStop Offset="0" Color="Transparent"/>
+                    <GradientStop Offset="1" Color="#FFE2E2E2"/>
+                </LinearGradientBrush>
+                                 
+            </Grid.Background>
+            <Grid.RowDefinitions>
+                <RowDefinition x:Name="topSpacingRow" Height="52"/>
+                <RowDefinition x:Name="dosHeaderRow" Height="11*"/>
+                <RowDefinition x:Name="dosStubRow" Height="12*"/>
+                <RowDefinition x:Name="peHeaderRow" Height="11*"/>
+                <RowDefinition x:Name="optionalHeaderRow" Height="26*"/>
+                <RowDefinition x:Name="dataDirectoriesRow" Height="20*"/>
+                <RowDefinition x:Name="sectionContentRow" Height="288*"/>
+                <RowDefinition x:Name="bottomSpacingRow" Height="20"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition x:Name="leftColumn" Width="108*"/>
+                <ColumnDefinition x:Name="centerColumn" Width="204*"/>
+                <ColumnDefinition x:Name="rightColumn" Width="100*"/>
+            </Grid.ColumnDefinitions>
+        
+            <Canvas
+                Grid.ColumnSpan="3"
+                Grid.RowSpan="8">
+                <TextBlock Name="fileNameTextBlock"
+                    Text="PEFile.dll"
+                    Foreground="Silver"
+                    FontSize="70"/>
+            </Canvas>
+
+            <Border
+                Grid.Column="1"
+                Grid.Row="1"
+                Grid.RowSpan="6"
+                BorderBrush="Black" BorderThickness="1"
+                Background="White">
+                <Border.Effect>
+                    <DropShadowEffect Opacity="0.5"/>
+                </Border.Effect>
+            
+            </Border>
+
+            <TextBlock
+                Text="0000h"
+                Grid.Row="1"/>
+
+        </Grid>
+    </Border>
+
+</UserControl>
