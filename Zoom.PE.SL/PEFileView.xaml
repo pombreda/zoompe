@@ -3,8 +3,65 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:Zoom.PE"
     mc:Ignorable="d"
-    d:DesignHeight="440" d:DesignWidth="322">
+    d:DesignHeight="440" d:DesignWidth="600">
+
+    <FrameworkElement.Resources>
+        <local:HexConverter x:Key="HexConverter"/>
+        <local:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+
+        <Style x:Key="ColorBorderBase" TargetType="Border">
+            <Setter Property="CornerRadius" Value="2"/>
+        </Style>
+
+        <Style x:Key="YellowFill" TargetType="Border" BasedOn="{StaticResource ColorBorderBase}">
+            <Setter Property="Background">
+                <Setter.Value>
+                    <SolidColorBrush Color="Gold" Opacity="0.4"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="YellowBorder" TargetType="Border" BasedOn="{StaticResource ColorBorderBase}">
+            <Setter Property="BorderBrush" Value="Gold"/>
+            <Setter Property="BorderThickness" Value="1"/>
+        </Style>
+
+        <Style x:Key="HexEditor" TargetType="local:FieldEditor">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="local:FieldEditor">
+                        <Grid>
+                            <ContentControl
+                                Content="{TemplateBinding Header}"
+                                ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                Opacity="0.5"
+                                Padding="5,0"
+                                IsTabStop="False"/>
+
+                            <local:HexEditor
+                                Value="{Binding Content, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                Padding="5,0"
+                                Background="Transparent"
+                                BorderBrush="{x:Null}"
+                                BorderThickness="0"
+                                TextAlignment="Right"/>
+
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="HorizontalSeparatorBorder" TargetType="Border">
+            <Setter Property="Margin" Value="0,2"/>
+            <Setter Property="Background" Value="Silver"/>
+            <Setter Property="Height" Value="1"/>
+            <Setter Property="Grid.ColumnSpan" Value="7"/>
+        </Style>
+
+    </FrameworkElement.Resources>
     
     <Border>
         <Border.Background>
@@ -14,59 +71,309 @@
                 <GradientStop Offset="1" Color="#FF6E7B93"/>
             </LinearGradientBrush>    
         </Border.Background>
-        
+
         <Grid x:Name="LayoutRoot">
             <Grid.Background>
                 <LinearGradientBrush
-                    EndPoint="2,0.2"
-                    MappingMode="Absolute"
-                    SpreadMethod="Reflect">
+    				EndPoint="2,0.2"
+    				MappingMode="Absolute"
+    				SpreadMethod="Reflect">
                     <GradientStop Offset="0" Color="Transparent"/>
                     <GradientStop Offset="1" Color="#FFE2E2E2"/>
                 </LinearGradientBrush>
-                                 
+
             </Grid.Background>
-            <Grid.RowDefinitions>
-                <RowDefinition x:Name="topSpacingRow" Height="52"/>
-                <RowDefinition x:Name="dosHeaderRow" Height="11*"/>
-                <RowDefinition x:Name="dosStubRow" Height="12*"/>
-                <RowDefinition x:Name="peHeaderRow" Height="11*"/>
-                <RowDefinition x:Name="optionalHeaderRow" Height="26*"/>
-                <RowDefinition x:Name="dataDirectoriesRow" Height="20*"/>
-                <RowDefinition x:Name="sectionContentRow" Height="288*"/>
-                <RowDefinition x:Name="bottomSpacingRow" Height="20"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition x:Name="leftColumn" Width="108*"/>
-                <ColumnDefinition x:Name="centerColumn" Width="204*"/>
-                <ColumnDefinition x:Name="rightColumn" Width="100*"/>
-            </Grid.ColumnDefinitions>
-        
-            <Canvas
-                Grid.ColumnSpan="3"
-                Grid.RowSpan="8">
-                <TextBlock Name="fileNameTextBlock"
-                    Text="PEFile.dll"
-                    Foreground="Silver"
-                    FontSize="70"/>
-            </Canvas>
 
-            <Border
-                Grid.Column="1"
-                Grid.Row="1"
-                Grid.RowSpan="6"
-                BorderBrush="Black" BorderThickness="1"
-                Background="White">
-                <Border.Effect>
-                    <DropShadowEffect Opacity="0.5"/>
-                </Border.Effect>
-            
-            </Border>
+            <TextBlock x:Name="fileNameTextBlock"
+    			Text="{Binding FileName}"
+    			Foreground="Silver"
+    			FontSize="70"/>
 
-            <TextBlock
-                Text="0000h"
-                Grid.Row="1"/>
+            <Grid
+                Margin="65, 52, 0,0" 
+                Width="550" MinHeight="100"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top">
+                <Border Name="outerContentBorder"
+    			    BorderBrush="Black" BorderThickness="1"
+    			    Background="White">
+                    <Border.Effect>
+                        <DropShadowEffect Opacity="0.5"/>
+                    </Border.Effect>
+                </Border>
 
+                <StackPanel
+                    Background="White">
+
+                    <Border
+                        Name="dosHeaderContainer"
+                        Padding="4">
+                        <Border.Background>
+                            <LinearGradientBrush EndPoint="0.1,2">
+                                <GradientStop Offset="0" Color="White"/>
+                                <GradientStop Offset="1" Color="#FFE8E8E8"/>
+                            </LinearGradientBrush>
+                        </Border.Background>
+                        <Grid>
+
+                            <TextBlock
+                                Margin="-40,0,0,0"
+                                Text="0000h"/>
+                        
+                            <TextBlock
+                                Text="DOS header"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Top"/>
+                        
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="60*"/>
+                                    <ColumnDefinition Width="7*"/>
+                                    <ColumnDefinition Width="60*"/>
+                                    <ColumnDefinition Width="7*"/>
+                                    <ColumnDefinition Width="60*"/>
+                                    <ColumnDefinition Width="7*"/>
+                                    <ColumnDefinition Width="60*"/>
+                                    <ColumnDefinition Width="100"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <Grid Grid.Column="0" Grid.Row="0">
+                                    <Border Style="{StaticResource YellowFill}"/>
+                                    <local:FieldEditor
+                                        Header="Signature"
+                                        Content="{Binding Signature, Mode=TwoWay}"/>
+                                </Grid>
+
+                                <local:FieldEditor
+                                    Grid.Column="0" Grid.Row="1"
+                                    Header="cblp"
+                                    Content="{Binding cblp, Mode=TwoWay}"/>
+
+                                <local:FieldEditor
+                                    Grid.Column="0" Grid.Row="2"
+                                    Header="cp"
+                                    Content="{Binding cp, Mode=TwoWay}"/>
+
+                                <local:FieldEditor
+                                    Grid.Column="0" Grid.Row="3"
+                                    Header="crlc"
+                                    Content="{Binding crlc, Mode=TwoWay}"/>
+
+                                <local:FieldEditor
+                                    Grid.Column="0" Grid.Row="4"
+                                    Header="cparhdr"
+                                    Content="{Binding cparhdr, Mode=TwoWay}"/>
+
+                                <local:FieldEditor
+                                    Grid.Column="2" Grid.Row="0"
+                                    Header="minalloc"
+                                    Content="{Binding minalloc, Mode=TwoWay}"/>
+
+                                <local:FieldEditor
+                                    Grid.Column="2" Grid.Row="1"
+                                    Header="maxalloc"
+                                    Content="{Binding maxalloc, Mode=TwoWay}"/>
+
+                                <Border Grid.Column="2" Grid.Row="2" Grid.RowSpan="2"
+                                    Style="{StaticResource YellowBorder}"/>
+
+                                <local:FieldEditor Style="{StaticResource HexEditor}"
+                                    Grid.Column="2" Grid.Row="2"
+                                    Header="ss"
+                                    Content="{Binding ss, Mode=TwoWay}"/>
+
+                                <local:FieldEditor Style="{StaticResource HexEditor}"
+                                    Grid.Column="2" Grid.Row="3"
+                                    Header="sp"
+                                    Content="{Binding sp, Mode=TwoWay}"/>
+
+                                <local:FieldEditor
+                                    Grid.Column="2" Grid.Row="4"
+                                    Header="csum"
+                                    Content="{Binding csum, Mode=TwoWay}"/>
+
+                                <Border Grid.Column="4" Grid.Row="0" Grid.RowSpan="2"
+                                    Style="{StaticResource YellowBorder}"/>
+
+                                <local:FieldEditor Style="{StaticResource HexEditor}"
+                                    Grid.Column="4" Grid.Row="0"
+                                    Header="cs"
+                                    Content="{Binding cs, Mode=TwoWay}"/>
+
+                                <local:FieldEditor Style="{StaticResource HexEditor}"
+                                    Grid.Column="4" Grid.Row="1"
+                                    Header="ip"
+                                    Content="{Binding ip, Mode=TwoWay}"/>
+
+                                <local:FieldEditor Style="{StaticResource HexEditor}"
+                                    Grid.Column="4" Grid.Row="2"
+                                    Header="lfarlc"
+                                    Content="{Binding lfarlc, Mode=TwoWay}"/>
+
+                                <local:FieldEditor
+                                    Grid.Column="4" Grid.Row="3"
+                                    Header="ovno"
+                                    Content="{Binding ovno, Mode=TwoWay}"/>
+
+                                <local:FieldEditor
+                                    Grid.Column="4" Grid.Row="4"
+                                    Header="res1"
+                                    Content="{Binding res1, Mode=TwoWay}"/>
+
+                                <local:FieldEditor
+                                    Grid.Column="6" Grid.Row="0"
+                                    Header="oemid"
+                                    Content="{Binding oemid, Mode=TwoWay}"/>
+
+                                <local:FieldEditor
+                                    Grid.Column="6" Grid.Row="1"
+                                    Header="oeminfo"
+                                    Content="{Binding oeminfo, Mode=TwoWay}"/>
+
+                                <Grid Grid.Column="6" Grid.Row="2">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <local:FieldEditor
+                                        Header="R0"
+                                        Content="{Binding ReservedNumber0, Mode=TwoWay}"/>
+                                </Grid>
+
+                                <Grid Grid.Column="6" Grid.Row="3">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <local:FieldEditor
+                                        Header="R1"
+                                        Content="{Binding ReservedNumber1, Mode=TwoWay}"/>
+                                </Grid>
+
+                                <Grid Grid.Column="6" Grid.Row="4">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <local:FieldEditor
+                                        Header="R2"
+                                        Content="{Binding ReservedNumber2, Mode=TwoWay}"/>
+                                </Grid>
+                                
+                                <Grid Grid.Column="6" Grid.Row="2">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <local:FieldEditor
+                                        Grid.Column="1"
+                                        Header="R3"
+                                        Content="{Binding ReservedNumber3, Mode=TwoWay}"/>
+                                </Grid>
+
+                                <Grid Grid.Column="6" Grid.Row="3">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <local:FieldEditor
+                                        Grid.Column="1"
+                                        Header="R4"
+                                        Content="{Binding ReservedNumber4, Mode=TwoWay}"/>
+                                </Grid>
+                                
+                                <Border Style="{StaticResource HorizontalSeparatorBorder}"
+                                    Grid.Column="0" Grid.Row="5"/>
+
+                                <local:FieldEditor Style="{StaticResource HexEditor}"
+                                    Grid.Column="0" Grid.Row="6"
+                                    Header="lfanew"
+                                    Content="{Binding lfanew, Mode=TwoWay}"/>
+                                
+
+                                
+                            </Grid>
+
+                        </Grid>
+                    </Border>
+
+                    <Border Name="dosStubContainer"
+                        Visibility="{Binding IsDosStubVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
+                        Padding="4">
+                        <Border.Background>
+                            <LinearGradientBrush EndPoint="0.001,1">
+                                <GradientStop Offset="0" Color="White"/>
+                                <GradientStop Offset="1" Color="#FFFBC9C9"/>
+                            </LinearGradientBrush>
+                        </Border.Background>
+                        <Grid>                              
+                            <TextBlock
+                                Margin="-40,0,0,0"
+                                Text="0040h"/>
+
+                            <TextBlock
+                                Text="DOS stub"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Top"/>
+
+                        <local:BinaryEditor Data="{Binding DosStub}"
+                            FontFamily="Courier New"
+                            Foreground="Silver"/>
+
+
+                        </Grid>
+                    </Border>
+
+                    <Grid Name="peHeaderContainer">
+                            <Grid.Background>
+                                <LinearGradientBrush EndPoint="0,1">
+                                    <GradientStop Offset="0" Color="White"/>
+                                    <GradientStop Offset="1" Color="Gold"/>
+                                </LinearGradientBrush>
+                            </Grid.Background>
+
+                            <TextBlock
+                                Margin="-40,0,0,0"
+                                Text="{Binding lfanew, Converter={StaticResource HexConverter}, ConverterParameter=X4}"/>
+
+                            <TextBlock
+                                Text="PE header"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Top"/>
+
+                        </Grid>
+
+                        <Grid Name="optionalHeaderContainer">
+                            <Grid.Background>
+                                <LinearGradientBrush EndPoint="0,1">
+                                    <GradientStop Offset="0" Color="White"/>
+                                    <GradientStop Offset="1" Color="CornflowerBlue"/>
+                                </LinearGradientBrush>
+                            </Grid.Background>
+
+                            <TextBlock
+                                Margin="-40,0,0,0"
+                                Text="{Binding OptionalHeaderOffset, Converter={StaticResource HexConverter}, ConverterParameter=X4}"/>
+
+                            <TextBlock
+                                Text="Optional header"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Top"/>
+
+                        </Grid>
+
+                    </StackPanel>
+
+            </Grid>
         </Grid>
     </Border>
 
