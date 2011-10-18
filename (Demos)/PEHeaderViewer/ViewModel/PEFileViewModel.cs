@@ -278,7 +278,7 @@ namespace PEHeaderViewer.ViewModel
 
                 m_PEFile.DosHeader.lfanew = value;
 
-                int dosStubSize = (int)(value - DosHeader.HeaderSize);
+                int dosStubSize = (int)(value - DosHeader.Size);
                 if (dosStubSize > 0)
                 {
                     if(m_PEFile.DosStub!=null)
@@ -306,7 +306,7 @@ namespace PEHeaderViewer.ViewModel
         {
             get
             {
-                return m_PEFile.DosHeader.lfanew > DosHeader.HeaderSize;
+                return m_PEFile.DosHeader.lfanew > DosHeader.Size;
             }
         }
 

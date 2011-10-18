@@ -65,9 +65,9 @@ namespace Mi.PE
             this.DosHeader.ReservedNumber4 = reader.ReadUInt32();
             this.DosHeader.lfanew = reader.ReadUInt32();
 
-            if (this.DosHeader.lfanew > DosHeader.HeaderSize)
+            if (this.DosHeader.lfanew > DosHeader.Size)
             {
-                this.DosStub = new byte[this.DosHeader.lfanew - DosHeader.HeaderSize];
+                this.DosStub = new byte[this.DosHeader.lfanew - DosHeader.Size];
                 reader.ReadBytes(this.DosStub, 0, this.DosStub.Length);
             }
         }

@@ -9,7 +9,7 @@ namespace Mi.PE.PEFormat
     
     public sealed class DosHeader
     {
-        public const int HeaderSize = 64;
+        public const int Size = 64;
 
         /// <summary> Bytes on last page of file. </summary>
         public ushort cblp;
