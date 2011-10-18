@@ -88,6 +88,7 @@
     </Compile>
     <Compile Include="Model\DosHeaderModel.cs" />
     <Compile Include="Model\DosStubModel.cs" />
+    <Compile Include="Model\OptionalHeaderModel.cs" />
     <Compile Include="Model\PEFileModel.cs" />
     <Compile Include="Model\PEFilePartModel.cs" />
     <Compile Include="Model\PEHeaderModel.cs" />
