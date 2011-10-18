@@ -97,6 +97,7 @@
     </Compile>
     <Compile Include="PEFileViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ProportionalConverter.cs" />
     <Compile Include="TypedEditor.cs" />
     <Compile Include="ZoomLayout.cs" />
   </ItemGroup>
