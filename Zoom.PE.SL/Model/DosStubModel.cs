@@ -31,7 +31,7 @@ namespace Zoom.PE.Model
                 if (this.Data == null)
                     this.Length = 0;
                 else
-                    this.Length = this.Data.Length;
+                    this.Length = (ulong)this.Data.Length;
             }
         }
     }
