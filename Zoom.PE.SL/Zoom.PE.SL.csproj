@@ -90,6 +90,7 @@
     <Compile Include="Model\DosStubModel.cs" />
     <Compile Include="Model\PEFileModel.cs" />
     <Compile Include="Model\PEFilePartModel.cs" />
+    <Compile Include="Model\PEHeaderModel.cs" />
     <Compile Include="PEFileView.xaml.cs">
       <DependentUpon>PEFileView.xaml</DependentUpon>
     </Compile>
