@@ -268,6 +268,7 @@ namespace PEHeaderViewer.ViewModel
                 OnPropertyChanged("ReservedNumber4");
             }
         }
+
         public uint lfanew
         {
             get { return m_PEFile.DosHeader.lfanew; }
