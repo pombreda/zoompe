@@ -86,8 +86,12 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\DataDirectoryModel.cs" />
+    <Compile Include="Model\OptionalHeaderData64.cs" />
     <Compile Include="Model\DosHeaderModel.cs" />
     <Compile Include="Model\DosStubModel.cs" />
+    <Compile Include="Model\OptionalHeaderData.cs" />
+    <Compile Include="Model\OptionalHeaderData32.cs" />
     <Compile Include="Model\OptionalHeaderModel.cs" />
     <Compile Include="Model\PEFileModel.cs" />
     <Compile Include="Model\PEFilePartModel.cs" />
@@ -95,7 +99,6 @@
     <Compile Include="PEFileView.xaml.cs">
       <DependentUpon>PEFileView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="PEFileViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ProportionalConverter.cs" />
     <Compile Include="TypedEditor.cs" />

@@ -80,6 +80,7 @@
                                         Text="0000h"/>
 
                                     <local:ZoomLayout
+                                        Content="{Binding DosHeader}"
                                         ThresholdWidth="300"
                                         ThresholdHeight="1">
                                         <local:ZoomLayout.MaxiTemplate>
@@ -92,7 +93,8 @@
                                                             HorizontalAlignment="Right"
                                                             VerticalAlignment="Top"/>
 
-                                                        <local:DosHeaderDetailedView x:Name="dosHeaderDetailedView"/>
+                                                        <local:DosHeaderDetailedView
+                                                            x:Name="dosHeaderDetailedView"/>
 
                                                     </Grid>
                                                 </Viewbox>    
@@ -134,7 +136,7 @@
                                             Text="0040h"/>
                                     </Canvas>
 
-                                    <local:ZoomLayout Content="{Binding .}"
+                                    <local:ZoomLayout Content="{Binding DosStub}"
                                         ThresholdWidth="300"                                        
                                         ThresholdHeight="1">
                                         <local:ZoomLayout.MaxiTemplate>
@@ -147,7 +149,7 @@
                                                             HorizontalAlignment="Right"
                                                             VerticalAlignment="Top"/>
 
-                                                        <local:BinaryEditor Data="{Binding DosStub}"
+                                                        <local:BinaryEditor Data="{Binding Data}"
                                                             FontFamily="Courier New"
                                                             Foreground="Silver"/>
 
