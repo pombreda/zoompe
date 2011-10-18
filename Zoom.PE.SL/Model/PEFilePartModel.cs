@@ -7,7 +7,7 @@ using Mi.PE.PEFormat;
 
 namespace Zoom.PE.Model
 {
-    public class PEFilePartModel : INotifyPropertyChanged
+    public abstract class PEFilePartModel : INotifyPropertyChanged
     {
         ulong m_Address;
         ulong m_Length;
