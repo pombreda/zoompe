@@ -23,7 +23,15 @@ namespace Zoom.PE
         {
             double typedValue = System.Convert.ToDouble(value, culture);
             double converted = typedValue * this.Proportion;
-            return System.Convert.ChangeType(converted, targetType, culture);
+
+            object cast;
+
+            if (targetType == typeof(GridLength))
+                cast = new GridLength(converted, GridUnitType.Star);
+            else
+                cast = System.Convert.ChangeType(converted, targetType, culture);
+
+            return cast;
         }
 
         object IValueConverter.ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) { throw new NotSupportedException(); }
