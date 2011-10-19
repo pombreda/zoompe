@@ -24,7 +24,7 @@ namespace Zoom.PE.Model
 
             this.m_DosHeader = new DosHeaderModel(peFile.DosHeader);
 
-            UpdateDosStubFromPEFile();
+            UpdateDosStubFromlfanew();
             
             this.m_PEHeader = new PEHeaderModel(peFile.PEHeader, m_DosHeader);
             this.m_OptionalHeader = new OptionalHeaderModel(peFile.OptionalHeader, m_PEHeader);
@@ -36,7 +36,21 @@ namespace Zoom.PE.Model
 
         public DosHeaderModel DosHeader { get { return m_DosHeader; } }
 
-        public DosStubModel DosStub { get { return m_DosStub; } }
+        public DosStubModel DosStub
+        {
+            get { return m_DosStub; }
+            private set
+            {
+                if (value == this.DosStub)
+                    return;
+
+                this.m_DosStub = value;
+
+                var propertyChangedHandler = this.PropertyChanged;
+                if (propertyChangedHandler != null)
+                    propertyChangedHandler(this, new PropertyChangedEventArgs("DosStub"));
+            }
+        }
 
         public PEHeaderModel PEHeader { get { return m_PEHeader; } }
 
@@ -47,38 +61,45 @@ namespace Zoom.PE.Model
         void DosHeader_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == "lfanew")
-                UpdateDosStubFromPEFile();
+                UpdateDosStubFromlfanew();
         }
 
-        private void UpdateDosStubFromPEFile()
+        private void UpdateDosStubFromlfanew()
         {
-            if (peFile.DosStub == null)
-            {
-                if (this.DosStub == null)
-                    return;
+            long newDosStubSize = (long)this.peFile.DosHeader.lfanew - Mi.PE.PEFormat.DosHeader.Size;
 
-                this.m_DosStub = null;
+            // adjust peFile.DosStub
+            if (newDosStubSize > 0)
+            {
+                if (this.peFile.DosStub == null)
+                {
+                    this.peFile.DosStub = new byte[newDosStubSize];
+                }
+                else
+                {
+                    Array.Resize(ref this.peFile.DosStub, (int)newDosStubSize);
+                }
             }
             else
             {
-                if (this.DosStub != null)
+                if (this.peFile.DosStub != null)
                 {
-                    if(this.DosStub.Data != this.peFile.DosStub)
-                        this.DosStub.Data = this.peFile.DosStub;
-                    return;
-                }
-
-                {
-                    this.m_DosStub = new DosStubModel
-                    {
-                        Data = this.peFile.DosStub
-                    };
+                    this.peFile.DosStub = null;
                 }
             }
 
-            var propertyChangedHandler = this.PropertyChanged;
-            if (propertyChangedHandler != null)
-                propertyChangedHandler(this, new PropertyChangedEventArgs("DosStub"));
+            // adjust this.DosStub
+            if (this.peFile.DosStub == null)
+            {
+                this.DosStub = null;
+            }
+            else
+            {
+                if (this.DosStub == null)
+                    this.DosStub = new DosStubModel { Data = this.peFile.DosStub };
+                else
+                    this.DosStub.Data = this.peFile.DosStub;
+            }
         }
     }
 }
