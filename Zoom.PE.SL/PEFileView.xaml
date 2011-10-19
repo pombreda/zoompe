@@ -40,7 +40,7 @@
     			        FontSize="70"/>
                     
                     <Slider Name="zoomSlider"
-                        Value="550" Maximum="1000"
+                        Value="{StaticResource PEFileWidth}" Maximum="1000"
                         Minimum="100"
                         Orientation="Vertical"
                         HorizontalAlignment="Right"
