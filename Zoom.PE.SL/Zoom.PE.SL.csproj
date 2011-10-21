@@ -74,9 +74,14 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AutoTemplate.cs" />
     <Compile Include="BinaryEditor.cs" />
     <Compile Include="BooleanToVisibilityConverter.cs" />
     <Compile Include="BooleanToInvisibilityConverter.cs" />
+    <Compile Include="DesignTime\ModelSource.cs" />
+    <Compile Include="DesignTime\SilverlightControl1.xaml.cs">
+      <DependentUpon>SilverlightControl1.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DosHeaderDetailedView.xaml.cs">
       <DependentUpon>DosHeaderDetailedView.xaml</DependentUpon>
     </Compile>
@@ -112,6 +117,10 @@
     <Page Include="CommonPEFileResources.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="DesignTime\SilverlightControl1.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="DosHeaderDetailedView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -123,6 +132,9 @@
     <Page Include="PEFileView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Tempates\PEFileModel.xaml">
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>

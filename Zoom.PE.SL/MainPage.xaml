@@ -7,6 +7,11 @@
     mc:Ignorable="d"
     d:DesignHeight="427" d:DesignWidth="279">
 
+    <Grid>
     <Grid x:Name="LayoutRoot" Background="White">
+    </Grid>
+        <Button ContentTemplate="{local:AutoTemplate}"
+            Content="Hello"
+            VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
     </Grid>
 </UserControl>
