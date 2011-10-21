@@ -9,6 +9,14 @@
     <local:HexConverter x:Key="HexConverter"/>
     <local:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
 
+    <LinearGradientBrush x:Key="DiagonalBrush"
+    	EndPoint="2,0.2"
+    	MappingMode="Absolute"
+    	SpreadMethod="Reflect">
+        <GradientStop Offset="0" Color="Transparent"/>
+        <GradientStop Offset="1" Color="#FFE2E2E2"/>
+    </LinearGradientBrush>
+
     <Style x:Key="ColorBorderBase" TargetType="Border">
         <Setter Property="CornerRadius" Value="2"/>
     </Style>

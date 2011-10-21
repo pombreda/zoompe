@@ -4,29 +4,20 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:local="clr-namespace:Zoom.PE"
+    xmlns:DesignTime="clr-namespace:Zoom.PE.DesignTime"
     mc:Ignorable="d"
     d:DesignHeight="658" d:DesignWidth="702">
-    
     <Border>
         <Border.Background>
             <LinearGradientBrush
                 EndPoint="0.7, 1">
                 <GradientStop Offset="0" Color="White"/>
                 <GradientStop Offset="1" Color="#FF6E7B93"/>
-            </LinearGradientBrush>    
+            </LinearGradientBrush>
         </Border.Background>
 
-        <Border x:Name="LayoutRoot">
-            <Border.Background>
-                <LinearGradientBrush
-    				EndPoint="2,0.2"
-    				MappingMode="Absolute"
-    				SpreadMethod="Reflect">
-                    <GradientStop Offset="0" Color="Transparent"/>
-                    <GradientStop Offset="1" Color="#FFE2E2E2"/>
-                </LinearGradientBrush>
-
-            </Border.Background>
+        <Border x:Name="LayoutRoot"
+            Background="{StaticResource DiagonalBrush}">
 
             <ScrollViewer Name="scrollViewer"
                 VerticalScrollBarVisibility="Auto"
