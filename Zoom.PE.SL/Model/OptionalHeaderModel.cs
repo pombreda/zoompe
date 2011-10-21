@@ -23,6 +23,8 @@ namespace Zoom.PE.Model
             this.Address = peHeader.Address + peHeader.Length;
 
             UpdateLength();
+
+            UpdateDataFromPEMagic();
         }
 
         public PEMagic PEMagic
@@ -40,10 +42,7 @@ namespace Zoom.PE.Model
                 optionalHeader.PEMagic = value;
                 OnPropertyChanged("PEMagic");
 
-                if (value == PEMagic.NT32)
-                    this.Data = new OptionalHeaderData32(this.optionalHeader);
-                else
-                    this.Data = new OptionalHeaderData64(this.optionalHeader);
+                UpdateDataFromPEMagic();
             }
         }
 
@@ -65,6 +64,14 @@ namespace Zoom.PE.Model
                 this.m_DataDirectories = value;
                 OnPropertyChanged("DataDirectories");
             }
+        }
+
+        private void UpdateDataFromPEMagic()
+        {
+            if (this.PEMagic == PEMagic.NT32)
+                this.Data = new OptionalHeaderData32(this.optionalHeader);
+            else
+                this.Data = new OptionalHeaderData64(this.optionalHeader);
         }
 
         private void UpdateLength()
