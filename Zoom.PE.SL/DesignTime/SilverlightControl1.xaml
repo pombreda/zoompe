@@ -15,8 +15,7 @@
         
         <ContentControl Content="{Binding PEFileModel, Source={StaticResource ModelSource}}"/>
         
-        <Button
-            ContentTemplate="{local:AutoTemplate}"/>
+        
 
     </Grid>
 </UserControl>

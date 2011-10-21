@@ -10,8 +10,18 @@
     <Grid>
     <Grid x:Name="LayoutRoot" Background="White">
     </Grid>
-        <Button ContentTemplate="{local:AutoTemplate}"
+        <Button
             Content="Hello"
-            VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+            VerticalAlignment="Bottom" HorizontalAlignment="Center">
+            <Button.ContentTemplate>
+                <local:ByType Path="Content" RelativeSource="{RelativeSource Self}">
+                    <local:MatchType Type="System.String">
+                        <DataTemplate>
+                            <CheckBox Content="{Binding .}"/>
+                        </DataTemplate>
+                    </local:MatchType>
+                </local:ByType>
+            </Button.ContentTemplate>
+        </Button>
     </Grid>
 </UserControl>

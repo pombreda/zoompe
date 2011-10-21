@@ -74,7 +74,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="AutoTemplate.cs" />
+    <Compile Include="ByType.cs" />
     <Compile Include="BinaryEditor.cs" />
     <Compile Include="BooleanToVisibilityConverter.cs" />
     <Compile Include="BooleanToInvisibilityConverter.cs" />
@@ -91,6 +91,7 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MatchType.cs" />
     <Compile Include="Model\DataDirectoryModel.cs" />
     <Compile Include="Model\OptionalHeaderData64.cs" />
     <Compile Include="Model\DosHeaderModel.cs" />
