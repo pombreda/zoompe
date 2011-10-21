@@ -29,9 +29,8 @@ namespace Zoom.PE
             var pe = new PEFile();
             pe.ReadFrom(reader);
 
-            var view = new PEFileView { DataContext = new Model.PEFileModel(fileName, pe) };
-
-            this.LayoutRoot.Children.Add(view);
+            myContentControl.Content = new Model.PEFileModel(fileName, pe);
+            myContentControl.Visibility = System.Windows.Visibility.Visible;
         }
     }
 }

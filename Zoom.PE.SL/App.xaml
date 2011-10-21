@@ -7,11 +7,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="CommonPEFileResources.xaml"/>
                 <ResourceDictionary Source="Tempates/PEFileModel.xaml"/>
-                <ResourceDictionary>
-                    <DataTemplate x:Key="System.String">
-                        <CheckBox Content="{Binding .}"/>
-                    </DataTemplate>
-                </ResourceDictionary>
+                <ResourceDictionary Source="Tempates/DosHeaderDetails.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
 

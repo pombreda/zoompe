@@ -7,21 +7,10 @@
     mc:Ignorable="d"
     d:DesignHeight="427" d:DesignWidth="279">
 
-    <Grid>
     <Grid x:Name="LayoutRoot" Background="White">
+        <ContentControl Name="myContentControl"
+            Visibility="Collapsed"
+            ContentTemplate="{StaticResource PEFileModel}"/>
     </Grid>
-        <Button
-            Content="Hello"
-            VerticalAlignment="Bottom" HorizontalAlignment="Center">
-            <Button.ContentTemplate>
-                <local:ByType Path="Content" RelativeSource="{RelativeSource Self}">
-                    <local:MatchType Type="System.String">
-                        <DataTemplate>
-                            <CheckBox Content="{Binding .}"/>
-                        </DataTemplate>
-                    </local:MatchType>
-                </local:ByType>
-            </Button.ContentTemplate>
-        </Button>
-    </Grid>
+    
 </UserControl>
