@@ -10,7 +10,9 @@
     <Grid x:Name="LayoutRoot" Background="White">
         <ContentControl Name="myContentControl"
             Visibility="Collapsed"
-            ContentTemplate="{StaticResource PEFileModel}"/>
+            ContentTemplate="{StaticResource PEFileModel}"
+            HorizontalContentAlignment="Stretch"
+            VerticalContentAlignment="Stretch"/>
     </Grid>
     
 </UserControl>
