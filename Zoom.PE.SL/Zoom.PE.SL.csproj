@@ -127,6 +127,9 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Tempates\PEHeaderDetails.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Tempates\DosHeaderDetails.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

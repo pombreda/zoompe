@@ -8,6 +8,7 @@
                 <ResourceDictionary Source="CommonPEFileResources.xaml"/>
                 <ResourceDictionary Source="Tempates/PEFileModel.xaml"/>
                 <ResourceDictionary Source="Tempates/DosHeaderDetails.xaml"/>
+                <ResourceDictionary Source="Tempates/PEHeaderDetails.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
 

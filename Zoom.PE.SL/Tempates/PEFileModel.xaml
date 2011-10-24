@@ -51,7 +51,7 @@
                             </Border>
 
                             <StackPanel
-                            Background="White">
+                                Background="White">
 
                                 <Border
                                     Name="dosHeaderContainer"
@@ -122,8 +122,8 @@
                                     <Grid>
                                         <Canvas>
                                             <TextBlock
-                                            Margin="-40,0,0,0"
-                                            Text="0040h"/>
+                                                Margin="-40,0,0,0"
+                                                Text="0040h"/>
                                         </Canvas>
 
                                         <local:ZoomLayout Content="{Binding DosStub}"
@@ -170,26 +170,62 @@
                                     </Grid>
                                 </Border>
 
-                                <Grid Name="peHeaderContainer">
-                                    <Grid.Background>
-                                        <LinearGradientBrush EndPoint="0,1">
+                                <Border
+                                    Name="peHeaderContainer"
+                                    Padding="4">
+                                    <Border.Background>
+                                        <LinearGradientBrush EndPoint="0.1,2">
                                             <GradientStop Offset="0" Color="White"/>
-                                            <GradientStop Offset="1" Color="Gold"/>
+                                            <GradientStop Offset="1" Color="#FFE8E8E8"/>
                                         </LinearGradientBrush>
-                                    </Grid.Background>
+                                    </Border.Background>
+                                    <Grid>
 
-                                    <Canvas>
                                         <TextBlock
-                                        Margin="-40,0,0,0"
-                                        Text="{Binding lfanew, Converter={StaticResource HexConverter}, ConverterParameter=X4}"/>
-                                    </Canvas>
+                                            Margin="-40,0,0,0"
+                                            Text="{Binding Address, Converter={StaticResource HexConverter}, ConverterParameter=X4}"/>
 
-                                    <TextBlock
-                                    Text="PE header"
-                                    HorizontalAlignment="Right"
-                                    VerticalAlignment="Top"/>
+                                        <local:ZoomLayout
+                                            Content="{Binding PEHeader}"
+                                            ThresholdWidth="300"
+                                            ThresholdHeight="1">
+                                            <local:ZoomLayout.MaxiTemplate>
+                                                <DataTemplate>
+                                                    <Viewbox>
+                                                        <Grid Width="600">
+                                                            <TextBlock
+                                                                Text="PE header"
+                                                                FontSize="14"
+                                                                HorizontalAlignment="Right"
+                                                                VerticalAlignment="Top"/>
 
-                                </Grid>
+                                                            <ContentControl
+                                                                Content="{Binding .}"
+                                                                ContentTemplate="{StaticResource PEHeaderDetails}" />
+
+                                                        </Grid>
+                                                    </Viewbox>
+                                                </DataTemplate>
+                                            </local:ZoomLayout.MaxiTemplate>
+
+                                            <local:ZoomLayout.MiniTemplate>
+                                                <DataTemplate>
+                                                    <Viewbox>
+                                                        <Grid>
+                                                            <TextBlock
+                                                                Text="PE header"
+                                                                FontSize="14"
+                                                                Margin="100,0,0,0"
+                                                                HorizontalAlignment="Right"
+                                                                VerticalAlignment="Top"/>
+                                                        </Grid>
+                                                    </Viewbox>
+                                                </DataTemplate>
+                                            </local:ZoomLayout.MiniTemplate>
+                                        </local:ZoomLayout>
+
+                                    </Grid>
+                                </Border>
 
                                 <Grid Name="optionalHeaderContainer">
                                     <Grid.Background>
