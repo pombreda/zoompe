@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using Mi.PE;
@@ -7,7 +8,7 @@ using Mi.PE.PEFormat;
 
 namespace Zoom.PE.Model
 {
-    public sealed class PEFileModel : INotifyPropertyChanged
+    public sealed class PEFileModel : ReadOnlyObservableCollection<object>
     {
         readonly string m_FileName;
         readonly PEFile peFile;
@@ -16,18 +17,24 @@ namespace Zoom.PE.Model
         readonly PEHeaderModel m_PEHeader;
         readonly OptionalHeaderModel m_OptionalHeader;
 
+        readonly ObservableCollection<object> partsCore = new ObservableCollection<object>();
+
         public PEFileModel(string fileName, PEFile peFile)
+            : base(new ObservableCollection<object>())
         {
             this.m_FileName = fileName;
-            
             this.peFile = peFile;
 
+            this.Items.Add(this.DosHeader);
             this.m_DosHeader = new DosHeaderModel(peFile.DosHeader);
 
             UpdateDosStubFromlfanew();
             
             this.m_PEHeader = new PEHeaderModel(peFile.PEHeader, m_DosHeader);
+            this.Items.Add(this.PEHeader);
+
             this.m_OptionalHeader = new OptionalHeaderModel(peFile.OptionalHeader, m_PEHeader);
+            this.Items.Add(this.OptionalHeader);
             
             this.DosHeader.PropertyChanged += DosHeader_PropertyChanged;
         }
@@ -44,7 +51,13 @@ namespace Zoom.PE.Model
                 if (value == this.DosStub)
                     return;
 
+                if (this.DosStub != null)
+                    this.Items.RemoveAt(1);
+
                 this.m_DosStub = value;
+
+                if (this.DosStub != null)
+                    this.Items.Insert(1, this.DosStub);
 
                 var propertyChangedHandler = this.PropertyChanged;
                 if (propertyChangedHandler != null)
