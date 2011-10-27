@@ -45,6 +45,7 @@ namespace Zoom.PE.Model
                 OnPropertyChanged("Size");
             }
         }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         void OnPropertyChanged(string propertyName)

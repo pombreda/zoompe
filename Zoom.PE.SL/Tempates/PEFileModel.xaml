@@ -86,11 +86,9 @@
                                                                                 <local:MatchType
                                                                                     Type="Zoom.PE.Model.DosHeaderModel"
                                                                                     Value="{StaticResource DosHeaderDetails}"/>
-                                                                                <!--
                                                                                 <local:MatchType
                                                                                     Type="Zoom.PE.Model.DosStubModel"
-                                                                                    Value="{StaticResource DosHeaderDetails}"/>
-                                                                                -->
+                                                                                    Value="{StaticResource DosStubDetails}"/>
                                                                                 <local:MatchType
                                                                                     Type="Zoom.PE.Model.PEHeaderModel"
                                                                                     Value="{StaticResource PEHeaderDetails}"/>

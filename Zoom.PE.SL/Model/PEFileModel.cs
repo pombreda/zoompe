@@ -16,6 +16,8 @@ namespace Zoom.PE.Model
         DosStubModel m_DosStub;
         readonly PEHeaderModel m_PEHeader;
         readonly OptionalHeaderModel m_OptionalHeader;
+        readonly ObservableCollection<DataDirectoryModel> coreDataDirectories = new ObservableCollection<DataDirectoryModel>();
+        readonly ReadOnlyObservableCollection<DataDirectoryModel> m_DataDirectories;
 
         readonly ObservableCollection<object> partsCore = new ObservableCollection<object>();
 
@@ -37,6 +39,10 @@ namespace Zoom.PE.Model
             this.Items.Add(this.OptionalHeader);
             
             this.DosHeader.PropertyChanged += DosHeader_PropertyChanged;
+
+            this.m_DataDirectories = new ReadOnlyObservableCollection<DataDirectoryModel>(coreDataDirectories);
+
+            UpdateDataDirectories();
         }
 
         public string FileName { get { return m_FileName; } }
@@ -66,6 +72,8 @@ namespace Zoom.PE.Model
         public PEHeaderModel PEHeader { get { return m_PEHeader; } }
 
         public OptionalHeaderModel OptionalHeader { get { return m_OptionalHeader; } }
+
+        public ReadOnlyObservableCollection<DataDirectoryModel> DataDirectories { get { return m_DataDirectories; } }
 
         void DosHeader_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
@@ -108,6 +116,24 @@ namespace Zoom.PE.Model
                     this.DosStub = new DosStubModel { Data = this.peFile.DosStub };
                 else
                     this.DosStub.Data = this.peFile.DosStub;
+            }
+        }
+
+        void UpdateDataDirectories()
+        {
+            var ddList = this.peFile.OptionalHeader.DataDirectories ?? new DataDirectory[] { };
+            while (this.DataDirectories.Count > ddList.Length)
+            {
+                var removeDD = this.DataDirectories[this.DataDirectories.Count-1];
+                this.coreDataDirectories.Remove(removeDD);
+                this.Items.Remove(removeDD);
+            }
+
+            while (this.DataDirectories.Count < ddList.Length)
+            {
+                var newDD = new DataDirectoryModel(this.peFile.OptionalHeader, (DataDirectoryKind)this.DataDirectories.Count);
+                this.coreDataDirectories.Add(newDD);
+                this.Items.Add(newDD);
             }
         }
     }
