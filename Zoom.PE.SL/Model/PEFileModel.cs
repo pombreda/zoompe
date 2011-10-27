@@ -25,8 +25,8 @@ namespace Zoom.PE.Model
             this.m_FileName = fileName;
             this.peFile = peFile;
 
-            this.Items.Add(this.DosHeader);
             this.m_DosHeader = new DosHeaderModel(peFile.DosHeader);
+            this.Items.Add(this.DosHeader);
 
             UpdateDosStubFromlfanew();
             
