@@ -27,6 +27,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
             <Grid Grid.Column="0" Grid.Row="0">
@@ -208,7 +209,7 @@
                 Header="NumRvaAndSizes"
                 Content="{Binding Data.NumberOfRvaAndSizes, Mode=TwoWay}"/>
             
-            <Grid Grid.ColumnSpan="7" Grid.Row="11">
+            <Grid Grid.ColumnSpan="8" Grid.Row="11">
                 <ItemsControl ItemsSource="{Binding DataDirectories}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
@@ -217,8 +218,8 @@
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel>
-                                <TextBlock Text="{Binding Kind}"/>
+                            <StackPanel Margin="2">
+                                <TextBlock Text="{Binding Kind}" Opacity="0.5"/>
                                 <StackPanel Orientation="Horizontal">
                                     <local:HexEditor Value="{Binding VirtualAddress}"/>
                                     <TextBlock Text=":" Opacity="0.5"/>
