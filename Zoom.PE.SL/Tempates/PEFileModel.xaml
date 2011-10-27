@@ -81,22 +81,24 @@
                                                                     <ContentControl
                                                                         Content="{Binding .}"
                                                                         HorizontalContentAlignment="Stretch">
-                                                                        <local:ByType>
-                                                                            <local:MatchType
-                                                                                Type="Zoom.PE.Model.DosHeaderModel"
-                                                                                Value="{StaticResource DosHeaderDetails}"/>
-                                                                            <!--
-                                                                            <local:MatchType
-                                                                                Type="Zoom.PE.Model.DosStubModel"
-                                                                                Value="{StaticResource DosHeaderDetails}"/>
-                                                                            -->
-                                                                            <local:MatchType
-                                                                                Type="Zoom.PE.Model.PEHeaderModel"
-                                                                                Value="{StaticResource PEHeaderDetails}"/>
-                                                                            <local:MatchType
-                                                                                Type="Zoom.PE.Model.OptionalHeaderModel"
-                                                                                Value="{StaticResource OptionalHeaderDetails}"/>
-                                                                        </local:ByType>
+                                                                        <ContentControl.ContentTemplate>
+                                                                            <local:ByType>
+                                                                                <local:MatchType
+                                                                                    Type="Zoom.PE.Model.DosHeaderModel"
+                                                                                    Value="{StaticResource DosHeaderDetails}"/>
+                                                                                <!--
+                                                                                <local:MatchType
+                                                                                    Type="Zoom.PE.Model.DosStubModel"
+                                                                                    Value="{StaticResource DosHeaderDetails}"/>
+                                                                                -->
+                                                                                <local:MatchType
+                                                                                    Type="Zoom.PE.Model.PEHeaderModel"
+                                                                                    Value="{StaticResource PEHeaderDetails}"/>
+                                                                                <local:MatchType
+                                                                                    Type="Zoom.PE.Model.OptionalHeaderModel"
+                                                                                    Value="{StaticResource OptionalHeaderDetails}"/>
+                                                                            </local:ByType>
+                                                                        </ContentControl.ContentTemplate>
                                                                     </ContentControl>
 
                                                                 </Grid>
