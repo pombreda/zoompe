@@ -7,7 +7,7 @@ using Mi.PE.PEFormat;
 
 namespace Zoom.PE.Model
 {
-    public sealed class DosHeaderModel : PEFilePartModel
+    public sealed class DosHeaderModel : PEFilePart
     {
         readonly DosHeader dosHeader;
 

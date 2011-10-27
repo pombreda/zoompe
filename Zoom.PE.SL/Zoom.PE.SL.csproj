@@ -100,7 +100,7 @@
     <Compile Include="Model\OptionalHeaderData32.cs" />
     <Compile Include="Model\OptionalHeaderModel.cs" />
     <Compile Include="Model\PEFileModel.cs" />
-    <Compile Include="Model\PEFilePartModel.cs" />
+    <Compile Include="Model\PEFilePart.cs" />
     <Compile Include="Model\PEHeaderModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ProportionalConverter.cs" />

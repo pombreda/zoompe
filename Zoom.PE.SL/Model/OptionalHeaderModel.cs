@@ -8,7 +8,7 @@ using Mi.PE.PEFormat;
 
 namespace Zoom.PE.Model
 {
-    public sealed class OptionalHeaderModel : PEFilePartModel
+    public sealed class OptionalHeaderModel : PEFilePart
     {
         readonly OptionalHeader optionalHeader;
         OptionalHeaderData m_Data;

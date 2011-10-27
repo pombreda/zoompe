@@ -7,7 +7,7 @@ using Mi.PE.PEFormat;
 
 namespace Zoom.PE.Model
 {
-    public sealed class DosStubModel : PEFilePartModel
+    public sealed class DosStubModel : PEFilePart
     {
         byte[] m_Data;
 
