@@ -12,6 +12,7 @@ namespace Zoom.PE.Model
         readonly DosHeader dosHeader;
 
         public DosHeaderModel(DosHeader dosHeader)
+            : base("DOS header")
         {
             this.dosHeader = dosHeader;
             this.Address = 0;

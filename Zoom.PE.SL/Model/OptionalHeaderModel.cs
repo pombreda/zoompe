@@ -15,6 +15,7 @@ namespace Zoom.PE.Model
         ReadOnlyCollection<DataDirectoryModel> m_DataDirectories;
 
         public OptionalHeaderModel(OptionalHeader optionalHeader, PEHeaderModel peHeader)
+            : base("Optional header")
         {
             this.optionalHeader = optionalHeader;
 

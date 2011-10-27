@@ -59,17 +59,13 @@ namespace Zoom.PE.Model
                 if (this.DosStub != null)
                     this.Items.Insert(1, this.DosStub);
 
-                var propertyChangedHandler = this.PropertyChanged;
-                if (propertyChangedHandler != null)
-                    propertyChangedHandler(this, new PropertyChangedEventArgs("DosStub"));
+                OnPropertyChanged(new PropertyChangedEventArgs("DosStub"));
             }
         }
 
         public PEHeaderModel PEHeader { get { return m_PEHeader; } }
 
         public OptionalHeaderModel OptionalHeader { get { return m_OptionalHeader; } }
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         void DosHeader_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {

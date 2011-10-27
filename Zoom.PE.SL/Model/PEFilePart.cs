@@ -9,8 +9,16 @@ namespace Zoom.PE.Model
 {
     public abstract class PEFilePart : INotifyPropertyChanged
     {
+        readonly string m_Title;
         ulong m_Address;
         ulong m_Length;
+
+        protected PEFilePart(string title)
+        {
+            this.m_Title = title;
+        }
+
+        public string Title { get { return m_Title; } }
 
         public ulong Address
         {

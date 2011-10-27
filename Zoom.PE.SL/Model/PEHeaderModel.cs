@@ -12,6 +12,7 @@ namespace Zoom.PE.Model
         readonly PEHeader peHeader;
 
         public PEHeaderModel(PEHeader peHeader, DosHeaderModel dosHeaderModel)
+            : base("PE header")
         {
             this.peHeader = peHeader;
 

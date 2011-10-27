@@ -12,6 +12,7 @@ namespace Zoom.PE.Model
         byte[] m_Data;
 
         public DosStubModel()
+            : base("DOS stub")
         {
             this.Address = DosHeader.Size;
             this.Length = 0;

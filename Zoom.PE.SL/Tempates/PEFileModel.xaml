@@ -53,244 +53,80 @@
                                 </Border.Effect>
                             </Border>
 
-                            <StackPanel
+                            <ItemsControl
+                                ItemsSource="{Binding .}"
                                 Background="White">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border Padding="4">
+                                            <Grid>
+                                                <TextBlock
+                                                    Margin="-40,0,0,0"
+                                                    Text="{Binding Address, Converter={StaticResource HexConverter}, ConverterParameter=X4}"/>
 
-                                <Border
-                                    Name="dosHeaderContainer"
-                                    Padding="4">
-                                    <Border.Background>
-                                        <LinearGradientBrush EndPoint="0.1,2">
-                                            <GradientStop Offset="0" Color="White"/>
-                                            <GradientStop Offset="1" Color="#FFE8E8E8"/>
-                                        </LinearGradientBrush>
-                                    </Border.Background>
-                                    <Grid>
+                                                <local:ZoomLayout
+                                                    Content="{Binding .}"
+                                                    ThresholdWidth="300"
+                                                    ThresholdHeight="1">
+                                                    <local:ZoomLayout.MaxiTemplate>
+                                                        <DataTemplate>
+                                                            <Viewbox>
+                                                                <Grid Width="{StaticResource VirtualContentWidth}">
+                                                                    <TextBlock
+                                                                        Text="{Binding Title}"
+                                                                        FontSize="14"
+                                                                        HorizontalAlignment="Right"
+                                                                        VerticalAlignment="Top"/>
 
-                                        <TextBlock
-                                            Margin="-40,0,0,0"
-                                            Text="0000h"/>
+                                                                    <ContentControl
+                                                                        Content="{Binding .}"
+                                                                        HorizontalContentAlignment="Stretch">
+                                                                        <local:ByType>
+                                                                            <local:MatchType
+                                                                                Type="Zoom.PE.Model.DosHeaderModel"
+                                                                                Value="{StaticResource DosHeaderDetails}"/>
+                                                                            <!--
+                                                                            <local:MatchType
+                                                                                Type="Zoom.PE.Model.DosStubModel"
+                                                                                Value="{StaticResource DosHeaderDetails}"/>
+                                                                            -->
+                                                                            <local:MatchType
+                                                                                Type="Zoom.PE.Model.PEHeaderModel"
+                                                                                Value="{StaticResource PEHeaderDetails}"/>
+                                                                            <local:MatchType
+                                                                                Type="Zoom.PE.Model.OptionalHeaderModel"
+                                                                                Value="{StaticResource OptionalHeaderDetails}"/>
+                                                                        </local:ByType>
+                                                                    </ContentControl>
 
-                                        <local:ZoomLayout
-                                            Content="{Binding DosHeader}"
-                                            ThresholdWidth="300"
-                                            ThresholdHeight="1">
-                                            <local:ZoomLayout.MaxiTemplate>
-                                                <DataTemplate>
-                                                    <Viewbox>
-                                                        <Grid Width="{StaticResource VirtualContentWidth}">
-                                                            <TextBlock
-                                                                Text="DOS header"
-                                                                FontSize="14"
-                                                                HorizontalAlignment="Right"
-                                                                VerticalAlignment="Top"/>
+                                                                </Grid>
+                                                            </Viewbox>
+                                                        </DataTemplate>
+                                                    </local:ZoomLayout.MaxiTemplate>
 
-                                                            <ContentControl
-                                                                Content="{Binding .}"
-                                                                HorizontalContentAlignment="Stretch"
-                                                                ContentTemplate="{StaticResource DosHeaderDetails}" />
+                                                    <local:ZoomLayout.MiniTemplate>
+                                                        <DataTemplate>
+                                                            <Viewbox>
+                                                                <Grid>
+                                                                    <TextBlock
+                                                                        Text="{Binding Title}"
+                                                                        FontSize="14"
+                                                                        Margin="100,0,0,0"
+                                                                        HorizontalAlignment="Right"
+                                                                        VerticalAlignment="Top"/>
+                                                                </Grid>
+                                                            </Viewbox>
+                                                        </DataTemplate>
+                                                    </local:ZoomLayout.MiniTemplate>
+                                                </local:ZoomLayout>
 
-                                                        </Grid>
-                                                    </Viewbox>
-                                                </DataTemplate>
-                                            </local:ZoomLayout.MaxiTemplate>
+                                            </Grid>
+                                        </Border>
+                                    </DataTemplate>
+                                    
+                                </ItemsControl.ItemTemplate>
 
-                                            <local:ZoomLayout.MiniTemplate>
-                                                <DataTemplate>
-                                                    <Viewbox>
-                                                        <Grid>
-                                                            <TextBlock
-                                                                Text="DOS header"
-                                                                FontSize="14"
-                                                                Margin="100,0,0,0"
-                                                                HorizontalAlignment="Right"
-                                                                VerticalAlignment="Top"/>
-                                                        </Grid>
-                                                    </Viewbox>
-                                                </DataTemplate>
-                                            </local:ZoomLayout.MiniTemplate>
-                                        </local:ZoomLayout>
-
-                                    </Grid>
-                                </Border>
-
-                                <Border Name="dosStubContainer"
-                                    Visibility="{Binding IsDosStubVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
-                                    Padding="4">
-                                    <Border.Background>
-                                        <LinearGradientBrush EndPoint="0.001,1">
-                                            <GradientStop Offset="0" Color="White"/>
-                                            <GradientStop Offset="1" Color="#FFFBC9C9"/>
-                                        </LinearGradientBrush>
-                                    </Border.Background>
-                                    <Grid>
-                                        <Canvas>
-                                            <TextBlock
-                                                Margin="-40,0,0,0"
-                                                Text="0040h"/>
-                                        </Canvas>
-
-                                        <local:ZoomLayout Content="{Binding DosStub}"
-                                            ThresholdWidth="300"                                        
-                                            ThresholdHeight="1">
-                                            <local:ZoomLayout.MaxiTemplate>
-                                                <DataTemplate>
-                                                    <Viewbox>
-                                                        <Grid Width="{StaticResource VirtualContentWidth}">
-                                                            <TextBlock
-                                                                Text="DOS stub"
-                                                                FontSize="14"
-                                                                HorizontalAlignment="Right"
-                                                                VerticalAlignment="Top"/>
-
-                                                            <local:BinaryEditor Data="{Binding Data}"
-                                                                FontFamily="Courier New"
-                                                                Foreground="Silver"/>
-
-                                                        </Grid>
-                                                    </Viewbox>
-                                                </DataTemplate>
-                                            </local:ZoomLayout.MaxiTemplate>
-
-                                            <local:ZoomLayout.MiniTemplate>
-                                                <DataTemplate>
-                                                    <Viewbox>
-                                                        <Grid>
-                                                            <TextBlock
-                                                                Text="DOS stub"
-                                                                FontSize="14"
-                                                                Margin="100,0,0,0"
-                                                                HorizontalAlignment="Right"
-                                                                VerticalAlignment="Top"/>
-
-                                                        </Grid>
-                                                    </Viewbox>
-                                                </DataTemplate>
-                                            </local:ZoomLayout.MiniTemplate>
-                                        </local:ZoomLayout>
-
-
-
-                                    </Grid>
-                                </Border>
-
-                                <Border
-                                    Name="peHeaderContainer"
-                                    Padding="4">
-                                    <Border.Background>
-                                        <LinearGradientBrush EndPoint="0.1,2">
-                                            <GradientStop Offset="0" Color="White"/>
-                                            <GradientStop Offset="1" Color="#FFE8E8E8"/>
-                                        </LinearGradientBrush>
-                                    </Border.Background>
-                                    <Grid>
-
-                                        <TextBlock
-                                            Margin="-40,0,0,0"
-                                            Text="{Binding PEHeader.Address, Converter={StaticResource HexConverter}, ConverterParameter=X4}"/>
-
-                                        <local:ZoomLayout
-                                            Content="{Binding PEHeader}"
-                                            ThresholdWidth="300"
-                                            ThresholdHeight="1">
-                                            <local:ZoomLayout.MaxiTemplate>
-                                                <DataTemplate>
-                                                    <Viewbox>
-                                                        <Grid Width="{StaticResource VirtualContentWidth}">
-                                                            <TextBlock
-                                                                Text="PE header"
-                                                                FontSize="14"
-                                                                HorizontalAlignment="Right"
-                                                                VerticalAlignment="Top"/>
-
-                                                            <ContentControl
-                                                                Content="{Binding .}"
-                                                                HorizontalContentAlignment="Stretch"
-                                                                ContentTemplate="{StaticResource PEHeaderDetails}" />
-
-                                                        </Grid>
-                                                    </Viewbox>
-                                                </DataTemplate>
-                                            </local:ZoomLayout.MaxiTemplate>
-
-                                            <local:ZoomLayout.MiniTemplate>
-                                                <DataTemplate>
-                                                    <Viewbox>
-                                                        <Grid>
-                                                            <TextBlock
-                                                                Text="PE header"
-                                                                FontSize="14"
-                                                                Margin="100,0,0,0"
-                                                                HorizontalAlignment="Right"
-                                                                VerticalAlignment="Top"/>
-                                                        </Grid>
-                                                    </Viewbox>
-                                                </DataTemplate>
-                                            </local:ZoomLayout.MiniTemplate>
-                                        </local:ZoomLayout>
-
-                                    </Grid>
-                                </Border>
-
-                                <Border
-                                    Name="optionalHeaderContainer"
-                                    Padding="4">
-                                    <Border.Background>
-                                        <LinearGradientBrush EndPoint="0.1,2">
-                                            <GradientStop Offset="0" Color="White"/>
-                                            <GradientStop Offset="1" Color="#FFE8E8E8"/>
-                                        </LinearGradientBrush>
-                                    </Border.Background>
-                                    <Grid>
-
-                                        <TextBlock
-                                            Margin="-40,0,0,0"
-                                            Text="{Binding OptionalHeader.Address, Converter={StaticResource HexConverter}, ConverterParameter=X4}"/>
-
-                                        <local:ZoomLayout
-                                            Content="{Binding OptionalHeader}"
-                                            ThresholdWidth="300"
-                                            ThresholdHeight="1">
-                                            <local:ZoomLayout.MaxiTemplate>
-                                                <DataTemplate>
-                                                    <Viewbox>
-                                                        <Grid Width="{StaticResource VirtualContentWidth}">
-                                                            <TextBlock
-                                                                Text="Optional header"
-                                                                FontSize="14"
-                                                                HorizontalAlignment="Right"
-                                                                VerticalAlignment="Top"/>
-
-                                                            <ContentControl
-                                                                Content="{Binding .}"
-                                                                HorizontalContentAlignment="Stretch"
-                                                                ContentTemplate="{StaticResource OptionalHeaderDetails}" />
-
-                                                        </Grid>
-                                                    </Viewbox>
-                                                </DataTemplate>
-                                            </local:ZoomLayout.MaxiTemplate>
-
-                                            <local:ZoomLayout.MiniTemplate>
-                                                <DataTemplate>
-                                                    <Viewbox>
-                                                        <Grid>
-                                                            <TextBlock
-                                                                Text="Optional header"
-                                                                FontSize="14"
-                                                                Margin="100,0,0,0"
-                                                                HorizontalAlignment="Right"
-                                                                VerticalAlignment="Top"/>
-                                                        </Grid>
-                                                    </Viewbox>
-                                                </DataTemplate>
-                                            </local:ZoomLayout.MiniTemplate>
-                                        </local:ZoomLayout>
-
-                                    </Grid>
-                                </Border>
-
-                            </StackPanel>
+                            </ItemsControl>
                         </Grid>
                     </Grid>
                 </ScrollViewer>
