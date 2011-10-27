@@ -311,6 +311,11 @@ namespace Zoom.PE.Model
                     return;
 
                 optionalHeader.NumberOfRvaAndSizes = value;
+
+                Array.Resize(
+                    ref optionalHeader.DataDirectories,
+                    (int)value);
+
                 OnPropertyChanged("NumberOfRvaAndSizes");
             }
         }

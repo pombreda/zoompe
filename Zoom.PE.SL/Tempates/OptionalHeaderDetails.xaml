@@ -207,7 +207,17 @@
                 Grid.Column="6" Grid.Row="8"
                 Header="NumRvaAndSizes"
                 Content="{Binding Data.NumberOfRvaAndSizes, Mode=TwoWay}"/>
-
+            
+            <Grid Grid.ColumnSpan="7">
+                <ItemsControl ItemsSource="{Binding DataDirectories}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+            </Grid>
+            
         </Grid>
     </DataTemplate>
     

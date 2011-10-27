@@ -12,7 +12,8 @@ namespace Zoom.PE.Model
     {
         readonly OptionalHeader optionalHeader;
         OptionalHeaderData m_Data;
-        ReadOnlyCollection<DataDirectoryModel> m_DataDirectories;
+        readonly ObservableCollection<DataDirectoryModel> coreDataDirectories = new ObservableCollection<DataDirectoryModel>();
+        readonly ReadOnlyObservableCollection<DataDirectoryModel> m_DataDirectories;
 
         public OptionalHeaderModel(OptionalHeader optionalHeader, PEHeaderModel peHeader)
             : base("Optional header")
@@ -26,6 +27,18 @@ namespace Zoom.PE.Model
             UpdateLength();
 
             UpdateDataFromPEMagic();
+
+            this.m_DataDirectories = new ReadOnlyObservableCollection<DataDirectoryModel>(coreDataDirectories);
+        
+            UpdateDataDirectories();
+
+            this.Data.PropertyChanged += (sender, e) =>
+            {
+                if (e.PropertyName == "NumberOfRvaAndSizes")
+                {
+                    UpdateDataDirectories();
+                }
+            };
         }
 
         public PEMagic PEMagic
@@ -57,14 +70,9 @@ namespace Zoom.PE.Model
             }
         }
 
-        public ReadOnlyCollection<DataDirectoryModel> DataDirectories
+        public ReadOnlyObservableCollection<DataDirectoryModel> DataDirectories
         {
             get { return m_DataDirectories; }
-            private set
-            {
-                this.m_DataDirectories = value;
-                OnPropertyChanged("DataDirectories");
-            }
         }
 
         private void UpdateDataFromPEMagic()
@@ -92,6 +100,22 @@ namespace Zoom.PE.Model
                 if (e.PropertyName == "Address" || e.PropertyName == "Length")
                     this.Address = peHeader.Address + peHeader.Length;
             };
+        }
+
+        void UpdateDataDirectories()
+        {
+            var ddList = this.optionalHeader.DataDirectories ?? new DataDirectory[] { };
+            while (this.DataDirectories.Count > ddList.Length)
+            {
+                var removeDD = this.DataDirectories[this.DataDirectories.Count - 1];
+                this.coreDataDirectories.Remove(removeDD);
+            }
+
+            while (this.DataDirectories.Count < ddList.Length)
+            {
+                var newDD = new DataDirectoryModel(this.optionalHeader, (DataDirectoryKind)this.DataDirectories.Count);
+                this.coreDataDirectories.Add(newDD);
+            }
         }
     }
 }
