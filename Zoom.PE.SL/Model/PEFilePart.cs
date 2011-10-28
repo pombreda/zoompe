@@ -43,7 +43,13 @@ namespace Zoom.PE.Model
 
                 this.m_Length = value;
                 OnPropertyChanged("Length");
+                OnPropertyChanged("Height");
             }
+        }
+
+        public double Height
+        {
+            get { return this.Length + 16; }
         }
 
         protected void OnPropertyChanged(string propertyName)

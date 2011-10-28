@@ -31,15 +31,7 @@
     			            Foreground="Silver"
     			            FontSize="70"/>
 
-                        <Slider Name="zoomSlider"
-                            Value="{StaticResource PEFileWidth}" Maximum="1000"
-                            Minimum="100"
-                            Orientation="Vertical"
-                            HorizontalAlignment="Right"
-                            VerticalAlignment="Top"
-                            MinWidth="20" MinHeight="200"
-                            Margin="3"/>
-
+                        <Canvas>
                         <Grid
                             Margin="65, 52, 60,10" 
                             Width="{Binding Value, ElementName=zoomSlider}" MinHeight="100"
@@ -58,7 +50,7 @@
                                 Background="White">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
-                                        <Border Padding="4">
+                                        <Border Padding="4" Height="{Binding Height}">
                                             <Grid>
                                                 <TextBlock
                                                     Margin="-40,0,0,0"
@@ -128,6 +120,22 @@
 
                             </ItemsControl>
                         </Grid>
+                        </Canvas>
+
+                        <Slider Name="zoomSlider"
+                            Value="{StaticResource PEFileWidth}" Maximum="1000"
+                            Minimum="100"
+                            Orientation="Vertical"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Top"
+                            MinWidth="20" MinHeight="200"
+                            Margin="3"
+                            BorderThickness="5" BorderBrush="White">
+                            <Slider.Effect>
+                                <DropShadowEffect/>
+                            </Slider.Effect>
+                        </Slider>
+
                     </Grid>
                 </ScrollViewer>
             </Border>
