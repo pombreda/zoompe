@@ -13,7 +13,7 @@
                 <ColumnDefinition Width="60*"/>
                 <ColumnDefinition Width="7*"/>
                 <ColumnDefinition Width="60*"/>
-                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="60*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -43,27 +43,28 @@
                 Content="{Binding NumberOfSections, Mode=TwoWay}"/>
 
             <TextBlock
-                Grid.Column="0" Grid.Row="3"
+                Grid.Column="2" Grid.Row="0"
                 Grid.RowSpan="2" Text="&#13;&#10;"/>
 
             <local:FieldEditor
-                Grid.Column="0" Grid.Row="3"
+                Grid.Column="2" Grid.Row="0"
                 Grid.RowSpan="2"
                 Header="Timestamp"
                 Content="{Binding Timestamp, Mode=TwoWay}"/>
 
             <local:FieldEditor
-                Grid.Column="0" Grid.Row="5"
+                Grid.Column="2" Grid.Row="2"
                 Header="SzOptionalHeader"
                 Content="{Binding SizeOfOptionalHeader, Mode=TwoWay}"/>
 
             <TextBlock Text="Characteristics"
-                Grid.Column="2" Grid.Row="0"
+                TextAlignment="Right"
+                Grid.Column="4" Grid.Row="0"
                 Padding="5,0"
                 Opacity="0.5"/>
 
             <local:TypedEditor
-                Grid.Column="2" Grid.Row="1" Grid.RowSpan="5"
+                Grid.Column="6" Grid.Row="0" Grid.RowSpan="3"
                 Value="{Binding Characteristics, Mode=TwoWay}"
                 Padding="5,0"
                 Background="Transparent"

@@ -20,18 +20,18 @@
             <Border x:Name="LayoutRoot"
                 Background="{StaticResource DiagonalBrush}">
 
-                <ScrollViewer Name="scrollViewer"
-                    VerticalScrollBarVisibility="Auto"
-                    HorizontalScrollBarVisibility="Auto"
-                    Padding="0">
-                    <Grid>
+                <Grid>
 
-                        <TextBlock Name="fileNameTextBlock"
-    			            Text="{Binding FileName}"
-    			            Foreground="Silver"
-    			            FontSize="70"/>
+                    <TextBlock Name="fileNameTextBlock"
+    			        Text="{Binding FileName}"
+    			        Foreground="Silver"
+    			        FontSize="70"/>
 
-                        <Canvas>
+                    <ScrollViewer Name="scrollViewer"
+                        VerticalScrollBarVisibility="Auto"
+                        HorizontalScrollBarVisibility="Auto"
+                        Padding="0">
+
                         <Grid
                             Margin="65, 52, 60,10" 
                             Width="{Binding Value, ElementName=zoomSlider}" MinHeight="100"
@@ -50,94 +50,74 @@
                                 Background="White">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
-                                        <Border Padding="4" Height="{Binding Height}">
+                                        <Border Padding="4" Height="{Binding Height}" BorderBrush="Silver" BorderThickness="1"
+                                            HorizontalAlignment="Stretch">
                                             <Grid>
                                                 <TextBlock
                                                     Margin="-40,0,0,0"
                                                     Text="{Binding Address, Converter={StaticResource HexConverter}, ConverterParameter=X4}"/>
 
-                                                <local:ZoomLayout
-                                                    Content="{Binding .}"
-                                                    ThresholdWidth="300"
-                                                    ThresholdHeight="1">
-                                                    <local:ZoomLayout.MaxiTemplate>
-                                                        <DataTemplate>
-                                                            <Viewbox>
-                                                                <Grid Width="{StaticResource VirtualContentWidth}">
-                                                                    <TextBlock
-                                                                        Text="{Binding Title}"
-                                                                        FontSize="14"
-                                                                        HorizontalAlignment="Right"
-                                                                        VerticalAlignment="Top"/>
+                                                <TextBlock
+                                                    Text="{Binding Title}"
+                                                    FontSize="14"
+                                                    HorizontalAlignment="Right"
+                                                    VerticalAlignment="Top"/>
 
-                                                                    <ContentControl
-                                                                        Content="{Binding .}"
-                                                                        HorizontalContentAlignment="Stretch">
-                                                                        <ContentControl.ContentTemplate>
-                                                                            <local:ByType>
-                                                                                <local:MatchType
-                                                                                    Type="Zoom.PE.Model.DosHeaderModel"
-                                                                                    Value="{StaticResource DosHeaderDetails}"/>
-                                                                                <local:MatchType
-                                                                                    Type="Zoom.PE.Model.DosStubModel"
-                                                                                    Value="{StaticResource DosStubDetails}"/>
-                                                                                <local:MatchType
-                                                                                    Type="Zoom.PE.Model.PEHeaderModel"
-                                                                                    Value="{StaticResource PEHeaderDetails}"/>
-                                                                                <local:MatchType
-                                                                                    Type="Zoom.PE.Model.OptionalHeaderModel"
-                                                                                    Value="{StaticResource OptionalHeaderDetails}"/>
-                                                                            </local:ByType>
-                                                                        </ContentControl.ContentTemplate>
-                                                                    </ContentControl>
 
-                                                                </Grid>
-                                                            </Viewbox>
-                                                        </DataTemplate>
-                                                    </local:ZoomLayout.MaxiTemplate>
-
-                                                    <local:ZoomLayout.MiniTemplate>
-                                                        <DataTemplate>
-                                                            <Viewbox>
-                                                                <Grid>
-                                                                    <TextBlock
-                                                                        Text="{Binding Title}"
-                                                                        FontSize="14"
-                                                                        Margin="100,0,0,0"
-                                                                        HorizontalAlignment="Right"
-                                                                        VerticalAlignment="Top"/>
-                                                                </Grid>
-                                                            </Viewbox>
-                                                        </DataTemplate>
-                                                    </local:ZoomLayout.MiniTemplate>
-                                                </local:ZoomLayout>
-
+                                                <Viewbox HorizontalAlignment="Left">
+                                                    <ContentControl
+                                                        Width="{StaticResource PEFileWidth}"
+                                                        Content="{Binding .}"
+                                                        HorizontalContentAlignment="Stretch"
+                                                        IsTabStop="False">
+                                                        <ContentControl.ContentTemplate>
+                                                            <local:ByType>
+                                                                <local:MatchType
+                                                                    Type="Zoom.PE.Model.DosHeaderModel"
+                                                                    Value="{StaticResource DosHeaderDetails}"/>
+                                                                <local:MatchType
+                                                                    Type="Zoom.PE.Model.DosStubModel"
+                                                                    Value="{StaticResource DosStubDetails}"/>
+                                                                <local:MatchType
+                                                                    Type="Zoom.PE.Model.PEHeaderModel"
+                                                                    Value="{StaticResource PEHeaderDetails}"/>
+                                                                <local:MatchType
+                                                                    Type="Zoom.PE.Model.OptionalHeaderModel"
+                                                                    Value="{StaticResource OptionalHeaderDetails}"/>
+                                                            </local:ByType>
+                                                        </ContentControl.ContentTemplate>
+                                                    </ContentControl>
+                                                </Viewbox>
+                                                    
                                             </Grid>
                                         </Border>
                                     </DataTemplate>
-                                    
+
                                 </ItemsControl.ItemTemplate>
 
                             </ItemsControl>
                         </Grid>
-                        </Canvas>
 
-                        <Slider Name="zoomSlider"
-                            Value="{StaticResource PEFileWidth}" Maximum="1000"
-                            Minimum="100"
-                            Orientation="Vertical"
-                            HorizontalAlignment="Right"
-                            VerticalAlignment="Top"
-                            MinWidth="20" MinHeight="200"
-                            Margin="3"
-                            BorderThickness="5" BorderBrush="White">
-                            <Slider.Effect>
-                                <DropShadowEffect/>
-                            </Slider.Effect>
-                        </Slider>
+                    </ScrollViewer>
 
-                    </Grid>
-                </ScrollViewer>
+                    <Slider Name="zoomSlider"
+                        Value="{StaticResource PEFileWidth}" Maximum="1000"
+                        Minimum="100"
+                        Orientation="Vertical"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        MinWidth="20" MinHeight="200"
+                        Margin="3"
+                        BorderThickness="5" BorderBrush="White">
+                        <Slider.Effect>
+                            <DropShadowEffect/>
+                        </Slider.Effect>
+                        <ToolTipService.ToolTip>
+                            <TextBlock Text="{Binding Value, ElementName=zoomSlider}"/>
+                        </ToolTipService.ToolTip>
+                    </Slider>
+
+                </Grid>
             </Border>
         </Border>
 

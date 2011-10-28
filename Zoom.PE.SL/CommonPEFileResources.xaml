@@ -4,7 +4,7 @@
     xmlns:System="clr-namespace:System;assembly=mscorlib"
     xmlns:local="clr-namespace:Zoom.PE">
 
-    <System:Double x:Key="PEFileWidth">550</System:Double>
+    <System:Double x:Key="PEFileWidth">760</System:Double>
     
     <local:HexConverter x:Key="HexConverter"/>
     <local:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
