@@ -107,6 +107,7 @@
     <Compile Include="Model\PEFileModel.cs" />
     <Compile Include="Model\PEFilePart.cs" />
     <Compile Include="Model\PEHeaderModel.cs" />
+    <Compile Include="Model\SectionHeaderListModel.cs" />
     <Compile Include="Model\SectionHeaderModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ProportionalConverter.cs" />
@@ -131,6 +132,9 @@
     </Page>
     <Page Include="MainPage.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Tempates\SectionHeadersDetails.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Tempates\DosStubDetails.xaml">

@@ -10,6 +10,7 @@
                 <ResourceDictionary Source="Tempates/DosStubDetails.xaml"/>
                 <ResourceDictionary Source="Tempates/PEHeaderDetails.xaml"/>
                 <ResourceDictionary Source="Tempates/OptionalHeaderDetails.xaml"/>
+                <ResourceDictionary Source="Tempates/SectionHeadersDetails.xaml"/>
                 <ResourceDictionary Source="Tempates/PEFileModel.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

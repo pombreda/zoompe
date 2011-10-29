@@ -16,8 +16,7 @@ namespace Zoom.PE.Model
         DosStubModel m_DosStub;
         readonly PEHeaderModel m_PEHeader;
         readonly OptionalHeaderModel m_OptionalHeader;
-        readonly ObservableCollection<SectionHeaderModel> sectionsCore = new ObservableCollection<SectionHeaderModel>();
-        readonly ReadOnlyObservableCollection<SectionHeaderModel> m_Sections;
+        readonly SectionHeaderListModel m_SectionHeaders;
 
         readonly ObservableCollection<object> partsCore = new ObservableCollection<object>();
 
@@ -37,12 +36,11 @@ namespace Zoom.PE.Model
 
             this.m_OptionalHeader = new OptionalHeaderModel(peFile.OptionalHeader, m_PEHeader);
             this.Items.Add(this.OptionalHeader);
+
+            this.m_SectionHeaders = new SectionHeaderListModel(peFile, this.PEHeader, this.OptionalHeader);
+            this.Items.Add(this.SectionHeaders);
             
             this.DosHeader.PropertyChanged += DosHeader_PropertyChanged;
-
-            this.m_Sections = new ReadOnlyObservableCollection<SectionHeaderModel>(sectionsCore);
-
-            UpdateSections();
         }
 
         public string FileName { get { return m_FileName; } }
@@ -72,6 +70,8 @@ namespace Zoom.PE.Model
         public PEHeaderModel PEHeader { get { return m_PEHeader; } }
 
         public OptionalHeaderModel OptionalHeader { get { return m_OptionalHeader; } }
+
+        public SectionHeaderListModel SectionHeaders { get { return m_SectionHeaders; } }
 
         void DosHeader_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
@@ -114,23 +114,6 @@ namespace Zoom.PE.Model
                     this.DosStub = new DosStubModel { Data = this.peFile.DosStub };
                 else
                     this.DosStub.Data = this.peFile.DosStub;
-            }
-        }
-
-        private void UpdateSections()
-        {
-            while (this.sectionsCore.Count > this.peFile.SectionHeaders.Length)
-            {
-                var se = this.sectionsCore[this.sectionsCore.Count - 1];
-                this.Items.Remove(se);
-                this.sectionsCore.Remove(se);
-            }
-
-            while (this.sectionsCore.Count < this.peFile.SectionHeaders.Length)
-            {
-                var se = new SectionHeaderModel(this.peFile.SectionHeaders[this.sectionsCore.Count]);
-                this.sectionsCore.Add(se);
-                this.Items.Add(se);
             }
         }
     }

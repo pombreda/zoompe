@@ -66,6 +66,9 @@
                                                 <local:MatchType
                                                         Type="Zoom.PE.Model.OptionalHeaderModel"
                                                         Value="{StaticResource OptionalHeaderDetails}"/>
+                                                <local:MatchType
+                                                        Type="Zoom.PE.Model.SectionHeaderListModel"
+                                                        Value="{StaticResource SectionHeaderDetails}"/>
                                             </local:ByType>
                                         </ContentControl.ContentTemplate>
                                     </ContentControl>

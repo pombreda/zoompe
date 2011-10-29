@@ -7,16 +7,13 @@ using Mi.PE.PEFormat;
 
 namespace Zoom.PE.Model
 {
-    public class SectionHeaderModel : PEFilePart
+    public class SectionHeaderModel : INotifyPropertyChanged
     {
         readonly SectionHeader sectionHeader;
 
         public SectionHeaderModel(SectionHeader sectionHeader)
-            : base(sectionHeader.Name)
         {
             this.sectionHeader = sectionHeader;
-            base.Address = this.PointerToRawData;
-            base.Length = this.VirtualSize;
         }
 
         public string Name
@@ -151,6 +148,15 @@ namespace Zoom.PE.Model
                 sectionHeader.Characteristics = value;
                 OnPropertyChanged("Characteristics");
             }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        void OnPropertyChanged(string propertyName)
+        {
+            var propertyChangedHandler = this.PropertyChanged;
+            if (propertyChangedHandler != null)
+                propertyChangedHandler(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
