@@ -27,7 +27,7 @@ namespace Zoom.PE.Model
             get { return peHeader.Machine; }
             set
             {
-                if (value == peHeader.Machine)
+                if (value == this.Machine)
                     return;
 
                 peHeader.Machine = value;
@@ -40,7 +40,7 @@ namespace Zoom.PE.Model
             get { return peHeader.NumberOfSections; }
             set
             {
-                if (value == peHeader.NumberOfSections)
+                if (value == this.NumberOfSections)
                     return;
 
                 peHeader.NumberOfSections = value;
@@ -53,7 +53,7 @@ namespace Zoom.PE.Model
             get { return peHeader.Timestamp; }
             set
             {
-                if (value == peHeader.Timestamp)
+                if (value == this.Timestamp)
                     return;
 
                 peHeader.Timestamp = value;
@@ -66,7 +66,7 @@ namespace Zoom.PE.Model
             get { return peHeader.PointerToSymbolTable; }
             set
             {
-                if (value == peHeader.PointerToSymbolTable)
+                if (value == this.PointerToSymbolTable)
                     return;
 
                 peHeader.PointerToSymbolTable = value;
@@ -79,7 +79,7 @@ namespace Zoom.PE.Model
             get { return peHeader.NumberOfSymbols; }
             set
             {
-                if (value == peHeader.NumberOfSymbols)
+                if (value == this.NumberOfSymbols)
                     return;
 
                 peHeader.NumberOfSymbols = value;
@@ -92,7 +92,7 @@ namespace Zoom.PE.Model
             get { return peHeader.SizeOfOptionalHeader; }
             set
             {
-                if (value == peHeader.SizeOfOptionalHeader)
+                if (value == this.SizeOfOptionalHeader)
                     return;
 
                 peHeader.SizeOfOptionalHeader = value;
@@ -105,7 +105,7 @@ namespace Zoom.PE.Model
             get { return peHeader.Characteristics; }
             set
             {
-                if (value == peHeader.Characteristics)
+                if (value == this.Characteristics)
                     return;
 
                 peHeader.Characteristics = value;

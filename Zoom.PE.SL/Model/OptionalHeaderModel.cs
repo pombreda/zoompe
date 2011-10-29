@@ -31,14 +31,6 @@ namespace Zoom.PE.Model
             this.m_DataDirectories = new ReadOnlyObservableCollection<DataDirectoryModel>(coreDataDirectories);
         
             UpdateDataDirectories();
-
-            this.Data.PropertyChanged += (sender, e) =>
-            {
-                if (e.PropertyName == "NumberOfRvaAndSizes")
-                {
-                    UpdateDataDirectories();
-                }
-            };
         }
 
         public PEMagic PEMagic
@@ -77,10 +69,15 @@ namespace Zoom.PE.Model
 
         private void UpdateDataFromPEMagic()
         {
+            if(this.Data!=null)
+                this.Data.PropertyChanged -= Data_PropertyChanged;
+
             if (this.PEMagic == PEMagic.NT32)
                 this.Data = new OptionalHeaderData32(this.optionalHeader);
             else
                 this.Data = new OptionalHeaderData64(this.optionalHeader);
+
+            this.Data.PropertyChanged += Data_PropertyChanged;
         }
 
         private void UpdateLength()
@@ -100,6 +97,14 @@ namespace Zoom.PE.Model
                 if (e.PropertyName == "Address" || e.PropertyName == "Length")
                     this.Address = peHeader.Address + peHeader.Length;
             };
+        }
+
+        void Data_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "NumberOfRvaAndSizes")
+            {
+                UpdateDataDirectories();
+            }
         }
 
         void UpdateDataDirectories()

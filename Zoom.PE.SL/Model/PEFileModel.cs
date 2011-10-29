@@ -16,6 +16,8 @@ namespace Zoom.PE.Model
         DosStubModel m_DosStub;
         readonly PEHeaderModel m_PEHeader;
         readonly OptionalHeaderModel m_OptionalHeader;
+        readonly ObservableCollection<SectionHeaderModel> sectionsCore = new ObservableCollection<SectionHeaderModel>();
+        readonly ReadOnlyObservableCollection<SectionHeaderModel> m_Sections;
 
         readonly ObservableCollection<object> partsCore = new ObservableCollection<object>();
 
@@ -37,6 +39,10 @@ namespace Zoom.PE.Model
             this.Items.Add(this.OptionalHeader);
             
             this.DosHeader.PropertyChanged += DosHeader_PropertyChanged;
+
+            this.m_Sections = new ReadOnlyObservableCollection<SectionHeaderModel>(sectionsCore);
+
+            UpdateSections();
         }
 
         public string FileName { get { return m_FileName; } }
@@ -108,6 +114,23 @@ namespace Zoom.PE.Model
                     this.DosStub = new DosStubModel { Data = this.peFile.DosStub };
                 else
                     this.DosStub.Data = this.peFile.DosStub;
+            }
+        }
+
+        private void UpdateSections()
+        {
+            while (this.sectionsCore.Count > this.peFile.SectionHeaders.Length)
+            {
+                var se = this.sectionsCore[this.sectionsCore.Count - 1];
+                this.Items.Remove(se);
+                this.sectionsCore.Remove(se);
+            }
+
+            while (this.sectionsCore.Count < this.peFile.SectionHeaders.Length)
+            {
+                var se = new SectionHeaderModel(this.peFile.SectionHeaders[this.sectionsCore.Count]);
+                this.sectionsCore.Add(se);
+                this.Items.Add(se);
             }
         }
     }

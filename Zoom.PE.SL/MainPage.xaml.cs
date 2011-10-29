@@ -21,6 +21,8 @@ namespace Zoom.PE
         {
             InitializeComponent();
 
+            Application.Current.Host.Settings.EnableAutoZoom = false;
+
             string fileName = new AssemblyName(this.GetType().Assembly.FullName).Name+".dll";
             var streamInfo = Application.GetResourceStream(new Uri(fileName, UriKind.Relative));
 
@@ -31,6 +33,13 @@ namespace Zoom.PE
 
             myContentControl.Content = new Model.PEFileModel(fileName, pe);
             myContentControl.Visibility = System.Windows.Visibility.Visible;
+
+            this.MouseWheel += new MouseWheelEventHandler(MainPage_MouseWheel);
+        }
+
+        void MainPage_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            e.Handled = true;
         }
     }
 }

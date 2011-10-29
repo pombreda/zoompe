@@ -49,7 +49,7 @@ namespace Zoom.PE.Model
 
         public double Height
         {
-            get { return this.Length * 2 + 20; }
+            get { return this.Length; }
         }
 
         protected void OnPropertyChanged(string propertyName)

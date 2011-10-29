@@ -138,7 +138,7 @@ namespace Mi.PE
 
         static void WriteSectionHeader(BinaryStreamWriter writer, SectionHeader section)
         {
-            writer.WriteFixedZeroFilledAsciiString(section.Name, 8);
+            writer.WriteFixedZeroFilledAsciiString(section.Name, SectionHeader.MaximumNameSize);
             writer.WriteUInt32(section.VirtualSize);
             writer.WriteUInt32(section.VirtualAddress);
             writer.WriteUInt32(section.SizeOfRawData);

@@ -7,12 +7,12 @@
     mc:Ignorable="d"
     d:DesignHeight="427" d:DesignWidth="279">
 
-    <Grid x:Name="LayoutRoot" Background="White">
+    <ScrollViewer x:Name="LayoutRoot" Background="White">
         <ContentControl Name="myContentControl"
             Visibility="Collapsed"
             ContentTemplate="{StaticResource PEFileModel}"
             HorizontalContentAlignment="Stretch"
             VerticalContentAlignment="Stretch"/>
-    </Grid>
+    </ScrollViewer>
     
 </UserControl>

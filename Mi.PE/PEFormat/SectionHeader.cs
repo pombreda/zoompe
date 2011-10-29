@@ -8,6 +8,7 @@ namespace Mi.PE.PEFormat
     public sealed class SectionHeader
     {
         public const int Size = 40;
+        public const int MaximumNameSize = 8;
 
         /// <summary>
         /// An 8-byte, null-padded UTF-8 string.

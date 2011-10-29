@@ -171,7 +171,7 @@ namespace Mi.PE
 
         static void ReadSectionHeader(BinaryStreamReader reader, SectionHeader section)
         {
-            section.Name = reader.ReadFixedZeroFilledAsciiString(8);
+            section.Name = reader.ReadFixedZeroFilledAsciiString(SectionHeader.MaximumNameSize);
             section.VirtualSize = reader.ReadUInt32();
             section.VirtualAddress = reader.ReadUInt32();
             section.SizeOfRawData = reader.ReadUInt32();
