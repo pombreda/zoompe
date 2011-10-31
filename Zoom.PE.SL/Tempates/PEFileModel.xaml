@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
     xmlns:System="clr-namespace:System;assembly=mscorlib"
     xmlns:local="clr-namespace:Zoom.PE">
 
@@ -8,25 +9,17 @@
     
     <DataTemplate x:Key="PEFileModel">
 
-        <Grid>
+        <toolkit:DockPanel>
 
             <TextBlock Name="fileNameTextBlock"
     	        Text="{Binding FileName}"
     	        Foreground="Silver"
-    	        FontSize="70"/>
+    	        FontSize="70"
+                toolkit:DockPanel.Dock="Top"/>
 
-            <Grid
-                    Margin="65, 52, 60,10" 
-                    Width="{Binding Value, ElementName=zoomSlider}" MinHeight="100"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Top">
-                <Border Name="outerContentBorder"
-    			        BorderBrush="Black" BorderThickness="1"
-    			        Background="White">
-                    <Border.Effect>
-                        <DropShadowEffect Opacity="0.5"/>
-                    </Border.Effect>
-                </Border>
+            <Border
+                BorderBrush="Silver"
+                BorderThickness="1">
 
                 <ItemsControl
                         ItemsSource="{Binding .}"
@@ -34,17 +27,19 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <Border Padding="4" MinHeight="{Binding Height}" BorderBrush="Silver" BorderThickness="1"
-                                    HorizontalAlignment="Stretch">
+                                HorizontalAlignment="Stretch">
                                 <Grid>
-                                    <TextBlock
-                                            Margin="-40,0,0,0"
-                                            Text="{Binding Address, Converter={StaticResource HexConverter}, ConverterParameter=X4}"/>
 
-                                    <TextBlock
+                                    <Canvas
+                                        HorizontalAlignment="Right">
+                                        <TextBlock
+                                            Margin="20,-10,0,0"
+                                            Text="{Binding Address, Converter={StaticResource HexConverter}, ConverterParameter=X4}"/>
+                                        <TextBlock
                                             Text="{Binding Title}"
-                                            FontSize="14"
-                                            HorizontalAlignment="Right"
-                                            VerticalAlignment="Top"/>
+                                            FontSize="24"
+                                            Margin="20,0,0,0"/>
+                                    </Canvas>
 
 
                                     <ContentControl
@@ -80,9 +75,9 @@
                     </ItemsControl.ItemTemplate>
 
                 </ItemsControl>
-            </Grid>
+            </Border>
 
-        </Grid>
+        </toolkit:DockPanel>
 
     </DataTemplate>
     

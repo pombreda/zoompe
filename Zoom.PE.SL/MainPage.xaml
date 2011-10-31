@@ -11,8 +11,8 @@
         <ContentControl Name="myContentControl"
             Visibility="Collapsed"
             ContentTemplate="{StaticResource PEFileModel}"
-            HorizontalContentAlignment="Stretch"
-            VerticalContentAlignment="Stretch"/>
+            HorizontalContentAlignment="Left"
+            VerticalContentAlignment="Top"/>
     </ScrollViewer>
     
 </UserControl>
