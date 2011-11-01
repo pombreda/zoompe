@@ -98,6 +98,8 @@
     </Compile>
     <Compile Include="MatchType.cs" />
     <Compile Include="Model\DataDirectoryModel.cs" />
+    <Compile Include="Model\FunctionImportModel.cs" />
+    <Compile Include="Model\ImportListModel.cs" />
     <Compile Include="Model\OptionalHeaderData64.cs" />
     <Compile Include="Model\DosHeaderModel.cs" />
     <Compile Include="Model\DosStubModel.cs" />
