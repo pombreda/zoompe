@@ -59,15 +59,23 @@ namespace Zoom.PE
             {
                 foreach (var m in Matches)
                 {
-                    if ((m.Type == null && type == null)
+                    if ((string.IsNullOrEmpty(m.Type) && type == null)
                         || (type != null && m.Type == type.FullName))
                         return m.Value;
                 }
 
                 type = type.BaseType;
                 if (type == null)
-                    return null;
+                    break;
             }
+
+            foreach (var m in Matches)
+            {
+                if (string.IsNullOrEmpty(m.Type))
+                    return m.Value;
+            }
+
+            return null;
         }
     }
 }

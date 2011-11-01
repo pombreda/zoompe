@@ -49,7 +49,12 @@ namespace Zoom.PE.Model
 
         public double Height
         {
-            get { return this.Length * 2 + 20; }
+            get
+            {
+                double logHeight = Math.Log(this.Length);
+                double result = logHeight * logHeight * 5;
+                return result;
+            }
         }
 
         protected void OnPropertyChanged(string propertyName)

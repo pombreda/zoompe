@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using Mi.PE;
@@ -39,8 +40,11 @@ namespace Zoom.PE.Model
 
             this.m_SectionHeaders = new SectionHeaderListModel(peFile, this.PEHeader, this.OptionalHeader);
             this.Items.Add(this.SectionHeaders);
+
+            UpdateSectionContentParts();
             
             this.DosHeader.PropertyChanged += DosHeader_PropertyChanged;
+            ((INotifyCollectionChanged)this.SectionHeaders.Items).CollectionChanged += SectionHeaders_Items_CollectionChanged;
         }
 
         public string FileName { get { return m_FileName; } }
@@ -79,6 +83,32 @@ namespace Zoom.PE.Model
                 UpdateDosStubFromlfanew();
         }
 
+        void SectionHeaders_Items_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.OldItems != null)
+            {
+                foreach (SectionHeaderModel s in e.OldItems)
+                {
+                    s.PropertyChanged -= SectionHeaderModel_PropertyChanged;
+                }
+            }
+
+            if (e.NewItems != null)
+            {
+                foreach (SectionHeaderModel s in e.NewItems)
+                {
+                    s.PropertyChanged += SectionHeaderModel_PropertyChanged;
+                }
+            }
+
+            UpdateSectionContentParts();
+        }
+
+        void SectionHeaderModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            UpdateSectionContentParts();
+        }
+
         private void UpdateDosStubFromlfanew()
         {
             long newDosStubSize = (long)this.peFile.DosHeader.lfanew - Mi.PE.PEFormat.DosHeader.Size;
@@ -114,6 +144,73 @@ namespace Zoom.PE.Model
                     this.DosStub = new DosStubModel { Data = this.peFile.DosStub };
                 else
                     this.DosStub.Data = this.peFile.DosStub;
+            }
+        }
+
+        void UpdateSectionContentParts()
+        {
+            var sectionMap =
+                (from s in peFile.SectionHeaders
+                where s.SizeOfRawData>0
+                orderby s.PointerToRawData
+                select new
+                {
+                    Address = (ulong)s.PointerToRawData,
+                    Length = (ulong)s.SizeOfRawData,
+                    SectionHeader = s
+                }).ToList();
+
+            ulong top = this.SectionHeaders.Address + this.SectionHeaders.Length;
+
+            for (int i = 0; i < sectionMap.Count; i++)
+            {
+                if (sectionMap[i].Address > top)
+                {
+                    var padding = new
+                        {
+                            Address = top,
+                            Length = sectionMap[i].Address - top,
+                            SectionHeader = (SectionHeader)null
+                        };
+
+                    sectionMap.Insert(
+                        0,
+                        padding);
+                }
+                else if (sectionMap[i].Address < top)
+                {
+                    RemoveAllSectionContentParts();
+                    return;
+                }
+
+                top = sectionMap[i].Address + sectionMap[i].Length;
+            }
+
+            RemoveAllSectionContentParts();
+            foreach (var p in sectionMap)
+            {
+                if (p.SectionHeader == null)
+                {
+                    this.Items.Add(new SectionPaddingModel(p.Address, p.Length));
+                }
+                else
+                {
+                    this.Items.Add(new RawSectionContentModel(p.SectionHeader));
+                }
+            }
+        }
+
+        private void RemoveAllSectionContentParts()
+        {
+            var existingSectionContentParts =
+                (from p in this
+                 where p is SectionContentModel
+                 || p is SectionPaddingModel
+                 select p).ToArray();
+
+            foreach (var p in existingSectionContentParts)
+            {
+                this.Items.Remove(p);
             }
         }
     }
