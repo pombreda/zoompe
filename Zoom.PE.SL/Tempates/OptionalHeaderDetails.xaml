@@ -227,6 +227,7 @@
                             <StackPanel Margin="2,0">
                                 <TextBlock Text="{Binding Kind}" Opacity="0.5"/>
                                 <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="@" Opacity="0.4"/>
                                     <local:HexEditor Value="{Binding VirtualAddress}"/>
                                     <TextBlock Text=":" Opacity="0.5"/>
                                     <local:HexEditor Value="{Binding Size}"/>
