@@ -7,7 +7,7 @@ using Mi.PE.PEFormat;
 
 namespace Zoom.PE.Model
 {
-    public sealed class SectionContentModel :PEFilePart
+    public sealed class SectionContentModel :AddressablePart
     {
         readonly SectionHeader sectionHeader;
 

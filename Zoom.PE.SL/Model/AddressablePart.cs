@@ -7,13 +7,13 @@ using Mi.PE.PEFormat;
 
 namespace Zoom.PE.Model
 {
-    public abstract class PEFilePart : INotifyPropertyChanged
+    public abstract class AddressablePart : INotifyPropertyChanged
     {
         readonly string m_Title;
         ulong m_Address;
         ulong m_Length;
 
-        protected PEFilePart(string title)
+        protected AddressablePart(string title)
         {
             this.m_Title = title;
         }

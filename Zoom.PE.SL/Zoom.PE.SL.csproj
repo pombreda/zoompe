@@ -105,7 +105,7 @@
     <Compile Include="Model\OptionalHeaderData32.cs" />
     <Compile Include="Model\OptionalHeaderModel.cs" />
     <Compile Include="Model\PEFileModel.cs" />
-    <Compile Include="Model\PEFilePart.cs" />
+    <Compile Include="Model\AddressablePart.cs" />
     <Compile Include="Model\PEHeaderModel.cs" />
     <Compile Include="Model\SectionContentModel.cs" />
     <Compile Include="Model\SectionHeaderListModel.cs" />

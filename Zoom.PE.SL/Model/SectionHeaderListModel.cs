@@ -8,7 +8,7 @@ using Mi.PE.PEFormat;
 
 namespace Zoom.PE.Model
 {
-    public sealed class SectionHeaderListModel : PEFilePart
+    public sealed class SectionHeaderListModel : AddressablePart
     {
         readonly PEFile peFile;
         readonly ObservableCollection<SectionHeaderModel> itemsCore = new ObservableCollection<SectionHeaderModel>();

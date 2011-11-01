@@ -7,7 +7,7 @@ using Mi.PE.PEFormat;
 
 namespace Zoom.PE.Model
 {
-    public sealed class SectionPaddingModel : PEFilePart
+    public sealed class SectionPaddingModel : AddressablePart
     {
         public SectionPaddingModel(ulong address, ulong length)
             : base("padding")
