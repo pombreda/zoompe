@@ -7,18 +7,18 @@ using Mi.PE.PEFormat;
 
 namespace Zoom.PE.Model
 {
-    public abstract class SectionContentModel :PEFilePart
+    public sealed class SectionContentModel :PEFilePart
     {
-        readonly SectionHeader m_SectionHeader;
+        readonly SectionHeader sectionHeader;
 
-        protected SectionContentModel(SectionHeader sectionHeader)
+        public SectionContentModel(SectionHeader sectionHeader)
             : base(sectionHeader.Name)
         {
-            this.m_SectionHeader = sectionHeader;
+            this.sectionHeader = sectionHeader;
             this.Address = sectionHeader.PointerToRawData;
             this.Length = sectionHeader.SizeOfRawData;
         }
 
-        protected SectionHeader SectionHeader { get { return m_SectionHeader; } }
+        public ulong VirtualAddress { get { return sectionHeader.VirtualAddress; } }
     }
 }

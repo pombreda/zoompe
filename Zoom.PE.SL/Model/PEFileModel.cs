@@ -195,7 +195,7 @@ namespace Zoom.PE.Model
                 }
                 else
                 {
-                    this.Items.Add(new RawSectionContentModel(p.SectionHeader));
+                    this.Items.Add(new SectionContentModel(p.SectionHeader));
                 }
             }
         }
