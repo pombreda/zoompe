@@ -9,9 +9,9 @@ namespace Mi.PE.Unmanaged
 
     public sealed class Import
     {
-        public string FunctionName { get; set; }
-        public uint FunctionOrdinal { get; set; }
-        public string DllName { get; set; }
+        public string FunctionName;
+        public uint FunctionOrdinal;
+        public string DllName;
 
         public static Import[] ReadImports(BinaryStreamReader reader)
         {
