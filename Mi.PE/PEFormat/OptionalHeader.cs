@@ -13,18 +13,18 @@ namespace Mi.PE.PEFormat
             public const int NT64 = 112;
         }
 
-        public PEMagic PEMagic { get; set; }
-        public byte MajorLinkerVersion { get; set; }
-        public byte MinorLinkerVersion { get; set; }
+        public PEMagic PEMagic;
+        public byte MajorLinkerVersion;
+        public byte MinorLinkerVersion;
 
         /// <summary> The size of the code section, in bytes, or the sum of all such sections if there are multiple code sections. </summary>
-        public uint SizeOfCode { get; set; }
+        public uint SizeOfCode;
 
         /// <summary> The size of the initialized data section, in bytes, or the sum of all such sections if there are multiple initialized data sections. </summary>
-        public uint SizeOfInitializedData { get; set; }
+        public uint SizeOfInitializedData;
 
         /// <summary> The size of the uninitialized data section, in bytes, or the sum of all such sections if there are multiple uninitialized data sections. </summary>
-        public uint SizeOfUninitializedData { get; set; }
+        public uint SizeOfUninitializedData;
 
         /// <summary>
         /// A pointer to the entry point function, relative to the image base address.
@@ -33,13 +33,13 @@ namespace Mi.PE.PEFormat
         /// The entry point function is optional for DLLs.
         /// When no entry point is present, this member is zero.
         /// </summary>
-        public uint AddressOfEntryPoint { get; set; }
+        public uint AddressOfEntryPoint;
 
         /// <summary> A pointer to the beginning of the code section, relative to the image base. </summary>
-        public uint BaseOfCode { get; set; }
+        public uint BaseOfCode;
 
         /// <summary> A pointer to the beginning of the data section, relative to the image base. </summary>
-        public uint BaseOfData { get; set; }
+        public uint BaseOfData;
 
         /// <summary>
         /// The preferred address of the first byte of the image when it is loaded in memory.
@@ -48,14 +48,14 @@ namespace Mi.PE.PEFormat
         /// The default value for applications is 0x00400000,
         /// except on Windows CE where it is 0x00010000.
         /// </summary>
-        public ulong ImageBase { get; set; }
+        public ulong ImageBase;
 
         /// <summary>
         /// The alignment of sections loaded in memory, in bytes.
         /// This value must be greater than or equal to the FileAlignment member.
         /// The default value is the page size for the system.
         /// </summary>
-        public uint SectionAlignment { get; set; }
+        public uint SectionAlignment;
 
         /// <summary>
         /// The alignment of the raw data of sections in the image file, in bytes.
@@ -64,53 +64,53 @@ namespace Mi.PE.PEFormat
         /// If the <see cref="SectionAlignment"/> member is less than the system page size,
         /// this member must be the same as <see cref="SectionAlignment"/>.
         /// </summary>
-        public uint FileAlignment { get; set; }
+        public uint FileAlignment;
 
         /// <summary>
         /// The major version number of the required operating system.
         /// </summary>
-        public ushort MajorOperatingSystemVersion { get; set; }
+        public ushort MajorOperatingSystemVersion;
 
         /// <summary>
         /// The minor version number of the required operating system.
         /// </summary>
-        public ushort MinorOperatingSystemVersion { get; set; }
+        public ushort MinorOperatingSystemVersion;
 
         /// <summary>
         /// The major version number of the image.
         /// </summary>
-        public ushort MajorImageVersion { get; set; }
+        public ushort MajorImageVersion;
 
         /// <summary>
         /// The minor version number of the image.
         /// </summary>
-        public ushort MinorImageVersion { get; set; }
+        public ushort MinorImageVersion;
 
         /// <summary>
         /// The major version number of the subsystem.
         /// </summary>
-        public ushort MajorSubsystemVersion { get; set; }
+        public ushort MajorSubsystemVersion;
 
         /// <summary>
         /// The minor version number of the subsystem.
         /// </summary>
-        public ushort MinorSubsystemVersion { get; set; }
+        public ushort MinorSubsystemVersion;
 
         /// <summary>
         /// This member is reserved and must be 0.
         /// </summary>
-        public uint Win32VersionValue { get; set; }
+        public uint Win32VersionValue;
 
         /// <summary>
         /// The size of the image, in bytes, including all headers. Must be a multiple of <see cref="SectionAlignment"/>.
         /// </summary>
-        public uint SizeOfImage { get; set; }
+        public uint SizeOfImage;
 
         /// <summary>
         /// The combined size of the MS-DOS stub, the PE header, and the section headers,
         /// rounded to a multiple of the value specified in the FileAlignment member.
         /// </summary>
-        public uint SizeOfHeaders { get; set; }
+        public uint SizeOfHeaders;
 
         /// <summary>
         /// The image file checksum.
@@ -119,46 +119,46 @@ namespace Mi.PE.PEFormat
         /// any DLL loaded at boot time,
         /// and any DLL loaded into a critical system process.
         /// </summary>
-        public uint CheckSum { get; set; }
+        public uint CheckSum;
 
         /// <summary>
         /// The subsystem required to run this image.
         /// </summary>
-        public Subsystem Subsystem { get; set; }
+        public Subsystem Subsystem;
 
         /// <summary>
         /// The DLL characteristics of the image.
         /// </summary>
-        public DllCharacteristics DllCharacteristics { get; set; }
+        public DllCharacteristics DllCharacteristics;
 
         /// <summary>
         /// The number of bytes to reserve for the stack.
         /// Only the memory specified by the <see cref="SizeOfStackCommit"/> member is committed at load time;
         /// the rest is made available one page at a time until this reserve size is reached.
         /// </summary>
-        public ulong SizeOfStackReserve { get; set; }
+        public ulong SizeOfStackReserve;
 
         /// <summary>
         /// The number of bytes to commit for the stack.
         /// </summary>
-        public ulong SizeOfStackCommit { get; set; }
+        public ulong SizeOfStackCommit;
 
         /// <summary>
         /// The number of bytes to reserve for the local heap.
         /// Only the memory specified by the <see cref="SizeOfHeapCommit"/> member is committed at load time;
         /// the rest is made available one page at a time until this reserve size is reached.
         /// </summary>
-        public ulong SizeOfHeapReserve { get; set; }
+        public ulong SizeOfHeapReserve;
 
         /// <summary>
         /// The number of bytes to commit for the local heap.
         /// </summary>
-        public ulong SizeOfHeapCommit { get; set; }
+        public ulong SizeOfHeapCommit;
 
         /// <summary>
         /// This member is obsolete.
         /// </summary>
-        public uint LoaderFlags { get; set; }
+        public uint LoaderFlags;
 
         /// <summary>
         /// The number of directory entries in the remainder of the optional header.
