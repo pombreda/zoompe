@@ -18,30 +18,21 @@ namespace PrintExports
                 "kernel32.dll");
 
             Console.WriteLine(Path.GetFileName(kernel32));
-            var exports = GetExportFor(kernel32);
+            var pe = new PEFile();
+            var exports = GetExportFor(kernel32, pe);
 
+            Console.WriteLine("PEHeader.Timestamp: "+pe.PEHeader.Timestamp);
             Console.WriteLine(exports.DllName + " " + exports.Timestamp);
             foreach (var i in exports.Exports)
             {
                 Console.WriteLine("  " + i.ToString());
             }
-
-            //string self = typeof(Program).Assembly.Location;
-            //Console.WriteLine(Path.GetFileName(self));
-            //exports = GetExportFor(self);
-
-            //foreach (var i in exports)
-            //{
-            //    Console.WriteLine("  " + i.ToString());
-            //}
-
         }
 
-        private static Mi.PE.Unmanaged.Export.Header GetExportFor(string file)
+        private static Mi.PE.Unmanaged.Export.Header GetExportFor(string file, PEFile pe)
         {
             var stream = new MemoryStream(File.ReadAllBytes(file));
             var reader = new BinaryStreamReader(stream, new byte[1024]);
-            var pe = new PEFile();
             pe.ReadFrom(reader);
 
             var exportDirectory = pe.OptionalHeader.DataDirectories[(int)DataDirectoryKind.ExportSymbols];
