@@ -20,6 +20,8 @@ namespace Zoom.PE.Model
 
         public DataDirectoryKind Kind { get { return m_Kind; } }
 
+        public bool IsEmpty { get { return this.VirtualAddress == 0 && this.Size == 0; } }
+
         public uint VirtualAddress
         {
             get { return optionalHeader.DataDirectories[(int)this.Kind].VirtualAddress; }
@@ -28,8 +30,13 @@ namespace Zoom.PE.Model
                 if (value == this.VirtualAddress)
                     return;
 
+                bool wasEmpty = this.IsEmpty;
+
                 optionalHeader.DataDirectories[(int)this.Kind].VirtualAddress = value;
                 OnPropertyChanged("VirtualAddress");
+
+                if (this.IsEmpty != wasEmpty)
+                    OnPropertyChanged("IsEmpty");
             }
         }
 
@@ -41,8 +48,13 @@ namespace Zoom.PE.Model
                 if (value == this.Size)
                     return;
 
+                bool wasEmpty = this.IsEmpty;
+
                 optionalHeader.DataDirectories[(int)this.Kind].Size = value;
                 OnPropertyChanged("Size");
+
+                if (this.IsEmpty != wasEmpty)
+                    OnPropertyChanged("IsEmpty");
             }
         }
 
