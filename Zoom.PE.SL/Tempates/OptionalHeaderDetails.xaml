@@ -224,15 +224,22 @@
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel Margin="2,0">
-                                <TextBlock Text="{Binding Kind}" Opacity="0.5"/>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="@" Opacity="0.4"/>
-                                    <local:HexEditor Value="{Binding VirtualAddress}"/>
-                                    <TextBlock Text=":" Opacity="0.5"/>
-                                    <local:HexEditor Value="{Binding Size}"/>
+                            <Grid>
+                                <StackPanel Margin="2,0">
+                                    <TextBlock Text="{Binding Kind}" Opacity="0.5"/>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="@" Opacity="0.4"/>
+                                        <local:HexEditor Value="{Binding VirtualAddress}"/>
+                                        <TextBlock Text=":" Opacity="0.5"/>
+                                        <local:HexEditor Value="{Binding Size}"/>
+                                    </StackPanel>
                                 </StackPanel>
-                            </StackPanel>
+                                <Border
+                                    Visibility="{Binding IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                    Background="White"
+                                    Opacity="0.6"
+                                    IsHitTestVisible="False"/>
+                            </Grid>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
