@@ -10,7 +10,7 @@ namespace Mi.PE
 
     partial class PEFile
     {
-        static readonly DateTime TimestampEpochUTC = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+        internal static readonly DateTime TimestampEpochUTC = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 
         public void ReadFrom(BinaryStreamReader reader)
         {
