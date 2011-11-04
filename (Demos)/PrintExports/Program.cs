@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using Mi.PE;
 using Mi.PE.Internal;
 using Mi.PE.PEFormat;
 
-namespace PrintImports
+namespace PrintExports
 {
     class Program
     {
@@ -19,31 +18,33 @@ namespace PrintImports
                 "kernel32.dll");
 
             Console.WriteLine(Path.GetFileName(kernel32));
-            var imports = GetImportsFor(kernel32);
+            var exports = GetExportFor(kernel32);
 
-            foreach (var i in imports)
+            Console.WriteLine(exports.DllName + " " + exports.Timestamp);
+            foreach (var i in exports.Exports)
             {
                 Console.WriteLine("  " + i.ToString());
             }
 
-            string self = typeof(Program).Assembly.Location;
-            Console.WriteLine(Path.GetFileName(self));
-            imports = GetImportsFor(self);
+            //string self = typeof(Program).Assembly.Location;
+            //Console.WriteLine(Path.GetFileName(self));
+            //exports = GetExportFor(self);
 
-            foreach (var i in imports)
-            {
-                Console.WriteLine("  " + i.ToString());
-            }
+            //foreach (var i in exports)
+            //{
+            //    Console.WriteLine("  " + i.ToString());
+            //}
+
         }
 
-        private static Mi.PE.Unmanaged.Import[] GetImportsFor(string file)
+        private static Mi.PE.Unmanaged.Export.Header GetExportFor(string file)
         {
             var stream = new MemoryStream(File.ReadAllBytes(file));
             var reader = new BinaryStreamReader(stream, new byte[1024]);
             var pe = new PEFile();
             pe.ReadFrom(reader);
 
-            var importDirectory = pe.OptionalHeader.DataDirectories[(int)DataDirectoryKind.ImportSymbols];
+            var exportDirectory = pe.OptionalHeader.DataDirectories[(int)DataDirectoryKind.ExportSymbols];
 
             var rvaStream = new RvaStream(
                 stream,
@@ -56,12 +57,13 @@ namespace PrintImports
                 })
                 .ToArray());
 
-            rvaStream.Position = importDirectory.VirtualAddress;
+            rvaStream.Position = exportDirectory.VirtualAddress;
 
             var sectionReader = new BinaryStreamReader(rvaStream, new byte[32]);
 
-            var imports = Mi.PE.Unmanaged.Import.ReadImports(sectionReader);
-            return imports;
+            var exports = new Mi.PE.Unmanaged.Export.Header();
+            exports.ReadExports(sectionReader, 0);
+            return exports;
         }
     }
 }
