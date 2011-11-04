@@ -107,11 +107,6 @@ namespace Mi.PE.Unmanaged
                         if (exportOrForwarderRva >= initialAddress
                             && exportOrForwarderRva < initialAddress + rangeSize)
                         {
-                            this.Exports[i].ExportRva = reader.ReadUInt32();
-                            this.Exports[i].Forwarder = null;
-                        }
-                        else
-                        {
                             this.Exports[i].ExportRva = 0;
 
                             uint forwarderRva = reader.ReadUInt32();
@@ -127,6 +122,11 @@ namespace Mi.PE.Unmanaged
                                 reader.Position = savePosition;
                             }
                         }
+                        else
+                        {
+                            this.Exports[i].ExportRva = reader.ReadUInt32();
+                            this.Exports[i].Forwarder = null;
+                        }
 
                         this.Exports[i].FunctionName = null;
                         this.Exports[i].FunctionOrdinal = (uint)(i + this.OrdinalBase);
@@ -141,7 +141,7 @@ namespace Mi.PE.Unmanaged
                             reader.Position = ordinalTableRva + 2 * i;
                             uint ordinal = reader.ReadUInt16();
 
-                            reader.Position = namePointerRva + 2 * i;
+                            reader.Position = namePointerRva + 4 * i;
                             uint functionNameRva = reader.ReadUInt32();
 
                             string functionName;
@@ -196,7 +196,11 @@ namespace Mi.PE.Unmanaged
 
         public override string ToString()
         {
-            return (this.FunctionOrdinal != 0 ? "[" + this.FunctionOrdinal + "]" : "") + this.FunctionName+" "+this.ExportRva.ToString("X")+"h "+Forwarder;
+            return
+                (this.FunctionOrdinal != 0 ? "[" + this.FunctionOrdinal + "]" : "") +
+                this.FunctionName + " " +
+                (this.ExportRva == 0 ? "" : this.ExportRva.ToString("X") + "h ") +
+                Forwarder;
         }
     }
 }
