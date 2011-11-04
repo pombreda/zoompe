@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Reflection;
@@ -35,6 +36,33 @@ namespace Zoom.PE
             myContentControl.Visibility = System.Windows.Visibility.Visible;
 
             this.MouseWheel += new MouseWheelEventHandler(MainPage_MouseWheel);
+
+            this.AllowDrop = true;
+
+            this.Drop += new DragEventHandler(MainPage_Drop);
+        }
+
+        void MainPage_Drop(object sender, DragEventArgs e)
+        {
+            if (e.Data != null)
+            {
+                var files = e.Data.GetData(DataFormats.FileDrop) as FileInfo[];
+
+                if (files != null)
+                {
+                    foreach (var fi in files)
+                    {
+                        PEFile pe = new PEFile();
+                        using(var stream = fi.OpenRead())
+                        {
+                            var reader = new BinaryStreamReader(stream, new byte[1024]);
+                            pe.ReadFrom(reader);
+                        }
+
+                        myContentControl.Content = new Model.PEFileModel(fi.Name, pe);
+                    }
+                }
+            }
         }
 
         void MainPage_MouseWheel(object sender, MouseWheelEventArgs e)
