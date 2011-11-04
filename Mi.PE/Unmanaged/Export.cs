@@ -102,24 +102,30 @@ namespace Mi.PE.Unmanaged
                         if (this.Exports[i] == null)
                             this.Exports[i] = new Export();
 
-                        //uint exportOrForwarderRva = reader.ReadUInt32();
+                        uint exportOrForwarderRva = reader.ReadUInt32();
 
-                        //if(exportOrForwarderRva>=initialAddress
-                        //    || exportOrForwarderRva<=
-
-                        this.Exports[i].ExportRva = reader.ReadUInt32();
-
-                        uint forwarderRva = reader.ReadUInt32();
-                        if (forwarderRva == 0)
+                        if (exportOrForwarderRva >= initialAddress
+                            && exportOrForwarderRva < initialAddress + rangeSize)
                         {
+                            this.Exports[i].ExportRva = reader.ReadUInt32();
                             this.Exports[i].Forwarder = null;
                         }
                         else
                         {
-                            long savePosition = reader.Position;
-                            reader.Position = forwarderRva;
-                            this.Exports[i].Forwarder = ReadAsciiZ(reader);
-                            reader.Position = savePosition;
+                            this.Exports[i].ExportRva = 0;
+
+                            uint forwarderRva = reader.ReadUInt32();
+                            if (forwarderRva == 0)
+                            {
+                                this.Exports[i].Forwarder = null;
+                            }
+                            else
+                            {
+                                long savePosition = reader.Position;
+                                reader.Position = forwarderRva;
+                                this.Exports[i].Forwarder = ReadAsciiZ(reader);
+                                reader.Position = savePosition;
+                            }
                         }
 
                         this.Exports[i].FunctionName = null;

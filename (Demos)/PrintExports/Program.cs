@@ -62,7 +62,7 @@ namespace PrintExports
             var sectionReader = new BinaryStreamReader(rvaStream, new byte[32]);
 
             var exports = new Mi.PE.Unmanaged.Export.Header();
-            exports.ReadExports(sectionReader, 0);
+            exports.ReadExports(sectionReader, exportDirectory.Size);
             return exports;
         }
     }
