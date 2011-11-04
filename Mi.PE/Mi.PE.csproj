@@ -70,6 +70,7 @@
     <Compile Include="PEFormat\TargetArchitecture.cs" />
     <Compile Include="Unmanaged\Export.cs" />
     <Compile Include="Unmanaged\Import.cs" />
+    <Compile Include="Unmanaged\ResourceDirectory.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
