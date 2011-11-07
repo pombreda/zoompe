@@ -14,8 +14,7 @@ namespace Mi.PE.Unmanaged
             public string Name;
             public uint IntegerID;
 
-            public DirectoryEntry[] Subdirectories;
-            public DataEntry[] DataEntries;
+            public ResourceDirectory Directory;
         }
 
         public sealed class DataEntry
@@ -82,21 +81,61 @@ namespace Mi.PE.Unmanaged
                 string name = ReadName(reader);
                 reader.Position = savePosition;
 
-                if ((contentRva & (1U << 31)) == 0)
+                const uint HighBit = 1U << 31;
+
+                if ((contentRva & HighBit) == 0) // high bit is set
                 {
-                    // TODO read data
+                    var dataEntry = new DataEntry
+                    {
+                        Name = name,
+                        IntegerID = 0
+                    };
+
+                    savePosition = reader.Position;
+                    reader.Position = contentRva;
+
+                    ReadResourceDataEntry(reader, dataEntry);
+
+                    dataEntries.Add(dataEntry);
+                    reader.Position = savePosition;
                 }
                 else
                 {
-                    contentRva = contentRva | ~(1U << 31);
-                    // TODO read directory
+                    contentRva = contentRva & ~HighBit; // clear hight bit
+
+                    savePosition = reader.Position;
+                    reader.Position = contentRva;
+
+                    var directoryEntry = new DirectoryEntry
+                    {
+                        Name = name,
+                        IntegerID = 0
+                    };
+
+                    directoryEntry.Directory = new ResourceDirectory();
+                    directoryEntry.Directory.ReadResourceDirectories(reader);
+
+                    subdirectories.Add(directoryEntry);
+                    reader.Position = savePosition;
                 }
             }
         }
 
+        static void ReadResourceDataEntry(BinaryStreamReader reader, DataEntry dataEntry)
+        {
+            dataEntry.DataRVA = reader.ReadUInt32();
+            dataEntry.Size = reader.ReadUInt32();
+            dataEntry.Codepage = reader.ReadUInt32();
+            dataEntry.Reserved = reader.ReadUInt32();
+        }
+
         private string ReadName(BinaryStreamReader reader)
         {
-            throw new NotImplementedException();
+            ushort length = reader.ReadUInt16();
+            byte[] buf = new byte[length];
+            reader.ReadBytes(buf, 0, buf.Length);
+            string result = Encoding.Unicode.GetString(buf, 0, buf.Length);
+            return result;
         }
     }
 }
