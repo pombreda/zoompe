@@ -47,17 +47,9 @@ namespace Mi.PE.Unmanaged
         /// </summary>
         public ushort MinorVersion;
 
-        /// <summary>
-        /// The number of directory entries immediately following the table that use strings
-        /// to identify Type, Name, or Language entries (depending on the level of the table).
-        /// </summary>
-        public ushort NumberOfNameEntries;
+        public DirectoryEntry[] Subdirectories;
 
-        /// <summary>
-        /// The number of directory entries immediately following the Name entries
-        /// that use numeric IDs for Type, Name, or Language entries.
-        /// </summary>
-        public ushort NumberOfIDEntries;
+        public DataEntry[] DataEntries;
 
         public void ReadResourceDirectories(BinaryStreamReader reader)
         {
@@ -78,6 +70,7 @@ namespace Mi.PE.Unmanaged
                 uint contentRva = reader.ReadUInt32();
 
                 long savePosition = reader.Position;
+                reader.Position = nameRva;
                 string name = ReadName(reader);
                 reader.Position = savePosition;
 
@@ -119,6 +112,9 @@ namespace Mi.PE.Unmanaged
                     reader.Position = savePosition;
                 }
             }
+
+            this.Subdirectories = subdirectories.ToArray();
+            this.DataEntries = dataEntries.ToArray();
         }
 
         static void ReadResourceDataEntry(BinaryStreamReader reader, DataEntry dataEntry)
