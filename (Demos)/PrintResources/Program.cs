@@ -49,7 +49,7 @@ namespace PrintResources
             var sectionReader = new BinaryStreamReader(rvaStream, new byte[32]);
 
             var res = new ResourceDirectory();
-            res.ReadResourceDirectories(sectionReader);
+            res.Read(sectionReader);
 
             return res;
         }

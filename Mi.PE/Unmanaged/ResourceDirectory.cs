@@ -9,6 +9,9 @@ namespace Mi.PE.Unmanaged
 
     public sealed class ResourceDirectory
     {
+        static readonly DirectoryEntry[] EmptyDirectoryEntries = new DirectoryEntry[] { };
+        static readonly DataEntry[] EmptyDataEntries = new DataEntry[] { };
+
         public sealed class DirectoryEntry
         {
             public string Name;
@@ -51,7 +54,12 @@ namespace Mi.PE.Unmanaged
 
         public DataEntry[] DataEntries;
 
-        public void ReadResourceDirectories(BinaryStreamReader reader)
+        public void Read(BinaryStreamReader reader)
+        {
+            Read(reader, reader.Position);
+        }
+
+        void Read(BinaryStreamReader reader, long baseOffset)
         {
             this.Characteristics = reader.ReadUInt32();
             uint timestampNum = reader.ReadUInt32();
@@ -61,18 +69,30 @@ namespace Mi.PE.Unmanaged
             ushort nameEntryCount = reader.ReadUInt16();
             ushort idEntryCount = reader.ReadUInt16();
 
-            var subdirectories = new List<DirectoryEntry>();
-            var dataEntries = new List<DataEntry>();
+            List<DirectoryEntry> subdirectories = null;
+            List<DataEntry> dataEntries = null;
 
-            for (int i = 0; i < nameEntryCount; i++)
+            for (int i = 0; i < nameEntryCount + idEntryCount; i++)
             {
-                uint nameRva = reader.ReadUInt32();
+                uint idOrNameRva = reader.ReadUInt32();
                 uint contentRva = reader.ReadUInt32();
 
-                long savePosition = reader.Position;
-                reader.Position = nameRva;
-                string name = ReadName(reader);
-                reader.Position = savePosition;
+                string name;
+                uint id;
+
+                if (i < nameEntryCount)
+                {
+                    id = 0;
+                    long savePosition = reader.Position;
+                    reader.Position = idOrNameRva;
+                    name = ReadName(reader);
+                    reader.Position = savePosition;
+                }
+                else
+                {
+                    id = idOrNameRva;
+                    name = null;
+                }
 
                 const uint HighBit = 1U << 31;
 
@@ -81,14 +101,16 @@ namespace Mi.PE.Unmanaged
                     var dataEntry = new DataEntry
                     {
                         Name = name,
-                        IntegerID = 0
+                        IntegerID = id
                     };
 
-                    savePosition = reader.Position;
-                    reader.Position = contentRva;
+                    long savePosition = reader.Position;
+                    reader.Position = baseOffset + contentRva;
 
                     ReadResourceDataEntry(reader, dataEntry);
 
+                    if (dataEntries == null)
+                        dataEntries = new List<DataEntry>();
                     dataEntries.Add(dataEntry);
                     reader.Position = savePosition;
                 }
@@ -96,25 +118,27 @@ namespace Mi.PE.Unmanaged
                 {
                     contentRva = contentRva & ~HighBit; // clear hight bit
 
-                    savePosition = reader.Position;
-                    reader.Position = contentRva;
+                    long savePosition = reader.Position;
+                    reader.Position = baseOffset + contentRva;
 
                     var directoryEntry = new DirectoryEntry
                     {
                         Name = name,
-                        IntegerID = 0
+                        IntegerID = id
                     };
 
                     directoryEntry.Directory = new ResourceDirectory();
-                    directoryEntry.Directory.ReadResourceDirectories(reader);
+                    directoryEntry.Directory.Read(reader, baseOffset);
 
+                    if (subdirectories == null)
+                        subdirectories = new List<DirectoryEntry>();
                     subdirectories.Add(directoryEntry);
                     reader.Position = savePosition;
                 }
             }
 
-            this.Subdirectories = subdirectories.ToArray();
-            this.DataEntries = dataEntries.ToArray();
+            this.Subdirectories = subdirectories == null ? EmptyDirectoryEntries : subdirectories.ToArray();
+            this.DataEntries = dataEntries == null ? EmptyDataEntries : dataEntries.ToArray();
         }
 
         static void ReadResourceDataEntry(BinaryStreamReader reader, DataEntry dataEntry)
