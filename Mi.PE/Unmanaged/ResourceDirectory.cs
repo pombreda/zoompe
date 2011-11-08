@@ -80,21 +80,22 @@ namespace Mi.PE.Unmanaged
                 string name;
                 uint id;
 
-                if (i < nameEntryCount)
-                {
-                    id = 0;
-                    long savePosition = reader.Position;
-                    reader.Position = idOrNameRva;
-                    name = ReadName(reader);
-                    reader.Position = savePosition;
-                }
-                else
+                const uint HighBit = 1U << 31;
+
+                if ((idOrNameRva & HighBit)==0)
                 {
                     id = idOrNameRva;
                     name = null;
                 }
-
-                const uint HighBit = 1U << 31;
+                else
+                {
+                    id = 0;
+                    long savePosition = reader.Position;
+                    uint namePositon = idOrNameRva & ~HighBit;
+                    reader.Position = baseOffset + namePositon;
+                    name = ReadName(reader);
+                    reader.Position = savePosition;
+                }
 
                 if ((contentRva & HighBit) == 0) // high bit is set
                 {
@@ -152,7 +153,7 @@ namespace Mi.PE.Unmanaged
         private string ReadName(BinaryStreamReader reader)
         {
             ushort length = reader.ReadUInt16();
-            byte[] buf = new byte[length];
+            byte[] buf = new byte[length * 2]; // two-byte Unicode characters
             reader.ReadBytes(buf, 0, buf.Length);
             string result = Encoding.Unicode.GetString(buf, 0, buf.Length);
             return result;
