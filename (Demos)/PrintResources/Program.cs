@@ -14,15 +14,35 @@ namespace PrintResources
     {
         static void Main(string[] args)
         {
-            string kernel32 = Path.Combine(
+            string filename = Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.System),
                 "kernel32.dll");
 
-            kernel32 = typeof(int).Assembly.Location;
-
-            Console.WriteLine(Path.GetFileName(kernel32));
+            Console.WriteLine(Path.GetFileName(filename));
             var pe = new PEFile();
-            var resources = GetResourcesFor(kernel32, pe);
+            var resources = GetResourcesFor(filename, pe);
+            Print(resources);
+
+            filename = typeof(int).Assembly.Location;
+
+            Console.WriteLine(Path.GetFileName(filename));
+            pe = new PEFile();
+            resources = GetResourcesFor(filename, pe);
+            Print(resources);
+
+            filename = typeof(Program).Assembly.Location;
+
+            Console.WriteLine(Path.GetFileName(filename));
+            pe = new PEFile();
+            resources = GetResourcesFor(filename, pe);
+            Print(resources);
+
+            filename = typeof(PEFile).Assembly.Location;
+
+            Console.WriteLine(Path.GetFileName(filename));
+            pe = new PEFile();
+            resources = GetResourcesFor(filename, pe);
+            Print(resources);
         }
 
         static ResourceDirectory GetResourcesFor(string file, PEFile pe)
@@ -52,6 +72,26 @@ namespace PrintResources
             res.Read(sectionReader);
 
             return res;
+        }
+
+        private static void Print(ResourceDirectory resources)
+        {
+            Print(resources, 0);
+            Console.WriteLine();
+        }
+
+        private static void Print(ResourceDirectory resources, int indent)
+        {
+            foreach (var dir in resources.Subdirectories)
+            {
+                Console.WriteLine(new string(' ', indent * 3) + "["+(dir.Name == null ? dir.IntegerID.ToString() : "'" + dir.Name + "'")+"]");
+                Print(dir.Directory, indent + 1);
+            }
+
+            foreach (var d in resources.DataEntries)
+            {
+                Console.WriteLine(new string(' ', indent * 3) + (d.Name == null ? d.IntegerID.ToString() : "'" + d.Name + "'") + " : " + d.DataRVA.ToString("X") + ":" + d.Size.ToString("X") + "h");
+            }
         }
     }
 }
