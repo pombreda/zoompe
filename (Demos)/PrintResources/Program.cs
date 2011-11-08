@@ -18,7 +18,7 @@ namespace PrintResources
                 Environment.GetFolderPath(Environment.SpecialFolder.System),
                 "kernel32.dll");
 
-            kernel32 = typeof(Program).Assembly.Location;
+            kernel32 = typeof(int).Assembly.Location;
 
             Console.WriteLine(Path.GetFileName(kernel32));
             var pe = new PEFile();
