@@ -56,6 +56,45 @@ namespace Mi.PE.Unmanaged
         /// The 16-bit section index of the section that contains the target.
         /// This is used to support debugging information.
         /// </summary>
-        Section = 0x000E
+        Section = 0x000E,
+
+        /// <summary>
+        /// The 32-bit offset of the target from the beginning of its section.
+        /// This is used to support debugging information and static thread local storage.
+        /// </summary>
+        SecRel = 0x000F,
+
+        /// <summary>
+        /// The 32-bit VA of the target.
+        /// Applied to a contiguous MOVW+MOVT pair in ARM mode.
+        /// The 32-bit VA is added to the existing value that is encoded in the immediate fields of the pair.
+        /// </summary>
+        Mov32A = 0x0010,
+
+        /// <summary>
+        /// The 32-bit VA of the target.
+        /// Applied to a contiguous MOVW+MOVT pair in Thumb mode.
+        /// The 32-bit VA is added to the existing value that is encoded in the immediate fields of the pair.
+        /// </summary>
+        Mov32T = 0x0011,
+
+        /// <summary>
+        /// The most significant 20 bits of the signed 21-bit relative displacement of the target.
+        /// Applied to a 32-bit conditional B instruction in Thumb mode.
+        /// </summary>
+        Branch20T = 0x0012,
+
+        /// <summary>
+        /// The most significant 24 bits of the signed 25-bit relative displacement of the target.
+        /// Applied to a 32-bit unconditional B or BL instruction in Thumb mode.
+        /// </summary>
+        Branch24T = 0x0014,
+
+        /// <summary>
+        /// The most significant 23 or 24 bits of the signed 25-bit relative displacement of the target.
+        /// Applied to a 32-bit BL instruction in Thumb mode.
+        /// The BL is transformed to a BLX during relocation if the target is in ARM mode.
+        /// </summary>
+        Blx23T = 0x0015
     }
 }
