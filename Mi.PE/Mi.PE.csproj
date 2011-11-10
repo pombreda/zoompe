@@ -68,8 +68,11 @@
     <Compile Include="PEFormat\SectionCharacteristics.cs" />
     <Compile Include="PEFormat\Subsystem.cs" />
     <Compile Include="PEFormat\TargetArchitecture.cs" />
+    <Compile Include="Unmanaged\ArmRelocationType.cs" />
     <Compile Include="Unmanaged\Export.cs" />
+    <Compile Include="Unmanaged\ImageRelocation.cs" />
     <Compile Include="Unmanaged\Import.cs" />
+    <Compile Include="Unmanaged\Amd64RelocationType.cs" />
     <Compile Include="Unmanaged\ResourceDirectory.cs" />
   </ItemGroup>
   <ItemGroup>
