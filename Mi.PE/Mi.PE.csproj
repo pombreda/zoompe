@@ -68,6 +68,7 @@
     <Compile Include="PEFormat\SectionCharacteristics.cs" />
     <Compile Include="PEFormat\Subsystem.cs" />
     <Compile Include="PEFormat\TargetArchitecture.cs" />
+    <Compile Include="Unmanaged\RelocationType.I386.cs" />
     <Compile Include="Unmanaged\RelocationType.Arm.cs" />
     <Compile Include="Unmanaged\RelocationType.cs" />
     <Compile Include="Unmanaged\RelocationType.PowerPC.cs" />

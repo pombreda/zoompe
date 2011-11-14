@@ -21,14 +21,14 @@ namespace Mi.PE.Unmanaged
         public static implicit operator RelocationType(Amd64 value) { return new RelocationType((short)value); }
         public static implicit operator RelocationType(Arm value) { return new RelocationType((short)value); }
         public static implicit operator RelocationType(HitachiSuperH value) { return new RelocationType((short)value); }
-        public static implicit operator RelocationType(PowerPCRelocationType value) { return new RelocationType((short)value); }
-        public static implicit operator RelocationType(Amd64 value) { return new RelocationType((short)value); }
+        public static implicit operator RelocationType(PowerPC value) { return new RelocationType((short)value); }
+        public static implicit operator RelocationType(I386 value) { return new RelocationType((short)value); }
 
 
         public static implicit operator Amd64(RelocationType value) { return (Amd64)value.value; }
         public static implicit operator Arm(RelocationType value) { return (Arm)value.value; }
         public static implicit operator HitachiSuperH(RelocationType value) { return (HitachiSuperH)value.value; }
-        public static implicit operator PowerPCRelocationType(RelocationType value) { return (PowerPCRelocationType)value.value; }
-        public static implicit operator Amd64(RelocationType value) { return new (Amd64)value.value; }
+        public static implicit operator PowerPC(RelocationType value) { return (PowerPC)value.value; }
+        public static implicit operator I386(RelocationType value) { return (I386)value.value; }
     }
 }
