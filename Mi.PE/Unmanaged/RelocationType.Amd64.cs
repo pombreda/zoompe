@@ -6,7 +6,7 @@ namespace Mi.PE.Unmanaged
 {
     partial struct RelocationType
     {
-        public enum Amd64RelocationType : short
+        public enum Amd64 : short
         {
             /// <summary>
             ///  The relocation is ignored.
