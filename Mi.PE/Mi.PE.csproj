@@ -69,7 +69,9 @@
     <Compile Include="PEFormat\Subsystem.cs" />
     <Compile Include="PEFormat\TargetArchitecture.cs" />
     <Compile Include="Unmanaged\ArmRelocationType.cs" />
+    <Compile Include="Unmanaged\PowerPCRelocationType.cs" />
     <Compile Include="Unmanaged\Export.cs" />
+    <Compile Include="Unmanaged\HitachiSuperHRelocationType.cs" />
     <Compile Include="Unmanaged\ImageRelocation.cs" />
     <Compile Include="Unmanaged\Import.cs" />
     <Compile Include="Unmanaged\Amd64RelocationType.cs" />
