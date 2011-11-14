@@ -4,6 +4,8 @@ using System.Linq;
 
 namespace Mi.PE.Unmanaged
 {
+    partial struct RelocationType
+    {
     public enum Amd64RelocationType : short
     {
         /// <summary>
@@ -92,5 +94,6 @@ namespace Mi.PE.Unmanaged
         /// A 32-bit signed span-dependent value that is applied at link time.
         /// </summary>
         SSpan32 = 0x0010 
+    }
     }
 }
