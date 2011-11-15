@@ -11,7 +11,7 @@ namespace Mi.PE.Unmanaged
             /// <summary>
             /// The relocation is ignored.
             /// </summary>
-            ABSOLUTE = 0x0000,
+            Absolute = 0x0000,
 
             /// <summary>
             /// Not supported.
