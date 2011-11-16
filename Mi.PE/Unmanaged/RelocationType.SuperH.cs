@@ -6,7 +6,7 @@ namespace Mi.PE.Unmanaged
 {
     partial struct RelocationType
     {
-        public enum HitachiSuperH : short
+        public enum SuperH : short
         {
             /// <summary>
             /// The relocation is ignored.
