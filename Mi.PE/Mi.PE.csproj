@@ -68,18 +68,8 @@
     <Compile Include="PEFormat\SectionCharacteristics.cs" />
     <Compile Include="PEFormat\Subsystem.cs" />
     <Compile Include="PEFormat\TargetArchitecture.cs" />
-    <Compile Include="Unmanaged\RelocationType.M32R.cs" />
-    <Compile Include="Unmanaged\RelocationType.Mips.cs" />
-    <Compile Include="Unmanaged\RelocationType.Itanium.cs" />
-    <Compile Include="Unmanaged\RelocationType.I386.cs" />
-    <Compile Include="Unmanaged\RelocationType.Arm.cs" />
-    <Compile Include="Unmanaged\RelocationType.cs" />
-    <Compile Include="Unmanaged\RelocationType.PowerPC.cs" />
     <Compile Include="Unmanaged\Export.cs" />
-    <Compile Include="Unmanaged\RelocationType.SuperH.cs" />
-    <Compile Include="Unmanaged\ImageRelocation.cs" />
     <Compile Include="Unmanaged\Import.cs" />
-    <Compile Include="Unmanaged\RelocationType.Amd64.cs" />
     <Compile Include="Unmanaged\ResourceDirectory.cs" />
   </ItemGroup>
   <ItemGroup>
