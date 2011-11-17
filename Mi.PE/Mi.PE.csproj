@@ -38,7 +38,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cli\ClrHeader.cs" />
-    <Compile Include="Cli\ClrHeaderReader.cs" />
     <Compile Include="Cli\ClrImageFlags.cs" />
     <Compile Include="Cli\ClrMetadata.cs" />
     <Compile Include="Cli\ClrMetadataFlags.cs" />
