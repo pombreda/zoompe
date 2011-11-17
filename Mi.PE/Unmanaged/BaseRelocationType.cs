@@ -10,7 +10,7 @@ namespace Mi.PE.Unmanaged
         /// The base relocation is skipped.
         /// This type can be used to pad a block.
         /// </summary>
-        Aabsolute = 0,
+        Absolute = 0,
 
         /// <summary>
         /// The base relocation adds the high 16 bits of the difference to the 16-bit field at offset.
