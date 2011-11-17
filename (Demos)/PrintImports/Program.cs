@@ -8,7 +8,7 @@ using Mi.PE;
 using Mi.PE.Internal;
 using Mi.PE.PEFormat;
 
-namespace PrintBaseRelocations
+namespace PrintImports
 {
     class Program
     {
