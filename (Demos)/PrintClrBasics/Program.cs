@@ -16,61 +16,55 @@ namespace PrintClrBasics
     {
         static void Main(string[] args)
         {
-        //    string kernel32 = Path.Combine(
-        //        Environment.GetFolderPath(Environment.SpecialFolder.System),
-        //        "kernel32.dll");
+            string mscolib = typeof(int).Assembly.Location;
 
-        //    var pe = new PEFile();
+            var pe = new PEFile();
 
-        //    Console.WriteLine(Path.GetFileName(kernel32));
-        //    var relocBlocks = GetClrBasicsFor(kernel32, pe);
+            Console.WriteLine(Path.GetFileName(mscolib));
+            var clrHeader = GetClrBasicsFor(mscolib, pe);
 
-        //    PrintBaseRelocations(relocBlocks);
+            PrintClrHeader(clrHeader);
 
-        //    string self = typeof(Program).Assembly.Location;
-        //    Console.WriteLine(Path.GetFileName(self));
-        //    relocBlocks = GetClrBasicsFor(self, pe);
+            string self = typeof(Program).Assembly.Location;
+            Console.WriteLine(Path.GetFileName(self));
+            clrHeader = GetClrBasicsFor(self, pe);
 
-        //    PrintBaseRelocations(relocBlocks);
-        //}
+            PrintClrHeader(clrHeader);
+        }
 
-        //private static void PrintBaseRelocations(BaseRelocationBlock[] relocBlocks)
-        //{
-        //    foreach (var b in relocBlocks)
-        //    {
-        //        Console.WriteLine(b.PageRVA.ToString("X")+"h ("+b.Size+")");
-        //        foreach (var e in b.Entries)
-        //        {
-        //            Console.WriteLine("    " + e.Offset.ToString("X").PadLeft(4, '0') + "h " + e.Type);
-        //        }
-        //    }
-        //}
+        private static void PrintClrHeader(ClrHeader clrHeader)
+        {
+            Console.WriteLine("RuntimeVersion: v"+clrHeader.MajorRuntimeVersion + "." + clrHeader.MinorRuntimeVersion);
+        }
 
-        //private static BaseRelocationBlock[] GetClrBasicsFor(string file, PEFile pe)
-        //{
-        //    var stream = new MemoryStream(File.ReadAllBytes(file));
-        //    var reader = new BinaryStreamReader(stream, new byte[1024]);
-        //    pe.ReadFrom(reader);
+        private static ClrHeader GetClrBasicsFor(string file, PEFile pe)
+        {
+            var stream = new MemoryStream(File.ReadAllBytes(file));
+            var reader = new BinaryStreamReader(stream, new byte[1024]);
+            pe.ReadFrom(reader);
 
-        //    var clrDirectory = pe.OptionalHeader.DataDirectories[(int)DataDirectoryKind.Clr];
+            var clrDirectory = pe.OptionalHeader.DataDirectories[(int)DataDirectoryKind.Clr];
 
-        //    var rvaStream = new RvaStream(
-        //        stream,
-        //        pe.SectionHeaders.Select(
-        //        s => new RvaStream.Range
-        //        {
-        //            PhysicalAddress = s.PointerToRawData,
-        //            Size = s.VirtualSize,
-        //            VirtualAddress = s.VirtualAddress
-        //        })
-        //        .ToArray());
+            var rvaStream = new RvaStream(
+                stream,
+                pe.SectionHeaders.Select(
+                s => new RvaStream.Range
+                {
+                    PhysicalAddress = s.PointerToRawData,
+                    Size = s.VirtualSize,
+                    VirtualAddress = s.VirtualAddress
+                })
+                .ToArray());
 
-        //    rvaStream.Position = clrDirectory.VirtualAddress;
+            rvaStream.Position = clrDirectory.VirtualAddress;
 
-        //    var sectionReader = new BinaryStreamReader(rvaStream, new byte[32]);
+            var sectionReader = new BinaryStreamReader(rvaStream, new byte[32]);
 
-        //    var reader = ClrHeaderReader.ReadClrHeader(sectionReader);
-        //    return result;
+            var header = ClrHeaderReader.ReadClrHeader(sectionReader);
+
+            sectionReader.Position = header.MetaData.VirtualAddress;
+
+            return header;
         }
     }
 }
