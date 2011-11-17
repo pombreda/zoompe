@@ -9,9 +9,9 @@ namespace Mi.PE.Cli
 
     public sealed class StreamHeader
     {
-        public uint Offset { get; set; }
-        public uint Size { get; set; }
-        public string Name { get; set; }
+        public uint Offset;
+        public uint Size;
+        public string Name;
 
         #region ToString
         public override string ToString()
