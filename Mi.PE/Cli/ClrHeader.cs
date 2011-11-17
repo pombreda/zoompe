@@ -5,6 +5,7 @@ using System.Text;
 
 namespace Mi.PE.Cli
 {
+    using Mi.PE.Internal;
     using Mi.PE.PEFormat;
     
     public sealed class ClrHeader
@@ -59,5 +60,34 @@ namespace Mi.PE.Cli
         /// null for ordinary IL images.  NGEN images it points at a code:CORCOMPILE_HEADER structure
         /// </summary>
         public DataDirectory ManagedNativeHeader { get; set; }
+
+        public void Read(BinaryStreamReader reader)
+        {
+            this.Cb = reader.ReadUInt32();
+
+            if (this.Cb < ClrHeader.Size)
+            {
+                throw new BadImageFormatException(
+                    "Unexpectedly short " + typeof(ClrHeader).Name + " structure " +
+                    this.Cb + " reported by the Cb field " +
+                    "(expected at least " + ClrHeader.Size + ").");
+            }
+
+            this.MajorRuntimeVersion = reader.ReadUInt16();
+            this.MinorRuntimeVersion = reader.ReadUInt16();
+
+            this.MetaData.Read(reader);
+
+            this.Flags = (ClrImageFlags)reader.ReadInt32();
+
+            this.EntryPointToken = reader.ReadUInt32();
+
+            this.Resources.Read(reader);
+            this.StrongNameSignature.Read(reader);
+            this.CodeManagerTable.Read(reader);
+            this.VTableFixups.Read(reader);
+            this.ExportAddressTableJumps.Read(reader);
+            this.ManagedNativeHeader.Read(reader);
+        }
     }
 }

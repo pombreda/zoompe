@@ -65,11 +65,13 @@ namespace PrintClrBasics
 
             var sectionReader = new BinaryStreamReader(rvaStream, new byte[32]);
 
-            var header = ClrHeaderReader.ReadClrHeader(sectionReader);
+            var header = new ClrHeader();
+            header.Read(sectionReader);
 
             sectionReader.Position = header.MetaData.VirtualAddress;
 
-            var metadata = ClrHeaderReader.ReadClrMetadata(sectionReader);
+            var metadata = new ClrMetadata();
+            metadata.Read(sectionReader);
 
             return Tuple.Create(header, metadata);
         }

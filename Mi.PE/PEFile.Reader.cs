@@ -161,11 +161,9 @@ namespace Mi.PE
 
             for (int i = 0; i < this.OptionalHeader.DataDirectories.Length; i++)
             {
-                this.OptionalHeader.DataDirectories[i] = new DataDirectory
-                {
-                    VirtualAddress = reader.ReadUInt32(),
-                    Size = reader.ReadUInt32()
-                };
+                var dd = new DataDirectory();
+                dd.Read(reader);
+                this.OptionalHeader.DataDirectories[i] = dd;
             }
         }
 
