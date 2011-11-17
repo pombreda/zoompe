@@ -49,7 +49,7 @@ namespace Mi.PE.Cli
         public DataDirectory CodeManagerTable { get; set; }
 
         /// <summary>
-        /// Used for manged codee that has unmaanaged code inside it (or exports methods as unmanaged entry points)
+        /// Used for manged code that has unmaanaged code inside it (or exports methods as unmanaged entry points)
         /// </summary>
         public DataDirectory VTableFixups { get; set; }
 
