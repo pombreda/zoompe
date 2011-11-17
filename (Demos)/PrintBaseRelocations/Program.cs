@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 using Mi.PE;
 using Mi.PE.Internal;
 using Mi.PE.PEFormat;
+using Mi.PE.Unmanaged;
 
-namespace PrintImports
+namespace PrintBaseRelocations
 {
     class Program
     {
@@ -18,32 +19,39 @@ namespace PrintImports
                 Environment.GetFolderPath(Environment.SpecialFolder.System),
                 "kernel32.dll");
 
-            Console.WriteLine(Path.GetFileName(kernel32));
-            var imports = GetImportsFor(kernel32);
+            var pe = new PEFile();
 
-            foreach (var i in imports)
-            {
-                Console.WriteLine("  " + i.ToString());
-            }
+            Console.WriteLine(Path.GetFileName(kernel32));
+            var relocBlocks = GetBaseRelocationsFor(kernel32, pe);
+
+            PrintBaseRelocations(relocBlocks);
 
             string self = typeof(Program).Assembly.Location;
             Console.WriteLine(Path.GetFileName(self));
-            imports = GetImportsFor(self);
+            relocBlocks = GetBaseRelocationsFor(self, pe);
 
-            foreach (var i in imports)
+            PrintBaseRelocations(relocBlocks);
+        }
+
+        private static void PrintBaseRelocations(BaseRelocationBlock[] relocBlocks)
+        {
+            foreach (var b in relocBlocks)
             {
-                Console.WriteLine("  " + i.ToString());
+                Console.WriteLine(b.PageRVA.ToString("X")+"h ("+b.Size+")");
+                foreach (var e in b.Entries)
+                {
+                    Console.WriteLine("    " + e.Offset.ToString("X").PadLeft(4, '0') + "h " + e.Type);
+                }
             }
         }
 
-        private static Mi.PE.Unmanaged.Import[] GetImportsFor(string file)
+        private static BaseRelocationBlock[] GetBaseRelocationsFor(string file, PEFile pe)
         {
             var stream = new MemoryStream(File.ReadAllBytes(file));
             var reader = new BinaryStreamReader(stream, new byte[1024]);
-            var pe = new PEFile();
             pe.ReadFrom(reader);
 
-            var importDirectory = pe.OptionalHeader.DataDirectories[(int)DataDirectoryKind.ImportSymbols];
+            var baseRelocationDirectory = pe.OptionalHeader.DataDirectories[(int)DataDirectoryKind.BaseRelocation];
 
             var rvaStream = new RvaStream(
                 stream,
@@ -56,12 +64,12 @@ namespace PrintImports
                 })
                 .ToArray());
 
-            rvaStream.Position = importDirectory.VirtualAddress;
+            rvaStream.Position = baseRelocationDirectory.VirtualAddress;
 
             var sectionReader = new BinaryStreamReader(rvaStream, new byte[32]);
 
-            var imports = Mi.PE.Unmanaged.Import.ReadImports(sectionReader);
-            return imports;
+            var result = BaseRelocationBlock.ReadBlocks(sectionReader, baseRelocationDirectory.Size);
+            return result;
         }
     }
 }

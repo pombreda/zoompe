@@ -3,11 +3,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{35216C79-713F-4EF2-9DA3-45CF5A12A978}</ProjectGuid>
+    <ProjectGuid>{398F764E-6769-4E0E-9BE1-D27F6EF1E44B}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PrintImports</RootNamespace>
-    <AssemblyName>PrintImports</AssemblyName>
+    <RootNamespace>PrintBaseRelocations</RootNamespace>
+    <AssemblyName>PrintBaseRelocations</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
