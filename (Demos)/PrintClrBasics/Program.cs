@@ -34,8 +34,12 @@ namespace PrintClrBasics
 
         private static void PrintClrHeader(ClrHeader clrHeader, ClrMetadata metadata)
         {
-            Console.WriteLine("  RuntimeVersion: v"+clrHeader.MajorRuntimeVersion + "." + clrHeader.MinorRuntimeVersion);
-            Console.WriteLine("  " + metadata.Version + " " + metadata.MajorVersion + "." + metadata.MinorVersion + " " + metadata.Flags+" StreamHeaders["+metadata.StreamHeaders.Length+"]");
+            Console.WriteLine("  RuntimeVersion: v" + clrHeader.MajorRuntimeVersion + "." + clrHeader.MinorRuntimeVersion);
+            Console.WriteLine("  " + metadata.Version + " " + metadata.MajorVersion + "." + metadata.MinorVersion + " StreamHeaders[" + metadata.StreamHeaders.Length + "]");
+            foreach (var sh in metadata.StreamHeaders)
+            {
+                Console.WriteLine("     " + sh.Name + " [" + sh.Size + "]");
+            }
         }
 
         private static Tuple<ClrHeader,ClrMetadata> GetClrBasicsFor(string file, PEFile pe)
