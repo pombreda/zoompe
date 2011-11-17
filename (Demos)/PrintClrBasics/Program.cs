@@ -21,23 +21,24 @@ namespace PrintClrBasics
             var pe = new PEFile();
 
             Console.WriteLine(Path.GetFileName(mscolib));
-            var clrHeader = GetClrBasicsFor(mscolib, pe);
+            var clrBasics = GetClrBasicsFor(mscolib, pe);
 
-            PrintClrHeader(clrHeader);
+            PrintClrHeader(clrBasics.Item1, clrBasics.Item2);
 
             string self = typeof(Program).Assembly.Location;
             Console.WriteLine(Path.GetFileName(self));
-            clrHeader = GetClrBasicsFor(self, pe);
+            clrBasics = GetClrBasicsFor(self, pe);
 
-            PrintClrHeader(clrHeader);
+            PrintClrHeader(clrBasics.Item1, clrBasics.Item2);
         }
 
-        private static void PrintClrHeader(ClrHeader clrHeader)
+        private static void PrintClrHeader(ClrHeader clrHeader, ClrMetadata metadata)
         {
-            Console.WriteLine("RuntimeVersion: v"+clrHeader.MajorRuntimeVersion + "." + clrHeader.MinorRuntimeVersion);
+            Console.WriteLine("  RuntimeVersion: v"+clrHeader.MajorRuntimeVersion + "." + clrHeader.MinorRuntimeVersion);
+            Console.WriteLine("  " + metadata.Version + " " + metadata.MajorVersion + "." + metadata.MinorVersion + " " + metadata.Flags+" StreamHeaders["+metadata.StreamHeaders.Length+"]");
         }
 
-        private static ClrHeader GetClrBasicsFor(string file, PEFile pe)
+        private static Tuple<ClrHeader,ClrMetadata> GetClrBasicsFor(string file, PEFile pe)
         {
             var stream = new MemoryStream(File.ReadAllBytes(file));
             var reader = new BinaryStreamReader(stream, new byte[1024]);
@@ -64,7 +65,9 @@ namespace PrintClrBasics
 
             sectionReader.Position = header.MetaData.VirtualAddress;
 
-            return header;
+            var metadata = ClrHeaderReader.ReadClrMetadata(sectionReader);
+
+            return Tuple.Create(header, metadata);
         }
     }
 }
