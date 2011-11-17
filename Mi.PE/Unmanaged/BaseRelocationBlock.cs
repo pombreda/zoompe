@@ -7,6 +7,8 @@ namespace Mi.PE.Unmanaged
 {
     public sealed class BaseRelocationBlock
     {
+        public const int HeaderSize = 8;
+
         /// <summary>
         ///  The image base plus the page RVA is added to each offset to create the VA where the base relocation must be applied.
         /// </summary>
@@ -21,17 +23,25 @@ namespace Mi.PE.Unmanaged
 
         public static BaseRelocationBlock[] ReadBlocks(BinaryStreamReader reader, uint totalSize)
         {
-            long endPosition = reader.Position + totalSize;
+            uint remainingSpace = totalSize;
 
             var result = new List<BaseRelocationBlock>();
-            while (reader.Position<endPosition)
+            while (remainingSpace >= BaseRelocationBlock.HeaderSize)
             {
                 var block = new BaseRelocationBlock();
                 block.PageRVA = reader.ReadUInt32();
                 block.Size = reader.ReadUInt32();
 
-                var entries  = new BaseRelocationEntry[block.Size / 2];
-                for (int i = 0; i < block.Entries.Length; i++)
+                remainingSpace -= BaseRelocationBlock.HeaderSize;
+
+                uint remainingBlockSpace = block.Size - BaseRelocationBlock.HeaderSize;
+                remainingBlockSpace = Math.Min(remainingBlockSpace, remainingSpace);
+
+                remainingSpace -= remainingBlockSpace;
+                
+                uint entryCount = remainingBlockSpace / 2;
+                var entries  = new BaseRelocationEntry[entryCount];
+                for (int i = 0; i < entries.Length; i++)
                 {
                     var entry = new BaseRelocationEntry();
                     ushort encodedEntry = reader.ReadUInt16();
@@ -39,7 +49,7 @@ namespace Mi.PE.Unmanaged
                     entry.Type = (BaseRelocationType)(encodedEntry >> 12);
                     entry.Offset = (ushort)(encodedEntry & 0xFFF);
 
-                    block.Entries[i] = entry;
+                    entries[i] = entry;
                 }
 
                 block.Entries = entries;
@@ -48,6 +58,11 @@ namespace Mi.PE.Unmanaged
             }
 
             return result.ToArray();
+        }
+
+        public override string ToString()
+        {
+            return this.PageRVA.ToString("X") + "h (" + this.Size + ")";
         }
     }
 }
