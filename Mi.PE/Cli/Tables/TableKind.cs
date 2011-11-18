@@ -17,7 +17,7 @@ namespace Mi.PE.Cli.Tables
         AssemblyRefProcessor = 0x25,
 
         /// <summary>
-        /// I.  The rows in the Module table result from .module directives in the Assembly.
+        /// The rows in the Module table result from .module directives in the Assembly.
         /// </summary>
         Module = 0x00,
 

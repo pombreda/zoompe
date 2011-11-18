@@ -41,6 +41,11 @@
     <Compile Include="Cli\ClrMetadataSignature.cs" />
     <Compile Include="Cli\ClrModule.cs" />
     <Compile Include="Cli\StreamHeader.cs" />
+    <Compile Include="Cli\Tables\AssemblyProcessorTable.cs" />
+    <Compile Include="Cli\Tables\AssemblyOSTable.cs" />
+    <Compile Include="Cli\Tables\AssemblyRefOSTable.cs" />
+    <Compile Include="Cli\Tables\AssemblyRefProcessorTable.cs" />
+    <Compile Include="Cli\Tables\ModuleTable.cs" />
     <Compile Include="Cli\Tables\MetadataTable.cs" />
     <Compile Include="Cli\Tables\TableKind.cs" />
     <Compile Include="Internal\BinaryStreamReader.cs" />
