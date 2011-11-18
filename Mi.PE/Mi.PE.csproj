@@ -37,15 +37,11 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Cli\ClrHeader.cs" />
     <Compile Include="Cli\ClrImageFlags.cs" />
-    <Compile Include="Cli\ClrMetadata.cs" />
-    <Compile Include="Cli\ClrMetadataFlags.cs" />
     <Compile Include="Cli\ClrMetadataSignature.cs" />
     <Compile Include="Cli\ClrModule.cs" />
     <Compile Include="Cli\StreamHeader.cs" />
     <Compile Include="Cli\Tables\TableKind.cs" />
-    <Compile Include="Cli\TableStream.cs" />
     <Compile Include="Internal\BinaryStreamReader.cs" />
     <Compile Include="Internal\BinaryStreamWriter.cs" />
     <Compile Include="PEFile.cs" />

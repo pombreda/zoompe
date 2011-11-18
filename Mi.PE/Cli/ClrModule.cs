@@ -23,7 +23,7 @@ namespace Mi.PE.Cli
             // CLR header
             uint cb = reader.ReadUInt32();
 
-            if (cb < ClrHeader.Size)
+            if (cb < ClrHeaderSize)
                 throw new BadImageFormatException(
                     "Unexpectedly short CLR header structure " + cb + " reported by Cb field " +
                     "(expected at least " + ClrHeaderSize + ").");
@@ -74,7 +74,7 @@ namespace Mi.PE.Cli
 
             this.MetadataVersionString = versionString;
 
-            var mdFlags = (ClrMetadataFlags)reader.ReadInt16();
+            short mdFlags = reader.ReadInt16();
 
             ushort streamCount = reader.ReadUInt16();
             var streamHeaders = new StreamHeader[streamCount];
