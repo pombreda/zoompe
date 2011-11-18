@@ -42,6 +42,7 @@
     <Compile Include="Cli\ClrMetadata.cs" />
     <Compile Include="Cli\ClrMetadataFlags.cs" />
     <Compile Include="Cli\ClrMetadataSignature.cs" />
+    <Compile Include="Cli\ClrModule.cs" />
     <Compile Include="Cli\StreamHeader.cs" />
     <Compile Include="Cli\Tables\TableKind.cs" />
     <Compile Include="Cli\TableStream.cs" />

@@ -23,20 +23,19 @@ namespace Mi.PE.Cli
 
         public StreamHeader[] StreamHeaders;
 
-        public ClrMetadata Read(BinaryStreamReader reader)
+        public void Read(BinaryStreamReader reader)
         {
-            var metadata = new ClrMetadata();
-            metadata.Signature = (ClrMetadataSignature)reader.ReadUInt32();
-            metadata.MajorVersion = reader.ReadUInt16();
-            metadata.MinorVersion = reader.ReadUInt16();
-            metadata.Reserved = reader.ReadUInt32();
+            this.Signature = (ClrMetadataSignature)reader.ReadUInt32();
+            this.MajorVersion = reader.ReadUInt16();
+            this.MinorVersion = reader.ReadUInt16();
+            this.Reserved = reader.ReadUInt32();
 
             int versionLength = reader.ReadInt32();
             string versionString = reader.ReadFixedZeroFilledAsciiString(versionLength);
 
-            metadata.Version = versionString;
+            this.Version = versionString;
 
-            metadata.Flags = (ClrMetadataFlags)reader.ReadInt16();
+            this.Flags = (ClrMetadataFlags)reader.ReadInt16();
 
             ushort streamCount = reader.ReadUInt16();
             if (this.StreamHeaders == null)
@@ -51,8 +50,6 @@ namespace Mi.PE.Cli
 
                 this.StreamHeaders[i].Read(reader);
             }
-
-            return metadata;
         }
     }
 }
