@@ -41,6 +41,7 @@
     <Compile Include="Cli\ClrMetadataSignature.cs" />
     <Compile Include="Cli\ClrModule.cs" />
     <Compile Include="Cli\StreamHeader.cs" />
+    <Compile Include="Cli\Tables\MetadataTable.cs" />
     <Compile Include="Cli\Tables\TableKind.cs" />
     <Compile Include="Internal\BinaryStreamReader.cs" />
     <Compile Include="Internal\BinaryStreamWriter.cs" />

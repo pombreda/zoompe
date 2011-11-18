@@ -5,6 +5,7 @@ using System.Text;
 
 namespace Mi.PE.Cli
 {
+    using Mi.PE.Cli.Tables;
     using Mi.PE.Internal;
     using Mi.PE.PEFormat;
 
@@ -17,6 +18,7 @@ namespace Mi.PE.Cli
         public Version MetadataVersion;
         public string MetadataVersionString;
         public Version TableStreamVersion;
+        public Guid[] Guids;
 
         public void Read(BinaryStreamReader reader)
         {
@@ -85,9 +87,8 @@ namespace Mi.PE.Cli
                 streamHeaders[i].Read(reader);
             }
 
-            Guid[] guids = null;
-
-
+            this.Guids = null;
+            this.TableStreamVersion = null;
             foreach (var sh in streamHeaders)
             {
                 reader.Position = metadataDir.VirtualAddress + sh.Offset;
@@ -95,8 +96,8 @@ namespace Mi.PE.Cli
                 switch (sh.Name)
                 {
                     case "#GUID":
-                        guids = new Guid[sh.Size / 128];
-                        ReadGuids(reader, guids);
+                        this.Guids = new Guid[sh.Size / 128];
+                        ReadGuids(reader, this.Guids);
                         break;
 
                     case "#~":
@@ -112,18 +113,15 @@ namespace Mi.PE.Cli
                         ulong tsValid = reader.ReadUInt64();
                         ulong tsSorted = reader.ReadUInt64();
 
-                        uint[] tsRows = new uint[CountNonzeroBits(tsValid)];
+                        var mdTables = new MetadataTable[64]; // sizeof(ulong) - one bit per table in tsValid
 
-                        for (int i = 0; i < tsRows.Length; i++)
+                        for (int i = 0; i < mdTables.Length; i++)
                         {
-                            if ((tsValid & ((ulong)1 << i)) != 0)
-                            {
-                                tsRows[i] = reader.ReadUInt32();
-                            }
-                            else
-                            {
-                                tsRows[i] = 0;
-                            }
+                            if ((tsValid & (1UL << i)) == 0)
+                                continue;
+
+                            uint rowCount = reader.ReadUInt32();
+                            mdTables = CreateTableOfKind(i, rowCount);
                         }
 
                         break;
@@ -134,6 +132,11 @@ namespace Mi.PE.Cli
             }
 
 
+        }
+
+        MetadataTable[] CreateTableOfKind(int tableKind, uint rowCount)
+        {
+            throw new NotImplementedException();
         }
 
         static void ReadGuids(BinaryStreamReader reader, Guid[] guids)
