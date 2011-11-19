@@ -37,17 +37,28 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cli\HasCustomAttribute.cs" />
+    <Compile Include="Cli\ElementType.cs" />
+    <Compile Include="Cli\Tables\AssemblyEntry.cs" />
+    <Compile Include="Cli\AssemblyFlags.cs" />
+    <Compile Include="Cli\AssemblyHashAlgorithm.cs" />
     <Compile Include="Cli\ClrImageFlags.cs" />
     <Compile Include="Cli\ClrMetadataSignature.cs" />
     <Compile Include="Cli\ClrModule.cs" />
+    <Compile Include="Cli\ClrModuleReader.cs" />
+    <Compile Include="Cli\ModuleEntry.cs" />
     <Compile Include="Cli\StreamHeader.cs" />
-    <Compile Include="Cli\Tables\AssemblyProcessorTable.cs" />
-    <Compile Include="Cli\Tables\AssemblyOSTable.cs" />
-    <Compile Include="Cli\Tables\AssemblyRefOSTable.cs" />
-    <Compile Include="Cli\Tables\AssemblyRefProcessorTable.cs" />
-    <Compile Include="Cli\Tables\ModuleTable.cs" />
-    <Compile Include="Cli\Tables\MetadataTable.cs" />
+    <Compile Include="Cli\Tables\AssemblyOSEntry.cs" />
+    <Compile Include="Cli\Tables\AssemblyProcessorEntry.cs" />
+    <Compile Include="Cli\Tables\AssemblyRefEntry.cs" />
+    <Compile Include="Cli\Tables\AssemblyRefOSEntry.cs" />
+    <Compile Include="Cli\Tables\AssemblyRefProcessorEntry.cs" />
+    <Compile Include="Cli\Tables\ClassLayoutEntry.cs" />
+    <Compile Include="Cli\Tables\ConstantEntry.cs" />
+    <Compile Include="Cli\HasConstant.cs" />
+    <Compile Include="Cli\Tables\CustomAttribute.cs" />
     <Compile Include="Cli\Tables\TableKind.cs" />
+    <Compile Include="Cli\TableStream.cs" />
     <Compile Include="Internal\BinaryStreamReader.cs" />
     <Compile Include="Internal\BinaryStreamWriter.cs" />
     <Compile Include="PEFile.cs" />

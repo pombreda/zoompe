@@ -14,7 +14,7 @@ namespace Mi.PE.Cli.Tables
         /// <summary> ECMA-335 §22.6 Shall be ignored by the CLI. </summary>
         AssemblyRefOS = 0x25,
         /// <summary> ECMA-335 §22.7 Shall be ignored by the CLI. </summary>
-        AssemblyRefProcessor = 0x25,
+        AssemblyRefProcessor = 0x24,
 
         /// <summary>
         /// The rows in the Module table result from .module directives in the Assembly.
