@@ -37,6 +37,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cli\TypeDefOrRef.cs" />
     <Compile Include="Cli\HasCustomAttribute.cs" />
     <Compile Include="Cli\ElementType.cs" />
     <Compile Include="Cli\Tables\AssemblyEntry.cs" />
@@ -46,7 +47,8 @@
     <Compile Include="Cli\ClrMetadataSignature.cs" />
     <Compile Include="Cli\ClrModule.cs" />
     <Compile Include="Cli\ClrModuleReader.cs" />
-    <Compile Include="Cli\ModuleEntry.cs" />
+    <Compile Include="Cli\Tables\TypeAttributes.cs" />
+    <Compile Include="Cli\Tables\ModuleEntry.cs" />
     <Compile Include="Cli\StreamHeader.cs" />
     <Compile Include="Cli\Tables\AssemblyOSEntry.cs" />
     <Compile Include="Cli\Tables\AssemblyProcessorEntry.cs" />
@@ -58,7 +60,7 @@
     <Compile Include="Cli\HasConstant.cs" />
     <Compile Include="Cli\Tables\CustomAttribute.cs" />
     <Compile Include="Cli\Tables\TableKind.cs" />
-    <Compile Include="Cli\TableStream.cs" />
+    <Compile Include="Cli\Tables\TypeRefEntry.cs" />
     <Compile Include="Internal\BinaryStreamReader.cs" />
     <Compile Include="Internal\BinaryStreamWriter.cs" />
     <Compile Include="PEFile.cs" />

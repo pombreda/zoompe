@@ -16,6 +16,5 @@ namespace Mi.PE.Cli
         public Version MetadataVersion;
         public string MetadataVersionString;
         public Version TableStreamVersion;
-        public Guid[] Guids;
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Mi.PE.Cli
+namespace Mi.PE.Cli.Tables
 {
     public sealed class ModuleEntry
     {

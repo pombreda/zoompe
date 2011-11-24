@@ -40,10 +40,10 @@ namespace Mi.PE.Cli
             MethodSpec = 21
         }
 
-        const int BitCount = 5;
+        const int HighBitCount = 5;
 
-        const uint WideKindMask = uint.MaxValue << BitCount;
-        const ushort NarrowKindMask = unchecked((ushort)(ushort.MaxValue << BitCount));
+        const uint WideKindMask = uint.MaxValue << HighBitCount;
+        const ushort NarrowKindMask = unchecked((ushort)(ushort.MaxValue << HighBitCount));
 
         readonly uint value;
 
@@ -52,7 +52,7 @@ namespace Mi.PE.Cli
             this.value = value;
         }
 
-        public TableKind Kind { get { return (TableKind)(value >> (32 - BitCount)); } }
+        public TableKind Kind { get { return (TableKind)(value >> (32 - HighBitCount)); } }
         public uint Index { get { return value & ~WideKindMask; } }
 
         public static explicit operator HasCustomAttribute(uint value)
