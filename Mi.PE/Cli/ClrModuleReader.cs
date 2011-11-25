@@ -19,6 +19,7 @@ namespace Mi.PE.Cli
 
         ModuleEntry[] moduleTable;
         TypeRefEntry[] typeRefTable;
+        TypeDefEntry[] typeDefTable;
 
         private ClrModuleReader(BinaryStreamReader binaryReader, ClrModule module)
         {
@@ -207,6 +208,7 @@ namespace Mi.PE.Cli
                         break;
 
                     case TableKind.TypeDef: // 0x2
+                        this.typeDefTable = new TypeDefEntry[rowCount];
                         break;
 
                     case TableKind.Field: // 0x4
