@@ -37,7 +37,11 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cli\Tables\FieldEntry.cs" />
+    <Compile Include="Cli\Tables\MethodDefEntry.cs" />
+    <Compile Include="Cli\Tables\ParamEntry.cs" />
     <Compile Include="Cli\Tables\ResolutionScope.cs" />
+    <Compile Include="Cli\Tables\TableStream.cs" />
     <Compile Include="Cli\Tables\TypeDefEntry.cs" />
     <Compile Include="Cli\Tables\TypeDefOrRef.cs" />
     <Compile Include="Cli\Tables\HasCustomAttribute.cs" />
