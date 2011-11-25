@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Mi.PE.Cli
+namespace Mi.PE.Cli.Tables
 {
     public struct TypeDefOrRef
     {

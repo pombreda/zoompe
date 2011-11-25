@@ -39,7 +39,7 @@
   <ItemGroup>
     <Compile Include="Cli\Tables\ResolutionScope.cs" />
     <Compile Include="Cli\Tables\TypeDefEntry.cs" />
-    <Compile Include="Cli\TypeDefOrRef.cs" />
+    <Compile Include="Cli\Tables\TypeDefOrRef.cs" />
     <Compile Include="Cli\Tables\HasCustomAttribute.cs" />
     <Compile Include="Cli\ElementType.cs" />
     <Compile Include="Cli\Tables\AssemblyEntry.cs" />
