@@ -37,8 +37,10 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cli\Tables\ResolutionScope.cs" />
+    <Compile Include="Cli\Tables\TypeDefEntry.cs" />
     <Compile Include="Cli\TypeDefOrRef.cs" />
-    <Compile Include="Cli\HasCustomAttribute.cs" />
+    <Compile Include="Cli\Tables\HasCustomAttribute.cs" />
     <Compile Include="Cli\ElementType.cs" />
     <Compile Include="Cli\Tables\AssemblyEntry.cs" />
     <Compile Include="Cli\AssemblyFlags.cs" />
@@ -57,7 +59,7 @@
     <Compile Include="Cli\Tables\AssemblyRefProcessorEntry.cs" />
     <Compile Include="Cli\Tables\ClassLayoutEntry.cs" />
     <Compile Include="Cli\Tables\ConstantEntry.cs" />
-    <Compile Include="Cli\HasConstant.cs" />
+    <Compile Include="Cli\Tables\HasConstant.cs" />
     <Compile Include="Cli\Tables\CustomAttribute.cs" />
     <Compile Include="Cli\Tables\TableKind.cs" />
     <Compile Include="Cli\Tables\TypeRefEntry.cs" />

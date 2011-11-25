@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Mi.PE.Cli
+namespace Mi.PE.Cli.Tabes
 {
     /// <summary>
     /// <see cref="HasCustomAttributes"/> only has values for tables that are ―externally visible;

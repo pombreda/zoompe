@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
-using System.IO;
+using Mi.PE.Cli.Tables;
 
 namespace Mi.PE.Internal
 {
@@ -243,6 +244,11 @@ namespace Mi.PE.Internal
                     this.bufferDataSize += readCount;
                 }
             }
+        }
+
+        public ResolutionScope ReadResolutionScope()
+        {
+            throw new NotImplementedException();
         }
     }
 }

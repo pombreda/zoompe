@@ -318,14 +318,22 @@ namespace Mi.PE.Cli
 
             for (int iTable = 0; iTable < 64; iTable++)
             {
-                uint rowCount = tsRowCounts[iTable];
-
-                if (rowCount == 0)
-                    continue;
-
-
             }
+        }
 
+        public TypeDefOrRef ReadTypeDefOrRef()
+        {
+            throw new NotImplementedException();
+        }
+
+        public uint ReadFieldIndex()
+        {
+            throw new NotImplementedException();
+        }
+
+        public uint ReadMethodIndex()
+        {
+            throw new NotImplementedException();
         }
     }
 }

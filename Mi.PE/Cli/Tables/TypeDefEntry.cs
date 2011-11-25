@@ -5,11 +5,11 @@ using System.Linq;
 namespace Mi.PE.Cli.Tables
 {
     /// <summary>
-    /// The first row of the TypeDef table represents the pseudo class that acts as parent for functions and variables defined at module scope.
+    /// The first row of the <see cref="TableKind.TypeDef"/> table represents the pseudo class that acts as parent for functions and variables defined at module scope.
     /// </summary>
-    public sealed class TypeRefEntry
+    public sealed class TypeDefEntry
     {
-        public ResolutionScope ResolutionScope;
+        public TypeAttributes Flags;
 
         /// <summary>
         /// Shall index a non-empty string  in the String heap. [ERROR]
@@ -22,11 +22,19 @@ namespace Mi.PE.Cli.Tables
         /// </summary>
         public string TypeNamespace;
 
+        public TypeDefOrRef Extends;
+
+        public uint FieldList;
+        public uint MethodList;
+
         public void Read(ClrModuleReader reader)
         {
-            this.ResolutionScope = reader.Binary.ReadResolutionScope();
+            this.Flags = (TypeAttributes)reader.Binary.ReadUInt32();
             this.TypeName = reader.ReadString();
             this.TypeNamespace = reader.ReadString();
+            this.Extends = reader.ReadTypeDefOrRef();
+            this.FieldList = reader.ReadFieldIndex();
+            this.MethodList = reader.ReadMethodIndex();
         }
     }
 }
