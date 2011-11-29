@@ -4,6 +4,7 @@ using System.Linq;
 
 namespace Mi.PE.Cli.Tables
 {
+    [Flags]
     public enum FieldAttributes
     {
         /// <summary>
