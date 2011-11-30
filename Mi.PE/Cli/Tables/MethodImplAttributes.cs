@@ -5,7 +5,7 @@ using System.Linq;
 namespace Mi.PE.Cli.Tables
 {
     [Flags]
-    public enum MethodImplAttributes
+    public enum MethodImplAttributes : ushort
     {
         /// <summary>
         /// These 2 bits contain one of the following values:

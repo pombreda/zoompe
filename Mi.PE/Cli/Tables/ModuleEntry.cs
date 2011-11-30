@@ -5,13 +5,37 @@ using System.Text;
 
 namespace Mi.PE.Cli.Tables
 {
+    /// <summary>
+    /// [ECMA 22.30]
+    /// </summary>
+    /// <remarks>
+    /// The Generation, EncId, and EncBaseId columns can be written as zero,
+    /// and can be ignored by conforming implementations of the CLI.
+    /// The rows in the <see cref="TableKind.Module"/> table result from .module directives in the Assembly (ECMA §6.4).
+    /// </remarks>
     public sealed class ModuleEntry
     {
         public ushort Generation;
-        public string Name; // -> StringHeap
-        public Guid? Mvid; // -> GuidHeap
-        public Guid? EncId; // -> GuidHeap
-        public Guid? EncBaseId; // -> GuidHeap
+        public string Name;
+
+        /// <summary>
+        /// The <see cref="Mvid"/> column shall index a unique GUID in the GUID heap (ECMA §24.2.5)
+        /// that identifies this instance of the module.
+        /// The <see cref="Mvid"/> can be ignored on read by conforming implementations of the CLI.
+        /// The <see cref="Mvid"/> should be newly generated for every module,
+        /// using the algorithm specified in ISO/IEC 11578:1996
+        /// (Annex A) or another compatible algorithm.
+        /// </summary>
+        /// <remarks>
+        /// [Rationale: While the VES itself makes no use of the Mvid,
+        /// other tools (such as debuggers, which are outside the scope of this standard)
+        /// rely on the fact that the <see cref="Mvid"/> almost always differs from one module to another.
+        /// end rationale]
+        /// </remarks>
+        public Guid? Mvid;
+
+        public Guid? EncId;
+        public Guid? EncBaseId;
 
         public void Read(ClrModuleReader reader)
         {

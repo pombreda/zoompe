@@ -6,6 +6,7 @@ namespace Mi.PE.Cli.Tables
 {
     /// <summary>
     /// The first row of the <see cref="TableKind.TypeDef"/> table represents the pseudo class that acts as parent for functions and variables defined at module scope.
+    /// [ECMA 22.37]
     /// </summary>
     public sealed class TypeDefEntry
     {
@@ -33,8 +34,8 @@ namespace Mi.PE.Cli.Tables
             this.TypeName = reader.ReadString();
             this.TypeNamespace = reader.ReadString();
             this.Extends = reader.ReadTypeDefOrRef();
-            this.FieldList = reader.ReadFieldIndex();
-            this.MethodList = reader.ReadMethodIndex();
+            this.FieldList = reader.ReadTableIndex(TableKind.Field);
+            this.MethodList = reader.ReadTableIndex(TableKind.MethodDef);
         }
     }
 }

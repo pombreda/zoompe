@@ -5,7 +5,7 @@ using System.Linq;
 namespace Mi.PE.Cli.Tables
 {
     [Flags]
-    public enum FieldAttributes
+    public enum FieldAttributes : ushort
     {
         /// <summary>
         /// These 3 bits contain one of the following values:

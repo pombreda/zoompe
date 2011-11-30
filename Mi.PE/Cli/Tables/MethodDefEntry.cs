@@ -12,6 +12,7 @@ namespace Mi.PE.Cli.Tables
     /// for the body of the method (ECMA §25.4) 
     /// [Note: If Signature is GENERIC (0x10), the generic arguments are described in the GenericParam table (ECMA §22.20). 
     /// end note]
+    /// [ECMA 22.26]
     /// </summary>
     public sealed class MethodDefEntry
     {
@@ -21,5 +22,15 @@ namespace Mi.PE.Cli.Tables
         public string Name;
         public byte[] Signature;
         public uint ParamList;
+
+        public void Read(ClrModuleReader reader)
+        {
+            this.RVA = reader.Binary.ReadUInt32();
+            this.ImplFlags = (MethodImplAttributes)reader.Binary.ReadUInt16();
+            this.Flags = (MethodAttributes)reader.Binary.ReadUInt16();
+            this.Name = reader.ReadString();
+            this.Signature = reader.ReadBlob();
+            this.ParamList = reader.ReadTableIndex(TableKind.Param);
+        }
     }
 }
