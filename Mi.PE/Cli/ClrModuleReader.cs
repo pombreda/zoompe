@@ -333,9 +333,15 @@ namespace Mi.PE.Cli
             throw new NotImplementedException();
         }
 
+        public CustomAttributeType CustomAttributeType()
+        {
+            throw new NotImplementedException();
+        }
+
         public uint ReadTableIndex(TableKind table)
         {
             throw new NotImplementedException();
         }
+
     }
 }
