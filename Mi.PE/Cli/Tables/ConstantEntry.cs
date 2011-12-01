@@ -7,7 +7,7 @@ namespace Mi.PE.Cli.Tables
     /// <summary>
     /// The <see cref="Constant"/> table is used to store compile-time, constant values for fields, parameters, and properties.
     /// </summary>
-    public sealed class ContantEntry
+    public sealed class ConstantEntry
     {
         /// <summary>
         /// <see cref="Type"/> (a 1-byte constant, followed by a 1-byte padding zero); see ECMA §23.1.16.
