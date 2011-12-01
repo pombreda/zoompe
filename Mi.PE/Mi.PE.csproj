@@ -41,6 +41,7 @@
     <Compile Include="Cli\Tables\CustomAttributeType.cs" />
     <Compile Include="Cli\Tables\DeclSecurityEntry.cs" />
     <Compile Include="Cli\Tables\FieldAttributes.cs" />
+    <Compile Include="Cli\Tables\FieldLayoutEntry.cs" />
     <Compile Include="Cli\Tables\FieldMarshalEntry.cs" />
     <Compile Include="Cli\Tables\HasDeclSecurity.cs" />
     <Compile Include="Cli\Tables\HasFieldMarshal.cs" />
