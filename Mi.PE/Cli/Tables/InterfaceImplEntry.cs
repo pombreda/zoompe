@@ -15,7 +15,8 @@ namespace Mi.PE.Cli.Tables
     public sealed class InterfaceImplEntry
     {
         /// <summary>
-        ///  shall be non-null [ERROR]
+        /// An index into the <see cref="TypeDef"/> table.
+        /// Shall be non-null [ERROR]
         /// If <see cref="Class"/> is non-null, then:
         /// a. <see cref="Class"/> shall index a valid row in the <see cref="TableKind.TypeDef"/> table  [ERROR]
         /// b. <see cref="Interface"/> shall index a valid row in the <see cref="TabeKind.TypeDef."/> or <see cref="TableKind.TypeRef"/> table [ERROR]
@@ -25,5 +26,11 @@ namespace Mi.PE.Cli.Tables
         public uint Class;
 
         public TypeDefOrRef Interface;
+
+        public void Read(ClrModuleReader reader)
+        {
+            this.Class = reader.ReadTableIndex(TableKind.TypeDef);
+            this.Interface = reader.ReadTypeDefOrRef();
+        }
     }
 }
