@@ -39,6 +39,7 @@
   <ItemGroup>
     <Compile Include="Cli\Tables\CustomAttributeEntry.cs" />
     <Compile Include="Cli\Tables\CustomAttributeType.cs" />
+    <Compile Include="Cli\Tables\DeclSecurityEntry.cs" />
     <Compile Include="Cli\Tables\FieldAttributes.cs" />
     <Compile Include="Cli\Tables\FieldMarshalEntry.cs" />
     <Compile Include="Cli\Tables\HasFieldMarshal.cs" />
@@ -52,6 +53,7 @@
     <Compile Include="Cli\Tables\ParamAttributes.cs" />
     <Compile Include="Cli\Tables\ParamEntry.cs" />
     <Compile Include="Cli\Tables\ResolutionScope.cs" />
+    <Compile Include="Cli\Tables\SecurityAction.cs" />
     <Compile Include="Cli\Tables\TableStream.cs" />
     <Compile Include="Cli\Tables\TableStream.ReadAndInitializeRowCounts.cs">
       <AutoGen>True</AutoGen>
