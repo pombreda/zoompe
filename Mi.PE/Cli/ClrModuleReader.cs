@@ -333,7 +333,12 @@ namespace Mi.PE.Cli
             throw new NotImplementedException();
         }
 
-        public CustomAttributeType CustomAttributeType()
+        public CustomAttributeType ReadCustomAttributeType()
+        {
+            throw new NotImplementedException();
+        }
+
+        public HasFieldMarshal ReadHasFieldMarshal()
         {
             throw new NotImplementedException();
         }
@@ -342,6 +347,5 @@ namespace Mi.PE.Cli
         {
             throw new NotImplementedException();
         }
-
     }
 }

@@ -37,7 +37,7 @@ namespace Mi.PE.Cli.Tables
         public void Read(ClrModuleReader reader)
         {
             this.Parent = reader.ReadHasCustomAttribute();
-            this.Type = reader.CustomAttributeType();
+            this.Type = reader.ReadCustomAttributeType();
             this.Value = reader.ReadBlob();
         }
     }

@@ -31,5 +31,11 @@ namespace Mi.PE.Cli.Tables
         /// For the detailed format of the 'blob', see ECMA §23.4.
         /// </summary>
         public byte[] NativeType;
+
+        public void Read(ClrModuleReader reader)
+        {
+            this.Parent = reader.ReadHasFieldMarshal();
+            this.NativeType = reader.ReadBlob();
+        }
     }
 }
