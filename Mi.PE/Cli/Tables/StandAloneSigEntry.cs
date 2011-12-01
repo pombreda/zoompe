@@ -27,5 +27,10 @@ namespace Mi.PE.Cli.Tables
         /// Duplicate rows are allowed.
         /// </summary>
         public byte[] Signature;
+
+        public void Read(ClrModuleReader reader)
+        {
+            this.Signature = reader.ReadBlob();
+        }
     }
 }
