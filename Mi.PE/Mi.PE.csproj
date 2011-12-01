@@ -40,6 +40,7 @@
     <Compile Include="Cli\Tables\CustomAttributeEntry.cs" />
     <Compile Include="Cli\Tables\CustomAttributeType.cs" />
     <Compile Include="Cli\Tables\FieldAttributes.cs" />
+    <Compile Include="Cli\Tables\FieldMarshalEntry.cs" />
     <Compile Include="Cli\Tables\InterfaceImplEntry.cs" />
     <Compile Include="Cli\Tables\FieldEntry.cs" />
     <Compile Include="Cli\Tables\MemberRefEntry.cs" />
