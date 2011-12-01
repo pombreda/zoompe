@@ -40,6 +40,10 @@
     <Compile Include="Cli\Tables\CustomAttributeEntry.cs" />
     <Compile Include="Cli\Tables\CustomAttributeType.cs" />
     <Compile Include="Cli\Tables\DeclSecurityEntry.cs" />
+    <Compile Include="Cli\Tables\EventAttributes.cs" />
+    <Compile Include="Cli\Tables\EventEntry.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Cli\Tables\EventMapEntry.cs" />
     <Compile Include="Cli\Tables\FieldAttributes.cs" />
     <Compile Include="Cli\Tables\FieldLayoutEntry.cs" />
