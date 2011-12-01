@@ -33,5 +33,12 @@ namespace Mi.PE.Cli.Tables
         public HasDeclSecurity Parent;
 
         public byte[] PermissionSet;
+
+        public void Read(ClrModuleReader reader)
+        {
+            this.Action = (SecurityAction)reader.Binary.ReadUInt16();
+            this.Parent = reader.ReadHasDeclSecurity();
+            this.PermissionSet = reader.ReadBlob();
+        }
     }
 }

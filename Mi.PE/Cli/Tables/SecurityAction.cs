@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Mi.PE.Cli.Tables
 {
-    public enum SecurityAction
+    public enum SecurityAction : ushort
     {
         /// <summary>
         /// Without further checks, satisfy Demand for the specified permission.

@@ -343,6 +343,11 @@ namespace Mi.PE.Cli
             throw new NotImplementedException();
         }
 
+        public HasDeclSecurity ReadHasDeclSecurity()
+        {
+            throw new NotImplementedException();
+        }
+
         public uint ReadTableIndex(TableKind table)
         {
             throw new NotImplementedException();

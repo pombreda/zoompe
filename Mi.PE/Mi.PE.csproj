@@ -42,6 +42,7 @@
     <Compile Include="Cli\Tables\DeclSecurityEntry.cs" />
     <Compile Include="Cli\Tables\FieldAttributes.cs" />
     <Compile Include="Cli\Tables\FieldMarshalEntry.cs" />
+    <Compile Include="Cli\Tables\HasDeclSecurity.cs" />
     <Compile Include="Cli\Tables\HasFieldMarshal.cs" />
     <Compile Include="Cli\Tables\InterfaceImplEntry.cs" />
     <Compile Include="Cli\Tables\FieldEntry.cs" />
