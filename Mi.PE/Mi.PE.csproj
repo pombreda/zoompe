@@ -40,6 +40,8 @@
     <Compile Include="Cli\Tables\FieldAttributes.cs" />
     <Compile Include="Cli\Tables\InterfaceImplEntry.cs" />
     <Compile Include="Cli\Tables\FieldEntry.cs" />
+    <Compile Include="Cli\Tables\MemberRefEntry.cs" />
+    <Compile Include="Cli\Tables\MemberRefParent.cs" />
     <Compile Include="Cli\Tables\MethodAttributes.cs" />
     <Compile Include="Cli\Tables\MethodDefEntry.cs" />
     <Compile Include="Cli\Tables\MethodImplAttributes.cs" />
