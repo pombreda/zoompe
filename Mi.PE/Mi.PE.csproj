@@ -56,6 +56,7 @@
     <Compile Include="Cli\Tables\ParamEntry.cs" />
     <Compile Include="Cli\Tables\ResolutionScope.cs" />
     <Compile Include="Cli\Tables\SecurityAction.cs" />
+    <Compile Include="Cli\Tables\StandAloneSigEntry.cs" />
     <Compile Include="Cli\Tables\TableStream.cs" />
     <Compile Include="Cli\Tables\TableStream.ReadAndInitializeRowCounts.cs">
       <AutoGen>True</AutoGen>
