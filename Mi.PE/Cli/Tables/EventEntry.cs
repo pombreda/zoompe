@@ -40,5 +40,11 @@ namespace Mi.PE.Cli.Tables
         /// <see cref="EventType"/> can be null or non-null.
         /// </summary>
         public TypeDefOrRef EventType;
+
+        public void Read(ClrModuleReader reader)
+        {
+            this.Name = reader.ReadString();
+            this.EventType = reader.ReadTypeDefOrRef();
+        }
     }
 }
