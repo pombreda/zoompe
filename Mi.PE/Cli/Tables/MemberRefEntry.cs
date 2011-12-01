@@ -27,5 +27,12 @@ namespace Mi.PE.Cli.Tables
         public string Name;
 
         public byte[] Signature;
+
+        public void Read(ClrModuleReader reader)
+        {
+            this.Class = reader.ReadMemberRefParent();
+            this.Name = reader.ReadString();
+            this.Signature = reader.ReadBlob();
+        }
     }
 }

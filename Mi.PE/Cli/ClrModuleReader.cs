@@ -328,17 +328,12 @@ namespace Mi.PE.Cli
             throw new NotImplementedException();
         }
 
+        public MemberRefParent ReadMemberRefParent()
+        {
+            throw new NotImplementedException();
+        }
+
         public uint ReadTableIndex(TableKind table)
-        {
-            throw new NotImplementedException();
-        }
-
-        public uint ReadFieldIndex()
-        {
-            throw new NotImplementedException();
-        }
-
-        public uint ReadMethodIndex()
         {
             throw new NotImplementedException();
         }
