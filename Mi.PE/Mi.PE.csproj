@@ -62,6 +62,7 @@
     <Compile Include="Cli\Tables\MethodImplEntry.cs" />
     <Compile Include="Cli\Tables\MethodSemanticsAttributes.cs" />
     <Compile Include="Cli\Tables\MethodSemanticsEntry.cs" />
+    <Compile Include="Cli\Tables\ModuleRefEntry.cs" />
     <Compile Include="Cli\Tables\ParamAttributes.cs" />
     <Compile Include="Cli\Tables\ParamEntry.cs" />
     <Compile Include="Cli\Tables\PropertyAttributes.cs" />
