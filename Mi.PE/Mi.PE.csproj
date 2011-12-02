@@ -54,6 +54,9 @@
     <Compile Include="Cli\Tables\ImplMapEntry.cs" />
     <Compile Include="Cli\Tables\InterfaceImplEntry.cs" />
     <Compile Include="Cli\Tables\FieldEntry.cs" />
+    <Compile Include="Cli\Tables\MemberForwarded.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Cli\Tables\MemberRefEntry.cs" />
     <Compile Include="Cli\Tables\MemberRefParent.cs" />
     <Compile Include="Cli\Tables\MethodAttributes.cs" />
