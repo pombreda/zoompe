@@ -49,6 +49,7 @@
     <Compile Include="Cli\Tables\FieldLayoutEntry.cs" />
     <Compile Include="Cli\Tables\FieldMarshalEntry.cs" />
     <Compile Include="Cli\Tables\FieldRVAEntry.cs" />
+    <Compile Include="Cli\Tables\FileEntry.cs" />
     <Compile Include="Cli\Tables\HasDeclSecurity.cs" />
     <Compile Include="Cli\Tables\HasFieldMarshal.cs" />
     <Compile Include="Cli\Tables\HasSemantics.cs" />
