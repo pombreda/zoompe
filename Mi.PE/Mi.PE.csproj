@@ -59,6 +59,8 @@
     <Compile Include="Cli\Tables\ImplMapEntry.cs" />
     <Compile Include="Cli\Tables\InterfaceImplEntry.cs" />
     <Compile Include="Cli\Tables\FieldEntry.cs" />
+    <Compile Include="Cli\Tables\ManifestResourceAttributes.cs" />
+    <Compile Include="Cli\Tables\ManifestResourceEntry.cs" />
     <Compile Include="Cli\Tables\MemberForwarded.cs">
       <SubType>Code</SubType>
     </Compile>
