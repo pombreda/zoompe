@@ -45,6 +45,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Cli\Tables\EventMapEntry.cs" />
+    <Compile Include="Cli\Tables\ExportedTypeEntry.cs" />
     <Compile Include="Cli\Tables\FieldAttributes.cs" />
     <Compile Include="Cli\Tables\FieldLayoutEntry.cs" />
     <Compile Include="Cli\Tables\FieldMarshalEntry.cs" />

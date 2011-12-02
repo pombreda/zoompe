@@ -6,7 +6,7 @@ using System.Text;
 namespace Mi.PE.Cli.Tables
 {
     [Flags]
-    public enum TypeAttributes
+    public enum TypeAttributes : uint
     {
         // Visibility attributes
 
