@@ -8,7 +8,7 @@ namespace Mi.PE.Cli.Tables
     /// [ECMA 23.1.12]
     /// </summary>
     [Flags]
-    public enum MethodSemanticsAttributes
+    public enum MethodSemanticsAttributes : ushort
     {
         /// <summary>
         /// Setter for property.
