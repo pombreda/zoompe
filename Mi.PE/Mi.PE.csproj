@@ -57,7 +57,9 @@
     <Compile Include="Cli\Tables\MemberRefParent.cs" />
     <Compile Include="Cli\Tables\MethodAttributes.cs" />
     <Compile Include="Cli\Tables\MethodDefEntry.cs" />
+    <Compile Include="Cli\Tables\MethodDefOrRef.cs" />
     <Compile Include="Cli\Tables\MethodImplAttributes.cs" />
+    <Compile Include="Cli\Tables\MethodImplEntry.cs" />
     <Compile Include="Cli\Tables\MethodSemanticsAttributes.cs" />
     <Compile Include="Cli\Tables\MethodSemanticsEntry.cs" />
     <Compile Include="Cli\Tables\ParamAttributes.cs" />
