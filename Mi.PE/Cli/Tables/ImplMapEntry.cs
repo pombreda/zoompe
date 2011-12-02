@@ -29,8 +29,16 @@ namespace Mi.PE.Cli.Tables
         public string ImportName;
 
         /// <summary>
-        /// An index into the ModuleRef table.
+        /// An index into the <see cref="TableKind.ModuleRef"/> table.
         /// </summary>
         public uint ImportScope;
+
+        public void Read(ClrModuleReader reader)
+        {
+            this.MappingFlags = (PInvokeAttributes)reader.Binary.ReadUInt16();
+            this.MemberForwarded = reader.ReadMemberForwarded();
+            this.ImportName = reader.ReadString();
+            this.ImportScope = reader.ReadTableIndex(TableKind.ModuleRef);
+        }
     }
 }
