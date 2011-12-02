@@ -64,5 +64,14 @@ namespace Mi.PE.Cli.Tables
         /// (<see cref="Flags"/> must have the <see cref="TypeAttributes.IsTypeForwarder"/> flag set).
         /// </summary>
         public Implementation Implementation;
+
+        public void Read(ClrModuleReader reader)
+        {
+            this.Flags = (TypeAttributes)reader.Binary.ReadUInt32();
+            this.TypeDefId = reader.Binary.ReadUInt32();
+            this.TypeName = reader.ReadString();
+            this.TypeNamespace = reader.ReadString();
+            this.Implementation = reader.ReadImplementation();
+        }
     }
 }

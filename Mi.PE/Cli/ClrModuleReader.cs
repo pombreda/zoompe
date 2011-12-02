@@ -363,6 +363,11 @@ namespace Mi.PE.Cli
             throw new NotImplementedException();
         }
 
+        public Implementation ReadImplementation()
+        {
+            throw new NotImplementedException();
+        }
+
         public uint ReadTableIndex(TableKind table)
         {
             throw new NotImplementedException();
