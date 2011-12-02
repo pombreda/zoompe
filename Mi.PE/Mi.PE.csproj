@@ -59,6 +59,8 @@
     <Compile Include="Cli\Tables\MethodImplAttributes.cs" />
     <Compile Include="Cli\Tables\ParamAttributes.cs" />
     <Compile Include="Cli\Tables\ParamEntry.cs" />
+    <Compile Include="Cli\Tables\PropertyAttributes.cs" />
+    <Compile Include="Cli\Tables\PropertyEntry.cs" />
     <Compile Include="Cli\Tables\PropertyMapEntry.cs" />
     <Compile Include="Cli\Tables\ResolutionScope.cs" />
     <Compile Include="Cli\Tables\SecurityAction.cs" />
