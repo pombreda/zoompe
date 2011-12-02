@@ -88,7 +88,7 @@ namespace Mi.PE.Cli.Tables
 		if(string.IsNullOrEmpty(t))
 		{ #>
 			if ((validMask & (1 << 0x<#=i.ToString("X2")#>)) != 0)
-				throw new BadImageFormatException("Non-standard metadata table 0x"+i.ToString("X2)+".");
+				throw new BadImageFormatException("Non-standard metadata table 0x"+i.ToString("X2")+".");
 <#	}
 		else
 		{ #>

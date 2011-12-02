@@ -62,15 +62,15 @@ namespace Mi.PE.Cli.Tables
 			if ((validMask & (1 << (int)TableKind.TypeDef)) != 0)
 				this.TypeDefEntries = new TypeDefEntry[reader.ReadUInt32()];
 			if ((validMask & (1 << 0x03)) != 0)
-				throw new BadImageFormatException("Non-standard metadata table 0x"+i.ToString("X2)+".");
+				throw new BadImageFormatException("Non-standard metadata table 0x"+i.ToString("X2")+".");
 			if ((validMask & (1 << (int)TableKind.Field)) != 0)
 				this.FieldEntries = new FieldEntry[reader.ReadUInt32()];
 			if ((validMask & (1 << 0x05)) != 0)
-				throw new BadImageFormatException("Non-standard metadata table 0x"+i.ToString("X2)+".");
+				throw new BadImageFormatException("Non-standard metadata table 0x"+i.ToString("X2")+".");
 			if ((validMask & (1 << (int)TableKind.MethodDef)) != 0)
 				this.MethodDefEntries = new MethodDefEntry[reader.ReadUInt32()];
 			if ((validMask & (1 << 0x07)) != 0)
-				throw new BadImageFormatException("Non-standard metadata table 0x"+i.ToString("X2)+".");
+				throw new BadImageFormatException("Non-standard metadata table 0x"+i.ToString("X2")+".");
 			if ((validMask & (1 << (int)TableKind.Param)) != 0)
 				this.ParamEntries = new ParamEntry[reader.ReadUInt32()];
 			if ((validMask & (1 << (int)TableKind.InterfaceImpl)) != 0)
@@ -94,13 +94,13 @@ namespace Mi.PE.Cli.Tables
 			if ((validMask & (1 << (int)TableKind.EventMap)) != 0)
 				this.EventMapEntries = new EventMapEntry[reader.ReadUInt32()];
 			if ((validMask & (1 << 0x13)) != 0)
-				throw new BadImageFormatException("Non-standard metadata table 0x"+i.ToString("X2)+".");
+				throw new BadImageFormatException("Non-standard metadata table 0x"+i.ToString("X2")+".");
 			if ((validMask & (1 << (int)TableKind.Event)) != 0)
 				this.EventEntries = new EventEntry[reader.ReadUInt32()];
 			if ((validMask & (1 << (int)TableKind.PropertyMap)) != 0)
 				this.PropertyMapEntries = new PropertyMapEntry[reader.ReadUInt32()];
 			if ((validMask & (1 << 0x16)) != 0)
-				throw new BadImageFormatException("Non-standard metadata table 0x"+i.ToString("X2)+".");
+				throw new BadImageFormatException("Non-standard metadata table 0x"+i.ToString("X2")+".");
 			if ((validMask & (1 << (int)TableKind.Property)) != 0)
 				this.PropertyEntries = new PropertyEntry[reader.ReadUInt32()];
 			if ((validMask & (1 << (int)TableKind.MethodSemantics)) != 0)
@@ -116,11 +116,11 @@ namespace Mi.PE.Cli.Tables
 			if ((validMask & (1 << (int)TableKind.FieldRVA)) != 0)
 				this.FieldRVAEntries = new FieldRVAEntry[reader.ReadUInt32()];
 			if ((validMask & (1 << 0x1E)) != 0)
-				throw new BadImageFormatException("Non-standard metadata table 0x"+i.ToString("X2)+".");
+				throw new BadImageFormatException("Non-standard metadata table 0x"+i.ToString("X2")+".");
 			if ((validMask & (1 << 0x1F)) != 0)
-				throw new BadImageFormatException("Non-standard metadata table 0x"+i.ToString("X2)+".");
+				throw new BadImageFormatException("Non-standard metadata table 0x"+i.ToString("X2")+".");
 			if ((validMask & (1 << 0x20)) != 0)
-				throw new BadImageFormatException("Non-standard metadata table 0x"+i.ToString("X2)+".");
+				throw new BadImageFormatException("Non-standard metadata table 0x"+i.ToString("X2")+".");
 			if ((validMask & (1 << (int)TableKind.AssemblyProcessor)) != 0)
 				this.AssemblyProcessorEntries = new AssemblyProcessorEntry[reader.ReadUInt32()];
 			if ((validMask & (1 << (int)TableKind.AssemblyOS)) != 0)
