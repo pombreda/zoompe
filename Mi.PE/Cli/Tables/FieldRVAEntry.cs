@@ -22,5 +22,11 @@ namespace Mi.PE.Cli.Tables
         /// An index into <see cref="TableKind.Field"/> table.
         /// </summary>
         public uint Field;
+
+        public void Read(ClrModuleReader reader)
+        {
+            this.RVA = reader.Binary.ReadUInt32();
+            this.Field = reader.ReadTableIndex(TableKind.Field);
+        }
     }
 }
