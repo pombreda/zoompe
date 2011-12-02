@@ -50,6 +50,7 @@
     <Compile Include="Cli\Tables\FieldMarshalEntry.cs" />
     <Compile Include="Cli\Tables\HasDeclSecurity.cs" />
     <Compile Include="Cli\Tables\HasFieldMarshal.cs" />
+    <Compile Include="Cli\Tables\HasSemantics.cs" />
     <Compile Include="Cli\Tables\InterfaceImplEntry.cs" />
     <Compile Include="Cli\Tables\FieldEntry.cs" />
     <Compile Include="Cli\Tables\MemberRefEntry.cs" />
