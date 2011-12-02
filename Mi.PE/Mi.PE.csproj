@@ -66,6 +66,9 @@
     <Compile Include="Cli\Tables\ModuleRefEntry.cs" />
     <Compile Include="Cli\Tables\ParamAttributes.cs" />
     <Compile Include="Cli\Tables\ParamEntry.cs" />
+    <Compile Include="Cli\Tables\PInvokeAttributes.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Cli\Tables\PropertyAttributes.cs" />
     <Compile Include="Cli\Tables\PropertyEntry.cs" />
     <Compile Include="Cli\Tables\PropertyMapEntry.cs" />
