@@ -16,7 +16,6 @@ namespace Mi.PE.Cli.Tables
         // Character set
 
         /// <summary>
-        /// This is a resource file or other non-metadata-containing file.
         /// These 2 bits contain one of the following values:
         /// <see cref="CharSetNotSpec"/>,
         /// <see cref="CharSetAnsi"/>,
