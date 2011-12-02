@@ -30,5 +30,12 @@ namespace Mi.PE.Cli.Tables
         /// <see cref="HashValue"/> shall index a non-empty 'blob' in the Blob heap. [ERROR]
         /// </summary>
         public byte[] HashValue;
+
+        public void Read(ClrModuleReader reader)
+        {
+            this.Flags = (FileAttributes)reader.Binary.ReadUInt32();
+            this.Name = reader.ReadString();
+            this.HashValue = reader.ReadBlob();
+        }
     }
 }
