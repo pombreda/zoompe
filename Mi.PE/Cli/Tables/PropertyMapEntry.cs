@@ -16,9 +16,15 @@ namespace Mi.PE.Cli.Tables
         public uint Parent;
 
         /// <summary>
-        /// An index into the Property table.
+        /// An index into the <see cref="TableKind.Property"/> table.
         /// It marks the first of a contiguous run of Properties owned by <see cref="Parent"/>.
         /// </summary>
         public uint PropertyList;
+
+        public void Read(ClrModuleReader reader)
+        {
+            this.Parent = reader.ReadTableIndex(TableKind.TypeDef);
+            this.PropertyList = reader.ReadTableIndex(TableKind.Property);
+        }
     }
 }
