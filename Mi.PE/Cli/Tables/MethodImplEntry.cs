@@ -33,5 +33,12 @@ namespace Mi.PE.Cli.Tables
         /// The method indexed by <see cref="MethodDeclaration"/> shall have Flags.Virtual set. [ERROR]
         /// </summary>
         public MethodDefOrRef MethodDeclaration;
+
+        public void Read(ClrModuleReader reader)
+        {
+            this.Class = reader.ReadTableIndex(TableKind.TypeDef);
+            this.MethodBody = reader.ReadMethodDefOrRef();
+            this.MethodDeclaration = reader.ReadMethodDefOrRef();
+        }
     }
 }

@@ -353,6 +353,11 @@ namespace Mi.PE.Cli
             throw new NotImplementedException();
         }
 
+        public MethodDefOrRef ReadMethodDefOrRef()
+        {
+            throw new NotImplementedException();
+        }
+
         public uint ReadTableIndex(TableKind table)
         {
             throw new NotImplementedException();
