@@ -102,6 +102,7 @@
     <Compile Include="Cli\Tables\CustomAttribute.cs" />
     <Compile Include="Cli\Tables\TableKind.cs" />
     <Compile Include="Cli\Tables\TypeRefEntry.cs" />
+    <Compile Include="Cli\Tables\TypeSpecEntry.cs" />
     <Compile Include="Internal\BinaryStreamReader.cs" />
     <Compile Include="Internal\BinaryStreamWriter.cs" />
     <Compile Include="PEFile.cs" />
