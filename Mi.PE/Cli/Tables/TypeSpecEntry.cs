@@ -19,5 +19,10 @@ namespace Mi.PE.Cli.Tables
     public sealed class TypeSpecEntry
     {
         public byte[] Signature;
+
+        public void Read(ClrModuleReader reader)
+        {
+            this.Signature = reader.ReadBlob();
+        }
     }
 }
