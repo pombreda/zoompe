@@ -50,5 +50,12 @@ namespace Mi.PE.Cli.Tables
         /// more precisely, a HasSemantics (ECMA §24.2.6) coded index.
         /// </summary>
         public HasSemantics Association;
+
+        public void Read(ClrModuleReader reader)
+        {
+            this.Semantics = (MethodSemanticsAttributes)reader.Binary.ReadUInt16();
+            this.Method = reader.ReadTableIndex(TableKind.MethodDef);
+            this.Association = reader.ReadHasSemantics();
+        }
     }
 }
