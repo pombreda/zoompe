@@ -118,6 +118,7 @@
     <Compile Include="Cli\Tables\HasConstant.cs" />
     <Compile Include="Cli\Tables\CustomAttribute.cs" />
     <Compile Include="Cli\Tables\TableKind.cs" />
+    <Compile Include="Cli\Tables\TypeOrMethodDef.cs" />
     <Compile Include="Cli\Tables\TypeRefEntry.cs" />
     <Compile Include="Cli\Tables\TypeSpecEntry.cs" />
     <Compile Include="Internal\BinaryStreamReader.cs" />
