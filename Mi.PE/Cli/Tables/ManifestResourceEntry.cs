@@ -31,5 +31,13 @@ namespace Mi.PE.Cli.Tables
         /// <see cref="Implementation"/> can be null or non-null (if null, it means the resource is stored in the current file).
         /// </summary>
         public Implementation Implementation;
+
+        public void Read(ClrModuleReader reader)
+        {
+            this.Offset = reader.Binary.ReadUInt32();
+            this.Flags = (ManifestResourceAttributes)reader.Binary.ReadUInt32();
+            this.Name = reader.ReadString();
+            this.Implementation = reader.ReadImplementation();
+        }
     }
 }
