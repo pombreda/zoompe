@@ -7,7 +7,8 @@ namespace Mi.PE.Cli.Tables
     /// <summary>
     /// [ECMA 23.1.7]
     /// </summary>
-    public enum GenericParamAttributes
+    [Flags]
+    public enum GenericParamAttributes : ushort
     {
         /// <summary>
         /// These 2 bits contain one of the following values:
