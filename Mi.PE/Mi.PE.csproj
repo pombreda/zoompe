@@ -75,6 +75,7 @@
     <Compile Include="Cli\Tables\MethodImplEntry.cs" />
     <Compile Include="Cli\Tables\MethodSemanticsAttributes.cs" />
     <Compile Include="Cli\Tables\MethodSemanticsEntry.cs" />
+    <Compile Include="Cli\Tables\MethodSpecEntry.cs" />
     <Compile Include="Cli\Tables\ModuleRefEntry.cs" />
     <Compile Include="Cli\Tables\NestedClassEntry.cs" />
     <Compile Include="Cli\Tables\ParamAttributes.cs" />
