@@ -18,7 +18,7 @@ namespace Mi.PE.Cli.Tables
     /// All binary values are stored in little-endian format
     /// (except for PackedLen items, which are used only as a count for the number of bytes to follow in a UTF8 string).
     /// </remarks>
-    public sealed class CustomAttributeEntry
+    public struct CustomAttributeEntry
     {
         /// <summary>
         /// Parent can be an index into any metadata table, except the <see cref="TableKind.CustomAttribute"/> table itself  [ERROR]

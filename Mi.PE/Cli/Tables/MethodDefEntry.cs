@@ -14,7 +14,7 @@ namespace Mi.PE.Cli.Tables
     /// end note]
     /// [ECMA 22.26]
     /// </summary>
-    public sealed class MethodDefEntry
+    public struct MethodDefEntry
     {
         public uint RVA;
         public MethodImplAttributes ImplFlags;

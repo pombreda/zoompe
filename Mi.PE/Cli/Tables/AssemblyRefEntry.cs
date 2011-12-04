@@ -9,7 +9,7 @@ namespace Mi.PE.Cli.Tables
     /// (where duplicate rows are deemd to be those having the same
     /// MajorVersion, MinorVersion, BuildNumber, RevisionNumber, PublicKeyOrToken, Name, and Culture). [WARNING]
     /// </summary>
-    public sealed class AssemblyRefEntry
+    public struct AssemblyRefEntry
     {
         /// <summary>
         /// MajorVersion, MinorVersion, BuildNumber, and RevisionNumber can each have any value.

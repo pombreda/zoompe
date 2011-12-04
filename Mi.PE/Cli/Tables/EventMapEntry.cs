@@ -16,7 +16,7 @@ namespace Mi.PE.Cli.Tables
     /// what counts is the information stored for each method that the event comprises.
     /// The <see cref="TableKind.EventMap"/> and <see cref="TableKind.Event"/> tables result from putting the .event directive on a class (ECMA §18).
     /// </remarks>
-    public sealed class EventMapEntry
+    public struct EventMapEntry
     {
         /// <summary>
         /// An index into the <see cref="TableKind.TypeDef"/> table.

@@ -18,7 +18,7 @@ namespace Mi.PE.Cli.Tables
     /// The <see cref="TableKind.Property"/> table has columns for <see cref="Flags"/>, <see cref="Name"/> and <see cref="Type"/>.
     /// In addition, the <see cref="TableKind.MethodSemantics"/> table has a column to record whether the method it points at is a set_, a get_ or other.
     /// </remarks>
-    public sealed class PropertyEntry
+    public struct PropertyEntry
     {
         /// <summary>
         /// A 2-byte bitmask of type <see cref="PropertyAttributes"/>, ECMA §23.1.14.

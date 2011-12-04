@@ -22,7 +22,7 @@ namespace Mi.PE.Cli.Tables
     /// to create a System.Security.SecurityElement.
     /// Finally, the XML that is required for the metadata is created using the ToString method on the security element.
     /// </remarks>
-    public sealed class DeclSecurityEntry
+    public struct DeclSecurityEntry
     {
         public SecurityAction Action;
 

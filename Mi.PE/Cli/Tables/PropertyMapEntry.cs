@@ -8,7 +8,7 @@ namespace Mi.PE.Cli.Tables
     /// The <see cref="TableKind.PropertyMap"/> and <see cref="TableKind.Property"/> tables result from putting the .property directive on a class (ECMA §17).
     /// [ECMA 22.35]
     /// </summary>
-    public sealed class PropertyMapEntry
+    public struct PropertyMapEntry
     {
         /// <summary>
         /// An index into the <see cref="TableKind.TypeDef"/> table.

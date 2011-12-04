@@ -10,7 +10,7 @@ namespace Mi.PE.Cli.Tables
     /// or from a .param attribute attached to a method (ECMA §15.4.1).
     /// [ECMA 22.33]
     /// </summary>
-    public sealed class ParamEntry
+    public struct ParamEntry
     {
         /// <summary>
         /// If Flags.HasDefault = 1 then this row shall own exactly one row in the Constant table [ERROR]

@@ -7,7 +7,7 @@ namespace Mi.PE.Cli.Tables
     /// <summary>
     /// [ECMA 22.19]
     /// </summary>
-    public sealed class FileEntry
+    public struct FileEntry
     {
         /// <summary>
         /// A 4-byte bitmask of type FileAttributes, ECMA §23.1.6.

@@ -14,7 +14,7 @@ namespace Mi.PE.Cli.Tables
     /// (the <see cref="TypeDefEntry.FieldList"/> column).
     /// [ECMA 22.15]
     /// </remarks>
-    public sealed class FieldEntry
+    public struct FieldEntry
     {
         public FieldAttributes Flags;
         public string Name;

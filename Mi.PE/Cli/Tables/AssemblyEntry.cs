@@ -7,7 +7,7 @@ namespace Mi.PE.Cli.Tables
     /// <summary>
     /// The Assembly table shall contain zero or one row. [ERROR]
     /// </summary>
-    public sealed class AssemblyEntry
+    public struct AssemblyEntry
     {
         /// <summary>
         /// <see cref="HashAlgId"/> shall be one of the specified values. [ERROR]

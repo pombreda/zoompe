@@ -43,20 +43,20 @@ namespace Mi.PE.Cli.Tables
         ///  throw SecurityException (see Partition IV) otherwise.
         ///  Valid scope: Method, Type.
         /// </summary>
-        NonCasDemand = -1, // TODO: find the correct value
+        NonCasDemand = 0, // TODO: find the correct value
 
         /// <summary>
         /// Check that the immediate caller has been granted the specified permission;
         /// throw SecurityException (see Partition IV) otherwise.
         /// Valid scope: Method, Type.
         /// </summary>
-        NonCasLinkDemand = -1,  // TODO: find the correct value
+        NonCasLinkDemand = 0,  // TODO: find the correct value
 
         /// <summary>
         /// Reserved for implementation-specific use.
         /// Valid scope: Assembly.
         /// </summary>
-        PrejitGrant = -1,  // TODO: find the correct value
+        PrejitGrant = 0,  // TODO: find the correct value
  
         /// <summary>
         /// Without further checks, refuse Demand for all permissions other than those specified.

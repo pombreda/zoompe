@@ -12,7 +12,7 @@ namespace Mi.PE.Cli.Tables
     /// with the name of a routine (<see cref="ImportName"/>) in some unmanaged DLL (<see cref="ImportScope"/>).  
     /// [ECMA 22.22]
     /// </summary>
-    public sealed class ImplMapEntry
+    public struct ImplMapEntry
     {
         /// <summary>
         /// A 2-byte bitmask of type <see cref="PInvokeAttributes"/>, ECMA §23.1.8.

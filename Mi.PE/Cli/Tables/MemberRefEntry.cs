@@ -9,7 +9,7 @@ namespace Mi.PE.Cli.Tables
     /// known as 'MethodRef' and 'FieldRef', respectively.
     /// [ECMA 22.25]
     /// </summary>
-    public sealed class MemberRefEntry
+    public struct MemberRefEntry
     {
         /// <summary>
         /// An index into the <see cref="TabeKind.MethodDef"/>, <see cref="TableKind.ModuleRef"/>,

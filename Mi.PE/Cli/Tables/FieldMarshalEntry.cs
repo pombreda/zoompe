@@ -18,7 +18,7 @@ namespace Mi.PE.Cli.Tables
     /// Once it invokes unmanaged code, it lies outside the regime that the CLI can check—it is simply trusted not to violate the type system.
     /// A row in the FieldMarshal table is created if the .field directive for the parent field has specified a marshal attribute (§16.1).
     /// </remarks>
-    public sealed class FieldMarshalEntry
+    public struct FieldMarshalEntry
     {
         /// <summary>
         /// An index into <see cref="TableKind.Field"/> or <see cref="TableKind.Param"/> table;

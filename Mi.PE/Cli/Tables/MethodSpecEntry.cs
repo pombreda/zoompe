@@ -9,7 +9,7 @@ namespace Mi.PE.Cli.Tables
     /// (There can be multiple instantiations of the same generic method.)
     /// [ECMA 22.29]
     /// </summary>
-    public sealed class MethodSpecEntry
+    public struct MethodSpecEntry
     {
         /// <summary>
         /// An index into the <see cref="TableKind.MethodDef"/> or <see cref="TableKind.MemberRef"/> table,

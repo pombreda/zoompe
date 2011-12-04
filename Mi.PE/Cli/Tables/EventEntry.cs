@@ -23,7 +23,7 @@ namespace Mi.PE.Cli.Tables
     /// The <see cref="TableKind.Event"/> table has columns for <see cref="EventFlags"/>, <see cref="Name"/>, and <see cref="EventType"/>.
     /// In addition, the <see cref="TableKind.MethodSemantics"/> table has a column to record whether the method it indexes is an add_, a remove_, a raise_, or other function.
     /// </remarks>
-    public sealed class EventEntry
+    public struct EventEntry
     {
         public EventAttributes EventFlags;
 

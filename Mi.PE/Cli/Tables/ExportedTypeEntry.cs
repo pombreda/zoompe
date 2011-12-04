@@ -32,7 +32,7 @@ namespace Mi.PE.Cli.Tables
     /// <remarks>
     /// The rows in the <see cref="TableKind."/> table are the result of the .class extern directive (ECMA §6.7).
     /// </remarks>
-    public sealed class ExportedTypeEntry
+    public struct ExportedTypeEntry
     {
         /// <summary>
         /// A 4-byte bitmask of type <see cref="TypeAttributes"/>, ECMA §23.1.15.

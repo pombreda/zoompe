@@ -65,41 +65,54 @@ namespace Mi.PE.Cli.Tables
 {
     partial class TableStream
     {
-<#
-	for(int i = 0; i<Tables.Length; i++)
-	{
-		string t = Tables[i];
-		if(string.IsNullOrEmpty(t))
-		{ #>
-		// <#=i#> (0x<#=i.ToString("X2")#>) not allocated
-<#	}
-		else
-		{ #>
-		<#=t#>Entry[] <#=t#>Entries;
-<#	}
-	} #>
-
 		private void ReadAndInitializeRowCounts(BinaryStreamReader reader, ulong validMask)
         {
+			var tables = new Array[<#=Tables.Length#>];
+
 <#
 	for(int i = 0; i<Tables.Length; i++)
 	{
 		string t = Tables[i];
 		if(string.IsNullOrEmpty(t))
 		{ #>
-			if ((validMask & (1 << 0x<#=i.ToString("X2")#>)) != 0)
-				throw new BadImageFormatException("Non-standard metadata table 0x"+i.ToString("X2")+".");
+			if ((validMask & (1U << 0x<#=i.ToString("X2")#>)) != 0)
+				throw new BadImageFormatException("Non-standard metadata table 0x"+validMask.ToString("X2")+".");
 <#	}
 		else
 		{ #>
-			if ((validMask & (1 << (int)TableKind.<#=t#>)) != 0)
-				this.<#=t#>Entries = new <#=t#>Entry[reader.ReadUInt32()];
+			if ((validMask & (1U << (int)TableKind.<#=t#>)) != 0)
+				tables[<#=i#>] = new <#=t#>Entry[reader.ReadUInt32()];
 <#	}
 	} #>
 
 			ulong trailingZeroesMask = ulong.MaxValue << <#=Tables.Length#>;
 			if ((validMask & trailingZeroesMask) != 0)
 				throw new BadImageFormatException("Non-standard metadata table bits.");
+
+			this.Tables = tables;
+		}
+
+		private void ReadTables(ClrModuleReader reader)
+        {
+<#
+	for(int i = 0; i<Tables.Length; i++)
+	{
+		string t = Tables[i];
+		if(!string.IsNullOrEmpty(t))
+		{ 
+			string tableName = t.Substring(0,1).ToLower()+t.Substring(1)+"Table";
+			#>
+			var <#=tableName#> = (<#=t#>Entry[])this.Tables[(int)TableKind.<#=t#>];
+			if (<#=tableName#> != null)
+			{
+				for(int i = 0; i < <#=tableName#>.Length; i++)
+				{
+					<#=tableName#>[i].Read(reader);
+				}
+			}
+
+<#	}
+	} #>
 		}
 	}
 }

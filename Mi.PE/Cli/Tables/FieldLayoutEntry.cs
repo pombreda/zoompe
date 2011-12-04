@@ -23,7 +23,7 @@ namespace Mi.PE.Cli.Tables
     /// since some of the rules specified here are dependent on platform-specific alignment rules.
     /// A row in the <see cref="TableKind.FieldLayout"/> table is created if the .field directive for the parent field has specified a field offset (ECMA §16).
     /// </remarks>
-    public class FieldLayoutEntry
+    public struct FieldLayoutEntry
     {
         /// <summary>
         /// Offset shall be zero or more. [ERROR]

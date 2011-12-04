@@ -7,7 +7,7 @@ namespace Mi.PE.Cli.Tables
     /// <summary>
     /// [ECMA 22.24]
     /// </summary>
-    public sealed class ManifestResourceEntry
+    public struct ManifestResourceEntry
     {
         /// <summary>
         ///  A 4-byte constant.

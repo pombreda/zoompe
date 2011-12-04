@@ -9,7 +9,7 @@ namespace Mi.PE.Cli.Tables
     /// However, if present in a PE file, it shall be treated as if all its fields were zero.
     /// It shall be ignored by the CLI.
     /// </summary>
-    public sealed class AssemblyOSEntry
+    public struct AssemblyOSEntry
     {
         public uint OSPlatformID;
         public uint OSMajorVersion;

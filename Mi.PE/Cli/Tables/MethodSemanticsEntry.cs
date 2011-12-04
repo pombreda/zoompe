@@ -22,7 +22,7 @@ namespace Mi.PE.Cli.Tables
     /// then the row indexed in the <see cref="TableKind.MethodDef"/> table by Method
     /// can return any type.
     /// </remarks>
-    public sealed class MethodSemanticsEntry
+    public struct MethodSemanticsEntry
     {
         /// <summary>
         /// A 2-byte bitmask of type <see cref="MethodSemanticsAttributes"/>, ECMA §23.1.12.

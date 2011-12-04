@@ -71,8 +71,13 @@ namespace Mi.PE.Cli
             managedNativeHeaderDir.Read(this.Binary);
 
 
+
             // CLR metadata
             this.Binary.Position = metadataDir.VirtualAddress;
+
+            var tableStream = new TableStream();
+            tableStream.Read(this.Binary);
+
 
             var mdSignature = (ClrMetadataSignature)this.Binary.ReadUInt32();
             if (mdSignature != ClrMetadataSignature.Signature)

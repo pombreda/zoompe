@@ -16,7 +16,7 @@ namespace Mi.PE.Cli.Tables
     /// that take a TypeDef or TypeRef token;
     /// specifically, castclass, cpobj, initobj, isinst, ldelema, ldobj, mkrefany, newarr, refanyval, sizeof, stobj, box, and unbox.
     /// </remarks>
-    public sealed class TypeSpecEntry
+    public struct TypeSpecEntry
     {
         public byte[] Signature;
 

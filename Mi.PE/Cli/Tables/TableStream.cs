@@ -10,6 +10,8 @@ namespace Mi.PE.Cli.Tables
     {
         public Version Version;
 
+        public Array[] Tables;
+
         public void Read(BinaryStreamReader reader)
         {
             int tsReserved0 = reader.ReadInt32();

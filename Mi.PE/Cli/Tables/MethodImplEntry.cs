@@ -8,7 +8,7 @@ namespace Mi.PE.Cli.Tables
     /// <see cref="TableKind.MethodImpl"/> tables let a compiler override the default inheritance rules provided by the CLI
     /// [ECMA 22.27]
     /// </summary>
-    public sealed class MethodImplEntry
+    public struct MethodImplEntry
     {
         /// <summary>
         /// An index into the <see cref="TableKind.TypeDef"/> table.

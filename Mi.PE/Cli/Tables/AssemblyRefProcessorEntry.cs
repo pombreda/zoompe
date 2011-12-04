@@ -9,7 +9,7 @@ namespace Mi.PE.Cli.Tables
     /// However, if present in a PE file, they should be treated as-if their fields were zero.
     /// They should be ignored by the CLI.
     /// </summary>
-    public sealed class AssemblyRefProcessorEntry
+    public struct AssemblyRefProcessorEntry
     {
         public uint Processor;
 

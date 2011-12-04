@@ -7,7 +7,7 @@ namespace Mi.PE.Cli.Tables
     /// <summary>
     /// [ECMA 22.32]
     /// </summary>
-    public sealed class NestedClassEntry
+    public struct NestedClassEntry
     {
         /// <summary>
         /// An index into the <see cref="TableKind.TypeDef"/> table.

@@ -11,7 +11,7 @@ namespace Mi.PE.Cli.Tables
     /// The <see cref="RVA"/> column is the relative virtual address of the data in the PE file (ECMA §16.3).
     /// [ECMA 22.18]
     /// </summary>
-    public sealed class FieldRVAEntry
+    public struct FieldRVAEntry
     {
         /// <summary>
         /// A 4-byte constant.

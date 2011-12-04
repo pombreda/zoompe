@@ -14,7 +14,7 @@ namespace Mi.PE.Cli.Tables
     /// in either the <see cref="TableKind.TypeDef"/> or <see cref="TableKind.MethodDef"/> tables.
     /// [ECMA 22.20]
     /// </summary>
-    public sealed class GenericParamEntry
+    public struct GenericParamEntry
     {
         /// <summary>
         /// The 2-byte index of the generic parameter, numbered left-to-right, from zero.

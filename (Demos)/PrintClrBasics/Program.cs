@@ -64,7 +64,7 @@ namespace PrintClrBasics
             var sectionReader = new BinaryStreamReader(rvaStream, new byte[32]);
 
             var clrmod = new ClrModule();
-            clrmod.Read(sectionReader);
+            ClrModuleReader.Read(sectionReader, clrmod);
 
             return clrmod;
         }

@@ -15,7 +15,7 @@ namespace Mi.PE.Cli.Tables
     /// in which this type is declared (ECMA §10.2).
     /// When either of these directives is omitted, its corresponding value is zero.  (See ECMA §10.7.)
     /// </remarks>
-    public sealed class ClassLayoutEntry
+    public struct ClassLayoutEntry
     {
         public ushort PackingSize;
 

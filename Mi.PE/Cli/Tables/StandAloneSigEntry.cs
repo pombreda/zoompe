@@ -20,7 +20,7 @@ namespace Mi.PE.Cli.Tables
     /// The .locals directive (ECMA §15.4.1) in ILAsm generates a row in the <see cref="TableKind.StandAloneSig"/> table.
     /// [ECMA 22.36]
     /// </summary>
-    public sealed class StandAloneSigEntry
+    public struct StandAloneSigEntry
     {
         /// <summary>
         /// The signature 'blob' indexed by Signature shall be a valid METHOD or LOCALS signature. [ERROR]

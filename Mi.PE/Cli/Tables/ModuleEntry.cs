@@ -13,7 +13,7 @@ namespace Mi.PE.Cli.Tables
     /// and can be ignored by conforming implementations of the CLI.
     /// The rows in the <see cref="TableKind.Module"/> table result from .module directives in the Assembly (ECMA §6.4).
     /// </remarks>
-    public sealed class ModuleEntry
+    public struct ModuleEntry
     {
         public ushort Generation;
         public string Name;

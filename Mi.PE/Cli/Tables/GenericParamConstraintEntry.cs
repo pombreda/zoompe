@@ -7,7 +7,7 @@ namespace Mi.PE.Cli.Tables
     /// <summary>
     /// [ECMA 22.21]
     /// </summary>
-    public sealed class GenericParamConstraintEntry
+    public struct GenericParamConstraintEntry
     {
         /// <summary>
         /// An index into the <see cref="TableKind.GenericParam"/> table, specifying to which generic parameter this row refers.

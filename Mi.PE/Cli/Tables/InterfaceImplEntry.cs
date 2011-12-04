@@ -12,7 +12,7 @@ namespace Mi.PE.Cli.Tables
     /// There can be many rows with the same value for <see cref="Interface"/> (since many classes can implement the same interface).
     /// [ECMA 22.23]
     /// </summary>
-    public sealed class InterfaceImplEntry
+    public struct InterfaceImplEntry
     {
         /// <summary>
         /// An index into the <see cref="TypeDef"/> table.

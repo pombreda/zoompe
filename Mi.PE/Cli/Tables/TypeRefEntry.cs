@@ -8,7 +8,7 @@ namespace Mi.PE.Cli.Tables
     /// The first row of the TypeDef table represents the pseudo class that acts as parent for functions and variables defined at module scope.
     /// [ECMA 22.38]
     /// </summary>
-    public sealed class TypeRefEntry
+    public struct TypeRefEntry
     {
         public ResolutionScope ResolutionScope;
 
