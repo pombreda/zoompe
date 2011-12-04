@@ -25,5 +25,11 @@ namespace Mi.PE.Cli.Tables
         /// of the signature of the generic method stored at <see cref="Method "/> [ERROR]
         /// </summary>
         public byte[] Instantiation;
+
+        public void Read(ClrModuleReader reader)
+        {
+            this.Method = reader.ReadMethodDefOrRef();
+            this.Instantiation = reader.ReadBlob();
+        }
     }
 }
