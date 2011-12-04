@@ -53,6 +53,7 @@
     <Compile Include="Cli\Tables\FileAttributes.cs" />
     <Compile Include="Cli\Tables\FileEntry.cs" />
     <Compile Include="Cli\Tables\GenericParamAttributes.cs" />
+    <Compile Include="Cli\Tables\GenericParamConstraintEntry.cs" />
     <Compile Include="Cli\Tables\GenericParamEntry.cs" />
     <Compile Include="Cli\Tables\HasDeclSecurity.cs" />
     <Compile Include="Cli\Tables\HasFieldMarshal.cs" />
