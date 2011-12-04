@@ -21,5 +21,11 @@ namespace Mi.PE.Cli.Tables
         /// more precisely, a <see cref="TypeDefOrRef"/> (ECMA §24.2.6) coded index.
         /// </summary>
         public TypeDefOrRef Constraint;
+
+        public void Read(ClrModuleReader reader)
+        {
+            this.Owner = reader.ReadTableIndex(TableKind.GenericParam);
+            this.Constraint = reader.ReadTypeDefOrRef();
+        }
     }
 }
