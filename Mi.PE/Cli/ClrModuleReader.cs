@@ -14,6 +14,7 @@ namespace Mi.PE.Cli
 
         readonly BinaryStreamReader m_Binary;
         readonly ClrModule module;
+        TableStream tableStream;
         
         Guid[] guids;
 
@@ -174,63 +175,120 @@ namespace Mi.PE.Cli
 
         void ReadTableStream()
         {
-            var tableStream = new TableStream();
+            tableStream = new TableStream();
             tableStream.Read(this);
+        }
+
+        uint ReadTableIndexByLength(uint length)
+        {
+            throw new NotImplementedException();
         }
 
         public TypeDefOrRef ReadTypeDefOrRef()
         {
-            throw new NotImplementedException();
+            uint maxCount = Math.Max(
+                Math.Max(
+                    (uint)tableStream.Tables[(int)TableKind.TypeDef].Length,
+                    (uint)tableStream.Tables[(int)TableKind.TypeRef].Length),
+                (uint)tableStream.Tables[(int)TableKind.TypeSpec].Length);
+
+            return (TypeDefOrRef)ReadTableIndexByLength(maxCount);
         }
 
         public MemberRefParent ReadMemberRefParent()
         {
-            throw new NotImplementedException();
+            uint maxCount = Math.Max(
+                Math.Max(
+                    Math.Max(
+                        (uint)tableStream.Tables[(int)TableKind.TypeDef].Length,
+                        (uint)tableStream.Tables[(int)TableKind.TypeRef].Length),
+                    (uint)tableStream.Tables[(int)TableKind.TypeSpec].Length),
+                Math.Max(
+                    (uint)tableStream.Tables[(int)TableKind.MethodDef].Length,
+                    (uint)tableStream.Tables[(int)TableKind.ModuleRef].Length));
+
+            return (MemberRefParent)ReadTableIndexByLength(maxCount);
         }
 
         public CustomAttributeType ReadCustomAttributeType()
         {
-            throw new NotImplementedException();
+            uint maxCount = Math.Max(
+                (uint)tableStream.Tables[(int)TableKind.MethodDef].Length,
+                (uint)tableStream.Tables[(int)TableKind.ModuleRef].Length);
+
+            return (CustomAttributeType)ReadTableIndexByLength(maxCount);
         }
 
         public HasFieldMarshal ReadHasFieldMarshal()
         {
-            throw new NotImplementedException();
+            uint maxCount = Math.Max(
+                (uint)tableStream.Tables[(int)TableKind.Field].Length,
+                (uint)tableStream.Tables[(int)TableKind.Param].Length);
+
+            return (HasFieldMarshal)ReadTableIndexByLength(maxCount);
         }
 
         public HasDeclSecurity ReadHasDeclSecurity()
         {
-            throw new NotImplementedException();
+            uint maxCount = Math.Max(
+                Math.Max(
+                    (uint)tableStream.Tables[(int)TableKind.TypeDef].Length,
+                    (uint)tableStream.Tables[(int)TableKind.MethodDef].Length),
+                (uint)tableStream.Tables[(int)TableKind.AssemblyOS].Length);
+
+            return (HasDeclSecurity)ReadTableIndexByLength(maxCount);
         }
 
         public HasSemantics ReadHasSemantics()
         {
-            throw new NotImplementedException();
+            uint maxCount = Math.Max(
+                (uint)tableStream.Tables[(int)TableKind.Event].Length,
+                (uint)tableStream.Tables[(int)TableKind.Property].Length);
+
+            return (HasSemantics)ReadTableIndexByLength(maxCount);
         }
 
         public MethodDefOrRef ReadMethodDefOrRef()
         {
-            throw new NotImplementedException();
+            uint maxCount = Math.Max(
+                (uint)tableStream.Tables[(int)TableKind.MethodDef].Length,
+                (uint)tableStream.Tables[(int)TableKind.MemberRef].Length);
+
+            return (MethodDefOrRef)ReadTableIndexByLength(maxCount);
         }
 
         public MemberForwarded ReadMemberForwarded()
         {
-            throw new NotImplementedException();
+            uint maxCount = Math.Max(
+                (uint)tableStream.Tables[(int)TableKind.Field].Length,
+                (uint)tableStream.Tables[(int)TableKind.MethodDef].Length);
+
+            return (MemberForwarded)ReadTableIndexByLength(maxCount);
         }
 
         public Implementation ReadImplementation()
         {
-            throw new NotImplementedException();
+            uint maxCount = Math.Max(
+                Math.Max(
+                    (uint)tableStream.Tables[(int)TableKind.Field].Length,
+                    (uint)tableStream.Tables[(int)TableKind.AssemblyRef].Length),
+                (uint)tableStream.Tables[(int)TableKind.ExportedType].Length);
+
+            return (Implementation)ReadTableIndexByLength(maxCount);
         }
 
         public TypeOrMethodDef ReadTypeOrMethodDef()
         {
-            throw new NotImplementedException();
+            uint maxCount = Math.Max(
+                (uint)tableStream.Tables[(int)TableKind.TypeDef].Length,
+                (uint)tableStream.Tables[(int)TableKind.MethodDef].Length);
+
+            return (TypeOrMethodDef)ReadTableIndexByLength(maxCount);
         }
 
         public uint ReadTableIndex(TableKind table)
         {
-            throw new NotImplementedException();
+            return ReadTableIndexByLength((uint)this.tableStream.Tables[(int)table].Length);
         }
     }
 }
