@@ -12,20 +12,21 @@ namespace Mi.PE.Cli.Tables
 
         public Array[] Tables;
 
-        public void Read(BinaryStreamReader reader)
+        public void Read(ClrModuleReader reader)
         {
-            int tsReserved0 = reader.ReadInt32();
-            byte tsMajorVersion = reader.ReadByte();
-            byte tsMinorVersion = reader.ReadByte();
+            int tsReserved0 = reader.Binary.ReadInt32();
+            byte tsMajorVersion = reader.Binary.ReadByte();
+            byte tsMinorVersion = reader.Binary.ReadByte();
 
             this.Version = new Version(tsMajorVersion, tsMinorVersion);
 
-            byte heapSizes = reader.ReadByte();
-            byte reserved1 = reader.ReadByte();
-            ulong valid = reader.ReadUInt64();
-            ulong sorted = reader.ReadUInt64();
+            byte heapSizes = reader.Binary.ReadByte();
+            byte reserved1 = reader.Binary.ReadByte();
+            ulong valid = reader.Binary.ReadUInt64();
+            ulong sorted = reader.Binary.ReadUInt64();
 
-            ReadAndInitializeRowCounts(reader, valid);
+            ReadAndInitializeRowCounts(reader.Binary, valid);
+            ReadTables(reader);
         }
     }
 }

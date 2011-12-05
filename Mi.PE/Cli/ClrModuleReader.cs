@@ -17,10 +17,6 @@ namespace Mi.PE.Cli
         
         Guid[] guids;
 
-        ModuleEntry[] moduleTable;
-        TypeRefEntry[] typeRefTable;
-        TypeDefEntry[] typeDefTable;
-
         private ClrModuleReader(BinaryStreamReader binaryReader, ClrModule module)
         {
             this.m_Binary = binaryReader;
@@ -75,10 +71,6 @@ namespace Mi.PE.Cli
             // CLR metadata
             this.Binary.Position = metadataDir.VirtualAddress;
 
-            var tableStream = new TableStream();
-            tableStream.Read(this.Binary);
-
-
             var mdSignature = (ClrMetadataSignature)this.Binary.ReadUInt32();
             if (mdSignature != ClrMetadataSignature.Signature)
                 throw new InvalidOperationException("Invalid CLR metadata signature field " + ((uint)mdSignature).ToString("X") + "h.");
@@ -106,7 +98,6 @@ namespace Mi.PE.Cli
             }
 
             this.guids = null;
-            this.module.TableStreamVersion = null;
 
             StreamHeader tableStreamHeader = null;
             foreach (var sh in streamHeaders)
@@ -183,149 +174,8 @@ namespace Mi.PE.Cli
 
         void ReadTableStream()
         {
-            int tsReserved0 = this.Binary.ReadInt32();
-            byte tsMajorVersion = this.Binary.ReadByte();
-            byte tsMinorVersion = this.Binary.ReadByte();
-
-            module.TableStreamVersion = new Version(tsMajorVersion, tsMinorVersion);
-
-            byte tsHeapSizes = this.Binary.ReadByte();
-            byte tsReserved1 = this.Binary.ReadByte();
-            ulong tsValid = this.Binary.ReadUInt64();
-            ulong tsSorted = this.Binary.ReadUInt64();
-
-            for (int i = 0; i < 64; i++)
-            {
-                if ((tsValid & (1UL << i)) == 0)
-                    continue;
-
-                uint rowCount = this.Binary.ReadUInt32();
-
-
-                switch ((TableKind)i)
-                {
-                    case TableKind.Module: // 0x0
-                        this.moduleTable = new ModuleEntry[rowCount];
-                        break;
-
-                    case TableKind.TypeRef: // 0x1
-                        this.typeRefTable = new TypeRefEntry[rowCount];
-                        break;
-
-                    case TableKind.TypeDef: // 0x2
-                        this.typeDefTable = new TypeDefEntry[rowCount];
-                        break;
-
-                    case TableKind.Field: // 0x4
-                        break;
-
-                    case TableKind.MethodDef: // 0x6
-                        break;
-
-                    case TableKind.Param: // 0x8
-                        break;
-
-                    case TableKind.InterfaceImpl: // 0x9
-                        break;
-
-                    case TableKind.MemberRef: // 0xA
-                        break;
-
-                    case TableKind.Constant: // 0xB
-                        break;
-
-                    case TableKind.CustomAttribute: // 0xC
-                        break;
-
-                    case TableKind.FieldMarshal: // 0xD
-                        break;
-
-                    case TableKind.DeclSecurity: // 0xE
-                        break;
-
-                    case TableKind.ClassLayout: // 0xF
-                        break;
-
-                    case TableKind.FieldLayout: // 0x10
-                        break;
-
-                    case TableKind.StandAloneSig: // 0x11
-                        break;
-
-                    case TableKind.EventMap: // 0x12
-                        break;
-
-                    case TableKind.Event: // 0x14
-                        break;
-
-                    case TableKind.PropertyMap: // 0x15
-                        break;
-
-                    case TableKind.Property: // 0x17
-                        break;
-
-                    case TableKind.MethodSemantics: // 0x18
-                        break;
-
-                    case TableKind.MethodImpl: // 0x19
-                        break;
-
-                    case TableKind.ModuleRef: // 0x1A
-                        break;
-
-                    case TableKind.TypeSpec: // 0x1B
-                        break;
-
-                    case TableKind.ImplMap: // 0x1C
-                        break;
-
-                    case TableKind.FieldRVA: // 0x1D
-                        break;
-
-                    case TableKind.AssemblyProcessor: // 0x21
-                        break;
-
-                    case TableKind.AssemblyOS: // 0x22
-                        break;
-
-                    case TableKind.AssemblyRef: // 0x23
-                        break;
-
-                    case TableKind.AssemblyRefProcessor: // 0x24
-                        break;
-
-                    case TableKind.AssemblyRefOS: // 0x25
-                        break;
-
-                    case TableKind.File: // 0x26
-                        break;
-
-                    case TableKind.ExportedType: // 0x27
-                        break;
-
-                    case TableKind.ManifestResource: // 0x28
-                        break;
-
-                    case TableKind.NestedClass: // 0x29
-                        break;
-
-                    case TableKind.GenericParam: // 0x2A
-                        break;
-
-                    case TableKind.MethodSpec: // 0x2B
-                        break;
-
-                    case TableKind.GenericParamConstraint: // 0x2C
-                        break;
-
-                    default:
-                        break;
-                }
-            }
-
-            for (int iTable = 0; iTable < 64; iTable++)
-            {
-            }
+            var tableStream = new TableStream();
+            tableStream.Read(this);
         }
 
         public TypeDefOrRef ReadTypeDefOrRef()
