@@ -152,11 +152,6 @@ namespace Mi.PE.Cli
             return new Version(major, minor, buildNumber, revisionNumber);
         }
 
-        public HasConstant ReadHasConstant()
-        {
-            throw new NotImplementedException();
-        }
-
         static void ReadGuids(BinaryStreamReader reader, Guid[] guids)
         {
             byte[] buf = new byte[128];
@@ -167,21 +162,85 @@ namespace Mi.PE.Cli
             }
         }
 
-
-        public HasCustomAttribute ReadHasCustomAttribute()
-        {
-            throw new NotImplementedException();
-        }
-
         void ReadTableStream()
         {
             tableStream = new TableStream();
             tableStream.Read(this);
         }
 
-        uint ReadTableIndexByLength(uint length)
+        uint ReadTableIndexByLengthAndExtraBitCount(uint length, int extraBitCount)
         {
-            throw new NotImplementedException();
+            ushort mask = (ushort)(ushort.MaxValue >> extraBitCount);
+
+            if ((length & ~mask) == 0)
+            {
+                return this.Binary.ReadUInt16();
+            }
+            else
+            {
+                return this.Binary.ReadUInt32();
+            }
+        }
+
+        public HasConstant ReadHasConstant()
+        {
+            uint maxCount = Math.Max(
+                Math.Max(
+                    (uint)tableStream.Tables[(int)TableKind.TypeDef].Length,
+                    (uint)tableStream.Tables[(int)TableKind.TypeRef].Length),
+                (uint)tableStream.Tables[(int)TableKind.TypeSpec].Length);
+
+            return (HasConstant)ReadTableIndexByLengthAndExtraBitCount(maxCount, HasConstant.HighBitCount);
+        }
+
+        public HasCustomAttribute ReadHasCustomAttribute()
+        {
+            uint maxCount =
+                (uint)tableStream.Tables[(int)TableKind.MethodDef].Length;
+            maxCount = Math.Max(maxCount,
+                (uint)tableStream.Tables[(int)TableKind.Field].Length);
+            maxCount = Math.Max(maxCount,
+                (uint)tableStream.Tables[(int)TableKind.TypeRef].Length);
+            maxCount = Math.Max(maxCount,
+                (uint)tableStream.Tables[(int)TableKind.TypeDef].Length);
+            maxCount = Math.Max(maxCount,
+                (uint)tableStream.Tables[(int)TableKind.Param].Length);
+            maxCount = Math.Max(maxCount,
+                (uint)tableStream.Tables[(int)TableKind.InterfaceImpl].Length);
+            maxCount = Math.Max(maxCount,
+                (uint)tableStream.Tables[(int)TableKind.MemberRef].Length);
+            maxCount = Math.Max(maxCount,
+                (uint)tableStream.Tables[(int)TableKind.Module].Length);
+            //maxCount = Math.Max(maxCount,
+            //    (uint)tableStream.Tables[(int)TableKind.Permission].Length);
+            maxCount = Math.Max(maxCount,
+                (uint)tableStream.Tables[(int)TableKind.Property].Length);
+            maxCount = Math.Max(maxCount,
+                (uint)tableStream.Tables[(int)TableKind.Event].Length);
+            maxCount = Math.Max(maxCount,
+                (uint)tableStream.Tables[(int)TableKind.StandAloneSig].Length);
+            maxCount = Math.Max(maxCount,
+                (uint)tableStream.Tables[(int)TableKind.ModuleRef].Length);
+            maxCount = Math.Max(maxCount,
+                (uint)tableStream.Tables[(int)TableKind.TypeSpec].Length);
+            maxCount = Math.Max(maxCount,
+                (uint)tableStream.Tables[(int)TableKind.Assembly].Length);
+            maxCount = Math.Max(maxCount,
+                (uint)tableStream.Tables[(int)TableKind.AssemblyRef].Length);
+            maxCount = Math.Max(maxCount,
+                (uint)tableStream.Tables[(int)TableKind.File].Length);
+            maxCount = Math.Max(maxCount,
+                (uint)tableStream.Tables[(int)TableKind.ExportedType].Length);
+            maxCount = Math.Max(maxCount,
+                (uint)tableStream.Tables[(int)TableKind.ManifestResource].Length);
+            maxCount = Math.Max(maxCount,
+                (uint)tableStream.Tables[(int)TableKind.GenericParam].Length);
+            maxCount = Math.Max(maxCount,
+                (uint)tableStream.Tables[(int)TableKind.GenericParamConstraint].Length);
+            maxCount = Math.Max(maxCount,
+                (uint)tableStream.Tables[(int)TableKind.MethodSpec].Length);
+
+            return (HasCustomAttribute)ReadTableIndexByLengthAndExtraBitCount(maxCount, HasCustomAttribute.HighBitCount);
         }
 
         public TypeDefOrRef ReadTypeDefOrRef()
@@ -192,7 +251,7 @@ namespace Mi.PE.Cli
                     (uint)tableStream.Tables[(int)TableKind.TypeRef].Length),
                 (uint)tableStream.Tables[(int)TableKind.TypeSpec].Length);
 
-            return (TypeDefOrRef)ReadTableIndexByLength(maxCount);
+            return (TypeDefOrRef)ReadTableIndexByLengthAndExtraBitCount(maxCount, TypeDefOrRef.HighBitCount);
         }
 
         public MemberRefParent ReadMemberRefParent()
@@ -207,7 +266,7 @@ namespace Mi.PE.Cli
                     (uint)tableStream.Tables[(int)TableKind.MethodDef].Length,
                     (uint)tableStream.Tables[(int)TableKind.ModuleRef].Length));
 
-            return (MemberRefParent)ReadTableIndexByLength(maxCount);
+            return (MemberRefParent)ReadTableIndexByLengthAndMask(maxCount);
         }
 
         public CustomAttributeType ReadCustomAttributeType()
@@ -216,7 +275,7 @@ namespace Mi.PE.Cli
                 (uint)tableStream.Tables[(int)TableKind.MethodDef].Length,
                 (uint)tableStream.Tables[(int)TableKind.ModuleRef].Length);
 
-            return (CustomAttributeType)ReadTableIndexByLength(maxCount);
+            return (CustomAttributeType)ReadTableIndexByLengthAndMask(maxCount);
         }
 
         public HasFieldMarshal ReadHasFieldMarshal()
@@ -225,7 +284,7 @@ namespace Mi.PE.Cli
                 (uint)tableStream.Tables[(int)TableKind.Field].Length,
                 (uint)tableStream.Tables[(int)TableKind.Param].Length);
 
-            return (HasFieldMarshal)ReadTableIndexByLength(maxCount);
+            return (HasFieldMarshal)ReadTableIndexByLengthAndMask(maxCount);
         }
 
         public HasDeclSecurity ReadHasDeclSecurity()
@@ -236,7 +295,7 @@ namespace Mi.PE.Cli
                     (uint)tableStream.Tables[(int)TableKind.MethodDef].Length),
                 (uint)tableStream.Tables[(int)TableKind.AssemblyOS].Length);
 
-            return (HasDeclSecurity)ReadTableIndexByLength(maxCount);
+            return (HasDeclSecurity)ReadTableIndexByLengthAndMask(maxCount);
         }
 
         public HasSemantics ReadHasSemantics()
@@ -245,7 +304,7 @@ namespace Mi.PE.Cli
                 (uint)tableStream.Tables[(int)TableKind.Event].Length,
                 (uint)tableStream.Tables[(int)TableKind.Property].Length);
 
-            return (HasSemantics)ReadTableIndexByLength(maxCount);
+            return (HasSemantics)ReadTableIndexByLengthAndMask(maxCount);
         }
 
         public MethodDefOrRef ReadMethodDefOrRef()
@@ -254,7 +313,7 @@ namespace Mi.PE.Cli
                 (uint)tableStream.Tables[(int)TableKind.MethodDef].Length,
                 (uint)tableStream.Tables[(int)TableKind.MemberRef].Length);
 
-            return (MethodDefOrRef)ReadTableIndexByLength(maxCount);
+            return (MethodDefOrRef)ReadTableIndexByLengthAndMask(maxCount);
         }
 
         public MemberForwarded ReadMemberForwarded()
@@ -263,7 +322,7 @@ namespace Mi.PE.Cli
                 (uint)tableStream.Tables[(int)TableKind.Field].Length,
                 (uint)tableStream.Tables[(int)TableKind.MethodDef].Length);
 
-            return (MemberForwarded)ReadTableIndexByLength(maxCount);
+            return (MemberForwarded)ReadTableIndexByLengthAndMask(maxCount);
         }
 
         public Implementation ReadImplementation()
@@ -274,7 +333,7 @@ namespace Mi.PE.Cli
                     (uint)tableStream.Tables[(int)TableKind.AssemblyRef].Length),
                 (uint)tableStream.Tables[(int)TableKind.ExportedType].Length);
 
-            return (Implementation)ReadTableIndexByLength(maxCount);
+            return (Implementation)ReadTableIndexByLengthAndMask(maxCount);
         }
 
         public TypeOrMethodDef ReadTypeOrMethodDef()
@@ -283,12 +342,12 @@ namespace Mi.PE.Cli
                 (uint)tableStream.Tables[(int)TableKind.TypeDef].Length,
                 (uint)tableStream.Tables[(int)TableKind.MethodDef].Length);
 
-            return (TypeOrMethodDef)ReadTableIndexByLength(maxCount);
+            return (TypeOrMethodDef)ReadTableIndexByLengthAndMask(maxCount);
         }
 
         public uint ReadTableIndex(TableKind table)
         {
-            return ReadTableIndexByLength((uint)this.tableStream.Tables[(int)table].Length);
+            return ReadTableIndexByLengthAndMask((uint)this.tableStream.Tables[(int)table].Length);
         }
     }
 }
