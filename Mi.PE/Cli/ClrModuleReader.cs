@@ -186,9 +186,9 @@ namespace Mi.PE.Cli
         {
             uint maxCount = Math.Max(
                 Math.Max(
-                    (uint)tableStream.Tables[(int)TableKind.TypeDef].Length,
-                    (uint)tableStream.Tables[(int)TableKind.TypeRef].Length),
-                (uint)tableStream.Tables[(int)TableKind.TypeSpec].Length);
+                    (uint)tableStream.Tables[(int)TableKind.Field].Length,
+                    (uint)tableStream.Tables[(int)TableKind.Param].Length),
+                (uint)tableStream.Tables[(int)TableKind.Property].Length);
 
             return (HasConstant)ReadTableIndexByLengthAndExtraBitCount(maxCount, HasConstant.HighBitCount);
         }
