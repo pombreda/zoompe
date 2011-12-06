@@ -13,10 +13,10 @@ namespace Mi.PE.Cli.Tables
             Property = 2
         }
 
-        const int BitCount = 2;
+        public const int HighBitCount = 2;
         
-        const uint WideKindMask = uint.MaxValue << BitCount;
-        const ushort NarrowKindMask = unchecked((ushort)(ushort.MaxValue << BitCount));
+        const uint WideKindMask = uint.MaxValue << HighBitCount;
+        const ushort NarrowKindMask = unchecked((ushort)(ushort.MaxValue << HighBitCount));
 
         readonly uint value;
 
@@ -25,7 +25,7 @@ namespace Mi.PE.Cli.Tables
             this.value = value;
         }
 
-        public TableKind Kind { get { return (TableKind)(value >> (32 - BitCount)); } }
+        public TableKind Kind { get { return (TableKind)(value >> (32 - HighBitCount)); } }
         public uint Index { get { return value & ~WideKindMask; } }
 
         public static explicit operator HasConstant(uint value)

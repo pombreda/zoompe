@@ -13,7 +13,7 @@ namespace Mi.PE.Cli.Tables
             ExportedType = 2
         }
 
-        const int HighBitCount = 2;
+        public const int HighBitCount = 2;
 
         const uint WideKindMask = uint.MaxValue << HighBitCount;
         const ushort NarrowKindMask = unchecked((ushort)(ushort.MaxValue << HighBitCount));

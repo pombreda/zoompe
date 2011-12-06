@@ -15,7 +15,7 @@ namespace Mi.PE.Cli.Tables
             TypeSpec = 4
         }
 
-        const int HighBitCount = 3;
+        public const int HighBitCount = 3;
 
         const uint WideKindMask = uint.MaxValue << HighBitCount;
         const ushort NarrowKindMask = unchecked((ushort)(ushort.MaxValue << HighBitCount));

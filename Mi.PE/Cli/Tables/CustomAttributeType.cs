@@ -15,7 +15,7 @@ namespace Mi.PE.Cli.Tables
             Not_used_4 = 4
         }
 
-        const int HighBitCount = 3;
+        public const int HighBitCount = 3;
 
         const uint WideKindMask = uint.MaxValue << HighBitCount;
         const ushort NarrowKindMask = unchecked((ushort)(ushort.MaxValue << HighBitCount));
