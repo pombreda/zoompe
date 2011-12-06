@@ -7,6 +7,8 @@ namespace Mi.PE.Cli.Tables
 {
     public enum TableKind
     {
+        /// <summary> ECMA-335 §22.2. </summary>
+        Assembly = 0x20,
         /// <summary> ECMA-335 §22.4 Shall be ignored by the CLI. </summary>
         AssemblyProcessor = 0x21,
         /// <summary> ECMA-335 §22.3 Shall be ignored by the CLI. </summary>
