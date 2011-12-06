@@ -181,8 +181,8 @@ namespace Mi.PE.Cli
                 (uint)tableStream.Tables[(int)TableKind.MemberRef].Length);
             maxCount = Math.Max(maxCount,
                 (uint)tableStream.Tables[(int)TableKind.Module].Length);
-            maxCount = Math.Max(maxCount,
-                (uint)tableStream.Tables[(int)TableKind.Permission].Length);
+            //maxCount = Math.Max(maxCount,
+            //    (uint)tableStream.Tables[(int)TableKind.Permission].Length);
             maxCount = Math.Max(maxCount,
                 (uint)tableStream.Tables[(int)TableKind.Property].Length);
             maxCount = Math.Max(maxCount,
