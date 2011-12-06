@@ -152,36 +152,6 @@ namespace Mi.PE.Cli
             return new Version(major, minor, buildNumber, revisionNumber);
         }
 
-        static void ReadGuids(BinaryStreamReader reader, Guid[] guids)
-        {
-            byte[] buf = new byte[128];
-            for (int i = 0; i < guids.Length; i++)
-            {
-                reader.ReadBytes(buf, 0, buf.Length);
-                guids[i] = new Guid(buf);
-            }
-        }
-
-        void ReadTableStream()
-        {
-            tableStream = new TableStream();
-            tableStream.Read(this);
-        }
-
-        uint ReadTableIndexByLengthAndExtraBitCount(uint length, int extraBitCount)
-        {
-            ushort mask = (ushort)(ushort.MaxValue >> extraBitCount);
-
-            if ((length & ~mask) == 0)
-            {
-                return this.Binary.ReadUInt16();
-            }
-            else
-            {
-                return this.Binary.ReadUInt32();
-            }
-        }
-
         public HasConstant ReadHasConstant()
         {
             uint maxCount = Math.Max(
@@ -211,8 +181,8 @@ namespace Mi.PE.Cli
                 (uint)tableStream.Tables[(int)TableKind.MemberRef].Length);
             maxCount = Math.Max(maxCount,
                 (uint)tableStream.Tables[(int)TableKind.Module].Length);
-            //maxCount = Math.Max(maxCount,
-            //    (uint)tableStream.Tables[(int)TableKind.Permission].Length);
+            maxCount = Math.Max(maxCount,
+                (uint)tableStream.Tables[(int)TableKind.Permission].Length);
             maxCount = Math.Max(maxCount,
                 (uint)tableStream.Tables[(int)TableKind.Property].Length);
             maxCount = Math.Max(maxCount,
@@ -266,7 +236,7 @@ namespace Mi.PE.Cli
                     (uint)tableStream.Tables[(int)TableKind.MethodDef].Length,
                     (uint)tableStream.Tables[(int)TableKind.ModuleRef].Length));
 
-            return (MemberRefParent)ReadTableIndexByLengthAndMask(maxCount);
+            return (MemberRefParent)ReadTableIndexByLengthAndMask(maxCount, MemberRefParent.HighBitCount);
         }
 
         public CustomAttributeType ReadCustomAttributeType()
@@ -275,7 +245,7 @@ namespace Mi.PE.Cli
                 (uint)tableStream.Tables[(int)TableKind.MethodDef].Length,
                 (uint)tableStream.Tables[(int)TableKind.ModuleRef].Length);
 
-            return (CustomAttributeType)ReadTableIndexByLengthAndMask(maxCount);
+            return (CustomAttributeType)ReadTableIndexByLengthAndMask(maxCount, CustomAttributeType.HighBitCount);
         }
 
         public HasFieldMarshal ReadHasFieldMarshal()
@@ -348,6 +318,36 @@ namespace Mi.PE.Cli
         public uint ReadTableIndex(TableKind table)
         {
             return ReadTableIndexByLengthAndMask((uint)this.tableStream.Tables[(int)table].Length);
+        }
+
+        static void ReadGuids(BinaryStreamReader reader, Guid[] guids)
+        {
+            byte[] buf = new byte[128];
+            for (int i = 0; i < guids.Length; i++)
+            {
+                reader.ReadBytes(buf, 0, buf.Length);
+                guids[i] = new Guid(buf);
+            }
+        }
+
+        void ReadTableStream()
+        {
+            tableStream = new TableStream();
+            tableStream.Read(this);
+        }
+
+        uint ReadTableIndexByLengthAndExtraBitCount(uint length, int extraBitCount)
+        {
+            ushort mask = (ushort)(ushort.MaxValue >> extraBitCount);
+
+            if ((length & ~mask) == 0)
+            {
+                return this.Binary.ReadUInt16();
+            }
+            else
+            {
+                return this.Binary.ReadUInt32();
+            }
         }
     }
 }
