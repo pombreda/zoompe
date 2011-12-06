@@ -245,10 +245,5 @@ namespace Mi.PE.Internal
                 }
             }
         }
-
-        public ResolutionScope ReadResolutionScope()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

@@ -25,7 +25,7 @@ namespace Mi.PE.Cli.Tables
 
         public void Read(ClrModuleReader reader)
         {
-            this.ResolutionScope = reader.Binary.ReadResolutionScope();
+            this.ResolutionScope = reader.ReadResolutionScope();
             this.TypeName = reader.ReadString();
             this.TypeNamespace = reader.ReadString();
         }

@@ -13,10 +13,10 @@ namespace Mi.PE.Cli.Tables
             ExportedType = 2
         }
 
-        public const int HighBitCount = 2;
+        public const int LowBitCount = 2;
 
-        const uint WideKindMask = uint.MaxValue << HighBitCount;
-        const ushort NarrowKindMask = unchecked((ushort)(ushort.MaxValue << HighBitCount));
+        const uint WideKindMask = uint.MaxValue << LowBitCount;
+        const ushort NarrowKindMask = unchecked((ushort)(ushort.MaxValue << LowBitCount));
 
         readonly uint value;
 
@@ -25,37 +25,17 @@ namespace Mi.PE.Cli.Tables
             this.value = value;
         }
 
-        public TableKind Kind { get { return (TableKind)(value >> (32 - HighBitCount)); } }
-        public uint Index { get { return value & ~WideKindMask; } }
+        public TableKind Kind { get { return (TableKind)(value & (1U << LowBitCount)); } }
+        public uint Index { get { return (uint)(value >> LowBitCount); } }
 
         public static explicit operator Implementation(uint value)
         {
             return new Implementation(value);
         }
 
-        public static explicit operator Implementation(ushort value)
-        {
-            ushort high = (ushort)(value & NarrowKindMask);
-            ushort low = (ushort)(value & ~NarrowKindMask);
-
-            uint extended = (uint)((high << 16) | low);
-
-            return new Implementation(extended);
-        }
-
         public static explicit operator uint(Implementation value)
         {
             return value.value;
-        }
-
-        public static explicit operator ushort(Implementation value)
-        {
-            ushort high = (ushort)(value.value >> 16);
-            ushort low = (ushort)(value.value & ushort.MaxValue);
-
-            ushort compacted = (ushort)(high | low);
-
-            return compacted;
         }
     }
 }

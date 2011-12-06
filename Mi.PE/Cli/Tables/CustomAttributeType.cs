@@ -15,10 +15,10 @@ namespace Mi.PE.Cli.Tables
             Not_used_4 = 4
         }
 
-        public const int HighBitCount = 3;
+        public const int LowBitCount = 3;
 
-        const uint WideKindMask = uint.MaxValue << HighBitCount;
-        const ushort NarrowKindMask = unchecked((ushort)(ushort.MaxValue << HighBitCount));
+        const uint WideKindMask = uint.MaxValue << LowBitCount;
+        const ushort NarrowKindMask = unchecked((ushort)(ushort.MaxValue << LowBitCount));
 
         readonly uint value;
 
@@ -27,37 +27,17 @@ namespace Mi.PE.Cli.Tables
             this.value = value;
         }
 
-        public TableKind Kind { get { return (TableKind)(value >> (32 - HighBitCount)); } }
-        public uint Index { get { return value & ~WideKindMask; } }
+        public TableKind Kind { get { return (TableKind)(value & (1U << LowBitCount)); } }
+        public uint Index { get { return (uint)(value >> LowBitCount); } }
 
         public static explicit operator CustomAttributeType(uint value)
         {
             return new CustomAttributeType(value);
         }
 
-        public static explicit operator CustomAttributeType(ushort value)
-        {
-            ushort high = (ushort)(value & NarrowKindMask);
-            ushort low = (ushort)(value & ~NarrowKindMask);
-
-            uint extended = (uint)((high << 16) | low);
-
-            return new CustomAttributeType(extended);
-        }
-
         public static explicit operator uint(CustomAttributeType value)
         {
             return value.value;
-        }
-
-        public static explicit operator ushort(CustomAttributeType value)
-        {
-            ushort high = (ushort)(value.value >> 16);
-            ushort low = (ushort)(value.value & ushort.MaxValue);
-
-            ushort compacted = (ushort)(high | low);
-
-            return compacted;
         }
     }
 }
