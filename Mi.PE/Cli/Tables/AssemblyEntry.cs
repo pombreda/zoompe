@@ -6,6 +6,7 @@ namespace Mi.PE.Cli.Tables
 {
     /// <summary>
     /// The Assembly table shall contain zero or one row. [ERROR]
+    /// [ECMA-335 22.2]
     /// </summary>
     public struct AssemblyEntry
     {
