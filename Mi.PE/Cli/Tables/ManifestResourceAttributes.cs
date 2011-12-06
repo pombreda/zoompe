@@ -6,7 +6,7 @@ using System.Text;
 namespace Mi.PE.Cli.Tables
 {
     /// <summary>
-    /// [ECMA 23.1.9]
+    /// [ECMA-335 23.1.9]
     /// </summary>
     public enum ManifestResourceAttributes
     {

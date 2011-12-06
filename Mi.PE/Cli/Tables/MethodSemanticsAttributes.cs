@@ -5,7 +5,7 @@ using System.Linq;
 namespace Mi.PE.Cli.Tables
 {
     /// <summary>
-    /// [ECMA 23.1.12]
+    /// [ECMA-335 23.1.12]
     /// </summary>
     [Flags]
     public enum MethodSemanticsAttributes : ushort
@@ -27,19 +27,19 @@ namespace Mi.PE.Cli.Tables
 
         /// <summary>
         /// AddOn method for event.
-        /// This refers to the required add_ method for events.  (ECMA §22.13)
+        /// This refers to the required add_ method for events.  (ECMA-335 §22.13)
         /// </summary>
         AddOn = 0x0008,
         
         /// <summary>
         /// RemoveOn method for event.
-        /// This refers to the required remove_ method for events. (ECMA §22.13)
+        /// This refers to the required remove_ method for events. (ECMA-335 §22.13)
         /// </summary>
         RemoveOn = 0x0010,
 
         /// <summary>
         /// Fire method for event.
-        /// This refers to the optional raise_ method for events. (ECMA §22.13)
+        /// This refers to the optional raise_ method for events. (ECMA-335 §22.13)
         /// </summary>
         Fire = 0x0020
     }

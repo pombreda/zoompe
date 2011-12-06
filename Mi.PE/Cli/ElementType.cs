@@ -131,24 +131,24 @@ namespace Mi.PE.Cli
         ArgumentType_ = 0x10 | Modifier,
 
         /// <summary>
-        /// Used in custom attributes to specify a boxed object (ECMA §23.3).
+        /// Used in custom attributes to specify a boxed object (ECMA-335 §23.3).
         /// </summary>
         CustomAttribute_BoxedObject_ = 0x11 | Modifier,
 
         // Reserved_ = 0x12 | Modifier,
 
         /// <summary>
-        /// Used in custom attributes to indicate a FIELD (ECMA §22.10, 23.3).
+        /// Used in custom attributes to indicate a FIELD (ECMA-335 §22.10, 23.3).
         /// </summary>
         CustomAttribute_Field_ = 0x13 | Modifier,
 
         /// <summary>
-        /// Used in custom attributes to indicate a PROPERTY (ECMA §22.10, 23.3).
+        /// Used in custom attributes to indicate a PROPERTY (ECMA-335 §22.10, 23.3).
         /// </summary>
         CustomAttribute_Property_ = 0x14 | Modifier,
 
         /// <summary>
-        /// Used in custom attributes to specify an enum (ECMA §23.3).
+        /// Used in custom attributes to specify an enum (ECMA-335 §23.3).
         /// </summary>
         CustomAttribute_Enum_ = 0x55
     }

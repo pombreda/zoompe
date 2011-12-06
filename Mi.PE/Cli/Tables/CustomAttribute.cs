@@ -11,7 +11,7 @@ namespace Mi.PE.Cli.Tables
     /// it actually indexes a constructor method —
     /// the owner of that constructor method is the <see cref="Type"/> of the Custom Attribute.
     /// A row in the <see cref="CustomAttribute"/> table for a parent is created by the .custom attribute,
-    /// which gives the value of the <see cref="Type"/> column and optionally that of the <see cref="Value"/> column (ECMA §21).
+    /// which gives the value of the <see cref="Type"/> column and optionally that of the <see cref="Value"/> column (ECMA-335 §21).
     /// </summary>
     public sealed class CustomAttribute
     {

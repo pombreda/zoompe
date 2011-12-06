@@ -6,7 +6,7 @@ namespace Mi.PE.Cli.Tables
 {
     /// <summary>
     /// 
-    /// [ECMA 22.16]
+    /// [ECMA-335 22.16]
     /// </summary>
     /// <remarks>
     /// Note that each Field in any Type is defined by its Signature.
@@ -21,7 +21,7 @@ namespace Mi.PE.Cli.Tables
     /// so the size of the field is the size of that ValueType.
     /// Note that metadata specifying explicit structure layout can be valid for use on one platform but not on another, 
     /// since some of the rules specified here are dependent on platform-specific alignment rules.
-    /// A row in the <see cref="TableKind.FieldLayout"/> table is created if the .field directive for the parent field has specified a field offset (ECMA §16).
+    /// A row in the <see cref="TableKind.FieldLayout"/> table is created if the .field directive for the parent field has specified a field offset (ECMA-335 §16).
     /// </remarks>
     public struct FieldLayoutEntry
     {

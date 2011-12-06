@@ -12,7 +12,7 @@ namespace Mi.PE.Cli.Tables
     /// However, the owner of any row in the <see cref="TableKind.Field"/> table is not stored anywhere in the <see cref="TableKind.Field"/> table itself.
     /// There is merely a 'forward-pointer' from each row in the <see cref="TableKind.TypeDef"/> table
     /// (the <see cref="TypeDefEntry.FieldList"/> column).
-    /// [ECMA 22.15]
+    /// [ECMA-335 22.15]
     /// </remarks>
     public struct FieldEntry
     {

@@ -12,7 +12,7 @@ namespace Mi.PE.Cli.Tables
     /// (Such constraints are stored in the <see cref="TableKind.GenericParamConstraint"/> table.)
     /// Conceptually, each row in the <see cref="TableKind.GenericParam"/> table is owned by one, and only one, row
     /// in either the <see cref="TableKind.TypeDef"/> or <see cref="TableKind.MethodDef"/> tables.
-    /// [ECMA 22.20]
+    /// [ECMA-335 22.20]
     /// </summary>
     public struct GenericParamEntry
     {
@@ -22,14 +22,14 @@ namespace Mi.PE.Cli.Tables
         public ushort Number;
 
         /// <summary>
-        /// A 2-byte bitmask of type <see cref="GenericParamAttributes"/>, ECMA §23.1.7.
+        /// A 2-byte bitmask of type <see cref="GenericParamAttributes"/>, ECMA-335 §23.1.7.
         /// </summary>
         public GenericParamAttributes Flags;
 
         /// <summary>
         /// An index into the <see cref="TableKind.TypeDef"/> or <see cref="TableKind.MethodDef"/> table,
         /// specifying the Type or Method to which this generic parameter applies;
-        /// more precisely, a <see cref="TypeOrMethodDef"/> (ECMA §24.2.6) coded index.
+        /// more precisely, a <see cref="TypeOrMethodDef"/> (ECMA-335 §24.2.6) coded index.
         /// </summary>
         /// <remarks>
         /// The following additional restrictions apply:

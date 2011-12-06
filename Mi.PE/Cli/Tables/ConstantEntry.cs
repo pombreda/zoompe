@@ -10,8 +10,8 @@ namespace Mi.PE.Cli.Tables
     public struct ConstantEntry
     {
         /// <summary>
-        /// <see cref="Type"/> (a 1-byte constant, followed by a 1-byte padding zero); see ECMA §23.1.16.
-        /// The encoding of <see cref="Type"/> for the nullref value for FieldInit in ilasm (ECMA §16.2)
+        /// <see cref="Type"/> (a 1-byte constant, followed by a 1-byte padding zero); see ECMA-335 §23.1.16.
+        /// The encoding of <see cref="Type"/> for the nullref value for FieldInit in ilasm (ECMA-335 §16.2)
         /// is <see cref="ElementType.Class"/> with a Value of a 4-byte zero.
         /// Unlike uses of <see cref="ElementType.Class"/> in signatures, this one is not followed by a type token.
         /// </summary>
@@ -25,13 +25,13 @@ namespace Mi.PE.Cli.Tables
         /// <see cref="ElementType.I8"/>, <see cref="ElementType.U8"/>,
         /// <see cref="ElementType.R4"/>, <see cref="ElementType.R8"/>,
         /// or <see cref="ElementType.String"/>;
-        /// or <see cref="ElementType.Class"/> with a <see cref="ConstantEntry.Value"/> of zero (ECMA §23.1.16) [ERROR]
+        /// or <see cref="ElementType.Class"/> with a <see cref="ConstantEntry.Value"/> of zero (ECMA-335 §23.1.16) [ERROR]
         /// </remarks>
         public ElementType Type;
 
         /// <summary>
         /// <see cref="Parent"/> (an index into the <see cref="TableKind.Param"/>, <see cref="TableKind.Field"/>, or <see cref="TableKind.Property"/> table;
-        /// more precisely, a <see cref="HasConstant"/> (ECMA §24.2.6) coded index).
+        /// more precisely, a <see cref="HasConstant"/> (ECMA-335 §24.2.6) coded index).
         /// </summary>
         /// <remarks>
         /// <see cref="Parent"/> shall index a valid row in the <see cref="TableKind.Param"/>, <see cref="TableKind.Field"/>, or <see cref="TableKind.Property"/> table. [ERROR]

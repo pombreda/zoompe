@@ -27,15 +27,15 @@ namespace Mi.PE.Cli.Tables
     /// and that following the '.' is stored as the <see cref="TypeName"/>.
     /// If there is no '.' in the full name,
     /// then the <see cref="TypeNamespace"/> shall be the index of the empty string.
-    /// [ECMA 22.14]
+    /// [ECMA-335 22.14]
     /// </summary>
     /// <remarks>
-    /// The rows in the <see cref="TableKind."/> table are the result of the .class extern directive (ECMA §6.7).
+    /// The rows in the <see cref="TableKind."/> table are the result of the .class extern directive (ECMA-335 §6.7).
     /// </remarks>
     public struct ExportedTypeEntry
     {
         /// <summary>
-        /// A 4-byte bitmask of type <see cref="TypeAttributes"/>, ECMA §23.1.15.
+        /// A 4-byte bitmask of type <see cref="TypeAttributes"/>, ECMA-335 §23.1.15.
         /// </summary>
         public TypeAttributes Flags;
 
@@ -56,7 +56,7 @@ namespace Mi.PE.Cli.Tables
         public string TypeNamespace;
 
         /// <summary>
-        /// This is an index (more precisely, an <see cref="Implementation"/> (ECMA §24.2.6) coded index)
+        /// This is an index (more precisely, an <see cref="Implementation"/> (ECMA-335 §24.2.6) coded index)
         /// into either of the following tables:
         /// * <see cref="TableKind.File"/> table, where that entry says which module in the current assembly holds the <see cref="TableKind.TypeDef"/>;
         /// * <see cref="TableKind.ExportedType"/> table, where that entry is the enclosing Type of the current nested Type;

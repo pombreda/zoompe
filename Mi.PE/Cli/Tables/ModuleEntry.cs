@@ -6,12 +6,12 @@ using System.Text;
 namespace Mi.PE.Cli.Tables
 {
     /// <summary>
-    /// [ECMA 22.30]
+    /// [ECMA-335 22.30]
     /// </summary>
     /// <remarks>
     /// The Generation, EncId, and EncBaseId columns can be written as zero,
     /// and can be ignored by conforming implementations of the CLI.
-    /// The rows in the <see cref="TableKind.Module"/> table result from .module directives in the Assembly (ECMA §6.4).
+    /// The rows in the <see cref="TableKind.Module"/> table result from .module directives in the Assembly (ECMA-335 §6.4).
     /// </remarks>
     public struct ModuleEntry
     {
@@ -19,7 +19,7 @@ namespace Mi.PE.Cli.Tables
         public string Name;
 
         /// <summary>
-        /// The <see cref="Mvid"/> column shall index a unique GUID in the GUID heap (ECMA §24.2.5)
+        /// The <see cref="Mvid"/> column shall index a unique GUID in the GUID heap (ECMA-335 §24.2.5)
         /// that identifies this instance of the module.
         /// The <see cref="Mvid"/> can be ignored on read by conforming implementations of the CLI.
         /// The <see cref="Mvid"/> should be newly generated for every module,

@@ -5,7 +5,7 @@ using System.Linq;
 namespace Mi.PE.Cli.Tables
 {
     /// <summary>
-    /// [ECMA 22.24]
+    /// [ECMA-335 22.24]
     /// </summary>
     public struct ManifestResourceEntry
     {
@@ -18,7 +18,7 @@ namespace Mi.PE.Cli.Tables
         public uint Offset;
         
         /// <summary>
-        /// A 4-byte bitmask of type <see cref="ManifestResourceAttributes"/>, ECMA §23.1.9.
+        /// A 4-byte bitmask of type <see cref="ManifestResourceAttributes"/>, ECMA-335 §23.1.9.
         /// </summary>
         public ManifestResourceAttributes Flags; 
 
@@ -26,7 +26,7 @@ namespace Mi.PE.Cli.Tables
 
         /// <summary>
         /// An index into a <see cref="TableKind.File"/> table, a <see cref="TableKind.AssemblyRef"/> table, or  null;
-        /// more precisely, an <see cref="Implementation"/> (ECMA §24.2.6) coded index.
+        /// more precisely, an <see cref="Implementation"/> (ECMA-335 §24.2.6) coded index.
         /// <see cref="Implementation"/> specifies which file holds this resource.
         /// <see cref="Implementation"/> can be null or non-null (if null, it means the resource is stored in the current file).
         /// </summary>

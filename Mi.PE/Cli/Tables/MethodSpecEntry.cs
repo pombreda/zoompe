@@ -7,7 +7,7 @@ namespace Mi.PE.Cli.Tables
     /// <summary>
     /// One or more rows can refer to the same row in the <see cref="TableKind.MethodDef"/> or <see cref="TableKind.MemberRef"/> table.
     /// (There can be multiple instantiations of the same generic method.)
-    /// [ECMA 22.29]
+    /// [ECMA-335 22.29]
     /// </summary>
     public struct MethodSpecEntry
     {
@@ -15,7 +15,7 @@ namespace Mi.PE.Cli.Tables
         /// An index into the <see cref="TableKind.MethodDef"/> or <see cref="TableKind.MemberRef"/> table,
         /// specifying to which generic method this row refers;
         /// that is, which generic method this row is an instantiation of;
-        /// more precisely, a <see cref="MethodDefOrRef"/> (ECMA §24.2.6) coded index.
+        /// more precisely, a <see cref="MethodDefOrRef"/> (ECMA-335 §24.2.6) coded index.
         /// </summary>
         public MethodDefOrRef Method;
 

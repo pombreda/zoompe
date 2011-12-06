@@ -9,12 +9,12 @@ namespace Mi.PE.Cli.Tables
     /// (a given class has only one 'pointer' to the start of its event list). [ERROR]
     /// There shall be no duplicate rows, based upon <see cref="EventList"/>
     /// (different classes cannot share rows in the <see cref="TableKind.Event"/> table). [ERROR]
-    /// [ECMA 22.12]
+    /// [ECMA-335 22.12]
     /// </summary>
     /// <remarks>
     /// Note that <see cref="TableKind.EventMap"/> info does not directly influence runtime behavior;
     /// what counts is the information stored for each method that the event comprises.
-    /// The <see cref="TableKind.EventMap"/> and <see cref="TableKind.Event"/> tables result from putting the .event directive on a class (ECMA §18).
+    /// The <see cref="TableKind.EventMap"/> and <see cref="TableKind.Event"/> tables result from putting the .event directive on a class (ECMA-335 §18).
     /// </remarks>
     public struct EventMapEntry
     {

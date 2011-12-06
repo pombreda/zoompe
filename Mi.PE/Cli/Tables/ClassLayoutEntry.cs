@@ -12,8 +12,8 @@ namespace Mi.PE.Cli.Tables
     /// <remarks>
     /// The rows of the <see cref="ClassLayout"/> table are defined
     /// by placing .pack and .size directives on the body of the type declaration
-    /// in which this type is declared (ECMA §10.2).
-    /// When either of these directives is omitted, its corresponding value is zero.  (See ECMA §10.7.)
+    /// in which this type is declared (ECMA-335 §10.2).
+    /// When either of these directives is omitted, its corresponding value is zero.  (See ECMA-335 §10.7.)
     /// </remarks>
     public struct ClassLayoutEntry
     {
@@ -32,7 +32,7 @@ namespace Mi.PE.Cli.Tables
 
         /// <summary>
         /// <see cref="Parent"/> shall index a valid row in the TypeDef table, corresponding to a Class or ValueType (but not to an Interface). [ERROR]
-        /// The Class or ValueType indexed by <see cref="Parent"/> shall be SequentialLayout or ExplicitLayout (ECMA §23.1.15).
+        /// The Class or ValueType indexed by <see cref="Parent"/> shall be SequentialLayout or ExplicitLayout (ECMA-335 §23.1.15).
         /// (That is, AutoLayout types shall not own any rows in the ClassLayout table.) [ERROR]
         /// </summary>
         /// <remarks>

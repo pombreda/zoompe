@@ -37,7 +37,7 @@ namespace Mi.PE.Cli.Tables
 
         /// <summary>
         /// <see cref="Culture "/> can be null or non-null.
-        /// If <see cref="Culture"/> is non-null, it shall index a single string from the list specified (ECMA §23.1.3). [ERROR]
+        /// If <see cref="Culture"/> is non-null, it shall index a single string from the list specified (ECMA-335 §23.1.3). [ERROR]
         /// </summary>
         public string Culture;
 

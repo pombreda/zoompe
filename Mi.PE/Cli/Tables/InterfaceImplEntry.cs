@@ -10,7 +10,7 @@ namespace Mi.PE.Cli.Tables
     /// There should be no duplicates in the <see cref="TableKind.InterfaceImpl"/> table, based upon non-null <see cref="Class"/> and <see cref="Interface"/> values  [WARNING]
     /// There can be many rows with the same value for <see cref="Class"/> (since a class can implement many interfaces).
     /// There can be many rows with the same value for <see cref="Interface"/> (since many classes can implement the same interface).
-    /// [ECMA 22.23]
+    /// [ECMA-335 22.23]
     /// </summary>
     public struct InterfaceImplEntry
     {

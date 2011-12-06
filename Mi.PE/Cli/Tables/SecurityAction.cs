@@ -14,7 +14,7 @@ namespace Mi.PE.Cli.Tables
 
         /// <summary>
         /// Check that all callers in the call chain have been granted specified permission,
-        /// throw SecurityException (see ECMA Partition IV) on failure.
+        /// throw SecurityException (see ECMA-335 Partition IV) on failure.
         /// Valid scope: Method, Type.
         /// </summary>
         Demand = 2,
@@ -33,7 +33,7 @@ namespace Mi.PE.Cli.Tables
 
         /// <summary>
         /// Check that the immediate caller has been granted the specified permission;
-        /// throw SecurityException (see ECMA Partition IV) on failure.
+        /// throw SecurityException (see ECMA-335 Partition IV) on failure.
         /// Valid scope: Method, Type.
         /// </summary>
         LinkDemand = 6,

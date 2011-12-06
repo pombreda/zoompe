@@ -6,19 +6,19 @@ namespace Mi.PE.Cli.Tables
 {
     /// <summary>
     /// <see cref="TableKind.MethodImpl"/> tables let a compiler override the default inheritance rules provided by the CLI
-    /// [ECMA 22.27]
+    /// [ECMA-335 22.27]
     /// </summary>
     public struct MethodImplEntry
     {
         /// <summary>
         /// An index into the <see cref="TableKind.TypeDef"/> table.
-        /// ILAsm uses the .override directive to specify the rows of the <see cref="TableKind.MethodImpl"/> table (ECMA §10.3.2 and ECMA §15.4.1).
+        /// ILAsm uses the .override directive to specify the rows of the <see cref="TableKind.MethodImpl"/> table (ECMA-335 §10.3.2 and ECMA-335 §15.4.1).
         /// </summary>
         public uint Class;
 
         /// <summary>
         /// An index into the MethodDef or MemberRef table;
-        /// more precisely, a <see cref="MethodDefOrRef"/> (ECMA §24.2.6) coded index.
+        /// more precisely, a <see cref="MethodDefOrRef"/> (ECMA-335 §24.2.6) coded index.
         /// 
         /// The method indexed by <see cref="MethodBody"/> shall be virtual. [ERROR]
         /// 
@@ -29,7 +29,7 @@ namespace Mi.PE.Cli.Tables
 
         /// <summary>
         /// An index into the <see cref="TableKind.MethodDef"/> or <see cref="TableKind.MemberRef"/> table;
-        /// more precisely, a <see cref="MethodDefOrRef"/> (ECMA §24.2.6) coded index.
+        /// more precisely, a <see cref="MethodDefOrRef"/> (ECMA-335 §24.2.6) coded index.
         /// The method indexed by <see cref="MethodDeclaration"/> shall have Flags.Virtual set. [ERROR]
         /// </summary>
         public MethodDefOrRef MethodDeclaration;

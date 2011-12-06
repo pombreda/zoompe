@@ -17,8 +17,8 @@ namespace Mi.PE.Cli.Tables
     /// That row indexes the call-site signature for the function pointer operand of the calli instruction.
     /// * local variables – code generators create one row in the <see cref="TableKind.StandAloneSig"/> table for each method,
     /// to describe all of its local variables.
-    /// The .locals directive (ECMA §15.4.1) in ILAsm generates a row in the <see cref="TableKind.StandAloneSig"/> table.
-    /// [ECMA 22.36]
+    /// The .locals directive (ECMA-335 §15.4.1) in ILAsm generates a row in the <see cref="TableKind.StandAloneSig"/> table.
+    /// [ECMA-335 22.36]
     /// </summary>
     public struct StandAloneSigEntry
     {

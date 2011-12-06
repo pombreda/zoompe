@@ -5,12 +5,12 @@ using System.Linq;
 namespace Mi.PE.Cli.Tables
 {
     /// <summary>
-    /// [ECMA 22.19]
+    /// [ECMA-335 22.19]
     /// </summary>
     public struct FileEntry
     {
         /// <summary>
-        /// A 4-byte bitmask of type FileAttributes, ECMA §23.1.6.
+        /// A 4-byte bitmask of type FileAttributes, ECMA-335 §23.1.6.
         /// If this module contains a row in the <see cref="TableKind.Assembly"/> table
         /// (that is, if this module 'holds the manifest')
         /// then there shall not be any row in the <see cref="TableKind.File"/> table for this module; i.e., no self-reference. [ERROR]

@@ -5,11 +5,11 @@ using System.Linq;
 namespace Mi.PE.Cli.Tables
 {
     /// <summary>
-    /// [ECMA 22.28]
+    /// [ECMA-335 22.28]
     /// </summary>
     /// <remarks>
     /// The rows of the <see cref="TableKind.MethodSemantics"/> table are filled
-    /// by .property (ECMA §17) and .event directives (ECMA §18). (See ECMA §22.13 for more information.)
+    /// by .property (ECMA-335 §17) and .event directives (ECMA-335 §18). (See ECMA-335 §22.13 for more information.)
     /// 
     /// If this row is for an Event, and its <see cref="Semantics"/> is
     /// <see cref="MethodSemanticsAttributes.Addon"/>
@@ -25,7 +25,7 @@ namespace Mi.PE.Cli.Tables
     public struct MethodSemanticsEntry
     {
         /// <summary>
-        /// A 2-byte bitmask of type <see cref="MethodSemanticsAttributes"/>, ECMA §23.1.12.
+        /// A 2-byte bitmask of type <see cref="MethodSemanticsAttributes"/>, ECMA-335 §23.1.12.
         /// If this row is for a Property, then exactly one of
         /// <see cref="MethodSemanticsAttributes.Setter"/>, 
         /// <see cref="MethodSemanticsAttributes.Getter"/>,
@@ -47,7 +47,7 @@ namespace Mi.PE.Cli.Tables
 
         /// <summary>
         /// An index into the <see cref="TableKind.Event"/> or <see cref="TableKind.Property"/> table;
-        /// more precisely, a HasSemantics (ECMA §24.2.6) coded index.
+        /// more precisely, a HasSemantics (ECMA-335 §24.2.6) coded index.
         /// </summary>
         public HasSemantics Association;
 

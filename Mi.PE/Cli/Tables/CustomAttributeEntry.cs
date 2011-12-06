@@ -11,8 +11,8 @@ namespace Mi.PE.Cli.Tables
     /// it actually indexes a constructor method —
     /// the owner of that constructor method is the Type of the Custom Attribute.
     /// A row in the CustomAttribute table for a parent is created by the .custom attribute,
-    /// which gives the value of the Type column and optionally that of the <see cref="Value"/> column (ECMA §21).
-    /// [ECMA 22.10]
+    /// which gives the value of the Type column and optionally that of the <see cref="Value"/> column (ECMA-335 §21).
+    /// [ECMA-335 22.10]
     /// </summary>
     /// <remarks>
     /// All binary values are stored in little-endian format

@@ -17,7 +17,7 @@ namespace Mi.PE.Cli.Tables
         public Version Version;
 
         /// <summary>
-        /// <see cref="Flags"/> shall have only one bit set, the PublicKey bit (ECMA §23.1.2). All other bits shall be zero. [ERROR]
+        /// <see cref="Flags"/> shall have only one bit set, the PublicKey bit (ECMA-335 §23.1.2). All other bits shall be zero. [ERROR]
         /// </summary>
         public AssemblyFlags Flags;
 
@@ -35,7 +35,7 @@ namespace Mi.PE.Cli.Tables
 
         /// <summary>
         /// <see cref="Culture"/> can be null or non-null.
-        /// If non-null, it shall index a single string from the list specified (ECMA §23.1.3). [ERROR]
+        /// If non-null, it shall index a single string from the list specified (ECMA-335 §23.1.3). [ERROR]
         /// </summary>
         public string Culture;
 

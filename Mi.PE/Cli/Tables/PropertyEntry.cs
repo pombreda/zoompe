@@ -11,7 +11,7 @@ namespace Mi.PE.Cli.Tables
     /// already defined on the class, and inserted like any other methods into the <see cref="TableKind.MethodDef"/> table.
     /// Within the rows owned by a given row in the <see cref="TableKind.TypeDef"/> table,
     /// there shall be no duplicates based upon <see cref="Name"/>+<see cref="Type"/>. [ERROR]
-    /// [ECMA 22.34]
+    /// [ECMA-335 22.34]
     /// </summary>
     /// <remarks>
     /// Property tables do a little more than group together existing rows from other tables.
@@ -21,7 +21,7 @@ namespace Mi.PE.Cli.Tables
     public struct PropertyEntry
     {
         /// <summary>
-        /// A 2-byte bitmask of type <see cref="PropertyAttributes"/>, ECMA §23.1.14.
+        /// A 2-byte bitmask of type <see cref="PropertyAttributes"/>, ECMA-335 §23.1.14.
         /// </summary>
         public PropertyAttributes Flags;
 

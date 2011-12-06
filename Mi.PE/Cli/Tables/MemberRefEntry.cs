@@ -7,14 +7,14 @@ namespace Mi.PE.Cli.Tables
     /// <summary>
     /// The <see cref="TableKind.MemberRef"/> table combines two sorts of references, to Methods and to Fields of a class,
     /// known as 'MethodRef' and 'FieldRef', respectively.
-    /// [ECMA 22.25]
+    /// [ECMA-335 22.25]
     /// </summary>
     public struct MemberRefEntry
     {
         /// <summary>
         /// An index into the <see cref="TabeKind.MethodDef"/>, <see cref="TableKind.ModuleRef"/>,
         /// <see cref="TableKind.TypeDef"/>, <see cref="TableKind.TypeRef"/>, or <see cref="TableKind.TypeSpec"/> tables;
-        /// more precisely, a <see cref="MemberRefParent"/> (ECMA §24.2.6) coded index.
+        /// more precisely, a <see cref="MemberRefParent"/> (ECMA-335 §24.2.6) coded index.
         /// </summary>
         /// <remarks>
         /// An entry is made into the <see cref="TableKind.MemberRef"/> table
