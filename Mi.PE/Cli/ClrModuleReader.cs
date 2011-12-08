@@ -153,49 +153,6 @@ namespace Mi.PE.Cli
             return new Version(major, minor, buildNumber, revisionNumber);
         }
 
-        public MethodDefOrRef ReadMethodDefOrRef()
-        {
-            uint maxCount = Math.Max(
-                (uint)tableStream.Tables[(int)TableKind.MethodDef].Length,
-                (uint)tableStream.Tables[(int)TableKind.MemberRef].Length);
-
-            return (MethodDefOrRef)ReadTableIndexByLengthAndExtraBitCount(maxCount, MethodDefOrRef.LowBitCount);
-        }
-
-        public MemberForwarded ReadMemberForwarded()
-        {
-            uint maxCount = Math.Max(
-                (uint)tableStream.Tables[(int)TableKind.Field].Length,
-                (uint)tableStream.Tables[(int)TableKind.MethodDef].Length);
-
-            return (MemberForwarded)ReadTableIndexByLengthAndExtraBitCount(maxCount, MemberForwarded.LowBitCount);
-        }
-
-        public Implementation ReadImplementation()
-        {
-            uint maxCount = Math.Max(
-                Math.Max(
-                    (uint)tableStream.Tables[(int)TableKind.Field].Length,
-                    (uint)tableStream.Tables[(int)TableKind.AssemblyRef].Length),
-                (uint)tableStream.Tables[(int)TableKind.ExportedType].Length);
-
-            return (Implementation)ReadTableIndexByLengthAndExtraBitCount(maxCount, Implementation.LowBitCount);
-        }
-
-        public TypeOrMethodDef ReadTypeOrMethodDef()
-        {
-            uint maxCount = Math.Max(
-                (uint)tableStream.Tables[(int)TableKind.TypeDef].Length,
-                (uint)tableStream.Tables[(int)TableKind.MethodDef].Length);
-
-            return (TypeOrMethodDef)ReadTableIndexByLengthAndExtraBitCount(maxCount, TypeOrMethodDef.LowBitCount);
-        }
-
-        public ResolutionScope ReadResolutionScope()
-        {
-            throw new NotImplementedException();
-        }
-
         public uint ReadTableIndex(TableKind table)
         {
             ushort mask = ushort.MaxValue;
