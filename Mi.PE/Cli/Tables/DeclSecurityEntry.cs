@@ -4,10 +4,12 @@ using System.Linq;
 
 namespace Mi.PE.Cli.Tables
 {
+    using Mi.PE.Cli.CodedIndices;
+
     /// <summary>
     /// All security custom attributes for a given security action on a method, type, or assembly shall be gathered together,
     /// and one System.Security.PermissionSet instance shall be created, stored in the Blob heap, and referenced from the <see cref="TableKind.DeclSecurity"/> table.
-    /// [ECMA-335 22.11]
+    /// [ECMA-335 §22.11]
     /// </summary>
     /// <remarks>
     /// The general flow from a compiler‘s point of view is as follows.
@@ -30,14 +32,14 @@ namespace Mi.PE.Cli.Tables
         /// An index into the <see cref="TabeKind.TypeDef"/>, <see cref="TableKind.MethodDef"/>, or <see cref="TableKind.Assembly"/> table;
         /// more precisely, a <see cref="HasDeclSecurity"/> (ECMA-335 §24.2.6) coded index.
         /// </summary>
-        public HasDeclSecurity Parent;
+        public CodedIndex<HasDeclSecurity> Parent;
 
         public byte[] PermissionSet;
 
         public void Read(ClrModuleReader reader)
         {
             this.Action = (SecurityAction)reader.Binary.ReadUInt16();
-            this.Parent = reader.ReadHasDeclSecurity();
+            this.Parent = reader.ReadCodedIndex<HasDeclSecurity>();
             this.PermissionSet = reader.ReadBlob();
         }
     }

@@ -4,8 +4,11 @@ using System.Linq;
 
 namespace Mi.PE.Cli.Tables
 {
+    /// <summary>
+    /// [ECMA-335 §23.1.10]
+    /// </summary>
     [Flags]
-    public enum MethodAttributes
+    public enum MethodAttributes : ushort
     {
         /// <summary>
         /// These 3 bits contain one of the following values:

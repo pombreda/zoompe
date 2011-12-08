@@ -5,10 +5,6 @@ using System.Linq;
 namespace Mi.PE.Cli.Tables
 {
     /// <summary>
-    /// 
-    /// [ECMA-335 22.16]
-    /// </summary>
-    /// <remarks>
     /// Note that each Field in any Type is defined by its Signature.
     /// When a Type instance (i.e., an object) is laid out by the CLI, each Field is one of four kinds:
     /// * Scalar: for any member of built-in type, such as int32.
@@ -21,6 +17,9 @@ namespace Mi.PE.Cli.Tables
     /// so the size of the field is the size of that ValueType.
     /// Note that metadata specifying explicit structure layout can be valid for use on one platform but not on another, 
     /// since some of the rules specified here are dependent on platform-specific alignment rules.
+    /// [ECMA-335 §22.16]
+    /// </summary>
+    /// <remarks>
     /// A row in the <see cref="TableKind.FieldLayout"/> table is created if the .field directive for the parent field has specified a field offset (ECMA-335 §16).
     /// </remarks>
     public struct FieldLayoutEntry

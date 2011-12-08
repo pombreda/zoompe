@@ -37,8 +37,22 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cli\CodedIndices\CodedIndex.cs" />
+    <Compile Include="Cli\CodedIndices\ResolutionScope.cs" />
+    <Compile Include="Cli\CodedIndices\MemberForwarded.cs" />
+    <Compile Include="Cli\CodedIndices\TypeOrMethodDef.cs" />
+    <Compile Include="Cli\CodedIndices\Implementation.cs" />
+    <Compile Include="Cli\CodedIndices\MethodDefOrRef.cs" />
+    <Compile Include="Cli\CodedIndices\HasSemantics.cs" />
+    <Compile Include="Cli\CodedIndices\HasDeclSecurity.cs" />
+    <Compile Include="Cli\CodedIndices\HasFieldMarshal.cs" />
+    <Compile Include="Cli\CodedIndices\CustomAttributeType.cs" />
+    <Compile Include="Cli\CodedIndices\MemberRefParent.cs" />
+    <Compile Include="Cli\CodedIndices\TypeDefOrRef.cs" />
+    <Compile Include="Cli\CodedIndices\HasCustomAttribute.cs" />
+    <Compile Include="Cli\CodedIndices\HasConstant.cs" />
+    <Compile Include="Cli\CodedIndices\ICodedIndexDefinition.cs" />
     <Compile Include="Cli\Tables\CustomAttributeEntry.cs" />
-    <Compile Include="Cli\Tables\CustomAttributeType.cs" />
     <Compile Include="Cli\Tables\DeclSecurityEntry.cs" />
     <Compile Include="Cli\Tables\EventAttributes.cs" />
     <Compile Include="Cli\Tables\EventEntry.cs">
@@ -55,23 +69,14 @@
     <Compile Include="Cli\Tables\GenericParamAttributes.cs" />
     <Compile Include="Cli\Tables\GenericParamConstraintEntry.cs" />
     <Compile Include="Cli\Tables\GenericParamEntry.cs" />
-    <Compile Include="Cli\Tables\HasDeclSecurity.cs" />
-    <Compile Include="Cli\Tables\HasFieldMarshal.cs" />
-    <Compile Include="Cli\Tables\HasSemantics.cs" />
-    <Compile Include="Cli\Tables\Implementation.cs" />
     <Compile Include="Cli\Tables\ImplMapEntry.cs" />
     <Compile Include="Cli\Tables\InterfaceImplEntry.cs" />
     <Compile Include="Cli\Tables\FieldEntry.cs" />
     <Compile Include="Cli\Tables\ManifestResourceAttributes.cs" />
     <Compile Include="Cli\Tables\ManifestResourceEntry.cs" />
-    <Compile Include="Cli\Tables\MemberForwarded.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Cli\Tables\MemberRefEntry.cs" />
-    <Compile Include="Cli\Tables\MemberRefParent.cs" />
     <Compile Include="Cli\Tables\MethodAttributes.cs" />
     <Compile Include="Cli\Tables\MethodDefEntry.cs" />
-    <Compile Include="Cli\Tables\MethodDefOrRef.cs" />
     <Compile Include="Cli\Tables\MethodImplAttributes.cs" />
     <Compile Include="Cli\Tables\MethodImplEntry.cs" />
     <Compile Include="Cli\Tables\MethodSemanticsAttributes.cs" />
@@ -87,7 +92,6 @@
     <Compile Include="Cli\Tables\PropertyAttributes.cs" />
     <Compile Include="Cli\Tables\PropertyEntry.cs" />
     <Compile Include="Cli\Tables\PropertyMapEntry.cs" />
-    <Compile Include="Cli\Tables\ResolutionScope.cs" />
     <Compile Include="Cli\Tables\SecurityAction.cs" />
     <Compile Include="Cli\Tables\StandAloneSigEntry.cs" />
     <Compile Include="Cli\Tables\TableStream.cs" />
@@ -97,8 +101,6 @@
       <DependentUpon>TableStream.ReadAndInitializeRowCounts.tt</DependentUpon>
     </Compile>
     <Compile Include="Cli\Tables\TypeDefEntry.cs" />
-    <Compile Include="Cli\Tables\TypeDefOrRef.cs" />
-    <Compile Include="Cli\Tables\HasCustomAttribute.cs" />
     <Compile Include="Cli\ElementType.cs" />
     <Compile Include="Cli\Tables\AssemblyEntry.cs" />
     <Compile Include="Cli\AssemblyFlags.cs" />
@@ -117,10 +119,7 @@
     <Compile Include="Cli\Tables\AssemblyRefProcessorEntry.cs" />
     <Compile Include="Cli\Tables\ClassLayoutEntry.cs" />
     <Compile Include="Cli\Tables\ConstantEntry.cs" />
-    <Compile Include="Cli\Tables\HasConstant.cs" />
-    <Compile Include="Cli\Tables\CustomAttribute.cs" />
     <Compile Include="Cli\Tables\TableKind.cs" />
-    <Compile Include="Cli\Tables\TypeOrMethodDef.cs" />
     <Compile Include="Cli\Tables\TypeRefEntry.cs" />
     <Compile Include="Cli\Tables\TypeSpecEntry.cs" />
     <Compile Include="Internal\BinaryStreamReader.cs" />

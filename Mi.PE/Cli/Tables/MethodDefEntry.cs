@@ -12,7 +12,7 @@ namespace Mi.PE.Cli.Tables
     /// for the body of the method (ECMA-335 §25.4) 
     /// [Note: If Signature is GENERIC (0x10), the generic arguments are described in the GenericParam table (ECMA-335 §22.20). 
     /// end note]
-    /// [ECMA-335 22.26]
+    /// [ECMA-335 §22.26]
     /// </summary>
     public struct MethodDefEntry
     {

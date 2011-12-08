@@ -6,16 +6,17 @@ using System.Text;
 namespace Mi.PE.Cli.Tables
 {
     /// <summary>
-    /// [ECMA-335 22.30]
+    /// [ECMA-335 §22.30]
     /// </summary>
     /// <remarks>
-    /// The Generation, EncId, and EncBaseId columns can be written as zero,
+    /// The <see cref="Generation"/>, <see cref="EncId"/>, and <see cref="EncBaseId"/> columns can be written as zero,
     /// and can be ignored by conforming implementations of the CLI.
     /// The rows in the <see cref="TableKind.Module"/> table result from .module directives in the Assembly (ECMA-335 §6.4).
     /// </remarks>
     public struct ModuleEntry
     {
         public ushort Generation;
+
         public string Name;
 
         /// <summary>
@@ -35,6 +36,7 @@ namespace Mi.PE.Cli.Tables
         public Guid? Mvid;
 
         public Guid? EncId;
+        
         public Guid? EncBaseId;
 
         public void Read(ClrModuleReader reader)

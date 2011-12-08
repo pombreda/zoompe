@@ -4,6 +4,8 @@ using System.Linq;
 
 namespace Mi.PE.Cli.Tables
 {
+    using Mi.PE.Cli.CodedIndices;
+
     /// <summary>
     /// The <see cref="TableKind.ExportedType"/> table holds a row for each type:
     /// a. Defined within other modules of this Assembly; that is exported out of this Assembly.
@@ -27,7 +29,7 @@ namespace Mi.PE.Cli.Tables
     /// and that following the '.' is stored as the <see cref="TypeName"/>.
     /// If there is no '.' in the full name,
     /// then the <see cref="TypeNamespace"/> shall be the index of the empty string.
-    /// [ECMA-335 22.14]
+    /// [ECMA-335 §22.14]
     /// </summary>
     /// <remarks>
     /// The rows in the <see cref="TableKind."/> table are the result of the .class extern directive (ECMA-335 §6.7).
@@ -63,7 +65,7 @@ namespace Mi.PE.Cli.Tables
         /// * <see cref="TableKind.AssemblyRef"/> table, where that entry says in which assembly the type may now be found
         /// (<see cref="Flags"/> must have the <see cref="TypeAttributes.IsTypeForwarder"/> flag set).
         /// </summary>
-        public Implementation Implementation;
+        public CodedIndex<Implementation> Implementation;
 
         public void Read(ClrModuleReader reader)
         {
@@ -71,7 +73,7 @@ namespace Mi.PE.Cli.Tables
             this.TypeDefId = reader.Binary.ReadUInt32();
             this.TypeName = reader.ReadString();
             this.TypeNamespace = reader.ReadString();
-            this.Implementation = reader.ReadImplementation();
+            this.Implementation = reader.ReadCodedIndex<Implementation>();
         }
     }
 }

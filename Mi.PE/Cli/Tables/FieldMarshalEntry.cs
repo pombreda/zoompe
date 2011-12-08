@@ -4,13 +4,15 @@ using System.Linq;
 
 namespace Mi.PE.Cli.Tables
 {
+    using Mi.PE.Cli.CodedIndices;
+
     /// <summary>
     /// The <see cref="TabeKind.FieldMarshal"/> table has two columns.
     /// It 'links' an existing row in the <see cref="TableKind.Field"/> or <see cref="TabeKind.Param"/> table,
     /// to information in the Blob heap that defines how that field or parameter
     /// (which, as usual, covers the method return, as parameter number 0)
     /// shall be marshalled when calling to or from unmanaged code via PInvoke dispatch.
-    /// [ECMA-335 22.17]
+    /// [ECMA-335 §22.17]
     /// </summary>
     /// <remarks>
     /// Note that <see cref="TableKind.FieldMarshal"/> information is used only by code paths that arbitrate operation with unmanaged code.
@@ -24,7 +26,7 @@ namespace Mi.PE.Cli.Tables
         /// An index into <see cref="TableKind.Field"/> or <see cref="TableKind.Param"/> table;
         /// more precisely, a <see cref="HasFieldMarshal"/> (ECMA-335 §24.2.6) coded index.
         /// </summary>
-        public HasFieldMarshal Parent;
+        public CodedIndex<HasFieldMarshal> Parent;
 
         /// <summary>
         /// An index into the Blob heap.
@@ -34,7 +36,7 @@ namespace Mi.PE.Cli.Tables
 
         public void Read(ClrModuleReader reader)
         {
-            this.Parent = reader.ReadHasFieldMarshal();
+            this.Parent = reader.ReadCodedIndex<HasFieldMarshal>();
             this.NativeType = reader.ReadBlob();
         }
     }

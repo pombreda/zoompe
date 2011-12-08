@@ -4,13 +4,15 @@ using System.Linq;
 
 namespace Mi.PE.Cli.Tables
 {
+    using Mi.PE.Cli.CodedIndices;
+
     /// <summary>
     /// The first row of the TypeDef table represents the pseudo class that acts as parent for functions and variables defined at module scope.
-    /// [ECMA-335 22.38]
+    /// [ECMA-335 §22.38]
     /// </summary>
     public struct TypeRefEntry
     {
-        public ResolutionScope ResolutionScope;
+        public CodedIndex<ResolutionScope> ResolutionScope;
 
         /// <summary>
         /// Shall index a non-empty string  in the String heap. [ERROR]
@@ -25,7 +27,7 @@ namespace Mi.PE.Cli.Tables
 
         public void Read(ClrModuleReader reader)
         {
-            this.ResolutionScope = reader.ReadResolutionScope();
+            this.ResolutionScope = reader.ReadCodedIndex<ResolutionScope>();
             this.TypeName = reader.ReadString();
             this.TypeNamespace = reader.ReadString();
         }

@@ -5,7 +5,7 @@ using System.Linq;
 namespace Mi.PE.Cli.Tables
 {
     /// <summary>
-    /// [ECMA-335 23.1.7]
+    /// [ECMA-335 §23.1.7]
     /// </summary>
     [Flags]
     public enum GenericParamAttributes : ushort

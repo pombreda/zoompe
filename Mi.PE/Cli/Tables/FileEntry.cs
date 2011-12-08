@@ -5,7 +5,7 @@ using System.Linq;
 namespace Mi.PE.Cli.Tables
 {
     /// <summary>
-    /// [ECMA-335 22.19]
+    /// [ECMA-335 §22.19]
     /// </summary>
     public struct FileEntry
     {

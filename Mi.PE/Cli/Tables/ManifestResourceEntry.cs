@@ -4,9 +4,14 @@ using System.Linq;
 
 namespace Mi.PE.Cli.Tables
 {
+    using Mi.PE.Cli.CodedIndices;
+
     /// <summary>
-    /// [ECMA-335 22.24]
+    /// [ECMA-335 §22.24]
     /// </summary>
+    /// <remarks>
+    /// The rows in the table result from .mresource directives on the Assembly (ECMA-335 §6.2.2).
+    /// </remarks>
     public struct ManifestResourceEntry
     {
         /// <summary>
@@ -30,14 +35,14 @@ namespace Mi.PE.Cli.Tables
         /// <see cref="Implementation"/> specifies which file holds this resource.
         /// <see cref="Implementation"/> can be null or non-null (if null, it means the resource is stored in the current file).
         /// </summary>
-        public Implementation Implementation;
+        public CodedIndex<Implementation> Implementation;
 
         public void Read(ClrModuleReader reader)
         {
             this.Offset = reader.Binary.ReadUInt32();
             this.Flags = (ManifestResourceAttributes)reader.Binary.ReadUInt32();
             this.Name = reader.ReadString();
-            this.Implementation = reader.ReadImplementation();
+            this.Implementation = reader.ReadCodedIndex<Implementation>();
         }
     }
 }

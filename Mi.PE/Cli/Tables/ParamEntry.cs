@@ -8,7 +8,7 @@ namespace Mi.PE.Cli.Tables
     /// Conceptually, every row in the <see cref="TableKind.Param"/> table is owned by one, and only one, row in the <see cref="TableKind.MethodDef "/> table.
     /// The rows in the <see cref="TableKind.Param"/> table result from the parameters in a method declaration (ECMA-335 §15.4),
     /// or from a .param attribute attached to a method (ECMA-335 §15.4.1).
-    /// [ECMA-335 22.33]
+    /// [ECMA-335 §22.33]
     /// </summary>
     public struct ParamEntry
     {

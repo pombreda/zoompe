@@ -4,9 +4,11 @@ using System.Linq;
 
 namespace Mi.PE.Cli.Tables
 {
+    using Mi.PE.Cli.CodedIndices;
+
     /// <summary>
     /// <see cref="TableKind.MethodImpl"/> tables let a compiler override the default inheritance rules provided by the CLI
-    /// [ECMA-335 22.27]
+    /// [ECMA-335 §22.27]
     /// </summary>
     public struct MethodImplEntry
     {
@@ -25,7 +27,7 @@ namespace Mi.PE.Cli.Tables
         /// The method indexed by <see cref="MethodBody"/> shall have its Method.RVA != 0
         /// (cannot be an unmanaged method reached via PInvoke, for example). [ERROR]
         /// </summary>
-        public MethodDefOrRef MethodBody;
+        public CodedIndex<MethodDefOrRef> MethodBody;
 
         /// <summary>
         /// An index into the <see cref="TableKind.MethodDef"/> or <see cref="TableKind.MemberRef"/> table;
@@ -37,7 +39,7 @@ namespace Mi.PE.Cli.Tables
         public void Read(ClrModuleReader reader)
         {
             this.Class = reader.ReadTableIndex(TableKind.TypeDef);
-            this.MethodBody = reader.ReadMethodDefOrRef();
+            this.MethodBody = reader.ReadCodedIndex<MethodDefOrRef>();
             this.MethodDeclaration = reader.ReadMethodDefOrRef();
         }
     }

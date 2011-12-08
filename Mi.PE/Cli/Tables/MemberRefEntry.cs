@@ -4,10 +4,12 @@ using System.Linq;
 
 namespace Mi.PE.Cli.Tables
 {
+    using Mi.PE.Cli.CodedIndices;
+
     /// <summary>
     /// The <see cref="TableKind.MemberRef"/> table combines two sorts of references, to Methods and to Fields of a class,
     /// known as 'MethodRef' and 'FieldRef', respectively.
-    /// [ECMA-335 22.25]
+    /// [ECMA-335 §22.25]
     /// </summary>
     public struct MemberRefEntry
     {
@@ -22,7 +24,7 @@ namespace Mi.PE.Cli.Tables
         /// which is defined in another module or assembly.
         /// (Also, an entry is made for a call to a method with a VARARG signature, even when it is defined in the same module as the call site.)
         /// </remarks>
-        public MemberRefParent Class;
+        public CodedIndex<MemberRefParent> Class;
 
         public string Name;
 
@@ -30,7 +32,7 @@ namespace Mi.PE.Cli.Tables
 
         public void Read(ClrModuleReader reader)
         {
-            this.Class = reader.ReadMemberRefParent();
+            this.Class = reader.ReadCodedIndex<MemberRefParent>();
             this.Name = reader.ReadString();
             this.Signature = reader.ReadBlob();
         }

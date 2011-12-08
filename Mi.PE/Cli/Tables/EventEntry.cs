@@ -5,10 +5,12 @@ using System.Text;
 
 namespace Mi.PE.Cli.Tables
 {
+    using Mi.PE.Cli.CodedIndices;
+
     /// <summary>
     /// For each row, there shall be one add_ and one remove_ row in the <see cref="TableKind.MethodSemantics"/> table. [ERROR]
     /// For each row, there can be zero or one raise_ row, as well as zero or more other rows in the <see cref="TableKind.MethodSemantics"/> table. [ERROR]
-    /// [ECMA-335 22.13]
+    /// [ECMA-335 §22.13]
     /// </summary>
     /// <remarks>
     /// Events are treated within metadata much like Properties;
@@ -25,6 +27,9 @@ namespace Mi.PE.Cli.Tables
     /// </remarks>
     public struct EventEntry
     {
+        /// <summary>
+        /// A 2-byte bitmask of type EventAttributes, ECMA-335 §23.1.4.
+        /// </summary>
         public EventAttributes EventFlags;
 
         /// <summary>
@@ -39,12 +44,12 @@ namespace Mi.PE.Cli.Tables
         /// 
         /// <see cref="EventType"/> can be null or non-null.
         /// </summary>
-        public TypeDefOrRef EventType;
+        public CodedIndex<TypeDefOrRef> EventType;
 
         public void Read(ClrModuleReader reader)
         {
             this.Name = reader.ReadString();
-            this.EventType = reader.ReadTypeDefOrRef();
+            this.EventType = reader.ReadCodedIndex<TypeDefOrRef>();
         }
     }
 }

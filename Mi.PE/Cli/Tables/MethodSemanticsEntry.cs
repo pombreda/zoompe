@@ -4,8 +4,10 @@ using System.Linq;
 
 namespace Mi.PE.Cli.Tables
 {
+    using Mi.PE.Cli.CodedIndices;
+
     /// <summary>
-    /// [ECMA-335 22.28]
+    /// [ECMA-335 §22.28]
     /// </summary>
     /// <remarks>
     /// The rows of the <see cref="TableKind.MethodSemantics"/> table are filled
@@ -49,13 +51,13 @@ namespace Mi.PE.Cli.Tables
         /// An index into the <see cref="TableKind.Event"/> or <see cref="TableKind.Property"/> table;
         /// more precisely, a HasSemantics (ECMA-335 §24.2.6) coded index.
         /// </summary>
-        public HasSemantics Association;
+        public CodedIndex<HasSemantics> Association;
 
         public void Read(ClrModuleReader reader)
         {
             this.Semantics = (MethodSemanticsAttributes)reader.Binary.ReadUInt16();
             this.Method = reader.ReadTableIndex(TableKind.MethodDef);
-            this.Association = reader.ReadHasSemantics();
+            this.Association = reader.ReadCodedIndex<HasSemantics>();
         }
     }
 }

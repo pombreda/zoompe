@@ -4,10 +4,12 @@ using System.Linq;
 
 namespace Mi.PE.Cli.Tables
 {
+    using Mi.PE.Cli.CodedIndices;
+
     /// <summary>
     /// One or more rows can refer to the same row in the <see cref="TableKind.MethodDef"/> or <see cref="TableKind.MemberRef"/> table.
     /// (There can be multiple instantiations of the same generic method.)
-    /// [ECMA-335 22.29]
+    /// [ECMA-335 §22.29]
     /// </summary>
     public struct MethodSpecEntry
     {
@@ -17,7 +19,7 @@ namespace Mi.PE.Cli.Tables
         /// that is, which generic method this row is an instantiation of;
         /// more precisely, a <see cref="MethodDefOrRef"/> (ECMA-335 §24.2.6) coded index.
         /// </summary>
-        public MethodDefOrRef Method;
+        public CodedIndex<MethodDefOrRef> Method;
 
         /// <summary>
         /// The signature of this instantiation.
@@ -28,7 +30,7 @@ namespace Mi.PE.Cli.Tables
 
         public void Read(ClrModuleReader reader)
         {
-            this.Method = reader.ReadMethodDefOrRef();
+            this.Method = reader.ReadCodedIndex<MethodDefOrRef>();
             this.Instantiation = reader.ReadBlob();
         }
     }

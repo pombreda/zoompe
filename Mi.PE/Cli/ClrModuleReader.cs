@@ -4,6 +4,7 @@ using System.Linq;
 
 namespace Mi.PE.Cli
 {
+    using Mi.PE.Cli.CodedIndices;
     using Mi.PE.Cli.Tables;
     using Mi.PE.Internal;
     using Mi.PE.PEFormat;
@@ -152,131 +153,6 @@ namespace Mi.PE.Cli
             return new Version(major, minor, buildNumber, revisionNumber);
         }
 
-        public HasConstant ReadHasConstant()
-        {
-            uint maxCount = Math.Max(
-                Math.Max(
-                    (uint)tableStream.Tables[(int)TableKind.Field].Length,
-                    (uint)tableStream.Tables[(int)TableKind.Param].Length),
-                (uint)tableStream.Tables[(int)TableKind.Property].Length);
-
-            return (HasConstant)ReadTableIndexByLengthAndExtraBitCount(maxCount, HasConstant.LowBitCount);
-        }
-
-        public HasCustomAttribute ReadHasCustomAttribute()
-        {
-            uint maxCount =
-                (uint)tableStream.Tables[(int)TableKind.MethodDef].Length;
-            maxCount = Math.Max(maxCount,
-                (uint)tableStream.Tables[(int)TableKind.Field].Length);
-            maxCount = Math.Max(maxCount,
-                (uint)tableStream.Tables[(int)TableKind.TypeRef].Length);
-            maxCount = Math.Max(maxCount,
-                (uint)tableStream.Tables[(int)TableKind.TypeDef].Length);
-            maxCount = Math.Max(maxCount,
-                (uint)tableStream.Tables[(int)TableKind.Param].Length);
-            maxCount = Math.Max(maxCount,
-                (uint)tableStream.Tables[(int)TableKind.InterfaceImpl].Length);
-            maxCount = Math.Max(maxCount,
-                (uint)tableStream.Tables[(int)TableKind.MemberRef].Length);
-            maxCount = Math.Max(maxCount,
-                (uint)tableStream.Tables[(int)TableKind.Module].Length);
-            //maxCount = Math.Max(maxCount,
-            //    (uint)tableStream.Tables[(int)TableKind.Permission].Length);
-            maxCount = Math.Max(maxCount,
-                (uint)tableStream.Tables[(int)TableKind.Property].Length);
-            maxCount = Math.Max(maxCount,
-                (uint)tableStream.Tables[(int)TableKind.Event].Length);
-            maxCount = Math.Max(maxCount,
-                (uint)tableStream.Tables[(int)TableKind.StandAloneSig].Length);
-            maxCount = Math.Max(maxCount,
-                (uint)tableStream.Tables[(int)TableKind.ModuleRef].Length);
-            maxCount = Math.Max(maxCount,
-                (uint)tableStream.Tables[(int)TableKind.TypeSpec].Length);
-            maxCount = Math.Max(maxCount,
-                (uint)tableStream.Tables[(int)TableKind.Assembly].Length);
-            maxCount = Math.Max(maxCount,
-                (uint)tableStream.Tables[(int)TableKind.AssemblyRef].Length);
-            maxCount = Math.Max(maxCount,
-                (uint)tableStream.Tables[(int)TableKind.File].Length);
-            maxCount = Math.Max(maxCount,
-                (uint)tableStream.Tables[(int)TableKind.ExportedType].Length);
-            maxCount = Math.Max(maxCount,
-                (uint)tableStream.Tables[(int)TableKind.ManifestResource].Length);
-            maxCount = Math.Max(maxCount,
-                (uint)tableStream.Tables[(int)TableKind.GenericParam].Length);
-            maxCount = Math.Max(maxCount,
-                (uint)tableStream.Tables[(int)TableKind.GenericParamConstraint].Length);
-            maxCount = Math.Max(maxCount,
-                (uint)tableStream.Tables[(int)TableKind.MethodSpec].Length);
-
-            return (HasCustomAttribute)ReadTableIndexByLengthAndExtraBitCount(maxCount, HasCustomAttribute.LowBitCount);
-        }
-
-        public TypeDefOrRef ReadTypeDefOrRef()
-        {
-            uint maxCount = Math.Max(
-                Math.Max(
-                    (uint)tableStream.Tables[(int)TableKind.TypeDef].Length,
-                    (uint)tableStream.Tables[(int)TableKind.TypeRef].Length),
-                (uint)tableStream.Tables[(int)TableKind.TypeSpec].Length);
-
-            return (TypeDefOrRef)ReadTableIndexByLengthAndExtraBitCount(maxCount, TypeDefOrRef.LowBitCount);
-        }
-
-        public MemberRefParent ReadMemberRefParent()
-        {
-            uint maxCount = Math.Max(
-                Math.Max(
-                    Math.Max(
-                        (uint)tableStream.Tables[(int)TableKind.TypeDef].Length,
-                        (uint)tableStream.Tables[(int)TableKind.TypeRef].Length),
-                    (uint)tableStream.Tables[(int)TableKind.TypeSpec].Length),
-                Math.Max(
-                    (uint)tableStream.Tables[(int)TableKind.MethodDef].Length,
-                    (uint)tableStream.Tables[(int)TableKind.ModuleRef].Length));
-
-            return (MemberRefParent)ReadTableIndexByLengthAndExtraBitCount(maxCount, MemberRefParent.LowBitCount);
-        }
-
-        public CustomAttributeType ReadCustomAttributeType()
-        {
-            uint maxCount = Math.Max(
-                (uint)tableStream.Tables[(int)TableKind.MethodDef].Length,
-                (uint)tableStream.Tables[(int)TableKind.ModuleRef].Length);
-
-            return (CustomAttributeType)ReadTableIndexByLengthAndExtraBitCount(maxCount, CustomAttributeType.LowBitCount);
-        }
-
-        public HasFieldMarshal ReadHasFieldMarshal()
-        {
-            uint maxCount = Math.Max(
-                (uint)tableStream.Tables[(int)TableKind.Field].Length,
-                (uint)tableStream.Tables[(int)TableKind.Param].Length);
-
-            return (HasFieldMarshal)ReadTableIndexByLengthAndExtraBitCount(maxCount, HasFieldMarshal.LowBitCount);
-        }
-
-        public HasDeclSecurity ReadHasDeclSecurity()
-        {
-            uint maxCount = Math.Max(
-                Math.Max(
-                    (uint)tableStream.Tables[(int)TableKind.TypeDef].Length,
-                    (uint)tableStream.Tables[(int)TableKind.MethodDef].Length),
-                (uint)tableStream.Tables[(int)TableKind.AssemblyOS].Length);
-
-            return (HasDeclSecurity)ReadTableIndexByLengthAndExtraBitCount(maxCount, HasDeclSecurity.LowBitCount);
-        }
-
-        public HasSemantics ReadHasSemantics()
-        {
-            uint maxCount = Math.Max(
-                (uint)tableStream.Tables[(int)TableKind.Event].Length,
-                (uint)tableStream.Tables[(int)TableKind.Property].Length);
-
-            return (HasSemantics)ReadTableIndexByLengthAndExtraBitCount(maxCount, HasSemantics.LowBitCount);
-        }
-
         public MethodDefOrRef ReadMethodDefOrRef()
         {
             uint maxCount = Math.Max(
@@ -322,7 +198,33 @@ namespace Mi.PE.Cli
 
         public uint ReadTableIndex(TableKind table)
         {
-            return ReadTableIndexByLengthAndExtraBitCount((uint)this.tableStream.Tables[(int)table].Length, 0);
+            ushort mask = ushort.MaxValue;
+
+            int length = this.tableStream.Tables[(int)table].Length;
+
+            if ((length & ~mask) == 0)
+                return this.Binary.ReadUInt16();
+            else
+                return this.Binary.ReadUInt32();
+        }
+
+        public CodedIndex<TCodedIndexDefinition> ReadCodedIndex<TCodedIndexDefinition>()
+            where TCodedIndexDefinition : struct, ICodedIndexDefinition
+        {
+            var tables = default(TCodedIndexDefinition).Tables;
+
+            ushort mask = (ushort)(ushort.MaxValue >> tables.Length);
+
+            int length = 0;
+            foreach (var tab in tables)
+            {
+                length = Math.Max(length, this.tableStream.Tables[(int)tab].Length);
+            }
+
+            if ((length & ~mask) == 0)
+                return (CodedIndex<TCodedIndexDefinition>)(uint)this.Binary.ReadUInt16();
+            else
+                return (CodedIndex<TCodedIndexDefinition>)this.Binary.ReadUInt32();
         }
 
         static void ReadGuids(BinaryStreamReader reader, Guid[] guids)
@@ -339,20 +241,6 @@ namespace Mi.PE.Cli
         {
             tableStream = new TableStream();
             tableStream.Read(this);
-        }
-
-        uint ReadTableIndexByLengthAndExtraBitCount(uint length, int extraBitCount)
-        {
-            ushort mask = (ushort)(ushort.MaxValue >> extraBitCount);
-
-            if ((length & ~mask) == 0)
-            {
-                return this.Binary.ReadUInt16();
-            }
-            else
-            {
-                return this.Binary.ReadUInt32();
-            }
         }
     }
 }

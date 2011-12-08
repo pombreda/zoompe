@@ -6,7 +6,7 @@ namespace Mi.PE.Cli.Tables
 {
     /// <summary>
     /// The first row of the <see cref="TableKind.TypeDef"/> table represents the pseudo class that acts as parent for functions and variables defined at module scope.
-    /// [ECMA-335 22.37]
+    /// [ECMA-335 §22.37]
     /// </summary>
     public struct TypeDefEntry
     {

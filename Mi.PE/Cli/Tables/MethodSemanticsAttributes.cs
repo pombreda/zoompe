@@ -5,7 +5,7 @@ using System.Linq;
 namespace Mi.PE.Cli.Tables
 {
     /// <summary>
-    /// [ECMA-335 23.1.12]
+    /// [ECMA-335 §23.1.12]
     /// </summary>
     [Flags]
     public enum MethodSemanticsAttributes : ushort

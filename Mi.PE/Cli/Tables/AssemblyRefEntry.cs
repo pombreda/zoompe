@@ -8,6 +8,7 @@ namespace Mi.PE.Cli.Tables
     /// The AssemblyRef table shall contain no duplicates
     /// (where duplicate rows are deemd to be those having the same
     /// MajorVersion, MinorVersion, BuildNumber, RevisionNumber, PublicKeyOrToken, Name, and Culture). [WARNING]
+    /// [ECMA-335 §22.5]
     /// </summary>
     public struct AssemblyRefEntry
     {

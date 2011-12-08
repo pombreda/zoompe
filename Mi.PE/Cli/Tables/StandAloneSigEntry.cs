@@ -18,7 +18,7 @@ namespace Mi.PE.Cli.Tables
     /// * local variables – code generators create one row in the <see cref="TableKind.StandAloneSig"/> table for each method,
     /// to describe all of its local variables.
     /// The .locals directive (ECMA-335 §15.4.1) in ILAsm generates a row in the <see cref="TableKind.StandAloneSig"/> table.
-    /// [ECMA-335 22.36]
+    /// [ECMA-335 §22.36]
     /// </summary>
     public struct StandAloneSigEntry
     {

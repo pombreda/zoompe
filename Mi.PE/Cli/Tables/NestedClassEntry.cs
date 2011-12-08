@@ -5,7 +5,7 @@ using System.Linq;
 namespace Mi.PE.Cli.Tables
 {
     /// <summary>
-    /// [ECMA-335 22.32]
+    /// [ECMA-335 §22.32]
     /// </summary>
     public struct NestedClassEntry
     {

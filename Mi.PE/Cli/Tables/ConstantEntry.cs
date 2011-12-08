@@ -4,8 +4,11 @@ using System.Linq;
 
 namespace Mi.PE.Cli.Tables
 {
+    using Mi.PE.Cli.CodedIndices;
+
     /// <summary>
     /// The <see cref="Constant"/> table is used to store compile-time, constant values for fields, parameters, and properties.
+    /// [ECMA-335 §22.9]
     /// </summary>
     public struct ConstantEntry
     {
@@ -37,7 +40,7 @@ namespace Mi.PE.Cli.Tables
         /// <see cref="Parent"/> shall index a valid row in the <see cref="TableKind.Param"/>, <see cref="TableKind.Field"/>, or <see cref="TableKind.Property"/> table. [ERROR]
         /// There shall be no duplicate rows, based upon <see cref="Parent"/>[ERROR]
         /// </remarks>
-        public HasConstant Parent;
+        public CodedIndex<HasConstant> Parent;
         
         public byte[] Value;
 
@@ -45,7 +48,7 @@ namespace Mi.PE.Cli.Tables
         {
             this.Type = (ElementType)reader.Binary.ReadByte();
             byte padding = reader.Binary.ReadByte();
-            this.Parent = reader.ReadHasConstant();
+            this.Parent = reader.ReadCodedIndex<HasConstant>();
             this.Value = reader.ReadBlob();
         }
     }

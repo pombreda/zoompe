@@ -4,6 +4,8 @@ using System.Linq;
 
 namespace Mi.PE.Cli.Tables
 {
+    using Mi.PE.Cli.CodedIndices;
+
     /// <summary>
     /// The <see cref="TableKind.GenericParam"/> table stores the generic parameters used in generic type definitions and generic method definitions.
     /// These generic parameters can be constrained
@@ -12,7 +14,7 @@ namespace Mi.PE.Cli.Tables
     /// (Such constraints are stored in the <see cref="TableKind.GenericParamConstraint"/> table.)
     /// Conceptually, each row in the <see cref="TableKind.GenericParam"/> table is owned by one, and only one, row
     /// in either the <see cref="TableKind.TypeDef"/> or <see cref="TableKind.MethodDef"/> tables.
-    /// [ECMA-335 22.20]
+    /// [ECMA-335 §22.20]
     /// </summary>
     public struct GenericParamEntry
     {
@@ -36,10 +38,10 @@ namespace Mi.PE.Cli.Tables
         /// * <see cref="Owner"/> cannot be a non nested enumeration type; and
         /// * If <see cref="Owner"/> is a nested enumeration type then Number must be less than or equal
         /// to the number of generic parameters of the enclosing class.
-        /// Rationale: Generic enumeration types serve little purpose and usually only exist to meet CLR Rule 42.
+        /// Rationale: generic enumeration types serve little purpose and usually only exist to meet CLR Rule 42.
         /// These additional restrictions limit the genericty of enumeration types while allowing CLS Rule 42 to be met.
         /// </remarks>
-        public TypeOrMethodDef Owner;
+        public CodedIndex<TypeOrMethodDef> Owner;
 
         /// <summary>
         /// This is purely descriptive and is used only by source language compilers and by Reflection.
@@ -49,7 +51,7 @@ namespace Mi.PE.Cli.Tables
         public void Read(ClrModuleReader reader)
         {
             this.Number = reader.Binary.ReadUInt16();
-            this.Owner = reader.ReadTypeOrMethodDef();
+            this.Owner = reader.ReadCodedIndex<TypeOrMethodDef>();
             this.Name = reader.ReadString();
         }
     }

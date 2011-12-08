@@ -4,7 +4,11 @@ using System.Linq;
 
 namespace Mi.PE.Cli.Tables
 {
-    public enum EventAttributes
+    /// <summary>
+    /// [ECMA-335 §23.1.4]
+    /// </summary>
+    [Flags]
+    public enum EventAttributes : ushort
     {
         /// <summary>
         /// Event is special.

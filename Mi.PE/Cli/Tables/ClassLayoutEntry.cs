@@ -8,6 +8,7 @@ namespace Mi.PE.Cli.Tables
     /// The <see cref="ClassLayout"/> table is used to define how the fields of a class or value type shall be laid out by the CLI.
     /// (Normally, the CLI is free to reorder and/or insert gaps between the fields defined for a class or value type.)
     /// A <see cref="ClassLayout"/> table can contain zero or more rows.
+    /// [ECMA-335 §22.8]
     /// </summary>
     /// <remarks>
     /// The rows of the <see cref="ClassLayout"/> table are defined
