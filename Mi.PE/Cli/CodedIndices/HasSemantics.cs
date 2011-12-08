@@ -8,7 +8,7 @@ namespace Mi.PE.Cli.CodedIndices
 
     public struct HasSemantics : ICodedIndexDefinition
     {
-        public static TableKind[] Tables { get { return tables; } }
+        public TableKind[] Tables { get { return tables; } }
 
         static readonly TableKind[] tables = new[]
             {
