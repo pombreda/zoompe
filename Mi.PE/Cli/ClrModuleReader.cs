@@ -4,6 +4,7 @@ using System.Linq;
 
 namespace Mi.PE.Cli
 {
+    using System.Text;
     using Mi.PE.Cli.CodedIndices;
     using Mi.PE.Cli.Tables;
     using Mi.PE.Internal;
@@ -18,6 +19,9 @@ namespace Mi.PE.Cli
         TableStream tableStream;
         
         Guid[] guids;
+        byte[] blobHeap;
+        byte[] stringHeap;
+        readonly Dictionary<uint, string> stringHeapCache = new Dictionary<uint, string>();
 
         private ClrModuleReader(BinaryStreamReader binaryReader, ClrModule module)
         {
@@ -100,6 +104,8 @@ namespace Mi.PE.Cli
             }
 
             this.guids = null;
+            this.blobHeap = null;
+            this.stringHeap = null;
 
             StreamHeader tableStreamHeader = null;
             foreach (var sh in streamHeaders)
@@ -111,6 +117,17 @@ namespace Mi.PE.Cli
                     case "#GUID":
                         this.guids = new Guid[sh.Size / 128];
                         ReadGuids(this.Binary, this.guids);
+                        break;
+
+                    case "#Strings":
+                        this.stringHeap = ReadBinaryHeap(this.Binary, sh.Size);
+                        break;
+
+                    case "#US": // user strings
+                        break;
+
+                    case "#Blob":
+                        this.blobHeap = ReadBinaryHeap(this.Binary, sh.Size);
                         break;
 
                     case "#~":
@@ -131,12 +148,46 @@ namespace Mi.PE.Cli
 
         public string ReadString()
         {
-            throw new NotImplementedException();
+            uint pos;
+            if(this.stringHeap.Length>ushort.MaxValue)
+                pos = this.Binary.ReadUInt16();
+            else
+                pos = this.Binary.ReadUInt32();
+
+            string result;
+            if(pos == 0 )
+            {
+                result = null;
+            }
+            else if(!stringHeapCache.TryGetValue(pos, out result))
+            {
+                int length = 0;
+                while(pos + length < stringHeap.Length)
+                {
+                    if(stringHeap[length]==0)
+                        break;
+                    else
+                        length ++;
+                }
+
+                result = Encoding.UTF8.GetString(stringHeap, (int)pos, length);
+
+                stringHeapCache[pos] = result;
+            }
+
+            return result;
         }
 
         public Guid? ReadGuid()
         {
-            throw new NotImplementedException();
+            uint index;
+
+            if (this.guids.Length <= ushort.MaxValue)
+                index = this.Binary.ReadUInt16();
+            else
+                index = this.Binary.ReadUInt32();
+
+            return guids[index];
         }
 
         public byte[] ReadBlob()
@@ -192,6 +243,13 @@ namespace Mi.PE.Cli
                 reader.ReadBytes(buf, 0, buf.Length);
                 guids[i] = new Guid(buf);
             }
+        }
+
+        static byte[] ReadBinaryHeap(BinaryStreamReader reader, uint size)
+        {
+            byte[] heapBytes = new byte[size];
+            reader.ReadBytes(heapBytes, 0, (int)size);
+            return heapBytes;
         }
 
         void ReadTableStream()
