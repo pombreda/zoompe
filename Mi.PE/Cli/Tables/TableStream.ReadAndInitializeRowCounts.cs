@@ -11,96 +11,96 @@ namespace Mi.PE.Cli.Tables
         {
 			var tables = new Array[45];
 
-			if ((validMask & (1U << (int)TableKind.Module)) != 0)
-				tables[0] = new ModuleEntry[reader.ReadUInt32()];
-			if ((validMask & (1U << (int)TableKind.TypeRef)) != 0)
-				tables[1] = new TypeRefEntry[reader.ReadUInt32()];
-			if ((validMask & (1U << (int)TableKind.TypeDef)) != 0)
-				tables[2] = new TypeDefEntry[reader.ReadUInt32()];
-			if ((validMask & (1U << 0x03)) != 0)
+			if ((validMask & ((ulong)1 << (int)TableKind.Module)) != 0)
+				tables[(int)TableKind.Module] = new ModuleEntry[reader.ReadUInt32()];
+			if ((validMask & ((ulong)1 << (int)TableKind.TypeRef)) != 0)
+				tables[(int)TableKind.TypeRef] = new TypeRefEntry[reader.ReadUInt32()];
+			if ((validMask & ((ulong)1 << (int)TableKind.TypeDef)) != 0)
+				tables[(int)TableKind.TypeDef] = new TypeDefEntry[reader.ReadUInt32()];
+			if ((validMask & ((ulong)1 << 0x03)) != 0)
 				throw new BadImageFormatException("Non-standard metadata table 0x"+validMask.ToString("X2")+".");
-			if ((validMask & (1U << (int)TableKind.Field)) != 0)
-				tables[4] = new FieldEntry[reader.ReadUInt32()];
-			if ((validMask & (1U << 0x05)) != 0)
+			if ((validMask & ((ulong)1 << (int)TableKind.Field)) != 0)
+				tables[(int)TableKind.Field] = new FieldEntry[reader.ReadUInt32()];
+			if ((validMask & ((ulong)1 << 0x05)) != 0)
 				throw new BadImageFormatException("Non-standard metadata table 0x"+validMask.ToString("X2")+".");
-			if ((validMask & (1U << (int)TableKind.MethodDef)) != 0)
-				tables[6] = new MethodDefEntry[reader.ReadUInt32()];
-			if ((validMask & (1U << 0x07)) != 0)
+			if ((validMask & ((ulong)1 << (int)TableKind.MethodDef)) != 0)
+				tables[(int)TableKind.MethodDef] = new MethodDefEntry[reader.ReadUInt32()];
+			if ((validMask & ((ulong)1 << 0x07)) != 0)
 				throw new BadImageFormatException("Non-standard metadata table 0x"+validMask.ToString("X2")+".");
-			if ((validMask & (1U << (int)TableKind.Param)) != 0)
-				tables[8] = new ParamEntry[reader.ReadUInt32()];
-			if ((validMask & (1U << (int)TableKind.InterfaceImpl)) != 0)
-				tables[9] = new InterfaceImplEntry[reader.ReadUInt32()];
-			if ((validMask & (1U << (int)TableKind.MemberRef)) != 0)
-				tables[10] = new MemberRefEntry[reader.ReadUInt32()];
-			if ((validMask & (1U << (int)TableKind.Constant)) != 0)
-				tables[11] = new ConstantEntry[reader.ReadUInt32()];
-			if ((validMask & (1U << (int)TableKind.CustomAttribute)) != 0)
-				tables[12] = new CustomAttributeEntry[reader.ReadUInt32()];
-			if ((validMask & (1U << (int)TableKind.FieldMarshal)) != 0)
-				tables[13] = new FieldMarshalEntry[reader.ReadUInt32()];
-			if ((validMask & (1U << (int)TableKind.DeclSecurity)) != 0)
-				tables[14] = new DeclSecurityEntry[reader.ReadUInt32()];
-			if ((validMask & (1U << (int)TableKind.ClassLayout)) != 0)
-				tables[15] = new ClassLayoutEntry[reader.ReadUInt32()];
-			if ((validMask & (1U << (int)TableKind.FieldLayout)) != 0)
-				tables[16] = new FieldLayoutEntry[reader.ReadUInt32()];
-			if ((validMask & (1U << (int)TableKind.StandAloneSig)) != 0)
-				tables[17] = new StandAloneSigEntry[reader.ReadUInt32()];
-			if ((validMask & (1U << (int)TableKind.EventMap)) != 0)
-				tables[18] = new EventMapEntry[reader.ReadUInt32()];
-			if ((validMask & (1U << 0x13)) != 0)
+			if ((validMask & ((ulong)1 << (int)TableKind.Param)) != 0)
+				tables[(int)TableKind.Param] = new ParamEntry[reader.ReadUInt32()];
+			if ((validMask & ((ulong)1 << (int)TableKind.InterfaceImpl)) != 0)
+				tables[(int)TableKind.InterfaceImpl] = new InterfaceImplEntry[reader.ReadUInt32()];
+			if ((validMask & ((ulong)1 << (int)TableKind.MemberRef)) != 0)
+				tables[(int)TableKind.MemberRef] = new MemberRefEntry[reader.ReadUInt32()];
+			if ((validMask & ((ulong)1 << (int)TableKind.Constant)) != 0)
+				tables[(int)TableKind.Constant] = new ConstantEntry[reader.ReadUInt32()];
+			if ((validMask & ((ulong)1 << (int)TableKind.CustomAttribute)) != 0)
+				tables[(int)TableKind.CustomAttribute] = new CustomAttributeEntry[reader.ReadUInt32()];
+			if ((validMask & ((ulong)1 << (int)TableKind.FieldMarshal)) != 0)
+				tables[(int)TableKind.FieldMarshal] = new FieldMarshalEntry[reader.ReadUInt32()];
+			if ((validMask & ((ulong)1 << (int)TableKind.DeclSecurity)) != 0)
+				tables[(int)TableKind.DeclSecurity] = new DeclSecurityEntry[reader.ReadUInt32()];
+			if ((validMask & ((ulong)1 << (int)TableKind.ClassLayout)) != 0)
+				tables[(int)TableKind.ClassLayout] = new ClassLayoutEntry[reader.ReadUInt32()];
+			if ((validMask & ((ulong)1 << (int)TableKind.FieldLayout)) != 0)
+				tables[(int)TableKind.FieldLayout] = new FieldLayoutEntry[reader.ReadUInt32()];
+			if ((validMask & ((ulong)1 << (int)TableKind.StandAloneSig)) != 0)
+				tables[(int)TableKind.StandAloneSig] = new StandAloneSigEntry[reader.ReadUInt32()];
+			if ((validMask & ((ulong)1 << (int)TableKind.EventMap)) != 0)
+				tables[(int)TableKind.EventMap] = new EventMapEntry[reader.ReadUInt32()];
+			if ((validMask & ((ulong)1 << 0x13)) != 0)
 				throw new BadImageFormatException("Non-standard metadata table 0x"+validMask.ToString("X2")+".");
-			if ((validMask & (1U << (int)TableKind.Event)) != 0)
-				tables[20] = new EventEntry[reader.ReadUInt32()];
-			if ((validMask & (1U << (int)TableKind.PropertyMap)) != 0)
-				tables[21] = new PropertyMapEntry[reader.ReadUInt32()];
-			if ((validMask & (1U << 0x16)) != 0)
+			if ((validMask & ((ulong)1 << (int)TableKind.Event)) != 0)
+				tables[(int)TableKind.Event] = new EventEntry[reader.ReadUInt32()];
+			if ((validMask & ((ulong)1 << (int)TableKind.PropertyMap)) != 0)
+				tables[(int)TableKind.PropertyMap] = new PropertyMapEntry[reader.ReadUInt32()];
+			if ((validMask & ((ulong)1 << 0x16)) != 0)
 				throw new BadImageFormatException("Non-standard metadata table 0x"+validMask.ToString("X2")+".");
-			if ((validMask & (1U << (int)TableKind.Property)) != 0)
-				tables[23] = new PropertyEntry[reader.ReadUInt32()];
-			if ((validMask & (1U << (int)TableKind.MethodSemantics)) != 0)
-				tables[24] = new MethodSemanticsEntry[reader.ReadUInt32()];
-			if ((validMask & (1U << (int)TableKind.MethodImpl)) != 0)
-				tables[25] = new MethodImplEntry[reader.ReadUInt32()];
-			if ((validMask & (1U << (int)TableKind.ModuleRef)) != 0)
-				tables[26] = new ModuleRefEntry[reader.ReadUInt32()];
-			if ((validMask & (1U << (int)TableKind.TypeSpec)) != 0)
-				tables[27] = new TypeSpecEntry[reader.ReadUInt32()];
-			if ((validMask & (1U << (int)TableKind.ImplMap)) != 0)
-				tables[28] = new ImplMapEntry[reader.ReadUInt32()];
-			if ((validMask & (1U << (int)TableKind.FieldRVA)) != 0)
-				tables[29] = new FieldRVAEntry[reader.ReadUInt32()];
-			if ((validMask & (1U << 0x1E)) != 0)
+			if ((validMask & ((ulong)1 << (int)TableKind.Property)) != 0)
+				tables[(int)TableKind.Property] = new PropertyEntry[reader.ReadUInt32()];
+			if ((validMask & ((ulong)1 << (int)TableKind.MethodSemantics)) != 0)
+				tables[(int)TableKind.MethodSemantics] = new MethodSemanticsEntry[reader.ReadUInt32()];
+			if ((validMask & ((ulong)1 << (int)TableKind.MethodImpl)) != 0)
+				tables[(int)TableKind.MethodImpl] = new MethodImplEntry[reader.ReadUInt32()];
+			if ((validMask & ((ulong)1 << (int)TableKind.ModuleRef)) != 0)
+				tables[(int)TableKind.ModuleRef] = new ModuleRefEntry[reader.ReadUInt32()];
+			if ((validMask & ((ulong)1 << (int)TableKind.TypeSpec)) != 0)
+				tables[(int)TableKind.TypeSpec] = new TypeSpecEntry[reader.ReadUInt32()];
+			if ((validMask & ((ulong)1 << (int)TableKind.ImplMap)) != 0)
+				tables[(int)TableKind.ImplMap] = new ImplMapEntry[reader.ReadUInt32()];
+			if ((validMask & ((ulong)1 << (int)TableKind.FieldRVA)) != 0)
+				tables[(int)TableKind.FieldRVA] = new FieldRVAEntry[reader.ReadUInt32()];
+			if ((validMask & ((ulong)1 << 0x1E)) != 0)
 				throw new BadImageFormatException("Non-standard metadata table 0x"+validMask.ToString("X2")+".");
-			if ((validMask & (1U << 0x1F)) != 0)
+			if ((validMask & ((ulong)1 << 0x1F)) != 0)
 				throw new BadImageFormatException("Non-standard metadata table 0x"+validMask.ToString("X2")+".");
-			if ((validMask & (1U << 0x20)) != 0)
-				throw new BadImageFormatException("Non-standard metadata table 0x"+validMask.ToString("X2")+".");
-			if ((validMask & (1U << (int)TableKind.AssemblyProcessor)) != 0)
-				tables[33] = new AssemblyProcessorEntry[reader.ReadUInt32()];
-			if ((validMask & (1U << (int)TableKind.AssemblyOS)) != 0)
-				tables[34] = new AssemblyOSEntry[reader.ReadUInt32()];
-			if ((validMask & (1U << (int)TableKind.AssemblyRef)) != 0)
-				tables[35] = new AssemblyRefEntry[reader.ReadUInt32()];
-			if ((validMask & (1U << (int)TableKind.AssemblyRefProcessor)) != 0)
-				tables[36] = new AssemblyRefProcessorEntry[reader.ReadUInt32()];
-			if ((validMask & (1U << (int)TableKind.AssemblyRefOS)) != 0)
-				tables[37] = new AssemblyRefOSEntry[reader.ReadUInt32()];
-			if ((validMask & (1U << (int)TableKind.File)) != 0)
-				tables[38] = new FileEntry[reader.ReadUInt32()];
-			if ((validMask & (1U << (int)TableKind.ExportedType)) != 0)
-				tables[39] = new ExportedTypeEntry[reader.ReadUInt32()];
-			if ((validMask & (1U << (int)TableKind.ManifestResource)) != 0)
-				tables[40] = new ManifestResourceEntry[reader.ReadUInt32()];
-			if ((validMask & (1U << (int)TableKind.NestedClass)) != 0)
-				tables[41] = new NestedClassEntry[reader.ReadUInt32()];
-			if ((validMask & (1U << (int)TableKind.GenericParam)) != 0)
-				tables[42] = new GenericParamEntry[reader.ReadUInt32()];
-			if ((validMask & (1U << (int)TableKind.MethodSpec)) != 0)
-				tables[43] = new MethodSpecEntry[reader.ReadUInt32()];
-			if ((validMask & (1U << (int)TableKind.GenericParamConstraint)) != 0)
-				tables[44] = new GenericParamConstraintEntry[reader.ReadUInt32()];
+			if ((validMask & ((ulong)1 << (int)TableKind.Assembly)) != 0)
+				tables[(int)TableKind.Assembly] = new AssemblyEntry[reader.ReadUInt32()];
+			if ((validMask & ((ulong)1 << (int)TableKind.AssemblyProcessor)) != 0)
+				tables[(int)TableKind.AssemblyProcessor] = new AssemblyProcessorEntry[reader.ReadUInt32()];
+			if ((validMask & ((ulong)1 << (int)TableKind.AssemblyOS)) != 0)
+				tables[(int)TableKind.AssemblyOS] = new AssemblyOSEntry[reader.ReadUInt32()];
+			if ((validMask & ((ulong)1 << (int)TableKind.AssemblyRef)) != 0)
+				tables[(int)TableKind.AssemblyRef] = new AssemblyRefEntry[reader.ReadUInt32()];
+			if ((validMask & ((ulong)1 << (int)TableKind.AssemblyRefProcessor)) != 0)
+				tables[(int)TableKind.AssemblyRefProcessor] = new AssemblyRefProcessorEntry[reader.ReadUInt32()];
+			if ((validMask & ((ulong)1 << (int)TableKind.AssemblyRefOS)) != 0)
+				tables[(int)TableKind.AssemblyRefOS] = new AssemblyRefOSEntry[reader.ReadUInt32()];
+			if ((validMask & ((ulong)1 << (int)TableKind.File)) != 0)
+				tables[(int)TableKind.File] = new FileEntry[reader.ReadUInt32()];
+			if ((validMask & ((ulong)1 << (int)TableKind.ExportedType)) != 0)
+				tables[(int)TableKind.ExportedType] = new ExportedTypeEntry[reader.ReadUInt32()];
+			if ((validMask & ((ulong)1 << (int)TableKind.ManifestResource)) != 0)
+				tables[(int)TableKind.ManifestResource] = new ManifestResourceEntry[reader.ReadUInt32()];
+			if ((validMask & ((ulong)1 << (int)TableKind.NestedClass)) != 0)
+				tables[(int)TableKind.NestedClass] = new NestedClassEntry[reader.ReadUInt32()];
+			if ((validMask & ((ulong)1 << (int)TableKind.GenericParam)) != 0)
+				tables[(int)TableKind.GenericParam] = new GenericParamEntry[reader.ReadUInt32()];
+			if ((validMask & ((ulong)1 << (int)TableKind.MethodSpec)) != 0)
+				tables[(int)TableKind.MethodSpec] = new MethodSpecEntry[reader.ReadUInt32()];
+			if ((validMask & ((ulong)1 << (int)TableKind.GenericParamConstraint)) != 0)
+				tables[(int)TableKind.GenericParamConstraint] = new GenericParamConstraintEntry[reader.ReadUInt32()];
 
 			ulong trailingZeroesMask = ulong.MaxValue << 45;
 			if ((validMask & trailingZeroesMask) != 0)
@@ -333,6 +333,15 @@ namespace Mi.PE.Cli.Tables
 				for(int i = 0; i < fieldRVATable.Length; i++)
 				{
 					fieldRVATable[i].Read(reader);
+				}
+			}
+
+			var assemblyTable = (AssemblyEntry[])this.Tables[(int)TableKind.Assembly];
+			if (assemblyTable != null)
+			{
+				for(int i = 0; i < assemblyTable.Length; i++)
+				{
+					assemblyTable[i].Read(reader);
 				}
 			}
 

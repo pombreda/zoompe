@@ -40,7 +40,7 @@ null,
 "FieldRVA",
 null,
 null,
-null,
+"Assembly",
 "AssemblyProcessor",
 "AssemblyOS",
 "AssemblyRef",
@@ -75,13 +75,13 @@ namespace Mi.PE.Cli.Tables
 		string t = Tables[i];
 		if(string.IsNullOrEmpty(t))
 		{ #>
-			if ((validMask & (1U << 0x<#=i.ToString("X2")#>)) != 0)
+			if ((validMask & ((ulong)1 << 0x<#=i.ToString("X2")#>)) != 0)
 				throw new BadImageFormatException("Non-standard metadata table 0x"+validMask.ToString("X2")+".");
 <#	}
 		else
 		{ #>
-			if ((validMask & (1U << (int)TableKind.<#=t#>)) != 0)
-				tables[<#=i#>] = new <#=t#>Entry[reader.ReadUInt32()];
+			if ((validMask & ((ulong)1 << (int)TableKind.<#=t#>)) != 0)
+				tables[(int)TableKind.<#=t#>] = new <#=t#>Entry[reader.ReadUInt32()];
 <#	}
 	} #>
 
