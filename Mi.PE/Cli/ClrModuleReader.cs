@@ -115,7 +115,7 @@ namespace Mi.PE.Cli
                 switch (sh.Name)
                 {
                     case "#GUID":
-                        this.guids = new Guid[sh.Size / 128];
+                        this.guids = new Guid[sh.Size / 16];
                         ReadGuids(this.Binary, this.guids);
                         break;
 
@@ -237,7 +237,7 @@ namespace Mi.PE.Cli
 
         static void ReadGuids(BinaryStreamReader reader, Guid[] guids)
         {
-            byte[] buf = new byte[128];
+            byte[] buf = new byte[16];
             for (int i = 0; i < guids.Length; i++)
             {
                 reader.ReadBytes(buf, 0, buf.Length);
