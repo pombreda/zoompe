@@ -149,7 +149,7 @@ namespace Mi.PE.Cli
         public string ReadString()
         {
             uint pos;
-            if(this.stringHeap.Length>ushort.MaxValue)
+            if(this.stringHeap.Length<ushort.MaxValue)
                 pos = this.Binary.ReadUInt16();
             else
                 pos = this.Binary.ReadUInt32();
