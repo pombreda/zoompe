@@ -164,7 +164,7 @@ namespace Mi.PE.Cli
                 int length = 0;
                 while(pos + length < stringHeap.Length)
                 {
-                    if(stringHeap[length]==0)
+                    if(stringHeap[pos + length]==0)
                         break;
                     else
                         length ++;
@@ -187,7 +187,10 @@ namespace Mi.PE.Cli
             else
                 index = this.Binary.ReadUInt32();
 
-            return guids[index];
+            if (index == 0)
+                return null;
+
+            return guids[(index-1)/16];
         }
 
         public byte[] ReadBlob()
