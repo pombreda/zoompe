@@ -229,7 +229,9 @@ namespace Mi.PE.Cli
             int length = 0;
             foreach (var tab in tables)
             {
-                length = Math.Max(length, this.tableStream.Tables[(int)tab].Length);
+                var table = this.tableStream.Tables[(int)tab];
+                
+                length = Math.Max(length, table==null ? 0 : table.Length);
             }
 
             if ((length & ~mask) == 0)
