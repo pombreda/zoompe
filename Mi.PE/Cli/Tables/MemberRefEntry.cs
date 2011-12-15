@@ -34,7 +34,7 @@ namespace Mi.PE.Cli.Tables
         {
             this.Class = reader.ReadCodedIndex<MemberRefParent>();
             this.Name = reader.ReadString();
-            this.Signature = reader.ReadBlob();
+            this.Signature = reader.ReadBlobObsolete();
         }
     }
 }

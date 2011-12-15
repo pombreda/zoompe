@@ -23,10 +23,10 @@ namespace Mi.PE.Cli.Tables
         {
             this.Version = reader.ReadVersion();
             this.Flags = (AssemblyFlags)reader.Binary.ReadUInt32();
-            this.PublicKeyOrToken = reader.ReadBlob();
+            this.PublicKeyOrToken = reader.ReadBlobObsolete();
             this.Name = reader.ReadString();
             this.Culture = reader.ReadString();
-            this.HashValue = reader.ReadBlob();
+            this.HashValue = reader.ReadBlobObsolete();
         }
     }
 }

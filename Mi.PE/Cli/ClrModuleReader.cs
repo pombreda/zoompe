@@ -194,9 +194,36 @@ namespace Mi.PE.Cli
         }
 
         [Obsolete("Use ReadSignature instead, or report to the security if you want another sort of blob.", true)]
-        public byte[] ReadBlob()
+        public byte[] ReadBlobObsolete()
         {
             throw new NotImplementedException();
+        }
+
+        public byte[] ReadBlob()
+        {
+            uint length;
+
+            byte b0 = this.Binary.ReadByte();
+            if (b0 <= sbyte.MaxValue)
+            {
+                length = b0;
+            }
+            else if ((b0 & 0xC0) == sbyte.MaxValue + 1)
+            {
+                byte b2 = this.Binary.ReadByte();
+                length = unchecked((uint)(((b0 & 0x3F) << 8) | b2));
+            }
+            else
+            {
+                byte b2 = this.Binary.ReadByte();
+                byte b3 = this.Binary.ReadByte();
+                byte b4 = this.Binary.ReadByte();
+                length = unchecked((uint)(((b0 & 0x3F) << 24) + (b2 << 16) + (b3 << 8) + b4));
+            }
+
+            byte[] result = new byte[length];
+            this.Binary.ReadBytes(result, 0, result.Length);
+            return result;
         }
 
         public Signature ReadSignature()

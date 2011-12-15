@@ -22,7 +22,7 @@ namespace Mi.PE.Cli.Tables
 
         public void Read(ClrModuleReader reader)
         {
-            this.Signature = reader.ReadBlob();
+            this.Signature = reader.ReadBlobObsolete();
         }
     }
 }

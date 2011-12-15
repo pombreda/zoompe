@@ -52,6 +52,8 @@
     <Compile Include="Cli\CodedIndices\HasCustomAttribute.cs" />
     <Compile Include="Cli\CodedIndices\HasConstant.cs" />
     <Compile Include="Cli\CodedIndices\ICodedIndexDefinition.cs" />
+    <Compile Include="Cli\CustomAttributeData.cs" />
+    <Compile Include="Cli\MarshalSpec.cs" />
     <Compile Include="Cli\Signature.cs" />
     <Compile Include="Cli\Tables\CustomAttributeEntry.cs" />
     <Compile Include="Cli\Tables\DeclSecurityEntry.cs" />

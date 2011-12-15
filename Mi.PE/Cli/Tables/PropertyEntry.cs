@@ -47,7 +47,7 @@ namespace Mi.PE.Cli.Tables
         {
             this.Flags = (PropertyAttributes)reader.Binary.ReadUInt16();
             this.Name = reader.ReadString();
-            this.Type = reader.ReadBlob();
+            this.Type = reader.ReadBlobObsolete();
         }
     }
 }

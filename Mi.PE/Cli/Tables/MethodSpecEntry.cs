@@ -31,7 +31,7 @@ namespace Mi.PE.Cli.Tables
         public void Read(ClrModuleReader reader)
         {
             this.Method = reader.ReadCodedIndex<MethodDefOrRef>();
-            this.Instantiation = reader.ReadBlob();
+            this.Instantiation = reader.ReadBlobObsolete();
         }
     }
 }

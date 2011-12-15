@@ -32,12 +32,12 @@ namespace Mi.PE.Cli.Tables
         /// An index into the Blob heap.
         /// For the detailed format of the 'blob', see ECMA-335 §23.4.
         /// </summary>
-        public byte[] NativeType;
+        public MarshalSpec NativeType;
 
         public void Read(ClrModuleReader reader)
         {
             this.Parent = reader.ReadCodedIndex<HasFieldMarshal>();
-            this.NativeType = reader.ReadBlob();
+            this.NativeType = new MarshalSpec(reader.ReadBlob());
         }
     }
 }

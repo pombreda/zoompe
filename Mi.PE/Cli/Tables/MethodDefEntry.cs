@@ -29,7 +29,7 @@ namespace Mi.PE.Cli.Tables
             this.ImplFlags = (MethodImplAttributes)reader.Binary.ReadUInt16();
             this.Flags = (MethodAttributes)reader.Binary.ReadUInt16();
             this.Name = reader.ReadString();
-            this.Signature = reader.ReadBlob();
+            this.Signature = reader.ReadBlobObsolete();
             this.ParamList = reader.ReadTableIndex(TableKind.Param);
         }
     }

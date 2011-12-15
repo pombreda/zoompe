@@ -34,13 +34,13 @@ namespace Mi.PE.Cli.Tables
         /// </summary>
         public CodedIndex<CustomAttributeType> Type;
 
-        public byte[] Value;
+        public CustomAttributeData Value;
 
         public void Read(ClrModuleReader reader)
         {
             this.Parent = reader.ReadCodedIndex<HasCustomAttribute>();
             this.Type = reader.ReadCodedIndex<CustomAttributeType>();
-            this.Value = reader.ReadBlob();
+            this.Value = new CustomAttributeData(reader.ReadBlob());
         }
     }
 }
