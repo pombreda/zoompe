@@ -19,7 +19,7 @@ namespace Mi.PE.Cli.CodedIndices
             this.value = value;
         }
 
-        public TableKind TableKind { get { return (TableKind)(value & (1U << Tables.Length)); } }
+        public TableKind TableKind { get { return Tables[value & (1U << Tables.Length)]; } }
         public uint Index { get { return (uint)(value >> Tables.Length); } }
 
         public static explicit operator uint(CodedIndex<TCodedIndexDefinition> codedIndex)
@@ -44,6 +44,11 @@ namespace Mi.PE.Cli.CodedIndices
             }
 
             return result;
+        }
+
+        public override string ToString()
+        {
+            return this.TableKind + "[" + this.Index+"]";
         }
     }
 }
