@@ -193,9 +193,21 @@ namespace Mi.PE.Cli
             return guids[(index-1)/16];
         }
 
+        [Obsolete("Use ReadSignature instead, or report to the security if you want another sort of blob.", true)]
         public byte[] ReadBlob()
         {
             throw new NotImplementedException();
+        }
+
+        public Signature ReadSignature()
+        {
+            uint index;
+            if (this.blobHeap.Length < ushort.MaxValue)
+                index = this.Binary.ReadUInt16();
+            else
+                index = this.Binary.ReadUInt32();
+
+            return new Signature(index, this.blobHeap);
         }
 
         public Version ReadVersion()

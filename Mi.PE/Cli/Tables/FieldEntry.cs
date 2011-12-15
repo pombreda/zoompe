@@ -18,13 +18,13 @@ namespace Mi.PE.Cli.Tables
     {
         public FieldAttributes Flags;
         public string Name;
-        public byte[] Signature;
+        public Signature Signature;
 
         public void Read(ClrModuleReader reader)
         {
             this.Flags = (FieldAttributes)reader.Binary.ReadUInt16();
             this.Name = reader.ReadString();
-            this.Signature = reader.ReadBlob();
+            this.Signature = reader.ReadSignature();
         }
     }
 }
