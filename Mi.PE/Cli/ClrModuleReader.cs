@@ -193,12 +193,6 @@ namespace Mi.PE.Cli
             return guids[(index-1)/16];
         }
 
-        [Obsolete("Use ReadSignature instead, or report to the security if you want another sort of blob.", true)]
-        public byte[] ReadBlobObsolete()
-        {
-            throw new NotImplementedException();
-        }
-
         public byte[] ReadBlob()
         {
             uint length;
