@@ -41,13 +41,13 @@ namespace Mi.PE.Cli.Tables
         /// (ie, low nibble of leading byte is 0x8).
         /// Apart from this leading byte, the signature is the same as the property‘s  get_ method. [ERROR]
         /// </summary>
-        public byte[] Type;
+        public Signature Type;
 
         public void Read(ClrModuleReader reader)
         {
             this.Flags = (PropertyAttributes)reader.Binary.ReadUInt16();
             this.Name = reader.ReadString();
-            this.Type = reader.ReadBlobObsolete();
+            this.Type = reader.ReadSignature();
         }
     }
 }

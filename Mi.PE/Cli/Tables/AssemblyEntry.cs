@@ -47,7 +47,7 @@ namespace Mi.PE.Cli.Tables
             this.HashAlgId = (AssemblyHashAlgorithm)reader.Binary.ReadUInt32();
             this.Version = reader.ReadVersion();
             this.Flags = (AssemblyFlags)reader.Binary.ReadUInt32();
-            this.PublicKey = reader.ReadBlobObsolete();
+            this.PublicKey = reader.ReadBlob();
             this.Name = reader.ReadString();
             this.Culture = reader.ReadString();
         }

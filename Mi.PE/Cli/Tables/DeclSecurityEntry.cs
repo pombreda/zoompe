@@ -40,7 +40,7 @@ namespace Mi.PE.Cli.Tables
         {
             this.Action = (SecurityAction)reader.Binary.ReadUInt16();
             this.Parent = reader.ReadCodedIndex<HasDeclSecurity>();
-            this.PermissionSet = reader.ReadBlobObsolete();
+            this.PermissionSet = reader.ReadBlob();
         }
     }
 }

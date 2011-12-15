@@ -49,7 +49,7 @@ namespace Mi.PE.Cli.Tables
             this.Type = (ElementType)reader.Binary.ReadByte();
             byte padding = reader.Binary.ReadByte();
             this.Parent = reader.ReadCodedIndex<HasConstant>();
-            this.Value = reader.ReadBlobObsolete();
+            this.Value = reader.ReadBlob();
         }
     }
 }
