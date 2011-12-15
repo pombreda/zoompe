@@ -35,7 +35,7 @@ namespace Mi.PE.Cli.Tables
         {
             this.Flags = (FileAttributes)reader.Binary.ReadUInt32();
             this.Name = reader.ReadString();
-            this.HashValue = reader.ReadBlobObsolete();
+            this.HashValue = reader.ReadBlob();
         }
     }
 }

@@ -28,13 +28,13 @@ namespace Mi.PE.Cli.Tables
 
         public string Name;
 
-        public byte[] Signature;
+        public Signature Signature;
 
         public void Read(ClrModuleReader reader)
         {
             this.Class = reader.ReadCodedIndex<MemberRefParent>();
             this.Name = reader.ReadString();
-            this.Signature = reader.ReadBlobObsolete();
+            this.Signature = reader.ReadSignature();
         }
     }
 }

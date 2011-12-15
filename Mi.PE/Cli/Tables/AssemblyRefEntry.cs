@@ -50,10 +50,10 @@ namespace Mi.PE.Cli.Tables
         {
             this.Version = reader.ReadVersion();
             this.Flags = (AssemblyFlags)reader.Binary.ReadUInt32();
-            this.PublicKeyOrToken = reader.ReadBlobObsolete();
+            this.PublicKeyOrToken = reader.ReadBlob();
             this.Name = reader.ReadString();
             this.Culture = reader.ReadString();
-            this.HashValue = reader.ReadBlobObsolete();
+            this.HashValue = reader.ReadBlob();
         }
     }
 }

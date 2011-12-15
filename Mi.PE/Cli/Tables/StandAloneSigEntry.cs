@@ -26,11 +26,11 @@ namespace Mi.PE.Cli.Tables
         /// The signature 'blob' indexed by Signature shall be a valid METHOD or LOCALS signature. [ERROR]
         /// Duplicate rows are allowed.
         /// </summary>
-        public byte[] Signature;
+        public Signature Signature;
 
         public void Read(ClrModuleReader reader)
         {
-            this.Signature = reader.ReadBlobObsolete();
+            this.Signature = reader.ReadSignature();
         }
     }
 }
