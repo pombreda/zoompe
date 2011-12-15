@@ -195,28 +195,42 @@ namespace Mi.PE.Cli
 
         public byte[] ReadBlob()
         {
+            uint index;
+
+            if (this.blobHeap.Length <= ushort.MaxValue)
+                index = this.Binary.ReadUInt16();
+            else
+                index = this.Binary.ReadUInt32();
+
+            if (index == 0)
+                return null;
+
             uint length;
 
-            byte b0 = this.Binary.ReadByte();
+            byte b0 = this.blobHeap[index];
             if (b0 <= sbyte.MaxValue)
             {
                 length = b0;
             }
             else if ((b0 & 0xC0) == sbyte.MaxValue + 1)
             {
-                byte b2 = this.Binary.ReadByte();
+                byte b2 = this.blobHeap[index + 1];
                 length = unchecked((uint)(((b0 & 0x3F) << 8) | b2));
             }
             else
             {
-                byte b2 = this.Binary.ReadByte();
-                byte b3 = this.Binary.ReadByte();
-                byte b4 = this.Binary.ReadByte();
+                byte b2 = this.blobHeap[index + 1];
+                byte b3 = this.blobHeap[index + 2];
+                byte b4 = this.blobHeap[index + 3];
                 length = unchecked((uint)(((b0 & 0x3F) << 24) + (b2 << 16) + (b3 << 8) + b4));
             }
 
             byte[] result = new byte[length];
-            this.Binary.ReadBytes(result, 0, result.Length);
+            Array.Copy(
+                this.blobHeap, (int)index,
+                result, 0,
+                (int)length);
+
             return result;
         }
 
@@ -262,6 +276,9 @@ namespace Mi.PE.Cli
             int length = 0;
             foreach (var tab in tables)
             {
+                if ((int)tab == ushort.MaxValue)
+                    continue;
+
                 var table = this.tableStream.Tables[(int)tab];
                 
                 length = Math.Max(length, table==null ? 0 : table.Length);
