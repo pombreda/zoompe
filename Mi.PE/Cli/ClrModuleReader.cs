@@ -236,9 +236,21 @@ namespace Mi.PE.Cli
 
         public Signature ReadSignature()
         {
-            byte[] blob = this.ReadBlob();
+            uint index;
 
-            return new Signature(blob);
+            if (this.blobHeap.Length <= ushort.MaxValue)
+                index = this.Binary.ReadUInt16();
+            else
+                index = this.Binary.ReadUInt32();
+
+            if (index == 0)
+                return null;
+
+            return new Signature((int)index, this.blobHeap);
+
+
+            //byte[] blob = this.ReadBlob();
+            //return new Signature(blob);
         }
 
         public Version ReadVersion()
@@ -256,10 +268,16 @@ namespace Mi.PE.Cli
 
             int length = this.tableStream.Tables[(int)table].Length;
 
+            uint index;
             if ((length & ~mask) == 0)
-                return this.Binary.ReadUInt16();
+                index = this.Binary.ReadUInt16();
             else
-                return this.Binary.ReadUInt32();
+                index = this.Binary.ReadUInt32();
+
+            if (index > length)
+                throw new FormatException("Index "+index+" is out of range [0.."+length+"] for "+table+" table.");
+
+            return index;
         }
 
         public CodedIndex<TCodedIndexDefinition> ReadCodedIndex<TCodedIndexDefinition>()

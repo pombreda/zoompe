@@ -7,11 +7,13 @@ namespace Mi.PE.Cli
 {
     public sealed class Signature
     {
-        readonly byte[] blob;
+        readonly int index;
+        readonly byte[] blobHeap;
 
-        public Signature(byte[] blob)
+        public Signature(int index, byte[] blobHeap)
         {
-            this.blob = blob;
+            this.index = index;
+            this.blobHeap = blobHeap;
         }
     }
 }
