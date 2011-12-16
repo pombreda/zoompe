@@ -280,10 +280,23 @@ namespace Mi.PE.Cli
                 length = Math.Max(length, table==null ? 0 : table.Length);
             }
 
+            uint result;
+
             if ((length & ~mask) == 0)
-                return (CodedIndex<TCodedIndexDefinition>)(uint)this.Binary.ReadUInt16();
+                result = this.Binary.ReadUInt16();
             else
-                return (CodedIndex<TCodedIndexDefinition>)this.Binary.ReadUInt32();
+                result = this.Binary.ReadUInt32();
+
+            var typedResult = (CodedIndex<TCodedIndexDefinition>)result;
+
+            if (typedResult.Index > this.tableStream.Tables[(int)typedResult.TableKind].Length)
+            {
+                var def = default(TCodedIndexDefinition);
+                throw new FormatException(
+                    "Coded index "+typedResult+" is out of bound for "+typeof(TCodedIndexDefinition).Name+" ("+string.Join(",", def.Tables.Select(t => t.ToString()).ToArray())+").");
+            }
+
+            return typedResult;
         }
 
         static void ReadGuids(BinaryStreamReader reader, Guid[] guids)
