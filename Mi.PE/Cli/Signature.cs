@@ -7,13 +7,11 @@ namespace Mi.PE.Cli
 {
     public sealed class Signature
     {
-        readonly uint offset;
-        readonly byte[] heap;
+        readonly byte[] blob;
 
-        public Signature(uint offset, byte[] heap)
+        public Signature(byte[] blob)
         {
-            this.offset = offset;
-            this.heap = heap;
+            this.blob = blob;
         }
     }
 }

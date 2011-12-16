@@ -236,13 +236,9 @@ namespace Mi.PE.Cli
 
         public Signature ReadSignature()
         {
-            uint index;
-            if (this.blobHeap.Length < ushort.MaxValue)
-                index = this.Binary.ReadUInt16();
-            else
-                index = this.Binary.ReadUInt32();
+            byte[] blob = this.ReadBlob();
 
-            return new Signature(index, this.blobHeap);
+            return new Signature(blob);
         }
 
         public Version ReadVersion()
