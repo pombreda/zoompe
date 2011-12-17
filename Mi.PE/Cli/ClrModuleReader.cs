@@ -283,12 +283,12 @@ namespace Mi.PE.Cli
         public CodedIndex<TCodedIndexDefinition> ReadCodedIndex<TCodedIndexDefinition>()
             where TCodedIndexDefinition : struct, ICodedIndexDefinition
         {
-            var tables = default(TCodedIndexDefinition).Tables;
+            var def = default(TCodedIndexDefinition);
 
-            ushort mask = (ushort)(ushort.MaxValue >> tables.Length);
+            ushort mask = (ushort)(ushort.MaxValue >> CodedIndex<TCodedIndexDefinition>.TableKindBitCount);
 
             int length = 0;
-            foreach (var tab in tables)
+            foreach (var tab in def.Tables)
             {
                 if ((int)tab == ushort.MaxValue)
                     continue;
@@ -309,9 +309,11 @@ namespace Mi.PE.Cli
 
             if (typedResult.Index > this.tableStream.Tables[(int)typedResult.TableKind].Length)
             {
-                var def = default(TCodedIndexDefinition);
                 throw new FormatException(
-                    "Coded index "+typedResult+" is out of bound for "+typeof(TCodedIndexDefinition).Name+" ("+string.Join(",", def.Tables.Select(t => t.ToString()).ToArray())+").");
+                    "Coded index " + typedResult + " is out of bound " +
+                    "(0.." + this.tableStream.Tables[(int)typedResult.TableKind].Length + ") " +
+                    "for " + typeof(TCodedIndexDefinition).Name + " " +
+                    "(" + string.Join(",", def.Tables.Select(t => t.ToString()).ToArray()) + ").");
             }
 
             return typedResult;

@@ -10,7 +10,7 @@ namespace Mi.PE.Cli.CodedIndices
         where TCodedIndexDefinition : struct, ICodedIndexDefinition
     {
         static readonly TableKind[] Tables = default(TCodedIndexDefinition).Tables;
-        static readonly int LowBitCount = CalcRequiredBitCount(Tables.Length);
+        public static readonly int TableKindBitCount = CalcRequiredBitCount(Tables.Length);
 
         readonly uint value;
 
@@ -19,8 +19,8 @@ namespace Mi.PE.Cli.CodedIndices
             this.value = value;
         }
 
-        public TableKind TableKind { get { return Tables[value & (1U << Tables.Length)]; } } // FIXME: not << Tables.Length, that's too much
-        public uint Index { get { return (uint)(value >> Tables.Length); } }
+        public TableKind TableKind { get { return Tables[value & ~(uint.MaxValue << TableKindBitCount)]; } }
+        public uint Index { get { return (uint)(value >> TableKindBitCount); } }
 
         public static explicit operator uint(CodedIndex<TCodedIndexDefinition> codedIndex)
         {
