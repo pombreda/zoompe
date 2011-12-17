@@ -16,7 +16,7 @@ namespace PrintClrBasics
     {
         static void Main(string[] args)
         {
-            string mscolib = typeof(Program).Assembly.Location;
+            string mscolib = typeof(int).Assembly.Location;
 
             var pe = new PEFile();
 
