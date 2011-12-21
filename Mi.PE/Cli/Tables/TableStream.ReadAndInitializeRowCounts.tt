@@ -81,7 +81,12 @@ namespace Mi.PE.Cli.Tables
 		else
 		{ #>
 			if ((validMask & ((ulong)1 << (int)TableKind.<#=t#>)) != 0)
-				tables[(int)TableKind.<#=t#>] = new <#=t#>Entry[reader.ReadUInt32()];
+			{
+				uint rowCount = reader.ReadUInt32();
+				var table = new <#=t#>Entry[rowCount];
+				tables[(int)TableKind.<#=t#>] = table;
+			}
+
 <#	}
 	} #>
 
@@ -110,7 +115,6 @@ namespace Mi.PE.Cli.Tables
 					<#=tableName#>[i].Read(reader);
 				}
 			}
-
 <#	}
 	} #>
 		}

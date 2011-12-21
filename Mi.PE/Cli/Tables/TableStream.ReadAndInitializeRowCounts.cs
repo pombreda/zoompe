@@ -12,95 +12,285 @@ namespace Mi.PE.Cli.Tables
 			var tables = new Array[45];
 
 			if ((validMask & ((ulong)1 << (int)TableKind.Module)) != 0)
-				tables[(int)TableKind.Module] = new ModuleEntry[reader.ReadUInt32()];
+			{
+				uint rowCount = reader.ReadUInt32();
+				var table = new ModuleEntry[rowCount];
+				tables[(int)TableKind.Module] = table;
+			}
+
 			if ((validMask & ((ulong)1 << (int)TableKind.TypeRef)) != 0)
-				tables[(int)TableKind.TypeRef] = new TypeRefEntry[reader.ReadUInt32()];
+			{
+				uint rowCount = reader.ReadUInt32();
+				var table = new TypeRefEntry[rowCount];
+				tables[(int)TableKind.TypeRef] = table;
+			}
+
 			if ((validMask & ((ulong)1 << (int)TableKind.TypeDef)) != 0)
-				tables[(int)TableKind.TypeDef] = new TypeDefEntry[reader.ReadUInt32()];
+			{
+				uint rowCount = reader.ReadUInt32();
+				var table = new TypeDefEntry[rowCount];
+				tables[(int)TableKind.TypeDef] = table;
+			}
+
 			if ((validMask & ((ulong)1 << 0x03)) != 0)
 				throw new BadImageFormatException("Non-standard metadata table 0x"+validMask.ToString("X2")+".");
 			if ((validMask & ((ulong)1 << (int)TableKind.Field)) != 0)
-				tables[(int)TableKind.Field] = new FieldEntry[reader.ReadUInt32()];
+			{
+				uint rowCount = reader.ReadUInt32();
+				var table = new FieldEntry[rowCount];
+				tables[(int)TableKind.Field] = table;
+			}
+
 			if ((validMask & ((ulong)1 << 0x05)) != 0)
 				throw new BadImageFormatException("Non-standard metadata table 0x"+validMask.ToString("X2")+".");
 			if ((validMask & ((ulong)1 << (int)TableKind.MethodDef)) != 0)
-				tables[(int)TableKind.MethodDef] = new MethodDefEntry[reader.ReadUInt32()];
+			{
+				uint rowCount = reader.ReadUInt32();
+				var table = new MethodDefEntry[rowCount];
+				tables[(int)TableKind.MethodDef] = table;
+			}
+
 			if ((validMask & ((ulong)1 << 0x07)) != 0)
 				throw new BadImageFormatException("Non-standard metadata table 0x"+validMask.ToString("X2")+".");
 			if ((validMask & ((ulong)1 << (int)TableKind.Param)) != 0)
-				tables[(int)TableKind.Param] = new ParamEntry[reader.ReadUInt32()];
+			{
+				uint rowCount = reader.ReadUInt32();
+				var table = new ParamEntry[rowCount];
+				tables[(int)TableKind.Param] = table;
+			}
+
 			if ((validMask & ((ulong)1 << (int)TableKind.InterfaceImpl)) != 0)
-				tables[(int)TableKind.InterfaceImpl] = new InterfaceImplEntry[reader.ReadUInt32()];
+			{
+				uint rowCount = reader.ReadUInt32();
+				var table = new InterfaceImplEntry[rowCount];
+				tables[(int)TableKind.InterfaceImpl] = table;
+			}
+
 			if ((validMask & ((ulong)1 << (int)TableKind.MemberRef)) != 0)
-				tables[(int)TableKind.MemberRef] = new MemberRefEntry[reader.ReadUInt32()];
+			{
+				uint rowCount = reader.ReadUInt32();
+				var table = new MemberRefEntry[rowCount];
+				tables[(int)TableKind.MemberRef] = table;
+			}
+
 			if ((validMask & ((ulong)1 << (int)TableKind.Constant)) != 0)
-				tables[(int)TableKind.Constant] = new ConstantEntry[reader.ReadUInt32()];
+			{
+				uint rowCount = reader.ReadUInt32();
+				var table = new ConstantEntry[rowCount];
+				tables[(int)TableKind.Constant] = table;
+			}
+
 			if ((validMask & ((ulong)1 << (int)TableKind.CustomAttribute)) != 0)
-				tables[(int)TableKind.CustomAttribute] = new CustomAttributeEntry[reader.ReadUInt32()];
+			{
+				uint rowCount = reader.ReadUInt32();
+				var table = new CustomAttributeEntry[rowCount];
+				tables[(int)TableKind.CustomAttribute] = table;
+			}
+
 			if ((validMask & ((ulong)1 << (int)TableKind.FieldMarshal)) != 0)
-				tables[(int)TableKind.FieldMarshal] = new FieldMarshalEntry[reader.ReadUInt32()];
+			{
+				uint rowCount = reader.ReadUInt32();
+				var table = new FieldMarshalEntry[rowCount];
+				tables[(int)TableKind.FieldMarshal] = table;
+			}
+
 			if ((validMask & ((ulong)1 << (int)TableKind.DeclSecurity)) != 0)
-				tables[(int)TableKind.DeclSecurity] = new DeclSecurityEntry[reader.ReadUInt32()];
+			{
+				uint rowCount = reader.ReadUInt32();
+				var table = new DeclSecurityEntry[rowCount];
+				tables[(int)TableKind.DeclSecurity] = table;
+			}
+
 			if ((validMask & ((ulong)1 << (int)TableKind.ClassLayout)) != 0)
-				tables[(int)TableKind.ClassLayout] = new ClassLayoutEntry[reader.ReadUInt32()];
+			{
+				uint rowCount = reader.ReadUInt32();
+				var table = new ClassLayoutEntry[rowCount];
+				tables[(int)TableKind.ClassLayout] = table;
+			}
+
 			if ((validMask & ((ulong)1 << (int)TableKind.FieldLayout)) != 0)
-				tables[(int)TableKind.FieldLayout] = new FieldLayoutEntry[reader.ReadUInt32()];
+			{
+				uint rowCount = reader.ReadUInt32();
+				var table = new FieldLayoutEntry[rowCount];
+				tables[(int)TableKind.FieldLayout] = table;
+			}
+
 			if ((validMask & ((ulong)1 << (int)TableKind.StandAloneSig)) != 0)
-				tables[(int)TableKind.StandAloneSig] = new StandAloneSigEntry[reader.ReadUInt32()];
+			{
+				uint rowCount = reader.ReadUInt32();
+				var table = new StandAloneSigEntry[rowCount];
+				tables[(int)TableKind.StandAloneSig] = table;
+			}
+
 			if ((validMask & ((ulong)1 << (int)TableKind.EventMap)) != 0)
-				tables[(int)TableKind.EventMap] = new EventMapEntry[reader.ReadUInt32()];
+			{
+				uint rowCount = reader.ReadUInt32();
+				var table = new EventMapEntry[rowCount];
+				tables[(int)TableKind.EventMap] = table;
+			}
+
 			if ((validMask & ((ulong)1 << 0x13)) != 0)
 				throw new BadImageFormatException("Non-standard metadata table 0x"+validMask.ToString("X2")+".");
 			if ((validMask & ((ulong)1 << (int)TableKind.Event)) != 0)
-				tables[(int)TableKind.Event] = new EventEntry[reader.ReadUInt32()];
+			{
+				uint rowCount = reader.ReadUInt32();
+				var table = new EventEntry[rowCount];
+				tables[(int)TableKind.Event] = table;
+			}
+
 			if ((validMask & ((ulong)1 << (int)TableKind.PropertyMap)) != 0)
-				tables[(int)TableKind.PropertyMap] = new PropertyMapEntry[reader.ReadUInt32()];
+			{
+				uint rowCount = reader.ReadUInt32();
+				var table = new PropertyMapEntry[rowCount];
+				tables[(int)TableKind.PropertyMap] = table;
+			}
+
 			if ((validMask & ((ulong)1 << 0x16)) != 0)
 				throw new BadImageFormatException("Non-standard metadata table 0x"+validMask.ToString("X2")+".");
 			if ((validMask & ((ulong)1 << (int)TableKind.Property)) != 0)
-				tables[(int)TableKind.Property] = new PropertyEntry[reader.ReadUInt32()];
+			{
+				uint rowCount = reader.ReadUInt32();
+				var table = new PropertyEntry[rowCount];
+				tables[(int)TableKind.Property] = table;
+			}
+
 			if ((validMask & ((ulong)1 << (int)TableKind.MethodSemantics)) != 0)
-				tables[(int)TableKind.MethodSemantics] = new MethodSemanticsEntry[reader.ReadUInt32()];
+			{
+				uint rowCount = reader.ReadUInt32();
+				var table = new MethodSemanticsEntry[rowCount];
+				tables[(int)TableKind.MethodSemantics] = table;
+			}
+
 			if ((validMask & ((ulong)1 << (int)TableKind.MethodImpl)) != 0)
-				tables[(int)TableKind.MethodImpl] = new MethodImplEntry[reader.ReadUInt32()];
+			{
+				uint rowCount = reader.ReadUInt32();
+				var table = new MethodImplEntry[rowCount];
+				tables[(int)TableKind.MethodImpl] = table;
+			}
+
 			if ((validMask & ((ulong)1 << (int)TableKind.ModuleRef)) != 0)
-				tables[(int)TableKind.ModuleRef] = new ModuleRefEntry[reader.ReadUInt32()];
+			{
+				uint rowCount = reader.ReadUInt32();
+				var table = new ModuleRefEntry[rowCount];
+				tables[(int)TableKind.ModuleRef] = table;
+			}
+
 			if ((validMask & ((ulong)1 << (int)TableKind.TypeSpec)) != 0)
-				tables[(int)TableKind.TypeSpec] = new TypeSpecEntry[reader.ReadUInt32()];
+			{
+				uint rowCount = reader.ReadUInt32();
+				var table = new TypeSpecEntry[rowCount];
+				tables[(int)TableKind.TypeSpec] = table;
+			}
+
 			if ((validMask & ((ulong)1 << (int)TableKind.ImplMap)) != 0)
-				tables[(int)TableKind.ImplMap] = new ImplMapEntry[reader.ReadUInt32()];
+			{
+				uint rowCount = reader.ReadUInt32();
+				var table = new ImplMapEntry[rowCount];
+				tables[(int)TableKind.ImplMap] = table;
+			}
+
 			if ((validMask & ((ulong)1 << (int)TableKind.FieldRVA)) != 0)
-				tables[(int)TableKind.FieldRVA] = new FieldRVAEntry[reader.ReadUInt32()];
+			{
+				uint rowCount = reader.ReadUInt32();
+				var table = new FieldRVAEntry[rowCount];
+				tables[(int)TableKind.FieldRVA] = table;
+			}
+
 			if ((validMask & ((ulong)1 << 0x1E)) != 0)
 				throw new BadImageFormatException("Non-standard metadata table 0x"+validMask.ToString("X2")+".");
 			if ((validMask & ((ulong)1 << 0x1F)) != 0)
 				throw new BadImageFormatException("Non-standard metadata table 0x"+validMask.ToString("X2")+".");
 			if ((validMask & ((ulong)1 << (int)TableKind.Assembly)) != 0)
-				tables[(int)TableKind.Assembly] = new AssemblyEntry[reader.ReadUInt32()];
+			{
+				uint rowCount = reader.ReadUInt32();
+				var table = new AssemblyEntry[rowCount];
+				tables[(int)TableKind.Assembly] = table;
+			}
+
 			if ((validMask & ((ulong)1 << (int)TableKind.AssemblyProcessor)) != 0)
-				tables[(int)TableKind.AssemblyProcessor] = new AssemblyProcessorEntry[reader.ReadUInt32()];
+			{
+				uint rowCount = reader.ReadUInt32();
+				var table = new AssemblyProcessorEntry[rowCount];
+				tables[(int)TableKind.AssemblyProcessor] = table;
+			}
+
 			if ((validMask & ((ulong)1 << (int)TableKind.AssemblyOS)) != 0)
-				tables[(int)TableKind.AssemblyOS] = new AssemblyOSEntry[reader.ReadUInt32()];
+			{
+				uint rowCount = reader.ReadUInt32();
+				var table = new AssemblyOSEntry[rowCount];
+				tables[(int)TableKind.AssemblyOS] = table;
+			}
+
 			if ((validMask & ((ulong)1 << (int)TableKind.AssemblyRef)) != 0)
-				tables[(int)TableKind.AssemblyRef] = new AssemblyRefEntry[reader.ReadUInt32()];
+			{
+				uint rowCount = reader.ReadUInt32();
+				var table = new AssemblyRefEntry[rowCount];
+				tables[(int)TableKind.AssemblyRef] = table;
+			}
+
 			if ((validMask & ((ulong)1 << (int)TableKind.AssemblyRefProcessor)) != 0)
-				tables[(int)TableKind.AssemblyRefProcessor] = new AssemblyRefProcessorEntry[reader.ReadUInt32()];
+			{
+				uint rowCount = reader.ReadUInt32();
+				var table = new AssemblyRefProcessorEntry[rowCount];
+				tables[(int)TableKind.AssemblyRefProcessor] = table;
+			}
+
 			if ((validMask & ((ulong)1 << (int)TableKind.AssemblyRefOS)) != 0)
-				tables[(int)TableKind.AssemblyRefOS] = new AssemblyRefOSEntry[reader.ReadUInt32()];
+			{
+				uint rowCount = reader.ReadUInt32();
+				var table = new AssemblyRefOSEntry[rowCount];
+				tables[(int)TableKind.AssemblyRefOS] = table;
+			}
+
 			if ((validMask & ((ulong)1 << (int)TableKind.File)) != 0)
-				tables[(int)TableKind.File] = new FileEntry[reader.ReadUInt32()];
+			{
+				uint rowCount = reader.ReadUInt32();
+				var table = new FileEntry[rowCount];
+				tables[(int)TableKind.File] = table;
+			}
+
 			if ((validMask & ((ulong)1 << (int)TableKind.ExportedType)) != 0)
-				tables[(int)TableKind.ExportedType] = new ExportedTypeEntry[reader.ReadUInt32()];
+			{
+				uint rowCount = reader.ReadUInt32();
+				var table = new ExportedTypeEntry[rowCount];
+				tables[(int)TableKind.ExportedType] = table;
+			}
+
 			if ((validMask & ((ulong)1 << (int)TableKind.ManifestResource)) != 0)
-				tables[(int)TableKind.ManifestResource] = new ManifestResourceEntry[reader.ReadUInt32()];
+			{
+				uint rowCount = reader.ReadUInt32();
+				var table = new ManifestResourceEntry[rowCount];
+				tables[(int)TableKind.ManifestResource] = table;
+			}
+
 			if ((validMask & ((ulong)1 << (int)TableKind.NestedClass)) != 0)
-				tables[(int)TableKind.NestedClass] = new NestedClassEntry[reader.ReadUInt32()];
+			{
+				uint rowCount = reader.ReadUInt32();
+				var table = new NestedClassEntry[rowCount];
+				tables[(int)TableKind.NestedClass] = table;
+			}
+
 			if ((validMask & ((ulong)1 << (int)TableKind.GenericParam)) != 0)
-				tables[(int)TableKind.GenericParam] = new GenericParamEntry[reader.ReadUInt32()];
+			{
+				uint rowCount = reader.ReadUInt32();
+				var table = new GenericParamEntry[rowCount];
+				tables[(int)TableKind.GenericParam] = table;
+			}
+
 			if ((validMask & ((ulong)1 << (int)TableKind.MethodSpec)) != 0)
-				tables[(int)TableKind.MethodSpec] = new MethodSpecEntry[reader.ReadUInt32()];
+			{
+				uint rowCount = reader.ReadUInt32();
+				var table = new MethodSpecEntry[rowCount];
+				tables[(int)TableKind.MethodSpec] = table;
+			}
+
 			if ((validMask & ((ulong)1 << (int)TableKind.GenericParamConstraint)) != 0)
-				tables[(int)TableKind.GenericParamConstraint] = new GenericParamConstraintEntry[reader.ReadUInt32()];
+			{
+				uint rowCount = reader.ReadUInt32();
+				var table = new GenericParamConstraintEntry[rowCount];
+				tables[(int)TableKind.GenericParamConstraint] = table;
+			}
+
 
 			ulong trailingZeroesMask = ulong.MaxValue << 45;
 			if ((validMask & trailingZeroesMask) != 0)
@@ -119,7 +309,6 @@ namespace Mi.PE.Cli.Tables
 					moduleTable[i].Read(reader);
 				}
 			}
-
 			var typeRefTable = (TypeRefEntry[])this.Tables[(int)TableKind.TypeRef];
 			if (typeRefTable != null)
 			{
@@ -128,7 +317,6 @@ namespace Mi.PE.Cli.Tables
 					typeRefTable[i].Read(reader);
 				}
 			}
-
 			var typeDefTable = (TypeDefEntry[])this.Tables[(int)TableKind.TypeDef];
 			if (typeDefTable != null)
 			{
@@ -137,7 +325,6 @@ namespace Mi.PE.Cli.Tables
 					typeDefTable[i].Read(reader);
 				}
 			}
-
 			var fieldTable = (FieldEntry[])this.Tables[(int)TableKind.Field];
 			if (fieldTable != null)
 			{
@@ -146,7 +333,6 @@ namespace Mi.PE.Cli.Tables
 					fieldTable[i].Read(reader);
 				}
 			}
-
 			var methodDefTable = (MethodDefEntry[])this.Tables[(int)TableKind.MethodDef];
 			if (methodDefTable != null)
 			{
@@ -155,7 +341,6 @@ namespace Mi.PE.Cli.Tables
 					methodDefTable[i].Read(reader);
 				}
 			}
-
 			var paramTable = (ParamEntry[])this.Tables[(int)TableKind.Param];
 			if (paramTable != null)
 			{
@@ -164,7 +349,6 @@ namespace Mi.PE.Cli.Tables
 					paramTable[i].Read(reader);
 				}
 			}
-
 			var interfaceImplTable = (InterfaceImplEntry[])this.Tables[(int)TableKind.InterfaceImpl];
 			if (interfaceImplTable != null)
 			{
@@ -173,7 +357,6 @@ namespace Mi.PE.Cli.Tables
 					interfaceImplTable[i].Read(reader);
 				}
 			}
-
 			var memberRefTable = (MemberRefEntry[])this.Tables[(int)TableKind.MemberRef];
 			if (memberRefTable != null)
 			{
@@ -182,7 +365,6 @@ namespace Mi.PE.Cli.Tables
 					memberRefTable[i].Read(reader);
 				}
 			}
-
 			var constantTable = (ConstantEntry[])this.Tables[(int)TableKind.Constant];
 			if (constantTable != null)
 			{
@@ -191,7 +373,6 @@ namespace Mi.PE.Cli.Tables
 					constantTable[i].Read(reader);
 				}
 			}
-
 			var customAttributeTable = (CustomAttributeEntry[])this.Tables[(int)TableKind.CustomAttribute];
 			if (customAttributeTable != null)
 			{
@@ -200,7 +381,6 @@ namespace Mi.PE.Cli.Tables
 					customAttributeTable[i].Read(reader);
 				}
 			}
-
 			var fieldMarshalTable = (FieldMarshalEntry[])this.Tables[(int)TableKind.FieldMarshal];
 			if (fieldMarshalTable != null)
 			{
@@ -209,7 +389,6 @@ namespace Mi.PE.Cli.Tables
 					fieldMarshalTable[i].Read(reader);
 				}
 			}
-
 			var declSecurityTable = (DeclSecurityEntry[])this.Tables[(int)TableKind.DeclSecurity];
 			if (declSecurityTable != null)
 			{
@@ -218,7 +397,6 @@ namespace Mi.PE.Cli.Tables
 					declSecurityTable[i].Read(reader);
 				}
 			}
-
 			var classLayoutTable = (ClassLayoutEntry[])this.Tables[(int)TableKind.ClassLayout];
 			if (classLayoutTable != null)
 			{
@@ -227,7 +405,6 @@ namespace Mi.PE.Cli.Tables
 					classLayoutTable[i].Read(reader);
 				}
 			}
-
 			var fieldLayoutTable = (FieldLayoutEntry[])this.Tables[(int)TableKind.FieldLayout];
 			if (fieldLayoutTable != null)
 			{
@@ -236,7 +413,6 @@ namespace Mi.PE.Cli.Tables
 					fieldLayoutTable[i].Read(reader);
 				}
 			}
-
 			var standAloneSigTable = (StandAloneSigEntry[])this.Tables[(int)TableKind.StandAloneSig];
 			if (standAloneSigTable != null)
 			{
@@ -245,7 +421,6 @@ namespace Mi.PE.Cli.Tables
 					standAloneSigTable[i].Read(reader);
 				}
 			}
-
 			var eventMapTable = (EventMapEntry[])this.Tables[(int)TableKind.EventMap];
 			if (eventMapTable != null)
 			{
@@ -254,7 +429,6 @@ namespace Mi.PE.Cli.Tables
 					eventMapTable[i].Read(reader);
 				}
 			}
-
 			var eventTable = (EventEntry[])this.Tables[(int)TableKind.Event];
 			if (eventTable != null)
 			{
@@ -263,7 +437,6 @@ namespace Mi.PE.Cli.Tables
 					eventTable[i].Read(reader);
 				}
 			}
-
 			var propertyMapTable = (PropertyMapEntry[])this.Tables[(int)TableKind.PropertyMap];
 			if (propertyMapTable != null)
 			{
@@ -272,7 +445,6 @@ namespace Mi.PE.Cli.Tables
 					propertyMapTable[i].Read(reader);
 				}
 			}
-
 			var propertyTable = (PropertyEntry[])this.Tables[(int)TableKind.Property];
 			if (propertyTable != null)
 			{
@@ -281,7 +453,6 @@ namespace Mi.PE.Cli.Tables
 					propertyTable[i].Read(reader);
 				}
 			}
-
 			var methodSemanticsTable = (MethodSemanticsEntry[])this.Tables[(int)TableKind.MethodSemantics];
 			if (methodSemanticsTable != null)
 			{
@@ -290,7 +461,6 @@ namespace Mi.PE.Cli.Tables
 					methodSemanticsTable[i].Read(reader);
 				}
 			}
-
 			var methodImplTable = (MethodImplEntry[])this.Tables[(int)TableKind.MethodImpl];
 			if (methodImplTable != null)
 			{
@@ -299,7 +469,6 @@ namespace Mi.PE.Cli.Tables
 					methodImplTable[i].Read(reader);
 				}
 			}
-
 			var moduleRefTable = (ModuleRefEntry[])this.Tables[(int)TableKind.ModuleRef];
 			if (moduleRefTable != null)
 			{
@@ -308,7 +477,6 @@ namespace Mi.PE.Cli.Tables
 					moduleRefTable[i].Read(reader);
 				}
 			}
-
 			var typeSpecTable = (TypeSpecEntry[])this.Tables[(int)TableKind.TypeSpec];
 			if (typeSpecTable != null)
 			{
@@ -317,7 +485,6 @@ namespace Mi.PE.Cli.Tables
 					typeSpecTable[i].Read(reader);
 				}
 			}
-
 			var implMapTable = (ImplMapEntry[])this.Tables[(int)TableKind.ImplMap];
 			if (implMapTable != null)
 			{
@@ -326,7 +493,6 @@ namespace Mi.PE.Cli.Tables
 					implMapTable[i].Read(reader);
 				}
 			}
-
 			var fieldRVATable = (FieldRVAEntry[])this.Tables[(int)TableKind.FieldRVA];
 			if (fieldRVATable != null)
 			{
@@ -335,7 +501,6 @@ namespace Mi.PE.Cli.Tables
 					fieldRVATable[i].Read(reader);
 				}
 			}
-
 			var assemblyTable = (AssemblyEntry[])this.Tables[(int)TableKind.Assembly];
 			if (assemblyTable != null)
 			{
@@ -344,7 +509,6 @@ namespace Mi.PE.Cli.Tables
 					assemblyTable[i].Read(reader);
 				}
 			}
-
 			var assemblyProcessorTable = (AssemblyProcessorEntry[])this.Tables[(int)TableKind.AssemblyProcessor];
 			if (assemblyProcessorTable != null)
 			{
@@ -353,7 +517,6 @@ namespace Mi.PE.Cli.Tables
 					assemblyProcessorTable[i].Read(reader);
 				}
 			}
-
 			var assemblyOSTable = (AssemblyOSEntry[])this.Tables[(int)TableKind.AssemblyOS];
 			if (assemblyOSTable != null)
 			{
@@ -362,7 +525,6 @@ namespace Mi.PE.Cli.Tables
 					assemblyOSTable[i].Read(reader);
 				}
 			}
-
 			var assemblyRefTable = (AssemblyRefEntry[])this.Tables[(int)TableKind.AssemblyRef];
 			if (assemblyRefTable != null)
 			{
@@ -371,7 +533,6 @@ namespace Mi.PE.Cli.Tables
 					assemblyRefTable[i].Read(reader);
 				}
 			}
-
 			var assemblyRefProcessorTable = (AssemblyRefProcessorEntry[])this.Tables[(int)TableKind.AssemblyRefProcessor];
 			if (assemblyRefProcessorTable != null)
 			{
@@ -380,7 +541,6 @@ namespace Mi.PE.Cli.Tables
 					assemblyRefProcessorTable[i].Read(reader);
 				}
 			}
-
 			var assemblyRefOSTable = (AssemblyRefOSEntry[])this.Tables[(int)TableKind.AssemblyRefOS];
 			if (assemblyRefOSTable != null)
 			{
@@ -389,7 +549,6 @@ namespace Mi.PE.Cli.Tables
 					assemblyRefOSTable[i].Read(reader);
 				}
 			}
-
 			var fileTable = (FileEntry[])this.Tables[(int)TableKind.File];
 			if (fileTable != null)
 			{
@@ -398,7 +557,6 @@ namespace Mi.PE.Cli.Tables
 					fileTable[i].Read(reader);
 				}
 			}
-
 			var exportedTypeTable = (ExportedTypeEntry[])this.Tables[(int)TableKind.ExportedType];
 			if (exportedTypeTable != null)
 			{
@@ -407,7 +565,6 @@ namespace Mi.PE.Cli.Tables
 					exportedTypeTable[i].Read(reader);
 				}
 			}
-
 			var manifestResourceTable = (ManifestResourceEntry[])this.Tables[(int)TableKind.ManifestResource];
 			if (manifestResourceTable != null)
 			{
@@ -416,7 +573,6 @@ namespace Mi.PE.Cli.Tables
 					manifestResourceTable[i].Read(reader);
 				}
 			}
-
 			var nestedClassTable = (NestedClassEntry[])this.Tables[(int)TableKind.NestedClass];
 			if (nestedClassTable != null)
 			{
@@ -425,7 +581,6 @@ namespace Mi.PE.Cli.Tables
 					nestedClassTable[i].Read(reader);
 				}
 			}
-
 			var genericParamTable = (GenericParamEntry[])this.Tables[(int)TableKind.GenericParam];
 			if (genericParamTable != null)
 			{
@@ -434,7 +589,6 @@ namespace Mi.PE.Cli.Tables
 					genericParamTable[i].Read(reader);
 				}
 			}
-
 			var methodSpecTable = (MethodSpecEntry[])this.Tables[(int)TableKind.MethodSpec];
 			if (methodSpecTable != null)
 			{
@@ -443,7 +597,6 @@ namespace Mi.PE.Cli.Tables
 					methodSpecTable[i].Read(reader);
 				}
 			}
-
 			var genericParamConstraintTable = (GenericParamConstraintEntry[])this.Tables[(int)TableKind.GenericParamConstraint];
 			if (genericParamConstraintTable != null)
 			{
@@ -452,7 +605,6 @@ namespace Mi.PE.Cli.Tables
 					genericParamConstraintTable[i].Read(reader);
 				}
 			}
-
 		}
 	}
 }
