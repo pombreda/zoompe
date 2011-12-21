@@ -48,6 +48,7 @@ namespace Mi.PE.Cli.Tables
 
         public void Read(ClrModuleReader reader)
         {
+            this.EventFlags = (EventAttributes)reader.Binary.ReadUInt16();
             this.Name = reader.ReadString();
             this.EventType = reader.ReadCodedIndex<TypeDefOrRef>();
         }
