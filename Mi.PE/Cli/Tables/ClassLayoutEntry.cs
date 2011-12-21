@@ -52,7 +52,7 @@ namespace Mi.PE.Cli.Tables
         {
             this.PackingSize = reader.Binary.ReadUInt16();
             this.ClassSize = reader.Binary.ReadUInt32();
-            this.Parent = reader.Binary.ReadUInt32();
+            this.Parent = reader.ReadTableIndex(TableKind.TypeDef);
         }
     }
 }
