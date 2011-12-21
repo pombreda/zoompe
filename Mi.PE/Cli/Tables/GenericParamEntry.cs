@@ -51,6 +51,7 @@ namespace Mi.PE.Cli.Tables
         public void Read(ClrModuleReader reader)
         {
             this.Number = reader.Binary.ReadUInt16();
+            this.Flags = (GenericParamAttributes)reader.Binary.ReadUInt16();
             this.Owner = reader.ReadCodedIndex<TypeOrMethodDef>();
             this.Name = reader.ReadString();
         }
