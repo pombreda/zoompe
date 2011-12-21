@@ -274,8 +274,8 @@ namespace Mi.PE.Cli
             else
                 index = this.Binary.ReadUInt32();
 
-            if (index > length)
-                throw new FormatException("Index "+index+" is out of range [0.."+length+"] for "+table+" table.");
+            if (index > length + 1)
+                throw new FormatException("Index " + index + " is out of range [0.." + length + "] for " + table + " table.");
 
             return index;
         }
