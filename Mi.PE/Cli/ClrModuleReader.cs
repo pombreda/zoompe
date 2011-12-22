@@ -142,6 +142,9 @@ namespace Mi.PE.Cli
 
             this.Binary.Position = metadataDir.VirtualAddress + tableStreamHeader.Offset;
             this.ReadTableStream();
+
+            this.LoadModule();
+            this.LoadTypes();
         }
 
         public BinaryStreamReader Binary { get { return m_Binary; } }
@@ -340,6 +343,103 @@ namespace Mi.PE.Cli
         {
             tableStream = new TableStream();
             tableStream.Read(this);
+            this.module.TableStreamVersion = this.tableStream.Version;
+        }
+
+        void LoadModule()
+        {
+            ModuleEntry moduleEntry;
+            {
+                var moduleEntries = (ModuleEntry[])tableStream.Tables[(int)TableKind.Module];
+                if (moduleEntries == null || moduleEntries.Length == 0)
+                {
+                    this.module.Name = null;
+                    this.module.Mvid = null;
+                    this.module.Generation = 0;
+                    this.module.EncId = null;
+                    this.module.EncBaseId = null;
+                    return;
+                }
+
+                moduleEntry = moduleEntries[0];
+            }
+
+            this.module.Name = moduleEntry.Name;
+            this.module.Mvid = moduleEntry.Mvid;
+            this.module.Generation = moduleEntry.Generation;
+            this.module.EncId = moduleEntry.EncId;
+            this.module.EncBaseId = moduleEntry.EncBaseId;
+        }
+
+        void LoadTypes()
+        {
+            var typeDefEntries = (TypeDefEntry[])tableStream.Tables[(int)TableKind.TypeDef];
+            if (typeDefEntries == null || typeDefEntries.Length == 0)
+            {
+                this.module.Types = null;
+                return;
+            }
+
+            bool isFirstTypeModuleStub;
+
+            if (typeDefEntries[0].Extends.Index == 0
+                && (typeDefEntries[0].Flags & TypeAttributes.Interface) == 0)
+                isFirstTypeModuleStub = true;
+            else
+                isFirstTypeModuleStub = false;
+
+            {
+                int typeCount = isFirstTypeModuleStub ? typeDefEntries.Length - 1 : typeDefEntries.Length;
+                if (this.module.Types == null
+                    && this.module.Types.Length != typeCount)
+                    this.module.Types = new ClrType[typeCount];
+            }
+
+            for (int i = isFirstTypeModuleStub ? 1 : 0; i < typeDefEntries.Length; i++)
+            {
+                int typeIndex = isFirstTypeModuleStub ? i-1 : i;
+                var typeDefEntry = typeDefEntries[i];
+
+                var type = this.module.Types[typeIndex] ?? (this.module.Types[typeIndex] = new ClrType());
+
+                type.Name = typeDefEntry.TypeName;
+                type.Namespace = typeDefEntry.TypeNamespace;
+
+                var extends = typeDefEntry.Extends;
+                if(extends.Index==0)
+                {
+                    type.BaseType = null;
+                }
+                else
+                {
+                    if (extends.TableKind == TableKind.TypeRef)
+                    {
+                        var typeRefEntries = (TypeRefEntry[])this.tableStream.Tables[(int)TableKind.TypeRef];
+                        if (typeRefEntries == null || extends.Index >= typeRefEntries.Length)
+                        {
+                            type.BaseType = null;
+                        }
+                        else
+                        {
+                            var externalBaseTypeRefEntry = typeRefEntries[extends.Index];
+                            var externalTypeReference = new TypeReference.External();
+                            externalTypeReference.Name = externalBaseTypeRefEntry.TypeName;
+                            externalTypeReference.Namespace = externalBaseTypeRefEntry.TypeNamespace;
+                        }
+                    }
+                    else if(extends.TableKind == TableKind.TypeDef)
+                    {
+                        if(typeDefEntries == null || extends.Index >= typeDefEntries.Length)
+                        {
+                            type.BaseType = null;
+                        }
+                        else
+                        {
+                            type.BaseType = this.module.Types[extends.Index] ?? (this.module.Types[extends.Index] = new ClrType());
+                        }
+                    }
+                }
+            }
         }
     }
 }

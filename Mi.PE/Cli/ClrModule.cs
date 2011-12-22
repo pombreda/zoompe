@@ -16,5 +16,13 @@ namespace Mi.PE.Cli
         public Version MetadataVersion;
         public string MetadataVersionString;
         public Version TableStreamVersion;
+
+        public ClrType[] Types;
+        
+        public string Name;
+        public ushort Generation;
+        public Guid? Mvid;
+        public Guid? EncId;
+        public Guid? EncBaseId;
     }
 }

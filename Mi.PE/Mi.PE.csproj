@@ -37,6 +37,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cli\ClrType.cs" />
     <Compile Include="Cli\CodedIndices\CodedIndex.cs" />
     <Compile Include="Cli\CodedIndices\ResolutionScope.cs" />
     <Compile Include="Cli\CodedIndices\MemberForwarded.cs" />
@@ -125,6 +126,7 @@
     <Compile Include="Cli\Tables\TableKind.cs" />
     <Compile Include="Cli\Tables\TypeRefEntry.cs" />
     <Compile Include="Cli\Tables\TypeSpecEntry.cs" />
+    <Compile Include="Cli\TypeReference.cs" />
     <Compile Include="Internal\BinaryStreamReader.cs" />
     <Compile Include="Internal\BinaryStreamWriter.cs" />
     <Compile Include="PEFile.cs" />

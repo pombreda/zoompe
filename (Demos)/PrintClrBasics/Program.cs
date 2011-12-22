@@ -34,6 +34,7 @@ namespace PrintClrBasics
 
         private static void PrintClrHeader(ClrModule clrMod)
         {
+            Console.WriteLine(" '" + clrMod.Name + "'");
             Console.WriteLine("  Flags: " + clrMod.ImageFlags);
             Console.WriteLine("  CLR v" + clrMod.RuntimeVersion);
             Console.WriteLine("  Metadata v" + clrMod.MetadataVersion + " " + clrMod.MetadataVersionString);
