@@ -430,13 +430,13 @@ namespace Mi.PE.Cli
                 else
                 {
                     uint fieldCount;
-                    if (typeDefIndex == typeDefEntries.Length)
+                    if (typeDefIndex < typeDefEntries.Length - 1)
                     {
-                        fieldCount = 0;
+                        fieldCount = typeDefEntries[typeDefIndex + 1].FieldList - typeDefEntry.FieldList;
                     }
                     else
                     {
-                        fieldCount = firstFieldIndex - typeDefEntry.FieldList;
+                        fieldCount = 0;
                     }
 
                     type.Fields = new ClrField[fieldCount];
@@ -447,6 +447,15 @@ namespace Mi.PE.Cli
                     for (uint i = 0; i < fieldCount; i++)
                     {
                         uint fieldIndex = typeDefEntry.FieldList + i;
+
+                        if (fieldIndex == 0)
+                        {
+                            type.Fields[i] = null;
+                            continue;
+                        }
+
+                        fieldIndex--;
+
                         var fieldDefEntry = fieldDefEntries[fieldIndex];
 
                         var field = new ClrField();
