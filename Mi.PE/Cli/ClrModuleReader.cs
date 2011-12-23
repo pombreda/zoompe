@@ -391,9 +391,11 @@ namespace Mi.PE.Cli
             {
                 int typeCount = isFirstTypeModuleStub ? typeDefEntries.Length - 1 : typeDefEntries.Length;
                 if (this.module.Types == null
-                    && this.module.Types.Length != typeCount)
+                    || this.module.Types.Length != typeCount)
                     this.module.Types = new ClrType[typeCount];
             }
+
+            var fieldDefEntries = (FieldEntry[])this.tableStream.Tables[(int)TableKind.Field];
 
             for (int i = isFirstTypeModuleStub ? 1 : 0; i < typeDefEntries.Length; i++)
             {
@@ -404,39 +406,95 @@ namespace Mi.PE.Cli
 
                 type.Name = typeDefEntry.TypeName;
                 type.Namespace = typeDefEntry.TypeNamespace;
+                type.Attributes = typeDefEntry.Flags;
 
-                var extends = typeDefEntry.Extends;
-                if(extends.Index==0)
+                SetBaseType(typeDefEntries, isFirstTypeModuleStub, typeDefEntry, type);
+
+                SetFields(typeDefEntries, fieldDefEntries, i, typeDefEntry, type);
+            }
+        }
+
+        private static void SetFields(TypeDefEntry[] typeDefEntries, FieldEntry[] fieldDefEntries, int typeDefIndex, TypeDefEntry typeDefEntry, ClrType type)
+        {
+            if (fieldDefEntries == null)
+            {
+                type.Fields = null;
+            }
+            else
+            {
+                uint firstFieldIndex = typeDefEntry.FieldList;
+                if (firstFieldIndex > fieldDefEntries.Length)
                 {
-                    type.BaseType = null;
+                    type.Fields = null;
                 }
                 else
                 {
-                    if (extends.TableKind == TableKind.TypeRef)
+                    uint fieldCount;
+                    if (typeDefIndex == typeDefEntries.Length)
                     {
-                        var typeRefEntries = (TypeRefEntry[])this.tableStream.Tables[(int)TableKind.TypeRef];
-                        if (typeRefEntries == null || extends.Index >= typeRefEntries.Length)
-                        {
-                            type.BaseType = null;
-                        }
-                        else
-                        {
-                            var externalBaseTypeRefEntry = typeRefEntries[extends.Index];
-                            var externalTypeReference = new TypeReference.External();
-                            externalTypeReference.Name = externalBaseTypeRefEntry.TypeName;
-                            externalTypeReference.Namespace = externalBaseTypeRefEntry.TypeNamespace;
-                        }
+                        fieldCount = 0;
                     }
-                    else if(extends.TableKind == TableKind.TypeDef)
+                    else
                     {
-                        if(typeDefEntries == null || extends.Index >= typeDefEntries.Length)
-                        {
-                            type.BaseType = null;
-                        }
-                        else
-                        {
-                            type.BaseType = this.module.Types[extends.Index] ?? (this.module.Types[extends.Index] = new ClrType());
-                        }
+                        fieldCount = firstFieldIndex - typeDefEntry.FieldList;
+                    }
+
+                    type.Fields = new ClrField[fieldCount];
+
+                    if (firstFieldIndex + fieldCount > fieldDefEntries.Length)
+                        fieldCount = (uint)fieldDefEntries.Length - firstFieldIndex;
+
+                    for (uint i = 0; i < fieldCount; i++)
+                    {
+                        uint fieldIndex = typeDefEntry.FieldList + i;
+                        var fieldDefEntry = fieldDefEntries[fieldIndex];
+
+                        var field = new ClrField();
+                        field.Name = fieldDefEntry.Name;
+
+                        type.Fields[i] = field;
+                    }
+                }
+            }
+        }
+
+        void SetBaseType(TypeDefEntry[] typeDefEntries, bool isFirstTypeModuleStub, TypeDefEntry typeDefEntry, ClrType type)
+        {
+            var extends = typeDefEntry.Extends;
+            if (extends.Index == 0)
+            {
+                type.BaseType = null;
+            }
+            else
+            {
+                if (extends.TableKind == TableKind.TypeRef)
+                {
+                    var typeRefEntries = (TypeRefEntry[])this.tableStream.Tables[(int)TableKind.TypeRef];
+                    if (typeRefEntries == null || extends.Index >= typeRefEntries.Length)
+                    {
+                        type.BaseType = null;
+                    }
+                    else
+                    {
+                        var externalBaseTypeRefEntry = typeRefEntries[extends.Index];
+                        var externalTypeReference = new TypeReference.External();
+                        externalTypeReference.Name = externalBaseTypeRefEntry.TypeName;
+                        externalTypeReference.Namespace = externalBaseTypeRefEntry.TypeNamespace;
+                    }
+                }
+                else if (extends.TableKind == TableKind.TypeDef)
+                {
+                    if (typeDefEntries == null || extends.Index >= typeDefEntries.Length)
+                    {
+                        type.BaseType = null;
+                    }
+                    else
+                    {
+                        uint baseTypeIndex = extends.Index - 1;
+                        if (isFirstTypeModuleStub)
+                            baseTypeIndex--;
+
+                        type.BaseType = this.module.Types[baseTypeIndex] ?? (this.module.Types[extends.Index] = new ClrType());
                     }
                 }
             }

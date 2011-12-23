@@ -37,6 +37,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cli\ClrField.cs" />
     <Compile Include="Cli\ClrType.cs" />
     <Compile Include="Cli\CodedIndices\CodedIndex.cs" />
     <Compile Include="Cli\CodedIndices\ResolutionScope.cs" />

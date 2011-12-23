@@ -9,6 +9,15 @@ namespace Mi.PE.Cli
     {
         public string Name;
         public string Namespace;
+        public Mi.PE.Cli.Tables.TypeAttributes Attributes;
         public TypeReference BaseType;
+        public ClrField[] Fields;
+
+        public override string ToString()
+        {
+            return
+                string.IsNullOrEmpty(this.Namespace) ? this.Name :
+                this.Namespace + "." + this.Name;
+        }
     }
 }
