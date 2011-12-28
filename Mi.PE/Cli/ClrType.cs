@@ -17,7 +17,8 @@ namespace Mi.PE.Cli
         {
             return
                 string.IsNullOrEmpty(this.Namespace) ? this.Name :
-                this.Namespace + "." + this.Name;
+                this.Namespace + "." + this.Name +
+                (this.Fields == null ? null : " : Fields["+this.Fields.Length+"]");
         }
     }
 }

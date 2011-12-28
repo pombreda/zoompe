@@ -39,6 +39,13 @@ namespace PrintClrBasics
             Console.WriteLine("  CLR v" + clrMod.RuntimeVersion);
             Console.WriteLine("  Metadata v" + clrMod.MetadataVersion + " " + clrMod.MetadataVersionString);
             Console.WriteLine("  TableStream v" + clrMod.TableStreamVersion);
+
+            var types =
+                (from t in clrMod.Types ?? new ClrType[] { }
+                 orderby t.Namespace, t.Name
+                 select t).ToArray();
+
+            Console.WriteLine("  " + types.Length + " types");
         }
 
         private static ClrModule GetClrBasicsFor(string file, PEFile pe)

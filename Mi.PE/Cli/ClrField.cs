@@ -10,5 +10,10 @@ namespace Mi.PE.Cli
     {
         public FieldAttributes Attributes;
         public string Name;
+
+        public override string ToString()
+        {
+            return this.Name;
+        }
     }
 }
