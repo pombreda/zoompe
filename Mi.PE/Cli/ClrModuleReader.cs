@@ -414,7 +414,7 @@ namespace Mi.PE.Cli
             }
         }
 
-        private static void SetFields(TypeDefEntry[] typeDefEntries, FieldEntry[] fieldDefEntries, int typeDefIndex, TypeDefEntry typeDefEntry, ClrType type)
+        static void SetFields(TypeDefEntry[] typeDefEntries, FieldEntry[] fieldDefEntries, int typeDefIndex, TypeDefEntry typeDefEntry, ClrType type)
         {
             if (fieldDefEntries == null)
             {
