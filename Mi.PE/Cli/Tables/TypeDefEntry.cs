@@ -25,9 +25,22 @@ namespace Mi.PE.Cli.Tables
         /// </summary>
         public string TypeNamespace;
 
+        /// <summary>
+        /// An index into the <see cref="TableKind.TypeDef"/>, <see cref="TableKind.TypeRef"/>, or <see cref="TableKind.TypeSpec"/> table;
+        /// more precisely, a <see cref="TypeDefOrRef"/> (ECMA §24.2.6) coded index.
+        /// </summary>
         public CodedIndex<TypeDefOrRef> Extends;
 
+        /// <summary>
+        ///  An index into the <see cref="TableKind.Field"/> table;
+        ///  it marks the first of a contiguous run of Fields owned by this Type.
+        /// </summary>
         public uint FieldList;
+
+        /// <summary>
+        /// An index into the <see cref="TableKind.MethodDef"/> table;
+        /// it marks the first of a continguous run of Methods owned by this Type.
+        /// </summary>
         public uint MethodList;
 
         public void Read(ClrModuleReader reader)

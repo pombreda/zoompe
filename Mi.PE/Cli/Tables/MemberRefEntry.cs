@@ -5,6 +5,7 @@ using System.Linq;
 namespace Mi.PE.Cli.Tables
 {
     using Mi.PE.Cli.CodedIndices;
+    using Mi.PE.Cli.Signatures;
 
     /// <summary>
     /// The <see cref="TableKind.MemberRef"/> table combines two sorts of references, to Methods and to Fields of a class,

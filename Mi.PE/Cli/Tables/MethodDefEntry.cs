@@ -4,6 +4,8 @@ using System.Linq;
 
 namespace Mi.PE.Cli.Tables
 {
+    using Mi.PE.Cli.Signatures;
+
     /// <summary>
     /// Conceptually, every row in the <see cref="TableKind.MethodDef"/> table is owned by one, and only one, row in the <see cref="TableKind.TypeDef"/> table.
     /// The rows in the MethodDef table result from .method directives (ECMA-335 §15).

@@ -12,6 +12,7 @@ namespace Mi.PE.Cli
         public Mi.PE.Cli.Tables.TypeAttributes Attributes;
         public TypeReference BaseType;
         public ClrField[] Fields;
+        public string[] Methods;
 
         public override string ToString()
         {

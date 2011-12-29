@@ -6,6 +6,7 @@ namespace Mi.PE.Cli
 {
     using System.Text;
     using Mi.PE.Cli.CodedIndices;
+    using Mi.PE.Cli.Signatures;
     using Mi.PE.Cli.Tables;
     using Mi.PE.Internal;
     using Mi.PE.PEFormat;
@@ -249,7 +250,9 @@ namespace Mi.PE.Cli
             if (index == 0)
                 return null;
 
-            return new Signature((int)index, this.blobHeap);
+            byte sigLeadByte = this.Binary.ReadByte();
+
+            return null; // new Signature((int)index, this.blobHeap);
 
 
             //byte[] blob = this.ReadBlob();
@@ -395,7 +398,8 @@ namespace Mi.PE.Cli
                     this.module.Types = new ClrType[typeCount];
             }
 
-            var fieldDefEntries = (FieldEntry[])this.tableStream.Tables[(int)TableKind.Field];
+            var fieldEntries = (FieldEntry[])this.tableStream.Tables[(int)TableKind.Field];
+            var methodDefEntries = (MethodDefEntry[])this.tableStream.Tables[(int)TableKind.MethodDef];
 
             for (int i = isFirstTypeModuleStub ? 1 : 0; i < typeDefEntries.Length; i++)
             {
@@ -410,20 +414,22 @@ namespace Mi.PE.Cli
 
                 SetBaseType(typeDefEntries, isFirstTypeModuleStub, typeDefEntry, type);
 
-                SetFields(typeDefEntries, fieldDefEntries, i, typeDefEntry, type);
+                SetFields(typeDefEntries, fieldEntries, i, typeDefEntry, type);
+
+                SetMethods(typeDefEntries, methodDefEntries, i, typeDefEntry, type);
             }
         }
 
-        static void SetFields(TypeDefEntry[] typeDefEntries, FieldEntry[] fieldDefEntries, int typeDefIndex, TypeDefEntry typeDefEntry, ClrType type)
+        static void SetFields(TypeDefEntry[] typeDefEntries, FieldEntry[] fieldEntries, int typeDefIndex, TypeDefEntry typeDefEntry, ClrType type)
         {
-            if (fieldDefEntries == null)
+            if (fieldEntries == null)
             {
                 type.Fields = null;
             }
             else
             {
                 uint firstFieldIndex = typeDefEntry.FieldList;
-                if (firstFieldIndex > fieldDefEntries.Length)
+                if (firstFieldIndex > fieldEntries.Length)
                 {
                     type.Fields = null;
                 }
@@ -441,8 +447,8 @@ namespace Mi.PE.Cli
 
                     type.Fields = new ClrField[fieldCount];
 
-                    if (firstFieldIndex + fieldCount > fieldDefEntries.Length)
-                        fieldCount = (uint)fieldDefEntries.Length - firstFieldIndex;
+                    if (firstFieldIndex + fieldCount > fieldEntries.Length)
+                        fieldCount = (uint)fieldEntries.Length - firstFieldIndex;
 
                     for (uint i = 0; i < fieldCount; i++)
                     {
@@ -456,12 +462,62 @@ namespace Mi.PE.Cli
 
                         fieldIndex--;
 
-                        var fieldDefEntry = fieldDefEntries[fieldIndex];
+                        var fieldDefEntry = fieldEntries[fieldIndex];
 
                         var field = new ClrField();
                         field.Name = fieldDefEntry.Name;
 
                         type.Fields[i] = field;
+                    }
+                }
+            }
+        }
+
+        static void SetMethods(TypeDefEntry[] typeDefEntries, MethodDefEntry[] methodDefEntries, int typeDefIndex, TypeDefEntry typeDefEntry, ClrType type)
+        {
+            if (methodDefEntries == null)
+            {
+                type.Methods = null;
+            }
+            else
+            {
+                uint firstMethodIndex = typeDefEntry.MethodList;
+                if (firstMethodIndex > methodDefEntries.Length)
+                {
+                    type.Methods = null;
+                }
+                else
+                {
+                    uint methodCount;
+                    if (typeDefIndex < typeDefEntries.Length - 1)
+                    {
+                        methodCount = typeDefEntries[typeDefIndex + 1].MethodList - typeDefEntry.MethodList;
+                    }
+                    else
+                    {
+                        methodCount = 0;
+                    }
+
+                    type.Methods = new string[methodCount];
+
+                    if (firstMethodIndex + methodCount > methodDefEntries.Length)
+                        methodCount = (uint)methodDefEntries.Length - firstMethodIndex;
+
+                    for (uint i = 0; i < methodCount; i++)
+                    {
+                        uint methodIndex = typeDefEntry.MethodList + i;
+
+                        if (methodIndex == 0)
+                        {
+                            type.Methods[i] = null;
+                            continue;
+                        }
+
+                        methodIndex--;
+
+                        var methodDefEntry = methodDefEntries[methodIndex];
+
+                        type.Methods[i] = methodDefEntry.Name + " "+methodDefEntry.Flags + " " + methodDefEntry.ImplFlags;
                     }
                 }
             }

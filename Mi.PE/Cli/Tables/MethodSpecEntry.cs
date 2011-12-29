@@ -5,6 +5,7 @@ using System.Linq;
 namespace Mi.PE.Cli.Tables
 {
     using Mi.PE.Cli.CodedIndices;
+    using Mi.PE.Cli.Signatures;
 
     /// <summary>
     /// One or more rows can refer to the same row in the <see cref="TableKind.MethodDef"/> or <see cref="TableKind.MemberRef"/> table.

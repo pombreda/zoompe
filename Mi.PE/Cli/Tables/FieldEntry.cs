@@ -4,6 +4,8 @@ using System.Linq;
 
 namespace Mi.PE.Cli.Tables
 {
+    using Mi.PE.Cli.Signatures;
+
     /// <summary>
     /// Conceptually, each row in the <see cref="TableKind.Field"/> table is owned by one, and only one, row in the <see cref="TableKind.TypeDef"/> table.
     /// However, the owner of any row in the <see cref="TableKind.Field"/> table is not stored anywhere in the <see cref="TableKind.Field"/> table itself.
@@ -18,13 +20,13 @@ namespace Mi.PE.Cli.Tables
     {
         public FieldAttributes Flags;
         public string Name;
-        public Signature Signature;
+        public FieldSig Signature;
 
         public void Read(ClrModuleReader reader)
         {
             this.Flags = (FieldAttributes)reader.Binary.ReadUInt16();
             this.Name = reader.ReadString();
-            this.Signature = reader.ReadSignature();
+            this.Signature = (FieldSig)reader.ReadSignature();
         }
     }
 }

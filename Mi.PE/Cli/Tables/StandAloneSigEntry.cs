@@ -4,6 +4,8 @@ using System.Linq;
 
 namespace Mi.PE.Cli.Tables
 {
+    using Mi.PE.Cli.Signatures;
+
     /// <summary>
     /// Signatures are stored in the metadata Blob heap.
     /// In most cases, they are indexed by a column in some table —

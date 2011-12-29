@@ -4,6 +4,8 @@ using System.Linq;
 
 namespace Mi.PE.Cli.Tables
 {
+    using Mi.PE.Cli.Signatures;
+
     /// <summary>
     /// Properties within metadata are best viewed as a means to gather together collections of methods
     /// defined on a class, give them a name, and not much else.
@@ -41,13 +43,13 @@ namespace Mi.PE.Cli.Tables
         /// (ie, low nibble of leading byte is 0x8).
         /// Apart from this leading byte, the signature is the same as the property‘s  get_ method. [ERROR]
         /// </summary>
-        public Signature Type;
+        public PropertySig Type;
 
         public void Read(ClrModuleReader reader)
         {
             this.Flags = (PropertyAttributes)reader.Binary.ReadUInt16();
             this.Name = reader.ReadString();
-            this.Type = reader.ReadSignature();
+            this.Type = (PropertySig)reader.ReadSignature();
         }
     }
 }
