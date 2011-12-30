@@ -22,7 +22,7 @@ namespace Mi.PE.Cli.Tables
         public MethodImplAttributes ImplFlags;
         public MethodAttributes Flags;
         public string Name;
-        public Signature Signature;
+        public MethodSig Signature;
         public uint ParamList;
 
         public void Read(ClrModuleReader reader)
@@ -31,7 +31,7 @@ namespace Mi.PE.Cli.Tables
             this.ImplFlags = (MethodImplAttributes)reader.Binary.ReadUInt16();
             this.Flags = (MethodAttributes)reader.Binary.ReadUInt16();
             this.Name = reader.ReadString();
-            this.Signature = reader.ReadSignature();
+            this.Signature = (MethodSig)reader.ReadSignature();
             this.ParamList = reader.ReadTableIndex(TableKind.Param);
         }
     }
