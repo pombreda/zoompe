@@ -27,6 +27,16 @@ namespace Mi.PE.Internal
             this.buffer = buffer;
         }
 
+        public BinaryStreamReader(byte[] source, int offset, int length)
+        {
+            if (source == null)
+                throw new ArgumentNullException("source");
+
+            this.buffer = source;
+            this.bufferDataPosition = checked((int)offset);
+            this.bufferDataSize = checked((int)length);
+        }
+
         public long Position
         { 
             get 
@@ -130,6 +140,9 @@ namespace Mi.PE.Internal
             }
             else
             {
+                if (stream == null)
+                    throw new EndOfStreamException();
+
                 byte[] byteBuffer = new byte[size];
                 Array.Copy(
                     this.buffer, this.bufferDataPosition,
@@ -188,6 +201,9 @@ namespace Mi.PE.Internal
             }
             else
             {
+                if (stream == null)
+                    throw new EndOfStreamException();
+
                 Array.Copy(
                     this.buffer, this.bufferDataPosition,
                     buffer, offset,
@@ -223,6 +239,9 @@ namespace Mi.PE.Internal
         {
             if (this.bufferDataSize < size)
             {
+                if (this.stream == null)
+                    throw new EndOfStreamException();
+
                 if (this.buffer.Length - this.bufferDataPosition < size)
                 {
                     Array.Copy(
