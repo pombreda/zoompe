@@ -5,7 +5,12 @@ using System.Text;
 
 namespace Mi.PE.Cli.Signatures
 {
+    using Mi.PE.Internal;
+
     public sealed class PropertySig : Signature
     {
+        protected override void ReadCore(BinaryStreamReader reader)
+        {
+        }
     }
 }

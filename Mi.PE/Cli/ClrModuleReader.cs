@@ -165,6 +165,9 @@ namespace Mi.PE.Cli
             }
             else if(!stringHeapCache.TryGetValue(pos, out result))
             {
+                if (pos > stringHeap.Length)
+                    throw new InvalidOperationException("String heap position overflow.");
+
                 int length = 0;
                 while(pos + length < stringHeap.Length)
                 {
@@ -199,35 +202,30 @@ namespace Mi.PE.Cli
 
         public byte[] ReadBlob()
         {
+            uint index = ReadBlobIndex();
+
+            if (index == 0)
+                return null;
+
+            byte[] result = GetBlobFromIndex(index);
+
+            return result;
+        }
+
+        private uint ReadBlobIndex()
+        {
             uint index;
 
             if (this.blobHeap.Length <= ushort.MaxValue)
                 index = this.Binary.ReadUInt16();
             else
                 index = this.Binary.ReadUInt32();
+            return index;
+        }
 
-            if (index == 0)
-                return null;
-
-            uint length;
-
-            byte b0 = this.blobHeap[index];
-            if (b0 <= sbyte.MaxValue)
-            {
-                length = b0;
-            }
-            else if ((b0 & 0xC0) == sbyte.MaxValue + 1)
-            {
-                byte b2 = this.blobHeap[index + 1];
-                length = unchecked((uint)(((b0 & 0x3F) << 8) | b2));
-            }
-            else
-            {
-                byte b2 = this.blobHeap[index + 1];
-                byte b3 = this.blobHeap[index + 2];
-                byte b4 = this.blobHeap[index + 3];
-                length = unchecked((uint)(((b0 & 0x3F) << 24) + (b2 << 16) + (b3 << 8) + b4));
-            }
+        byte[] GetBlobFromIndex(uint index)
+        {
+            uint length = ReadBlobLengthForIndex(ref index);
 
             byte[] result = new byte[length];
             Array.Copy(
@@ -238,25 +236,43 @@ namespace Mi.PE.Cli
             return result;
         }
 
+        uint ReadBlobLengthForIndex(ref uint index)
+        {
+            uint length;
+
+            byte b0 = this.blobHeap[index];
+            if (b0 <= sbyte.MaxValue)
+            {
+                length = b0;
+                index++;
+            }
+            else if ((b0 & 0xC0) == sbyte.MaxValue + 1)
+            {
+                byte b2 = this.blobHeap[index + 1];
+                length = unchecked((uint)(((b0 & 0x3F) << 8) | b2));
+                index += 2;
+            }
+            else
+            {
+                byte b2 = this.blobHeap[index + 1];
+                byte b3 = this.blobHeap[index + 2];
+                byte b4 = this.blobHeap[index + 3];
+                length = unchecked((uint)(((b0 & 0x3F) << 24) + (b2 << 16) + (b3 << 8) + b4));
+                index += 4;
+            }
+            return length;
+        }
+
         public Signature ReadSignature()
         {
-            uint index;
+            uint blobIindex = ReadBlobIndex();
+            uint blobLength = ReadBlobLengthForIndex(ref blobIindex);
 
-            if (this.blobHeap.Length <= ushort.MaxValue)
-                index = this.Binary.ReadUInt16();
-            else
-                index = this.Binary.ReadUInt32();
+            var sigReader = new BinaryStreamReader(this.blobHeap, checked((int)blobIindex), checked((int)blobLength));
 
-            if (index == 0)
-                return null;
+            var sig = Signature.Read(sigReader);
 
-            byte sigLeadByte = this.Binary.ReadByte();
-
-            return null; // new Signature((int)index, this.blobHeap);
-
-
-            //byte[] blob = this.ReadBlob();
-            //return new Signature(blob);
+            return sig;
         }
 
         public Version ReadVersion()

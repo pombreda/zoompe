@@ -16,72 +16,55 @@ namespace Mi.PE.Cli.Signatures
     {
         public sealed class Default : MethodSig
         {
-
+            protected override void ReadCore(BinaryStreamReader reader)
+            {
+            }
         }
 
         public sealed class C : MethodSig
         {
+            protected override void ReadCore(BinaryStreamReader reader)
+            {
+            }
         }
 
         public sealed class StdCall : MethodSig
         {
+            protected override void ReadCore(BinaryStreamReader reader)
+            {
+            }
         }
 
         public sealed class ThisCall : MethodSig
         {
+            protected override void ReadCore(BinaryStreamReader reader)
+            {
+            }
         }
 
         public sealed class FastCall : MethodSig
         {
+            protected override void ReadCore(BinaryStreamReader reader)
+            {
+            }
         }
 
         public sealed class Generic : MethodSig
         {
             public Signature[] GenParams;
+
+            protected override void ReadCore(BinaryStreamReader reader)
+            {
+            }
         }
 
         public sealed class VarArg : MethodSig
         {
             public Signature[] VarArgs;
-        }
 
-        enum CallingConvention : byte
-        {
-            /// <summary>
-            /// Used to encode the keyword default in the calling convention, see ECMA §15.3.
-            /// </summary>
-            Default = 0x0,
-
-            C = 0x1,
-
-            StdCall = 0x2,
-
-            FastCall = 0x4,
-
-            /// <summary>
-            /// Used to encode the keyword vararg in the calling convention, see ECMA §15.3.
-            /// </summary>
-            VarArg = 0x5,
-
-            /// <summary>
-            /// Used to indicate that the method has one or more generic parameters.
-            /// </summary>
-            Generic = 0x10,
-
-            /// <summary>
-            /// Used to encode the keyword instance in the calling convention, see ECMA §15.3.
-            /// </summary>
-            HasThis = 0x20,
-
-            /// <summary>
-            /// Used to encode the keyword explicit in the calling convention, see ECMA §15.3.
-            /// </summary>
-            ExplicitThis = 0x40,
-
-            /// <summary>
-            /// (ECMA §23.1.16), used to encode '...' in the parameter list, see ECMA §15.3.
-            /// </summary>
-            Sentinel = 0x41,
+            protected override void ReadCore(BinaryStreamReader reader)
+            {
+            }
         }
 
         public bool Instance;
@@ -92,47 +75,47 @@ namespace Mi.PE.Cli.Signatures
 
         public static MethodSig Read(BinaryStreamReader reader)
         {
-            var callingConvention = (CallingConvention)reader.ReadByte();
+            var callingConvention = (LeadingByte)reader.ReadByte();
 
             
-            switch (callingConvention & ~CallingConvention.HasThis & ~CallingConvention.ExplicitThis)
+            switch (callingConvention & ~LeadingByte.HasThis & ~LeadingByte.ExplicitThis)
             {
-                case CallingConvention.Default:
+                case LeadingByte.Default:
                     {
                         var result = new Default();
                         result.PopulateSimpleSig(reader, callingConvention);
                         return result;
                     }
 
-                case CallingConvention.C:
+                case LeadingByte.C:
                     {
                         var result = new C();
                         result.PopulateSimpleSig(reader, callingConvention);
                         return result;
                     }
 
-                case CallingConvention.StdCall:
+                case LeadingByte.StdCall:
                     {
                         var result = new StdCall();
                         result.PopulateSimpleSig(reader, callingConvention);
                         return result;
                     }
 
-                case CallingConvention.FastCall:
+                case LeadingByte.FastCall:
                     {
                         var result = new FastCall();
                         result.PopulateSimpleSig(reader, callingConvention);
                         return result;
                     }
 
-                case CallingConvention.VarArg:
+                case LeadingByte.VarArg:
                     {
                         var result = new VarArg();
                         throw new NotImplementedException();
                         return result;
                     }
 
-                case CallingConvention.Generic:
+                case LeadingByte.Generic:
                     {
                         var result = new Generic();
                         throw new NotImplementedException();
@@ -144,13 +127,13 @@ namespace Mi.PE.Cli.Signatures
             }
         }
 
-        void PopulateInstanceAndExplicit(CallingConvention callingConvention)
+        void PopulateInstanceAndExplicit(LeadingByte callingConvention)
         {
-            this.Instance = (callingConvention & CallingConvention.HasThis) != 0;
-            this.Explicit = (callingConvention & CallingConvention.ExplicitThis) != 0;
+            this.Instance = (callingConvention & LeadingByte.HasThis) != 0;
+            this.Explicit = (callingConvention & LeadingByte.ExplicitThis) != 0;
         }
 
-        void PopulateSimpleSig(BinaryStreamReader reader, CallingConvention callingConvention)
+        void PopulateSimpleSig(BinaryStreamReader reader, LeadingByte callingConvention)
         {
             PopulateInstanceAndExplicit(callingConvention);
             throw new NotImplementedException();

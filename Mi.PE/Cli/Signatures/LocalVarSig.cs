@@ -7,5 +7,8 @@ namespace Mi.PE.Cli.Signatures
 {
     public sealed class LocalVarSig : Signature
     {
+        protected override void ReadCore(Internal.BinaryStreamReader reader)
+        {
+        }
     }
 }
