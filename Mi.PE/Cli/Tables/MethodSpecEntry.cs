@@ -27,12 +27,12 @@ namespace Mi.PE.Cli.Tables
         /// The signature stored at <see cref="Instantiation"/> shall be a valid instantiation
         /// of the signature of the generic method stored at <see cref="Method "/> [ERROR]
         /// </summary>
-        public Signature Instantiation;
+        public MethodSig Instantiation;
 
         public void Read(ClrModuleReader reader)
         {
             this.Method = reader.ReadCodedIndex<MethodDefOrRef>();
-            this.Instantiation = reader.ReadSignature();
+            this.Instantiation = reader.ReadMethodSignature();
         }
     }
 }

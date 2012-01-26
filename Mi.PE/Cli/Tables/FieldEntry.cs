@@ -26,7 +26,7 @@ namespace Mi.PE.Cli.Tables
         {
             this.Flags = (FieldAttributes)reader.Binary.ReadUInt16();
             this.Name = reader.ReadString();
-            this.Signature = (FieldSig)reader.ReadSignature();
+            this.Signature = reader.ReadFieldSignature();
         }
     }
 }

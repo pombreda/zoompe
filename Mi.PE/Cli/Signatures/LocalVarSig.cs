@@ -5,9 +5,11 @@ using System.Text;
 
 namespace Mi.PE.Cli.Signatures
 {
-    public sealed class LocalVarSig : Signature
+    using Mi.PE.Internal;
+
+    public sealed class LocalVarSig
     {
-        protected override void ReadCore(Internal.BinaryStreamReader reader)
+        public void Read(BinaryStreamReader signatureBlobReader)
         {
         }
     }

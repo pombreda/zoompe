@@ -263,15 +263,57 @@ namespace Mi.PE.Cli
             return length;
         }
 
-        public Signature ReadSignature()
+        public MethodSig ReadMethodSignature()
+        {
+            uint blobIindex = ReadBlobIndex();
+            
+            var sigReader = GetSignatureBlobReader(ref blobIindex);
+
+            var sig = MethodSig.Read(sigReader);
+
+            return sig;
+        }
+
+        private BinaryStreamReader GetSignatureBlobReader(ref uint blobIindex)
+        {
+            uint blobLength = ReadBlobLengthForIndex(ref blobIindex);
+            var sigReader = new BinaryStreamReader(this.blobHeap, checked((int)blobIindex), checked((int)blobLength));
+            return sigReader;
+        }
+
+        public FieldSig ReadFieldSignature()
+        {
+            uint blobIindex = ReadBlobIndex();
+
+            var sigReader = GetSignatureBlobReader(ref blobIindex);
+
+            var sig = new FieldSig();
+            sig.Read(sigReader);
+
+            return sig;
+        }
+
+        public PropertySig ReadPropertySignature()
+        {
+            uint blobIindex = ReadBlobIndex();
+
+            var sigReader = GetSignatureBlobReader(ref blobIindex);
+
+            var sig = new PropertySig();
+            sig.Read(sigReader);
+
+            return sig;
+        }
+
+        public TypeSpec ReadTypeSpec()
         {
             uint blobIindex = ReadBlobIndex();
             uint blobLength = ReadBlobLengthForIndex(ref blobIindex);
 
             var sigReader = new BinaryStreamReader(this.blobHeap, checked((int)blobIindex), checked((int)blobLength));
 
-            var sig = Signature.Read(sigReader);
-
+            var sig = new TypeSpec();
+            sig.Read(sigReader);
             return sig;
         }
 

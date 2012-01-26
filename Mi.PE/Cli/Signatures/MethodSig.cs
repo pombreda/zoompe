@@ -12,7 +12,7 @@ namespace Mi.PE.Cli.Signatures
     /// It captures the signature of a method or global function.
     /// [ECMA §23.2.1, §23.2.2, §23.2.3]
     /// </summary>
-    public abstract class MethodSig : Signature
+    public abstract class MethodSig
     {
         public sealed class Default : MethodSig
         {
@@ -51,7 +51,7 @@ namespace Mi.PE.Cli.Signatures
 
         public sealed class Generic : MethodSig
         {
-            public Signature[] GenParams;
+            public LocalVarSig[] GenParams;
 
             protected override void ReadCore(BinaryStreamReader reader)
             {
@@ -60,80 +60,108 @@ namespace Mi.PE.Cli.Signatures
 
         public sealed class VarArg : MethodSig
         {
-            public Signature[] VarArgs;
+            public LocalVarSig[] VarArgs;
 
             protected override void ReadCore(BinaryStreamReader reader)
             {
             }
         }
 
+        [Flags]
+        private enum CallingConventions : byte
+        {
+            /// <summary>
+            /// Used to encode the keyword default in the calling convention, see ECMA §15.3.
+            /// </summary>
+            Default = 0x0,
+
+            C = 0x1,
+
+            StdCall = 0x2,
+
+            FastCall = 0x4,
+
+            /// <summary>
+            /// Used to encode the keyword vararg in the calling convention, see ECMA §15.3.
+            /// </summary>
+            VarArg = 0x5,
+
+            /// <summary>
+            /// Used to indicate that the method has one or more generic parameters.
+            /// </summary>
+            Generic = 0x10,
+
+            /// <summary>
+            /// Used to encode the keyword instance in the calling convention, see ECMA §15.3.
+            /// </summary>
+            HasThis = 0x20,
+
+            /// <summary>
+            /// Used to encode the keyword explicit in the calling convention, see ECMA §15.3.
+            /// </summary>
+            ExplicitThis = 0x40,
+
+            /// <summary>
+            /// (ECMA §23.1.16), used to encode '...' in the parameter list, see ECMA §15.3.
+            /// </summary>
+            Sentinel = 0x41,
+        }
+
         public bool Instance;
         public bool Explicit;
 
-        public Signature RefType;
-        public Signature[] ParamList;
+        public TypeSpec RefType;
+        public LocalVarSig[] ParamList;
 
-        public static MethodSig Read(BinaryStreamReader reader)
+        public static MethodSig Read(BinaryStreamReader signatureBlobReader)
         {
-            var callingConvention = (LeadingByte)reader.ReadByte();
+            var callingConvention = (CallingConventions)signatureBlobReader.ReadByte();
 
-            
-            switch (callingConvention & ~LeadingByte.HasThis & ~LeadingByte.ExplicitThis)
+            MethodSig result;
+            switch (callingConvention & ~CallingConventions.HasThis & ~CallingConventions.ExplicitThis)
             {
-                case LeadingByte.Default:
-                    {
-                        var result = new Default();
-                        result.PopulateSimpleSig(reader, callingConvention);
-                        return result;
-                    }
+                case CallingConventions.Default:
+                    result = new Default();
+                    break;
 
-                case LeadingByte.C:
-                    {
-                        var result = new C();
-                        result.PopulateSimpleSig(reader, callingConvention);
-                        return result;
-                    }
+                case CallingConventions.C:
+                    result = new C();
+                    break;
 
-                case LeadingByte.StdCall:
-                    {
-                        var result = new StdCall();
-                        result.PopulateSimpleSig(reader, callingConvention);
-                        return result;
-                    }
+                case CallingConventions.StdCall:
+                    result = new StdCall();
+                    break;
 
-                case LeadingByte.FastCall:
-                    {
-                        var result = new FastCall();
-                        result.PopulateSimpleSig(reader, callingConvention);
-                        return result;
-                    }
+                case CallingConventions.FastCall:
+                    result = new FastCall();
+                    break;
 
-                case LeadingByte.VarArg:
-                    {
-                        var result = new VarArg();
-                        throw new NotImplementedException();
-                        return result;
-                    }
+                case CallingConventions.VarArg:
+                    result = new VarArg();
+                    break;
 
-                case LeadingByte.Generic:
-                    {
-                        var result = new Generic();
-                        throw new NotImplementedException();
-                        return result;
-                    }
+                case CallingConventions.Generic:
+                    result = new Generic();
+                    break;
 
                 default:
                     throw new BadImageFormatException("Invalid calling convention byte "+callingConvention+".");
             }
+
+            result.ReadCore(signatureBlobReader);
+
+            return result;
         }
 
-        void PopulateInstanceAndExplicit(LeadingByte callingConvention)
+        protected abstract void ReadCore(BinaryStreamReader signatureBlobReader);
+
+        void PopulateInstanceAndExplicit(CallingConventions callingConvention)
         {
-            this.Instance = (callingConvention & LeadingByte.HasThis) != 0;
-            this.Explicit = (callingConvention & LeadingByte.ExplicitThis) != 0;
+            this.Instance = (callingConvention & CallingConventions.HasThis) != 0;
+            this.Explicit = (callingConvention & CallingConventions.ExplicitThis) != 0;
         }
 
-        void PopulateSimpleSig(BinaryStreamReader reader, LeadingByte callingConvention)
+        void PopulateSimpleSig(BinaryStreamReader signatureBlobReader, CallingConventions callingConvention)
         {
             PopulateInstanceAndExplicit(callingConvention);
             throw new NotImplementedException();

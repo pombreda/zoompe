@@ -49,7 +49,7 @@ namespace Mi.PE.Cli.Tables
         {
             this.Flags = (PropertyAttributes)reader.Binary.ReadUInt16();
             this.Name = reader.ReadString();
-            this.Type = (PropertySig)reader.ReadSignature();
+            this.Type = reader.ReadPropertySignature();
         }
     }
 }

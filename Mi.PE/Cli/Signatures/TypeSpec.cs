@@ -7,7 +7,7 @@ namespace Mi.PE.Cli.Signatures
 {
     using Mi.PE.Internal;
 
-    public sealed class PropertySig
+    public sealed class TypeSpec
     {
         public void Read(BinaryStreamReader signatureBlobReader)
         {

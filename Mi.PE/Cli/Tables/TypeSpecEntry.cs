@@ -20,11 +20,11 @@ namespace Mi.PE.Cli.Tables
     /// </remarks>
     public struct TypeSpecEntry
     {
-        public Signature Signature;
+        public TypeSpec Signature;
 
         public void Read(ClrModuleReader reader)
         {
-            this.Signature = reader.ReadSignature();
+            this.Signature = reader.ReadTypeSpec();
         }
     }
 }

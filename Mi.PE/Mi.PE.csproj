@@ -61,7 +61,7 @@
     <Compile Include="Cli\Signatures\LocalVarSig.cs" />
     <Compile Include="Cli\Signatures\MethodSig.cs" />
     <Compile Include="Cli\Signatures\PropertySig.cs" />
-    <Compile Include="Cli\Signatures\Signature.cs" />
+    <Compile Include="Cli\Signatures\TypeSpec.cs" />
     <Compile Include="Cli\Tables\CustomAttributeEntry.cs" />
     <Compile Include="Cli\Tables\DeclSecurityEntry.cs" />
     <Compile Include="Cli\Tables\EventAttributes.cs" />
