@@ -56,12 +56,14 @@
     <Compile Include="Cli\CodedIndices\ICodedIndexDefinition.cs" />
     <Compile Include="Cli\CustomAttributeData.cs" />
     <Compile Include="Cli\MarshalSpec.cs" />
+    <Compile Include="Cli\Signatures\CustomMod.cs" />
     <Compile Include="Cli\Signatures\FieldSig.cs" />
     <Compile Include="Cli\Signatures\IntegerCompression.cs" />
     <Compile Include="Cli\Signatures\LocalVarSig.cs" />
     <Compile Include="Cli\Signatures\MethodSig.cs" />
     <Compile Include="Cli\Signatures\MethodSpec.cs" />
     <Compile Include="Cli\Signatures\PropertySig.cs" />
+    <Compile Include="Cli\Signatures\RefType.cs" />
     <Compile Include="Cli\Signatures\TypeSpec.cs" />
     <Compile Include="Cli\Tables\CustomAttributeEntry.cs" />
     <Compile Include="Cli\Tables\DeclSecurityEntry.cs" />
