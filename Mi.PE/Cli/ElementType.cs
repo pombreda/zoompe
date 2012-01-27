@@ -4,15 +4,22 @@ using System.Linq;
 
 namespace Mi.PE.Cli
 {
-    public enum ElementType
+    /// <summary>
+    /// [ECMA-335 §23.1.16]
+    /// </summary>
+    public enum ElementType : byte
     {
         /// <summary>
-        /// Marks end of a list
+        /// Marks end of a list.
         /// </summary>
         End = 0x00,
+
         Void = 0x01,
+        
         Boolean = 0x02,
+        
         Char = 0x03,
+        
         I1 = 0x04,
         U1 = 0x05,
         I2 = 0x06,
@@ -26,27 +33,27 @@ namespace Mi.PE.Cli
         String = 0x0e,
 
         /// <summary>
-        /// Followed by type
+        /// Followed by type.
         /// </summary>
         Ptr = 0x0f,
 
         /// <summary>
-        /// Followed by type
+        /// Followed by type.
         /// </summary>
         ByRef = 0x10,
 
         /// <summary>
-        /// Followed by TypeDef or TypeRef token
+        /// Followed by <see cref="TableKind.TypeDef"/> or <see cref="TableKind.TypeRef"/> token.
         /// </summary>
         ValueType = 0x11,
 
         /// <summary>
-        /// Followed by TypeDef or TypeRef token
+        /// Followed by <see cref="TableKind.TypeDef"/> or <see cref="TableKind.TypeRef"/> token.
         /// </summary>
         Class = 0x12,
 
         /// <summary>
-        /// Generic parameter in a generic type definition, represented as number (compressed unsigned integer)
+        /// Generic parameter in a generic type definition, represented as number (compressed unsigned integer).
         /// </summary>
         Var = 0x13,
 
@@ -56,7 +63,7 @@ namespace Mi.PE.Cli
         Array = 0x14,
 
         /// <summary>
-        /// Generic type instantiation.  Followed by type typearg-count type-1 ... type-n
+        /// Generic type instantiation.  Followed by type typearg-count type-1 ... type-n.
         /// </summary>
         GenericInst = 0x15,
 
@@ -93,12 +100,12 @@ namespace Mi.PE.Cli
         MVar = 0x1e,
 
         /// <summary>
-        /// Required modifier : followed by a TypeDef or TypeRef token.
+        /// Required modifier : followed by <see cref="TableKind.TypeDef"/> or <see cref="TableKind.TypeRef"/> token.
         /// </summary>
         CMod_ReqD = 0x1f,
 
         /// <summary>
-        /// Optional modifier : followed by a TypeDef or TypeRef token.
+        /// Optional modifier : followed by <see cref="TableKind.TypeDef"/> or <see cref="TableKind.TypeRef"/> token.
         /// </summary>
         CMod_Opt = 0x20,
 
