@@ -16,55 +16,37 @@ namespace Mi.PE.Cli.Signatures
     {
         public sealed class Default : MethodSig
         {
-            protected override void ReadCore(BinaryStreamReader reader)
-            {
-            }
         }
 
         public sealed class C : MethodSig
         {
-            protected override void ReadCore(BinaryStreamReader reader)
-            {
-            }
         }
 
         public sealed class StdCall : MethodSig
         {
-            protected override void ReadCore(BinaryStreamReader reader)
-            {
-            }
         }
 
         public sealed class ThisCall : MethodSig
         {
-            protected override void ReadCore(BinaryStreamReader reader)
-            {
-            }
         }
 
         public sealed class FastCall : MethodSig
         {
-            protected override void ReadCore(BinaryStreamReader reader)
-            {
-            }
         }
 
         public sealed class Generic : MethodSig
         {
-            public LocalVarSig[] GenParams;
+            public uint GenParamCount;
 
-            protected override void ReadCore(BinaryStreamReader reader)
+            internal void ReadDetails(BinaryStreamReader reader)
             {
+                this.GenParamCount = reader.ReadCompressedInteger() ?? 0;
             }
         }
 
         public sealed class VarArg : MethodSig
         {
             public LocalVarSig[] VarArgs;
-
-            protected override void ReadCore(BinaryStreamReader reader)
-            {
-            }
         }
 
         [Flags]
@@ -141,19 +123,19 @@ namespace Mi.PE.Cli.Signatures
                     break;
 
                 case CallingConventions.Generic:
-                    result = new Generic();
+                    {
+                        var typed = new Generic();
+                        typed.ReadDetails(signatureBlobReader);
+                        result = typed;
+                    }
                     break;
 
                 default:
                     throw new BadImageFormatException("Invalid calling convention byte "+callingConvention+".");
             }
 
-            result.ReadCore(signatureBlobReader);
-
             return result;
         }
-
-        protected abstract void ReadCore(BinaryStreamReader signatureBlobReader);
 
         void PopulateInstanceAndExplicit(CallingConventions callingConvention)
         {
