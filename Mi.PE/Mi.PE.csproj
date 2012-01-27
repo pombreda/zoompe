@@ -60,6 +60,7 @@
     <Compile Include="Cli\Signatures\IntegerCompression.cs" />
     <Compile Include="Cli\Signatures\LocalVarSig.cs" />
     <Compile Include="Cli\Signatures\MethodSig.cs" />
+    <Compile Include="Cli\Signatures\MethodSpec.cs" />
     <Compile Include="Cli\Signatures\PropertySig.cs" />
     <Compile Include="Cli\Signatures\TypeSpec.cs" />
     <Compile Include="Cli\Tables\CustomAttributeEntry.cs" />

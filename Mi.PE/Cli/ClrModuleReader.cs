@@ -266,6 +266,8 @@ namespace Mi.PE.Cli
         public MethodSig ReadMethodSignature()
         {
             uint blobIindex = ReadBlobIndex();
+            if (blobIindex == 0)
+                return null;
             
             var sigReader = GetSignatureBlobReader(ref blobIindex);
 
@@ -274,16 +276,25 @@ namespace Mi.PE.Cli
             return sig;
         }
 
-        private BinaryStreamReader GetSignatureBlobReader(ref uint blobIindex)
+        public MethodSpec ReadMethodSpec()
         {
-            uint blobLength = ReadBlobLengthForIndex(ref blobIindex);
-            var sigReader = new BinaryStreamReader(this.blobHeap, checked((int)blobIindex), checked((int)blobLength));
-            return sigReader;
+            uint blobIindex = ReadBlobIndex();
+            if (blobIindex == 0)
+                return null;
+
+            var sigReader = GetSignatureBlobReader(ref blobIindex);
+
+            var sig = new MethodSpec();
+            sig.Read(sigReader);
+
+            return sig;
         }
 
         public FieldSig ReadFieldSignature()
         {
             uint blobIindex = ReadBlobIndex();
+            if (blobIindex == 0)
+                return null;
 
             var sigReader = GetSignatureBlobReader(ref blobIindex);
 
@@ -296,6 +307,8 @@ namespace Mi.PE.Cli
         public PropertySig ReadPropertySignature()
         {
             uint blobIindex = ReadBlobIndex();
+            if (blobIindex == 0)
+                return null;
 
             var sigReader = GetSignatureBlobReader(ref blobIindex);
 
@@ -308,6 +321,9 @@ namespace Mi.PE.Cli
         public TypeSpec ReadTypeSpec()
         {
             uint blobIindex = ReadBlobIndex();
+            if (blobIindex == 0)
+                return null;
+
             uint blobLength = ReadBlobLengthForIndex(ref blobIindex);
 
             var sigReader = new BinaryStreamReader(this.blobHeap, checked((int)blobIindex), checked((int)blobLength));
@@ -315,6 +331,13 @@ namespace Mi.PE.Cli
             var sig = new TypeSpec();
             sig.Read(sigReader);
             return sig;
+        }
+
+        BinaryStreamReader GetSignatureBlobReader(ref uint blobIindex)
+        {
+            uint blobLength = ReadBlobLengthForIndex(ref blobIindex);
+            var sigReader = new BinaryStreamReader(this.blobHeap, checked((int)blobIindex), checked((int)blobLength));
+            return sigReader;
         }
 
         public Version ReadVersion()
