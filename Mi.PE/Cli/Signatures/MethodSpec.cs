@@ -7,6 +7,9 @@ namespace Mi.PE.Cli.Signatures
 {
     using Mi.PE.Internal;
 
+    /// <summary>
+    /// [ECMA-335 §23.2.15]
+    /// </summary>
     public sealed class MethodSpec
     {
         public TypeSpec[] GenArgs;
