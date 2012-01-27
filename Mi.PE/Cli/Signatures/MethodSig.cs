@@ -10,7 +10,7 @@ namespace Mi.PE.Cli.Signatures
     /// <summary>
     /// A <see cref="MethodSig"/> is indexed by the Method.Signature column.
     /// It captures the signature of a method or global function.
-    /// [ECMA §23.2.1, §23.2.2, §23.2.3]
+    /// [ECMA-335 §23.2.1, §23.2.2, §23.2.3]
     /// </summary>
     public abstract class MethodSig
     {
@@ -134,7 +134,14 @@ namespace Mi.PE.Cli.Signatures
                     throw new BadImageFormatException("Invalid calling convention byte "+callingConvention+".");
             }
 
+            result.ReadParameters(signatureBlobReader);
+
             return result;
+        }
+
+        void ReadParameters(BinaryStreamReader signatureBlobReader)
+        {
+            uint parameterCount = signatureBlobReader.ReadCompressedInteger() ?? 0;
         }
 
         void PopulateInstanceAndExplicit(CallingConventions callingConvention)
