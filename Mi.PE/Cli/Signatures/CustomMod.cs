@@ -34,20 +34,7 @@ namespace Mi.PE.Cli.Signatures
                 return null;
             }
 
-            // TypeDefOrRefOrSpecEncoded (ECMA-335 §23.2.8)
-            uint? encodedOrNull = signatureBlobReader.ReadCompressedInteger();
-
-            switch (encodedOrNull)
-            {
-                case 0: // TypeDef
-                case 1: // TypeRef
-                case 2: // TypeSpec
-                    result.Type = (CodedIndices.CodedIndex<CodedIndices.TypeDefOrRef>)encodedOrNull.Value;
-                    break;
-
-                default:
-                    throw new BadImageFormatException("Invalid TypeDefOrRefOrSpecEncoded value: " + (encodedOrNull == null ? "null" : encodedOrNull.ToString()) + ".");
-            }
+            result.Type = signatureBlobReader.ReadTypeDefOrRefOrSpecEncoded();
 
             return result;
         }

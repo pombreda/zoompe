@@ -10,23 +10,62 @@ namespace Mi.PE.Cli.Signatures
     /// <summary>
     /// [ECMA-335 §23.2.11]
     /// </summary>
-    public sealed class RefType
+    public abstract class RefType
     {
-        public void Read(BinaryStreamReader signatureBlobReader)
+        public sealed class ByRef : RefType
         {
-            var etype = (ElementType)signatureBlobReader.ReadByte();
-            if (etype == ElementType.ByRef)
+            public Type Type;
+        }
+
+        public sealed class DirectType : RefType
+        {
+            public Type Type;
+        }
+
+        public sealed class TypedByRef : RefType
+        {
+            public static readonly TypedByRef Instance = new TypedByRef();
+
+            private TypedByRef() { }
+        }
+
+        public sealed class Void : RefType
+        {
+            public static readonly Void Instance = new Void();
+
+            private Void() { }
+        }
+
+        private RefType()
+        {
+        }
+
+        public static RefType Read(BinaryStreamReader signatureBlobReader)
+        {
+            var leadByte = (ElementType)signatureBlobReader.ReadByte();
+            if (leadByte == ElementType.ByRef)
             {
+                Type t = Type.Read(leadByte, signatureBlobReader);
+                return new ByRef
+                {
+                    Type = t
+                };
             }
-            else if (etype == ElementType.TypedByRef)
+            else if (leadByte == ElementType.TypedByRef)
             {
+                return TypedByRef.Instance;
             }
-            else if (etype == ElementType.Void)
+            else if (leadByte == ElementType.Void)
             {
+                return TypedByRef.Instance;
             }
             else
             {
-                throw new BadImageFormatException("Invalid element type byte " + etype + ".");
+                Type t = Type.Read(leadByte, signatureBlobReader);
+                return new DirectType
+                {
+                    Type = t
+                };
             }
         }
     }

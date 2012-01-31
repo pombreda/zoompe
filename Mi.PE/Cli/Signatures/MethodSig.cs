@@ -143,8 +143,7 @@ namespace Mi.PE.Cli.Signatures
         {
             uint parameterCount = signatureBlobReader.ReadCompressedInteger() ?? 0;
 
-            this.RefType = new RefType();
-            this.RefType.Read(signatureBlobReader);
+            this.RefType = RefType.Read(signatureBlobReader);
 
             var paramList = new Param[parameterCount];
             for (int i = 0; i < paramList.Length; i++)

@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Mi.PE.Internal;
 
 namespace Mi.PE.Cli.Signatures
 {
+    using Mi.PE.Cli.CodedIndices;
+    using Mi.PE.Internal;
+
     public static class IntegerCompression
     {
         public static uint? ReadCompressedInteger(this BinaryStreamReader reader)
@@ -38,6 +40,23 @@ namespace Mi.PE.Cli.Signatures
                             | (b2 << 8)
                             | b3);
                     }
+            }
+        }
+
+        public static CodedIndex<TypeDefOrRef> ReadTypeDefOrRefOrSpecEncoded(this BinaryStreamReader reader)
+        {
+            // TypeDefOrRefOrSpecEncoded (ECMA-335 §23.2.8)
+            uint? encodedOrNull = reader.ReadCompressedInteger();
+
+            switch (encodedOrNull)
+            {
+                case 0: // TypeDef
+                case 1: // TypeRef
+                case 2: // TypeSpec
+                    return (CodedIndices.CodedIndex<CodedIndices.TypeDefOrRef>)encodedOrNull.Value;
+
+                default:
+                    throw new BadImageFormatException("Invalid TypeDefOrRefOrSpecEncoded value: " + (encodedOrNull == null ? "null" : encodedOrNull.ToString()) + ".");
             }
         }
 
