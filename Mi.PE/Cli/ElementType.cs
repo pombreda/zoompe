@@ -67,7 +67,7 @@ namespace Mi.PE.Cli
         /// </summary>
         GenericInst = 0x15,
 
-        TypedBeRef = 0x16,
+        TypedByRef = 0x16,
 
         /// <summary>
         /// <see cref="System.IntPtr"/>

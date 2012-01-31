@@ -92,8 +92,8 @@ namespace Mi.PE.Cli.Signatures
         public bool Instance;
         public bool Explicit;
 
-        public TypeSpec RefType;
-        public LocalVarSig[] ParamList;
+        public RefType RefType;
+        public Param[] ParamList;
 
         public static MethodSig Read(BinaryStreamReader signatureBlobReader)
         {
@@ -142,6 +142,19 @@ namespace Mi.PE.Cli.Signatures
         void ReadParameters(BinaryStreamReader signatureBlobReader)
         {
             uint parameterCount = signatureBlobReader.ReadCompressedInteger() ?? 0;
+
+            this.RefType = new RefType();
+            this.RefType.Read(signatureBlobReader);
+
+            var paramList = new Param[parameterCount];
+            for (int i = 0; i < paramList.Length; i++)
+            {
+                var p = new Param();
+                p.Read(signatureBlobReader);
+                paramList[i] = p;
+            }
+
+            this.ParamList = paramList;
         }
 
         void PopulateInstanceAndExplicit(CallingConventions callingConvention)

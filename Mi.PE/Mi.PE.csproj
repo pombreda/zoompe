@@ -62,6 +62,7 @@
     <Compile Include="Cli\Signatures\LocalVarSig.cs" />
     <Compile Include="Cli\Signatures\MethodSig.cs" />
     <Compile Include="Cli\Signatures\MethodSpec.cs" />
+    <Compile Include="Cli\Signatures\Param.cs" />
     <Compile Include="Cli\Signatures\PropertySig.cs" />
     <Compile Include="Cli\Signatures\RefType.cs" />
     <Compile Include="Cli\Signatures\TypeSpec.cs" />

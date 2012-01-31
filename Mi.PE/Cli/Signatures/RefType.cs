@@ -18,11 +18,15 @@ namespace Mi.PE.Cli.Signatures
             if (etype == ElementType.ByRef)
             {
             }
-            else if (etype == ElementType.TypedBeRef)
+            else if (etype == ElementType.TypedByRef)
             {
             }
-            else if(etype == ElementType.Void)
+            else if (etype == ElementType.Void)
             {
+            }
+            else
+            {
+                throw new BadImageFormatException("Invalid element type byte " + etype + ".");
             }
         }
     }
