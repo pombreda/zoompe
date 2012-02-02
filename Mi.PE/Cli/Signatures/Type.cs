@@ -102,10 +102,63 @@ using Mi.PE.Internal;
             public CodedIndex<TypeDefOrRef> TypeDefOrRefEncoded;
         }
 
+        public sealed class FnPtr : Type
+        {
+            public MethodSig MethodDefSig;
+        }
+
+        public sealed class MVar : Type
+        {
+            public int Number;
+        }
+
+        public sealed class Object : Type
+        {
+            public static readonly Object Instance = new Object();
+            private Object() { }
+        }
+
+        public abstract class Ptr : Type
+        {
+            private Ptr()
+            {
+            }
+
+            public sealed class Void : Ptr
+            {
+                public static readonly Void Instance = new Void();
+
+                private Void() { }
+            }
+
+            public sealed class Type : Ptr
+            {
+                public Signatures.Type PtrType;
+            }
+
+            public CustomMod[] CustomMods;
+        }
+
         public sealed class String : Type
         {
             public static readonly String Instance = new String();
             private String() { }
+        }
+
+        public sealed class SZArray : Type
+        {
+            public CustomMod[] CustomMods;
+            public Type Type;
+        }
+
+        public sealed class ValueType : Type
+        {
+            public CodedIndex<TypeDefOrRef> TypeDefOrRefEncoded;
+        }
+
+        public sealed class Var : Type
+        {
+            public int Number;
         }
 
         private Type()
@@ -137,24 +190,50 @@ using Mi.PE.Internal;
                 case ElementType.String: return String.Instance;
 
                 case ElementType.Ptr:
-                    break;
+                    ElementType ptrLeadByte;
+                    var ptrCustomMod = CustomMod.ReadCustomModArray(out ptrLeadByte, signatureBlobReader);
+                    Ptr resultPtr;
+                    if (ptrLeadByte == ElementType.Void)
+                    {
+                        resultPtr = Ptr.Void.Instance;
+                    }
+                    else
+                    {
+                        Type ptrType = Type.Read(ptrLeadByte, signatureBlobReader);
+                        resultPtr = new Ptr.Type
+                        {
+                            PtrType = ptrType
+                        };
+                    }
+                    resultPtr.CustomMods = ptrCustomMod;
+                    return resultPtr;
+
                 case ElementType.ByRef:
                     break;
+                
                 case ElementType.ValueType:
-                    break;
+                    var valueTypeTypeDefOrRefOrSpecEncoded = signatureBlobReader.ReadTypeDefOrRefOrSpecEncoded();
+                    return new ValueType { TypeDefOrRefEncoded = valueTypeTypeDefOrRefOrSpecEncoded };
+
                 case ElementType.Class:
-                    var typeDefOrRefOrSpecEncoded = signatureBlobReader.ReadTypeDefOrRefOrSpecEncoded();
-                    return new Class { TypeDefOrRefEncoded = typeDefOrRefOrSpecEncoded };
+                    var classTypeDefOrRefOrSpecEncoded = signatureBlobReader.ReadTypeDefOrRefOrSpecEncoded();
+                    return new Class { TypeDefOrRefEncoded = classTypeDefOrRefOrSpecEncoded };
 
                 case ElementType.Var:
-                    break;
+                    int varNumber = signatureBlobReader.ReadInt32();
+                    return new Var
+                    {
+                        Number = varNumber
+                    };
                 
                 case ElementType.Array:
-                    // TODO: implemet ArrayShape (ECMA-335 §23.2.13)
-                    throw new NotImplementedException("TODO: implemet ArrayShape (ECMA-335 §23.2.13).");
+                    // TODO: implement ArrayShape (ECMA-335 §23.2.13)
+                    throw new NotImplementedException("TODO: implement ArrayShape (ECMA-335 §23.2.13).");
 
                 case ElementType.GenericInst:
-                    break;
+                    // TODO: implement GenericInst
+                    throw new NotImplementedException("TODO: implement GenericInst.");
+
                 case ElementType.TypedByRef:
                     break;
 
@@ -162,15 +241,34 @@ using Mi.PE.Internal;
                 case ElementType.U: return U.Instance;
                 
                 case ElementType.FnPtr:
-                    break;
-                case ElementType.Object:
-                    break;
+                    var methodDefSig = MethodSig.Read(signatureBlobReader);
+                    return new FnPtr
+                    {
+                        MethodDefSig = methodDefSig
+                    };
+
+                case ElementType.Object: return Object.Instance;
+
                 case ElementType.SZArray:
-                    break;
+                    ElementType szArrayLeadByte;
+                    var szArrayCustomMod = CustomMod.ReadCustomModArray(out szArrayLeadByte, signatureBlobReader);
+                    var szArrayType = Type.Read(szArrayLeadByte, signatureBlobReader);
+                    return new SZArray
+                    {
+                        CustomMods = szArrayCustomMod,
+                        Type = szArrayType
+                    };
+                
                 case ElementType.MVar:
-                    break;
+                    int mvarNumber = signatureBlobReader.ReadInt32();
+                    return new MVar
+                    {
+                        Number = mvarNumber
+                    };
+
                 case ElementType.CMod_ReqD:
                     break;
+
                 case ElementType.CMod_Opt:
                     break;
                 case ElementType.Internal:
@@ -198,6 +296,8 @@ using Mi.PE.Internal;
                 default:
                     break;
             }
+
+            throw new BadImageFormatException("Invalid lead byte "+leadByte+".");
         }
     }
 }

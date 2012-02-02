@@ -16,7 +16,7 @@ namespace Mi.PE.Cli.Signatures
         public bool Required;
         public CodedIndex<TypeDefOrRef> Type;
 
-        public static CustomMod Read(ElementType leadByte, BinaryStreamReader signatureBlobReader)
+        public static CustomMod Read(BinaryStreamReader signatureBlobReader, ElementType leadByte)
         {
             CustomMod result;
             if (leadByte == ElementType.CMod_Opt)
@@ -37,6 +37,29 @@ namespace Mi.PE.Cli.Signatures
             result.Type = signatureBlobReader.ReadTypeDefOrRefOrSpecEncoded();
 
             return result;
+        }
+
+        public static CustomMod[] ReadCustomModArray(out ElementType leadByte, BinaryStreamReader signatureBlobReader)
+        {
+            List<CustomMod> customMods = null;
+
+            leadByte = (ElementType)signatureBlobReader.ReadByte();
+            while (true)
+            {
+                var cmod = CustomMod.Read(signatureBlobReader, leadByte);
+                if (cmod == null)
+                    break;
+
+                if (customMods == null)
+                    customMods = new List<CustomMod>();
+
+                customMods.Add(cmod);
+            }
+
+            if (customMods == null)
+                return null;
+            else
+                return customMods.ToArray();
         }
     }
 }

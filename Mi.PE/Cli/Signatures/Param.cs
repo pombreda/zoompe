@@ -13,34 +13,18 @@ namespace Mi.PE.Cli.Signatures
 
         public void Read(BinaryStreamReader signatureBlobReader)
         {
-            List<CustomMod> customMods = null;
-            var leadByte = (ElementType)signatureBlobReader.ReadByte();
-            while (true)
-            {
-                var cmod = CustomMod.Read(leadByte, signatureBlobReader);
-                if (cmod == null)
-                    break;
-
-                if (customMods == null)
-                    customMods = new List<CustomMod>();
-
-                customMods.Add(cmod);
-            }
-
-            if (customMods != null)
-                this.CustomMods = customMods.ToArray();
+            ElementType leadByte;
+            this.CustomMods = CustomMod.ReadCustomModArray(out leadByte, signatureBlobReader);
 
             switch (leadByte)
 	        {
                 case ElementType.ByRef:
                     // TODO: read type
                     throw new NotImplementedException("TODO: read type");
-                    break;
 
                 case ElementType.TypedByRef:
                     // TODO: read type by ref???
                     throw new NotImplementedException("TODO: read type by ref???");
-                    break;
 
 		        default:
                     throw new BadImageFormatException(
