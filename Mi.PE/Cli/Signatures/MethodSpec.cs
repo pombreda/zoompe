@@ -20,7 +20,7 @@ namespace Mi.PE.Cli.Signatures
             if (genericInst != 0x0a)
                 throw new BadImageFormatException("Invalid leading byte in MethodSpec: " + genericInst + ".");
 
-            uint? genArgCount = signatureBlobReader.ReadCompressedInteger();
+            uint? genArgCount = signatureBlobReader.ReadCompressedUInt32();
             if(genArgCount==null)
                 throw new BadImageFormatException("Null value for MethodSpec.GenArgCount is not supported.");
 

@@ -40,7 +40,7 @@ namespace Mi.PE.Cli.Signatures
 
             internal void ReadDetails(BinaryStreamReader reader)
             {
-                this.GenParamCount = reader.ReadCompressedInteger() ?? 0;
+                this.GenParamCount = reader.ReadCompressedUInt32() ?? 0;
             }
         }
 
@@ -141,7 +141,7 @@ namespace Mi.PE.Cli.Signatures
 
         void ReadParameters(BinaryStreamReader signatureBlobReader)
         {
-            uint parameterCount = signatureBlobReader.ReadCompressedInteger() ?? 0;
+            uint parameterCount = signatureBlobReader.ReadCompressedUInt32() ?? 0;
 
             this.RefType = RefType.Read(signatureBlobReader);
 

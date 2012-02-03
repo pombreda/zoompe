@@ -10,7 +10,7 @@ namespace Mi.PE.Cli.Signatures
 
     public static class IntegerCompression
     {
-        public static uint? ReadCompressedInteger(this BinaryStreamReader reader)
+        public static uint? ReadCompressedUInt32(this BinaryStreamReader reader)
         {
             byte b0 = reader.ReadByte();
             switch (b0 & 0xC0)
@@ -46,7 +46,7 @@ namespace Mi.PE.Cli.Signatures
         public static CodedIndex<TypeDefOrRef> ReadTypeDefOrRefOrSpecEncoded(this BinaryStreamReader reader)
         {
             // TypeDefOrRefOrSpecEncoded (ECMA-335 §23.2.8)
-            uint? encodedOrNull = reader.ReadCompressedInteger();
+            uint? encodedOrNull = reader.ReadCompressedUInt32();
 
             switch (encodedOrNull & 3) // 2 least significant bits
             {

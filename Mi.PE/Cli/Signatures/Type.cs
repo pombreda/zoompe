@@ -268,7 +268,7 @@ namespace Mi.PE.Cli.Signatures
                     var typeDefOrRefOrSpecEncoded = signatureBlobReader.ReadTypeDefOrRefOrSpecEncoded();
                     genericInst.TypeDefOrRefOrSpecEncoded = typeDefOrRefOrSpecEncoded;
 
-                    uint? genArgCount = signatureBlobReader.ReadCompressedInteger();
+                    uint? genArgCount = signatureBlobReader.ReadCompressedUInt32();
                     if (genArgCount == null)
                         throw new BadImageFormatException("Invalid null value for GenArgCount value in " + ElementType.GenericInst+".");
                     
