@@ -34,5 +34,15 @@ namespace Mi.PE.Cli.Tables
             this.Signature = reader.ReadMethodSignature();
             this.ParamList = reader.ReadTableIndex(TableKind.Param);
         }
+
+        public override string ToString()
+        {
+            return
+                this.Signature == null ? this.Name + "()" :
+                this.Signature.RefType + " " + this.Name + "(" +
+                (this.Signature.ParamList == null ? "" :
+                string.Join(", ", this.Signature.ParamList.Select(t => t.ToString()).ToArray())) + ")";
+
+        }
     }
 }

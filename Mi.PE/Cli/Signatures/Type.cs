@@ -100,16 +100,26 @@ namespace Mi.PE.Cli.Signatures
         public sealed class Class : Type
         {
             public CodedIndex<TypeDefOrRef> TypeDefOrRefEncoded;
+
+            public override string ToString()
+            {
+                return "Class:" + this.TypeDefOrRefEncoded;
+            }
         }
 
         public sealed class FnPtr : Type
         {
             public MethodSig MethodDefSig;
+
+            public override string ToString()
+            {
+                return "FnPtr:" + this.MethodDefSig;
+            }
         }
 
         public abstract class GenericInst : Type
         {
-            public sealed class Class : GenericInst
+            new public sealed class Class : GenericInst
             {
             }
 
@@ -123,11 +133,26 @@ namespace Mi.PE.Cli.Signatures
             private GenericInst()
             {
             }
+
+            public override string ToString()
+            {
+                return
+                    this.GetType().Name + ":" + this.TypeDefOrRefOrSpecEncoded +
+                    "<" +
+                    (this.Types == null ? null :
+                    string.Join(", ", this.Types.Select(t => t.ToString()).ToArray())) +
+                    ">";
+            }
         }
 
         public sealed class MVar : Type
         {
             public int Number;
+
+            public override string ToString()
+            {
+                return "MVar:" + this.Number;
+            }
         }
 
         public sealed class Object : Type
@@ -147,11 +172,27 @@ namespace Mi.PE.Cli.Signatures
                 public static readonly Void Instance = new Void();
 
                 private Void() { }
+
+                public override string ToString()
+                {
+                    return
+                        (this.CustomMods == null ? "" :
+                        "[" + string.Join(", ", this.CustomMods.Select(cm => cm.ToString()).ToArray()) + "]") +
+                        "Ptr:Void";
+                }
             }
 
             public sealed class Type : Ptr
             {
                 public Signatures.Type PtrType;
+
+                public override string ToString()
+                {
+                    return
+                        (this.CustomMods == null ? "" :
+                        "[" + string.Join(", ", this.CustomMods.Select(cm => cm.ToString()).ToArray()) + "]") +
+                        "Ptr:" + PtrType;
+                }
             }
 
             public CustomMod[] CustomMods;
@@ -167,16 +208,34 @@ namespace Mi.PE.Cli.Signatures
         {
             public CustomMod[] CustomMods;
             public Type Type;
+
+            public override string ToString()
+            {
+                return
+                    (this.CustomMods == null ? "" :
+                    "[" + string.Join(", ", this.CustomMods.Select(cm => cm.ToString()).ToArray()) + "]") +
+                    Type + "[]";
+            }
         }
 
         public sealed class ValueType : Type
         {
             public CodedIndex<TypeDefOrRef> TypeDefOrRefEncoded;
+
+            public override string ToString()
+            {
+                return "ValueType:" + TypeDefOrRefEncoded;
+            }
         }
 
         public sealed class Var : Type
         {
             public int Number;
+
+            public override string ToString()
+            {
+                return "Var:" + this.Number;
+            }
         }
 
         private Type()
@@ -347,5 +406,7 @@ namespace Mi.PE.Cli.Signatures
 
             throw new BadImageFormatException("Invalid lead byte "+leadByte+".");
         }
+
+        public override string ToString() { return this.GetType().Name; }
     }
 }

@@ -15,19 +15,41 @@ namespace Mi.PE.Cli.Signatures
         public sealed class ByRef : Param
         {
             public Type Type;
+
+            public override string ToString()
+            {
+                return
+                    (this.CustomMods == null ? "" :
+                    "[" + string.Join(", ", this.CustomMods.Select(cm => cm.ToString()).ToArray()) + "]") + 
+                    "ByRef:" + this.Type;
+            }
         }
 
         public sealed class DirectType : Param
         {
             public Type Type;
+
+            public override string ToString()
+            {
+                return
+                    (this.CustomMods == null ? "" :
+                    "[" + string.Join(", ", this.CustomMods.Select(cm => cm.ToString()).ToArray()) + "]") + 
+                    this.Type + "";
+            }
         }
 
         public sealed class TypedByRef : Param
         {
-            public static readonly TypedByRef Instance = new TypedByRef();
-
-            private TypedByRef()
+            public TypedByRef()
             {
+            }
+
+            public override string ToString()
+            {
+                return
+                    (this.CustomMods == null ? "" :
+                    "[" + string.Join(", ", this.CustomMods.Select(cm => cm.ToString()).ToArray()) + "]") + 
+                    this.GetType().Name;
             }
         }
 
@@ -53,7 +75,7 @@ namespace Mi.PE.Cli.Signatures
                     };
 
                 case ElementType.TypedByRef:
-                    return TypedByRef.Instance;
+                    return new TypedByRef();
 
 		        default:
                     return new DirectType

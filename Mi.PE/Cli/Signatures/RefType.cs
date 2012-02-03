@@ -15,11 +15,21 @@ namespace Mi.PE.Cli.Signatures
         public sealed class ByRef : RefType
         {
             public Type Type;
+
+            public override string ToString()
+            {
+                return "ref "+this.Type;
+            }
         }
 
         public sealed class DirectType : RefType
         {
             public Type Type;
+
+            public override string ToString()
+            {
+                return this.Type+"";
+            }
         }
 
         public sealed class TypedByRef : RefType
@@ -27,6 +37,11 @@ namespace Mi.PE.Cli.Signatures
             public static readonly TypedByRef Instance = new TypedByRef();
 
             private TypedByRef() { }
+
+            public override string ToString()
+            {
+                return "TypedByRef";
+            }
         }
 
         public sealed class Void : RefType
@@ -34,6 +49,11 @@ namespace Mi.PE.Cli.Signatures
             public static readonly Void Instance = new Void();
 
             private Void() { }
+
+            public override string ToString()
+            {
+                return "Void";
+            }
         }
 
         private RefType()
