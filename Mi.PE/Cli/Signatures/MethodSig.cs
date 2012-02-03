@@ -148,8 +148,7 @@ namespace Mi.PE.Cli.Signatures
             var paramList = new Param[parameterCount];
             for (int i = 0; i < paramList.Length; i++)
             {
-                var p = new Param();
-                p.Read(signatureBlobReader);
+                var p = Param.Read(signatureBlobReader);
                 paramList[i] = p;
             }
 

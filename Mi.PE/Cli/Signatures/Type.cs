@@ -6,7 +6,7 @@ using System.Text;
 namespace Mi.PE.Cli.Signatures
 {
     using Mi.PE.Cli.CodedIndices;
-using Mi.PE.Internal;
+    using Mi.PE.Internal;
 
     /// <summary>
     /// [ECMA-335 §23.2.12]
@@ -105,6 +105,24 @@ using Mi.PE.Internal;
         public sealed class FnPtr : Type
         {
             public MethodSig MethodDefSig;
+        }
+
+        public abstract class GenericInst : Type
+        {
+            public sealed class Class : GenericInst
+            {
+            }
+
+            public sealed class ValueType : GenericInst
+            {
+            }
+
+            public CodedIndex<TypeDefOrRef> TypeDefOrRefOrSpecEncoded;
+            public Type[] Types;
+
+            private GenericInst()
+            {
+            }
         }
 
         public sealed class MVar : Type
@@ -231,8 +249,38 @@ using Mi.PE.Internal;
                     throw new NotImplementedException("TODO: implement ArrayShape (ECMA-335 §23.2.13).");
 
                 case ElementType.GenericInst:
-                    // TODO: implement GenericInst
-                    throw new NotImplementedException("TODO: implement GenericInst.");
+                    var genericLeadByte = (ElementType)signatureBlobReader.ReadByte();
+                    GenericInst genericInst;
+                    switch (genericLeadByte)
+	                {
+                        case ElementType.Class:
+                            genericInst = new GenericInst.Class();
+                            break;
+
+                        case ElementType.ValueType:
+                            genericInst = new GenericInst.ValueType();
+                            break;
+
+		                default:
+                            throw new BadImageFormatException("Invalid lead byte for "+ElementType.GenericInst+" class/valuetype value.");
+	                }
+
+                    var typeDefOrRefOrSpecEncoded = signatureBlobReader.ReadTypeDefOrRefOrSpecEncoded();
+                    genericInst.TypeDefOrRefOrSpecEncoded = typeDefOrRefOrSpecEncoded;
+
+                    uint? genArgCount = signatureBlobReader.ReadCompressedInteger();
+                    if (genArgCount == null)
+                        throw new BadImageFormatException("Invalid null value for GenArgCount value in " + ElementType.GenericInst+".");
+                    
+                    var genericInstTypes = new Type[genArgCount.Value];
+                    for(int i = 0; i<genericInstTypes.Length; i++)
+                    {
+                        var genericInstTypeLeadByte = (ElementType)signatureBlobReader.ReadByte();
+                        genericInstTypes[i] = Type.Read(genericInstTypeLeadByte, signatureBlobReader);
+                    }
+
+                    genericInst.Types = genericInstTypes;
+                    return genericInst;
 
                 case ElementType.TypedByRef:
                     break;

@@ -48,12 +48,12 @@ namespace Mi.PE.Cli.Signatures
             // TypeDefOrRefOrSpecEncoded (ECMA-335 §23.2.8)
             uint? encodedOrNull = reader.ReadCompressedInteger();
 
-            switch (encodedOrNull)
+            switch (encodedOrNull & 3) // 2 least significant bits
             {
                 case 0: // TypeDef
                 case 1: // TypeRef
                 case 2: // TypeSpec
-                    return (CodedIndices.CodedIndex<CodedIndices.TypeDefOrRef>)encodedOrNull.Value;
+                    return (CodedIndices.CodedIndex<CodedIndices.TypeDefOrRef>)(encodedOrNull>>2).Value;
 
                 default:
                     throw new BadImageFormatException("Invalid TypeDefOrRefOrSpecEncoded value: " + (encodedOrNull == null ? "null" : encodedOrNull.ToString()) + ".");
