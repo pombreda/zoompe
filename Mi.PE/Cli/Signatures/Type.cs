@@ -123,7 +123,7 @@ namespace Mi.PE.Cli.Signatures
             {
             }
 
-            public sealed class ValueType : GenericInst
+            new public sealed class ValueType : GenericInst
             {
             }
 
