@@ -269,7 +269,7 @@ namespace Mi.PE.Cli
             if (blobIindex == 0)
                 return null;
             
-            var sigReader = GetSignatureBlobReader(ref blobIindex);
+            var sigReader = GetSignatureBlobReader(blobIindex);
 
             var sig = MethodSig.Read(sigReader);
 
@@ -282,7 +282,7 @@ namespace Mi.PE.Cli
             if (blobIindex == 0)
                 return null;
 
-            var sigReader = GetSignatureBlobReader(ref blobIindex);
+            var sigReader = GetSignatureBlobReader(blobIindex);
 
             var sig = new MethodSpec();
             sig.Read(sigReader);
@@ -296,7 +296,7 @@ namespace Mi.PE.Cli
             if (blobIindex == 0)
                 return null;
 
-            var sigReader = GetSignatureBlobReader(ref blobIindex);
+            var sigReader = GetSignatureBlobReader(blobIindex);
 
             var sig = new FieldSig();
             sig.Read(sigReader);
@@ -310,7 +310,7 @@ namespace Mi.PE.Cli
             if (blobIindex == 0)
                 return null;
 
-            var sigReader = GetSignatureBlobReader(ref blobIindex);
+            var sigReader = GetSignatureBlobReader(blobIindex);
 
             var sig = new PropertySig();
             sig.Read(sigReader);
@@ -333,7 +333,7 @@ namespace Mi.PE.Cli
             return sig;
         }
 
-        BinaryStreamReader GetSignatureBlobReader(ref uint blobIindex)
+        BinaryStreamReader GetSignatureBlobReader(uint blobIindex)
         {
             uint blobLength = ReadBlobLengthForIndex(ref blobIindex);
             var sigReader = new BinaryStreamReader(this.blobHeap, checked((int)blobIindex), checked((int)blobLength));
