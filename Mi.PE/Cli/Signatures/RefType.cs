@@ -77,7 +77,7 @@ namespace Mi.PE.Cli.Signatures
             }
             else if (leadByte == ElementType.Void)
             {
-                return TypedByRef.Instance;
+                return Void.Instance;
             }
             else
             {
