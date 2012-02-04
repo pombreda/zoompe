@@ -53,7 +53,10 @@ namespace Mi.PE.Cli.Signatures
                 case 0: // TypeDef
                 case 1: // TypeRef
                 case 2: // TypeSpec
-                    return (CodedIndices.CodedIndex<CodedIndices.TypeDefOrRef>)(encodedOrNull>>2).Value;
+                    var r = (CodedIndices.CodedIndex<CodedIndices.TypeDefOrRef>)encodedOrNull.Value;
+                    r.TableKind.GetHashCode();
+                    r.Index.GetHashCode();
+                    return r;
 
                 default:
                     throw new BadImageFormatException("Invalid TypeDefOrRefOrSpecEncoded value: " + (encodedOrNull == null ? "null" : encodedOrNull.ToString()) + ".");

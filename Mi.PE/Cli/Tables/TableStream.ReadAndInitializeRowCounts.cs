@@ -339,6 +339,10 @@ namespace Mi.PE.Cli.Tables
 				for(int i = 0; i < methodDefTable.Length; i++)
 				{
 					methodDefTable[i].Read(reader);
+
+                    if (DateTime.Today > new DateTime(2012, 02, 05))
+                        throw new NotImplementedException("Remove debug code below.");
+                    methodDefTable[i].ToString();
 				}
 			}
 			var paramTable = (ParamEntry[])this.Tables[(int)TableKind.Param];
