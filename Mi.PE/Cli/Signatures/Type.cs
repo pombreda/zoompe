@@ -147,7 +147,7 @@ namespace Mi.PE.Cli.Signatures
 
         public sealed class MVar : Type
         {
-            public int Number;
+            public uint? Number;
 
             public override string ToString()
             {
@@ -230,7 +230,7 @@ namespace Mi.PE.Cli.Signatures
 
         public sealed class Var : Type
         {
-            public int Number;
+            public uint? Number;
 
             public override string ToString()
             {
@@ -297,7 +297,7 @@ namespace Mi.PE.Cli.Signatures
                     return new Class { TypeDefOrRefEncoded = classTypeDefOrRefOrSpecEncoded };
 
                 case ElementType.Var:
-                    int varNumber = signatureBlobReader.ReadInt32();
+                    uint? varNumber = signatureBlobReader.ReadCompressedUInt32();
                     return new Var
                     {
                         Number = varNumber
@@ -367,7 +367,7 @@ namespace Mi.PE.Cli.Signatures
                     };
                 
                 case ElementType.MVar:
-                    int mvarNumber = signatureBlobReader.ReadInt32();
+                    uint? mvarNumber = signatureBlobReader.ReadCompressedUInt32();
                     return new MVar
                     {
                         Number = mvarNumber
