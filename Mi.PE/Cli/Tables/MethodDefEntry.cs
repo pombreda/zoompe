@@ -31,6 +31,13 @@ namespace Mi.PE.Cli.Tables
             this.ImplFlags = (MethodImplAttributes)reader.Binary.ReadUInt16();
             this.Flags = (MethodAttributes)reader.Binary.ReadUInt16();
             this.Name = reader.ReadString();
+            {
+                if (DateTime.Today > new DateTime(2012, 02, 08))
+                    throw new NotImplementedException("Remove debug code below.");
+                if (this.RVA.ToString().StartsWith("122")
+                    && this.Name == "TryParse")
+                    this.GetHashCode();
+            }
             this.Signature = reader.ReadMethodSignature();
             this.ParamList = reader.ReadTableIndex(TableKind.Param);
         }
