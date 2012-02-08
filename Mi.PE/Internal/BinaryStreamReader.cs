@@ -41,10 +41,16 @@ namespace Mi.PE.Internal
         { 
             get 
             {
-                return this.stream.Position - this.bufferDataSize; 
+                return
+                    this.stream == null ?
+                    -1 :
+                    this.stream.Position - this.bufferDataSize; 
             } 
             set
             {
+                if (this.stream == null)
+                    throw new NotSupportedException("Buffer-based reader cannot be repositioned safely.");
+
                 long offset = value - this.Position;
                 if (offset == 0)
                 {
