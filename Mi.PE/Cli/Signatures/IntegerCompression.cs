@@ -16,6 +16,7 @@ namespace Mi.PE.Cli.Signatures
             switch (b0 & 0xC0)
             {
                 case 0x00:
+                case 0x40:
                     return b0;
 
                 case 0x80:
