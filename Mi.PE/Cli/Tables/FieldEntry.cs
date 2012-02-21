@@ -18,14 +18,15 @@ namespace Mi.PE.Cli.Tables
     /// </remarks>
     public struct FieldEntry
     {
-        public FieldAttributes Flags;
-        public string Name;
+        public FieldDefinition FieldDefinition;
+
         public FieldSig Signature;
 
         public void Read(ClrModuleReader reader)
         {
-            this.Flags = (FieldAttributes)reader.Binary.ReadUInt16();
-            this.Name = reader.ReadString();
+            this.FieldDefinition = new FieldDefinition();
+            this.FieldDefinition.Attributes = (FieldAttributes)reader.Binary.ReadUInt16();
+            this.FieldDefinition.Name = reader.ReadString();
             this.Signature = reader.ReadFieldSignature();
         }
     }

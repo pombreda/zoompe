@@ -12,18 +12,7 @@ namespace Mi.PE.Cli.Tables
     /// </summary>
     public struct TypeDefEntry
     {
-        public TypeAttributes Flags;
-
-        /// <summary>
-        /// Shall index a non-empty string  in the String heap. [ERROR]
-        /// </summary>
-        public string TypeName;
-
-        /// <summary>
-        /// Can be null or non-null.
-        /// If non-null, then TypeNamespace shall index a non-empty string in the String heap. [ERROR]
-        /// </summary>
-        public string TypeNamespace;
+        public TypeDefinition TypeDefinition;
 
         /// <summary>
         /// An index into the <see cref="TableKind.TypeDef"/>, <see cref="TableKind.TypeRef"/>, or <see cref="TableKind.TypeSpec"/> table;
@@ -45,9 +34,11 @@ namespace Mi.PE.Cli.Tables
 
         public void Read(ClrModuleReader reader)
         {
-            this.Flags = (TypeAttributes)reader.Binary.ReadUInt32();
-            this.TypeName = reader.ReadString();
-            this.TypeNamespace = reader.ReadString();
+            this.TypeDefinition = new TypeDefinition();
+
+            this.TypeDefinition.Attributes = (TypeAttributes)reader.Binary.ReadUInt32();
+            this.TypeDefinition.Name = reader.ReadString();
+            this.TypeDefinition.Namespace = reader.ReadString();
             this.Extends = reader.ReadCodedIndex<TypeDefOrRef>();
             this.FieldList = reader.ReadTableIndex(TableKind.Field);
             this.MethodList = reader.ReadTableIndex(TableKind.MethodDef);

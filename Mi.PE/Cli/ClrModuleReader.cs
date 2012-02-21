@@ -467,7 +467,7 @@ namespace Mi.PE.Cli
             bool isFirstTypeModuleStub;
 
             if (typeDefEntries[0].Extends.Index == 0
-                && (typeDefEntries[0].Flags & TypeAttributes.Interface) == 0)
+                && (typeDefEntries[0].TypeDefinition.Attributes & TypeAttributes.Interface) == 0)
                 isFirstTypeModuleStub = true;
             else
                 isFirstTypeModuleStub = false;
@@ -485,19 +485,28 @@ namespace Mi.PE.Cli
             for (int i = isFirstTypeModuleStub ? 1 : 0; i < typeDefEntries.Length; i++)
             {
                 int typeIndex = isFirstTypeModuleStub ? i-1 : i;
-                var typeDefEntry = typeDefEntries[i];
 
-                var type = this.module.Types[typeIndex] ?? (this.module.Types[typeIndex] = new TypeDefinition());
+                this.module.Types[typeIndex] = typeDefEntries[i].TypeDefinition;
 
-                type.Name = typeDefEntry.TypeName;
-                type.Namespace = typeDefEntry.TypeNamespace;
-                type.Attributes = typeDefEntry.Flags;
+                SetBaseType(
+                    typeDefEntries,
+                    isFirstTypeModuleStub,
+                    typeDefEntries[i],
+                    typeDefEntries[i].TypeDefinition);
 
-                SetBaseType(typeDefEntries, isFirstTypeModuleStub, typeDefEntry, type);
+                SetFields(
+                    typeDefEntries,
+                    fieldEntries,
+                    i,
+                    typeDefEntries[i],
+                    typeDefEntries[i].TypeDefinition);
 
-                SetFields(typeDefEntries, fieldEntries, i, typeDefEntry, type);
-
-                SetMethods(typeDefEntries, methodDefEntries, i, typeDefEntry, type);
+                SetMethods(
+                    typeDefEntries,
+                    methodDefEntries,
+                    i,
+                    typeDefEntries[i],
+                    typeDefEntries[i].TypeDefinition);
             }
         }
 
@@ -545,10 +554,7 @@ namespace Mi.PE.Cli
 
                         var fieldDefEntry = fieldEntries[fieldIndex];
 
-                        var field = new FieldDefinition();
-                        field.Name = fieldDefEntry.Name;
-
-                        type.Fields[i] = field;
+                        type.Fields[i] = fieldDefEntry.FieldDefinition;
                     }
                 }
             }
@@ -598,10 +604,7 @@ namespace Mi.PE.Cli
 
                         var methodDefEntry = methodDefEntries[methodIndex];
 
-                        type.Methods[i] = new MethodDefinition
-                        {
-                            Name = methodDefEntry.Name // + " "+methodDefEntry.Flags + " " + methodDefEntry.ImplFlags;
-                        };
+                        type.Methods[i] = methodDefEntry.MethodDefinition; // + " "+methodDefEntry.Flags + " " + methodDefEntry.ImplFlags;
                     }
                 }
             }
@@ -640,10 +643,12 @@ namespace Mi.PE.Cli
                     else
                     {
                         uint baseTypeIndex = extends.Index - 1;
-                        if (isFirstTypeModuleStub)
-                            baseTypeIndex--;
 
-                        type.BaseType = this.module.Types[baseTypeIndex] ?? (this.module.Types[extends.Index] = new TypeDefinition());
+                        if (isFirstTypeModuleStub
+                            && extends.Index == 0)
+                            type.BaseType = null;
+                        else
+                            type.BaseType = typeDefEntries[baseTypeIndex].TypeDefinition;
                     }
                 }
             }

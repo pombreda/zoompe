@@ -18,19 +18,22 @@ namespace Mi.PE.Cli.Tables
     /// </summary>
     public struct MethodDefEntry
     {
+        public MethodDefinition MethodDefinition;
+
         public uint RVA;
         public MethodImplAttributes ImplFlags;
         public MethodAttributes Flags;
-        public string Name;
         public MethodSig Signature;
         public uint ParamList;
 
         public void Read(ClrModuleReader reader)
         {
+            this.MethodDefinition = new MethodDefinition();
+
             this.RVA = reader.Binary.ReadUInt32();
             this.ImplFlags = (MethodImplAttributes)reader.Binary.ReadUInt16();
             this.Flags = (MethodAttributes)reader.Binary.ReadUInt16();
-            this.Name = reader.ReadString();
+            this.MethodDefinition.Name = reader.ReadString();
             this.Signature = reader.ReadMethodSignature();
             this.ParamList = reader.ReadTableIndex(TableKind.Param);
         }
@@ -38,8 +41,8 @@ namespace Mi.PE.Cli.Tables
         public override string ToString()
         {
             return
-                this.Signature == null ? this.Name + "()" :
-                this.Signature.RefType + " " + this.Name + "(" +
+                this.Signature == null ? this.MethodDefinition.Name + "()" :
+                this.Signature.RefType + " " + this.MethodDefinition.Name + "(" +
                 (this.Signature.ParamList == null ? "" :
                 string.Join(", ", this.Signature.ParamList.Select(t => t.ToString()).ToArray())) + ")";
         }

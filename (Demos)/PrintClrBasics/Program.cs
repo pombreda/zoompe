@@ -27,9 +27,9 @@ namespace PrintClrBasics
 
             string self = typeof(Program).Assembly.Location;
             Console.WriteLine(Path.GetFileName(self));
-            clrBasics = GetClrBasicsFor(self, pe);
+            var clrBasics2 = GetClrBasicsFor(self, pe);
 
-            PrintClrHeader(clrBasics);
+            PrintClrHeader(clrBasics2);
         }
 
         private static void PrintClrHeader(ModuleDefinition clrMod)
