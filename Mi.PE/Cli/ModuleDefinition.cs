@@ -9,7 +9,7 @@ namespace Mi.PE.Cli
     using Mi.PE.Internal;
     using Mi.PE.PEFormat;
 
-    public sealed class ClrModule
+    public sealed class ModuleDefinition
     {
         public Version RuntimeVersion;
         public ClrImageFlags ImageFlags;
@@ -17,7 +17,7 @@ namespace Mi.PE.Cli
         public string MetadataVersionString;
         public Version TableStreamVersion;
 
-        public ClrType[] Types;
+        public TypeDefinition[] Types;
         
         public string Name;
         public ushort Generation;

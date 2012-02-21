@@ -37,8 +37,10 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Cli\ClrField.cs" />
-    <Compile Include="Cli\ClrType.cs" />
+    <Compile Include="Cli\FieldDefinition.cs" />
+    <Compile Include="Cli\MethodDefinition.cs" />
+    <Compile Include="Cli\ParameterDefinition.cs" />
+    <Compile Include="Cli\TypeDefinition.cs" />
     <Compile Include="Cli\CodedIndices\CodedIndex.cs" />
     <Compile Include="Cli\CodedIndices\ResolutionScope.cs" />
     <Compile Include="Cli\CodedIndices\MemberForwarded.cs" />
@@ -122,7 +124,7 @@
     <Compile Include="Cli\AssemblyHashAlgorithm.cs" />
     <Compile Include="Cli\ClrImageFlags.cs" />
     <Compile Include="Cli\ClrMetadataSignature.cs" />
-    <Compile Include="Cli\ClrModule.cs" />
+    <Compile Include="Cli\ModuleDefinition.cs" />
     <Compile Include="Cli\ClrModuleReader.cs" />
     <Compile Include="Cli\Tables\TypeAttributes.cs" />
     <Compile Include="Cli\Tables\ModuleEntry.cs" />

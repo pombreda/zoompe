@@ -32,7 +32,7 @@ namespace PrintClrBasics
             PrintClrHeader(clrBasics);
         }
 
-        private static void PrintClrHeader(ClrModule clrMod)
+        private static void PrintClrHeader(ModuleDefinition clrMod)
         {
             Console.WriteLine(" '" + clrMod.Name + "'");
             Console.WriteLine("  Flags: " + clrMod.ImageFlags);
@@ -41,14 +41,14 @@ namespace PrintClrBasics
             Console.WriteLine("  TableStream v" + clrMod.TableStreamVersion);
 
             var types =
-                (from t in clrMod.Types ?? new ClrType[] { }
+                (from t in clrMod.Types ?? new TypeDefinition[] { }
                  orderby t.Namespace, t.Name
                  select t).ToArray();
 
             Console.WriteLine("  " + types.Length + " types");
         }
 
-        private static ClrModule GetClrBasicsFor(string file, PEFile pe)
+        private static ModuleDefinition GetClrBasicsFor(string file, PEFile pe)
         {
             var stream = new MemoryStream(File.ReadAllBytes(file));
             var reader = new BinaryStreamReader(stream, new byte[1024]);
@@ -71,7 +71,7 @@ namespace PrintClrBasics
 
             var sectionReader = new BinaryStreamReader(rvaStream, new byte[32]);
 
-            var clrmod = new ClrModule();
+            var clrmod = new ModuleDefinition();
             ClrModuleReader.Read(sectionReader, clrmod);
 
             return clrmod;

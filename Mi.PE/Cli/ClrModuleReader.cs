@@ -16,7 +16,7 @@ namespace Mi.PE.Cli
         public const uint ClrHeaderSize = 72;
 
         readonly BinaryStreamReader m_Binary;
-        readonly ClrModule module;
+        readonly ModuleDefinition module;
         TableStream tableStream;
         
         Guid[] guids;
@@ -24,13 +24,13 @@ namespace Mi.PE.Cli
         byte[] stringHeap;
         readonly Dictionary<uint, string> stringHeapCache = new Dictionary<uint, string>();
 
-        private ClrModuleReader(BinaryStreamReader binaryReader, ClrModule module)
+        private ClrModuleReader(BinaryStreamReader binaryReader, ModuleDefinition module)
         {
             this.m_Binary = binaryReader;
             this.module = module;
         }
 
-        public static void Read(BinaryStreamReader reader, ClrModule module)
+        public static void Read(BinaryStreamReader reader, ModuleDefinition module)
         {
             var modReader = new ClrModuleReader(reader, module);
             modReader.Read();
@@ -476,7 +476,7 @@ namespace Mi.PE.Cli
                 int typeCount = isFirstTypeModuleStub ? typeDefEntries.Length - 1 : typeDefEntries.Length;
                 if (this.module.Types == null
                     || this.module.Types.Length != typeCount)
-                    this.module.Types = new ClrType[typeCount];
+                    this.module.Types = new TypeDefinition[typeCount];
             }
 
             var fieldEntries = (FieldEntry[])this.tableStream.Tables[(int)TableKind.Field];
@@ -487,7 +487,7 @@ namespace Mi.PE.Cli
                 int typeIndex = isFirstTypeModuleStub ? i-1 : i;
                 var typeDefEntry = typeDefEntries[i];
 
-                var type = this.module.Types[typeIndex] ?? (this.module.Types[typeIndex] = new ClrType());
+                var type = this.module.Types[typeIndex] ?? (this.module.Types[typeIndex] = new TypeDefinition());
 
                 type.Name = typeDefEntry.TypeName;
                 type.Namespace = typeDefEntry.TypeNamespace;
@@ -501,7 +501,7 @@ namespace Mi.PE.Cli
             }
         }
 
-        static void SetFields(TypeDefEntry[] typeDefEntries, FieldEntry[] fieldEntries, int typeDefIndex, TypeDefEntry typeDefEntry, ClrType type)
+        static void SetFields(TypeDefEntry[] typeDefEntries, FieldEntry[] fieldEntries, int typeDefIndex, TypeDefEntry typeDefEntry, TypeDefinition type)
         {
             if (fieldEntries == null)
             {
@@ -526,7 +526,7 @@ namespace Mi.PE.Cli
                         fieldCount = 0;
                     }
 
-                    type.Fields = new ClrField[fieldCount];
+                    type.Fields = new FieldDefinition[fieldCount];
 
                     if (firstFieldIndex + fieldCount > fieldEntries.Length)
                         fieldCount = (uint)fieldEntries.Length - firstFieldIndex;
@@ -545,7 +545,7 @@ namespace Mi.PE.Cli
 
                         var fieldDefEntry = fieldEntries[fieldIndex];
 
-                        var field = new ClrField();
+                        var field = new FieldDefinition();
                         field.Name = fieldDefEntry.Name;
 
                         type.Fields[i] = field;
@@ -554,7 +554,7 @@ namespace Mi.PE.Cli
             }
         }
 
-        static void SetMethods(TypeDefEntry[] typeDefEntries, MethodDefEntry[] methodDefEntries, int typeDefIndex, TypeDefEntry typeDefEntry, ClrType type)
+        static void SetMethods(TypeDefEntry[] typeDefEntries, MethodDefEntry[] methodDefEntries, int typeDefIndex, TypeDefEntry typeDefEntry, TypeDefinition type)
         {
             if (methodDefEntries == null)
             {
@@ -579,7 +579,7 @@ namespace Mi.PE.Cli
                         methodCount = 0;
                     }
 
-                    type.Methods = new string[methodCount];
+                    type.Methods = new MethodDefinition[methodCount];
 
                     if (firstMethodIndex + methodCount > methodDefEntries.Length)
                         methodCount = (uint)methodDefEntries.Length - firstMethodIndex;
@@ -598,13 +598,16 @@ namespace Mi.PE.Cli
 
                         var methodDefEntry = methodDefEntries[methodIndex];
 
-                        type.Methods[i] = methodDefEntry.Name + " "+methodDefEntry.Flags + " " + methodDefEntry.ImplFlags;
+                        type.Methods[i] = new MethodDefinition
+                        {
+                            Name = methodDefEntry.Name // + " "+methodDefEntry.Flags + " " + methodDefEntry.ImplFlags;
+                        };
                     }
                 }
             }
         }
 
-        void SetBaseType(TypeDefEntry[] typeDefEntries, bool isFirstTypeModuleStub, TypeDefEntry typeDefEntry, ClrType type)
+        void SetBaseType(TypeDefEntry[] typeDefEntries, bool isFirstTypeModuleStub, TypeDefEntry typeDefEntry, TypeDefinition type)
         {
             var extends = typeDefEntry.Extends;
             if (extends.Index == 0)
@@ -640,7 +643,7 @@ namespace Mi.PE.Cli
                         if (isFirstTypeModuleStub)
                             baseTypeIndex--;
 
-                        type.BaseType = this.module.Types[baseTypeIndex] ?? (this.module.Types[extends.Index] = new ClrType());
+                        type.BaseType = this.module.Types[baseTypeIndex] ?? (this.module.Types[extends.Index] = new TypeDefinition());
                     }
                 }
             }

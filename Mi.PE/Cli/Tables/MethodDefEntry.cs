@@ -42,7 +42,6 @@ namespace Mi.PE.Cli.Tables
                 this.Signature.RefType + " " + this.Name + "(" +
                 (this.Signature.ParamList == null ? "" :
                 string.Join(", ", this.Signature.ParamList.Select(t => t.ToString()).ToArray())) + ")";
-
         }
     }
 }

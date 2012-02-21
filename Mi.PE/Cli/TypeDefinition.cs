@@ -5,14 +5,14 @@ using System.Text;
 
 namespace Mi.PE.Cli
 {
-    public sealed class ClrType : TypeReference
+    public sealed class TypeDefinition : TypeReference
     {
         public string Name;
         public string Namespace;
         public Mi.PE.Cli.Tables.TypeAttributes Attributes;
         public TypeReference BaseType;
-        public ClrField[] Fields;
-        public string[] Methods;
+        public FieldDefinition[] Fields;
+        public MethodDefinition[] Methods;
 
         public override string ToString()
         {
