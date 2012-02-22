@@ -11,6 +11,7 @@ namespace Mi.PE.Cli
     {
         public FieldAttributes Attributes;
         public string Name;
+        public TypeReference Type;
 
         public override string ToString()
         {

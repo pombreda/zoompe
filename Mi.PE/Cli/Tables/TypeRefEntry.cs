@@ -14,22 +14,15 @@ namespace Mi.PE.Cli.Tables
     {
         public CodedIndex<ResolutionScope> ResolutionScope;
 
-        /// <summary>
-        /// Shall index a non-empty string  in the String heap. [ERROR]
-        /// </summary>
-        public string TypeName;
-
-        /// <summary>
-        /// Can be null or non-null.
-        /// If non-null, then TypeNamespace shall index a non-empty string in the String heap. [ERROR]
-        /// </summary>
-        public string TypeNamespace;
+        public TypeReference.External TypeReference;
 
         public void Read(ClrModuleReader reader)
         {
+            this.TypeReference = new TypeReference.External();
+
             this.ResolutionScope = reader.ReadCodedIndex<ResolutionScope>();
-            this.TypeName = reader.ReadString();
-            this.TypeNamespace = reader.ReadString();
+            this.TypeReference.Name = reader.ReadString();
+            this.TypeReference.Namespace = reader.ReadString();
         }
     }
 }

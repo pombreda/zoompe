@@ -318,7 +318,7 @@ namespace Mi.PE.Cli
             return sig;
         }
 
-        public TypeSpec ReadTypeSpec()
+        public TypeReference ReadTypeSpec()
         {
             uint blobIindex = ReadBlobIndex();
             if (blobIindex == 0)
@@ -327,10 +327,8 @@ namespace Mi.PE.Cli
             uint blobLength = ReadBlobLengthForIndex(ref blobIindex);
 
             var sigReader = new BinaryStreamReader(this.blobHeap, checked((int)blobIindex), checked((int)blobLength));
-
-            var sig = new TypeSpec();
-            sig.Read(sigReader);
-            return sig;
+            // TODO: read type spec signature
+            return null;
         }
 
         BinaryStreamReader GetSignatureBlobReader(uint blobIindex)
@@ -488,11 +486,7 @@ namespace Mi.PE.Cli
 
                 this.module.Types[typeIndex] = typeDefEntries[i].TypeDefinition;
 
-                SetBaseType(
-                    typeDefEntries,
-                    isFirstTypeModuleStub,
-                    typeDefEntries[i],
-                    typeDefEntries[i].TypeDefinition);
+                this.module.Types[typeIndex].BaseType = GetTypeReference(typeDefEntries[i].Extends);
 
                 SetFields(
                     typeDefEntries,
@@ -610,47 +604,24 @@ namespace Mi.PE.Cli
             }
         }
 
-        void SetBaseType(TypeDefEntry[] typeDefEntries, bool isFirstTypeModuleStub, TypeDefEntry typeDefEntry, TypeDefinition type)
+        TypeReference GetTypeReference(CodedIndex<TypeDefOrRef> typeDefOrRef)
         {
-            var extends = typeDefEntry.Extends;
-            if (extends.Index == 0)
-            {
-                type.BaseType = null;
-            }
-            else
-            {
-                if (extends.TableKind == TableKind.TypeRef)
-                {
-                    var typeRefEntries = (TypeRefEntry[])this.tableStream.Tables[(int)TableKind.TypeRef];
-                    if (typeRefEntries == null || extends.Index >= typeRefEntries.Length)
-                    {
-                        type.BaseType = null;
-                    }
-                    else
-                    {
-                        var externalBaseTypeRefEntry = typeRefEntries[extends.Index];
-                        var externalTypeReference = new TypeReference.External();
-                        externalTypeReference.Name = externalBaseTypeRefEntry.TypeName;
-                        externalTypeReference.Namespace = externalBaseTypeRefEntry.TypeNamespace;
-                    }
-                }
-                else if (extends.TableKind == TableKind.TypeDef)
-                {
-                    if (typeDefEntries == null || extends.Index >= typeDefEntries.Length)
-                    {
-                        type.BaseType = null;
-                    }
-                    else
-                    {
-                        uint baseTypeIndex = extends.Index - 1;
+            if (typeDefOrRef.Index == 0)
+                return null;
 
-                        if (isFirstTypeModuleStub
-                            && extends.Index == 0)
-                            type.BaseType = null;
-                        else
-                            type.BaseType = typeDefEntries[baseTypeIndex].TypeDefinition;
-                    }
-                }
+            uint adjustedIndex = typeDefOrRef.Index - 1;
+
+            if (typeDefOrRef.TableKind == TableKind.TypeRef)
+            {
+                return ((TypeRefEntry[])this.tableStream.Tables[(int)TableKind.TypeRef])[adjustedIndex].TypeReference;
+            }
+            else if (typeDefOrRef.TableKind == TableKind.TypeDef)
+            {
+                return ((TypeDefEntry[])this.tableStream.Tables[(int)TableKind.TypeDef])[adjustedIndex].TypeDefinition;
+            }
+            else // TableKind.TypeSpec
+            {
+                return ((TypeSpecEntry[])this.tableStream.Tables[(int)TableKind.TypeSpec])[adjustedIndex].Signature;
             }
         }
     }

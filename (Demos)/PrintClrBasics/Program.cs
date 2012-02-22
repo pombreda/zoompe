@@ -14,6 +14,8 @@ namespace PrintClrBasics
 {
     class Program
     {
+        public class ArrayListDescendant : System.Collections.ArrayList { }
+
         static void Main(string[] args)
         {
             string mscolib = typeof(int).Assembly.Location;

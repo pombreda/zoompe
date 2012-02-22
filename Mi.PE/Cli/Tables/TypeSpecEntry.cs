@@ -20,7 +20,7 @@ namespace Mi.PE.Cli.Tables
     /// </remarks>
     public struct TypeSpecEntry
     {
-        public TypeSpec Signature;
+        public TypeReference Signature;
 
         public void Read(ClrModuleReader reader)
         {

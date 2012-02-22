@@ -68,7 +68,6 @@
     <Compile Include="Cli\Signatures\PropertySig.cs" />
     <Compile Include="Cli\Signatures\RefType.cs" />
     <Compile Include="Cli\Signatures\Type.cs" />
-    <Compile Include="Cli\Signatures\TypeSpec.cs" />
     <Compile Include="Cli\Tables\CustomAttributeEntry.cs" />
     <Compile Include="Cli\Tables\DeclSecurityEntry.cs" />
     <Compile Include="Cli\Tables\EventAttributes.cs" />

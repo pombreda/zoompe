@@ -15,6 +15,11 @@ namespace Mi.PE.Cli
         {
             public string Name;
             public string Namespace;
+
+            public override string ToString()
+            {
+                return string.IsNullOrEmpty(Namespace) ? Name : Namespace + "." + Name;
+            }
         }
     }
 }

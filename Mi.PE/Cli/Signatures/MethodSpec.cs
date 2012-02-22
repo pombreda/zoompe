@@ -12,7 +12,7 @@ namespace Mi.PE.Cli.Signatures
     /// </summary>
     public sealed class MethodSpec
     {
-        public TypeSpec[] GenArgs;
+        public TypeReference[] GenArgs;
 
         public void Read(BinaryStreamReader signatureBlobReader)
         {
@@ -24,7 +24,7 @@ namespace Mi.PE.Cli.Signatures
             if(genArgCount==null)
                 throw new BadImageFormatException("Null value for MethodSpec.GenArgCount is not supported.");
 
-            this.GenArgs = new TypeSpec[genArgCount.Value];
+            this.GenArgs = new TypeReference[genArgCount.Value];
         }
     }
 }
