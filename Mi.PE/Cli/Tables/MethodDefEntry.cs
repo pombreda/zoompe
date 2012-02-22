@@ -21,8 +21,6 @@ namespace Mi.PE.Cli.Tables
         public MethodDefinition MethodDefinition;
 
         public uint RVA;
-        public MethodImplAttributes ImplFlags;
-        public MethodAttributes Flags;
         public MethodSig Signature;
         public uint ParamList;
 
@@ -31,8 +29,8 @@ namespace Mi.PE.Cli.Tables
             this.MethodDefinition = new MethodDefinition();
 
             this.RVA = reader.Binary.ReadUInt32();
-            this.ImplFlags = (MethodImplAttributes)reader.Binary.ReadUInt16();
-            this.Flags = (MethodAttributes)reader.Binary.ReadUInt16();
+            this.MethodDefinition.ImplAttributes = (MethodImplAttributes)reader.Binary.ReadUInt16();
+            this.MethodDefinition.Attributes = (MethodAttributes)reader.Binary.ReadUInt16();
             this.MethodDefinition.Name = reader.ReadString();
             this.Signature = reader.ReadMethodSignature();
             this.ParamList = reader.ReadTableIndex(TableKind.Param);
