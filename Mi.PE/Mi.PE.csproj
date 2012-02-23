@@ -40,6 +40,7 @@
     <Compile Include="Cli\FieldDefinition.cs" />
     <Compile Include="Cli\MethodDefinition.cs" />
     <Compile Include="Cli\ParameterDefinition.cs" />
+    <Compile Include="Cli\PropertyDefinition.cs" />
     <Compile Include="Cli\TypeDefinition.cs" />
     <Compile Include="Cli\CodedIndices\CodedIndex.cs" />
     <Compile Include="Cli\CodedIndices\ResolutionScope.cs" />

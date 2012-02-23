@@ -7,9 +7,9 @@ namespace Mi.PE.Cli
 {
     using Mi.PE.Cli.Tables;
 
-    public sealed class ParameterDefinition
+    public sealed class PropertyDefinition
     {
-        public ParamAttributes Attributes;
         public string Name;
+        public PropertyAttributes Attributes;
     }
 }

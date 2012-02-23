@@ -12,12 +12,7 @@ namespace Mi.PE.Cli.Tables
     /// </summary>
     public struct ParamEntry
     {
-        /// <summary>
-        /// If Flags.HasDefault = 1 then this row shall own exactly one row in the Constant table [ERROR]
-        /// If Flags.HasDefault = 0, then there shall be no rows in the Constant table owned by this row [ERROR]
-        /// if Flags.FieldMarshal = 1 then this row shall own exactly one row in the FieldMarshal table [ERROR]
-        /// </summary>
-        public ParamAttributes Flags;
+        public ParameterDefinition ParameterDefinition;
 
         /// <summary>
         /// <see cref="Sequence"/> shall have a value >= 0 and <= number of parameters in owner method.
@@ -29,13 +24,12 @@ namespace Mi.PE.Cli.Tables
         /// </summary>
         public ushort Sequence;
 
-        public string Name;
-
         public void Read(ClrModuleReader reader)
         {
-            this.Flags = (ParamAttributes)reader.Binary.ReadUInt16();
+            this.ParameterDefinition = new ParameterDefinition();
+            this.ParameterDefinition.Attributes = (ParamAttributes)reader.Binary.ReadUInt16();
             this.Sequence = reader.Binary.ReadUInt16();
-            this.Name = reader.ReadString();
+            this.ParameterDefinition.Name = reader.ReadString();
         }
     }
 }

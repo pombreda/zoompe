@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace Mi.PE.Cli
 {
-    using System.Text;
     using Mi.PE.Cli.CodedIndices;
     using Mi.PE.Cli.Signatures;
     using Mi.PE.Cli.Tables;
@@ -14,6 +14,10 @@ namespace Mi.PE.Cli
     public sealed class ClrModuleReader
     {
         public const uint ClrHeaderSize = 72;
+
+        static readonly FieldDefinition[] EmptyFields = new FieldDefinition[] {};
+        static readonly MethodDefinition[] EmptyMethods = new MethodDefinition[] { };
+        static readonly ParameterDefinition[] EmptyParameters = new ParameterDefinition[] { };
 
         readonly BinaryStreamReader m_Binary;
         readonly ModuleDefinition module;
@@ -479,128 +483,68 @@ namespace Mi.PE.Cli
 
             var fieldEntries = (FieldEntry[])this.tableStream.Tables[(int)TableKind.Field];
             var methodDefEntries = (MethodDefEntry[])this.tableStream.Tables[(int)TableKind.MethodDef];
+            var paramDefEntries = (ParamEntry[])this.tableStream.Tables[(int)TableKind.Param];
 
-            for (int i = isFirstTypeModuleStub ? 1 : 0; i < typeDefEntries.Length; i++)
+            for (int iType = isFirstTypeModuleStub ? 1 : 0; iType < typeDefEntries.Length; iType++)
             {
-                int typeIndex = isFirstTypeModuleStub ? i-1 : i;
+                TypeDefEntry typeDef = typeDefEntries[iType];
+                int typeIndex = isFirstTypeModuleStub ? iType-1 : iType;
 
-                this.module.Types[typeIndex] = typeDefEntries[i].TypeDefinition;
+                TypeDefinition type = typeDef.TypeDefinition;
+                type.BaseType = GetTypeReference(typeDef.Extends);
 
-                this.module.Types[typeIndex].BaseType = GetTypeReference(typeDefEntries[i].Extends);
+                uint fieldIndex = typeDef.FieldList - 1;
+                uint methodIndex = typeDef.MethodList - 1;
+                uint nextFieldIndex;
+                uint nextMethodIndex;
 
-                SetFields(
-                    typeDefEntries,
-                    fieldEntries,
-                    i,
-                    typeDefEntries[i],
-                    typeDefEntries[i].TypeDefinition);
-
-                SetMethods(
-                    typeDefEntries,
-                    methodDefEntries,
-                    i,
-                    typeDefEntries[i],
-                    typeDefEntries[i].TypeDefinition);
-            }
-        }
-
-        static void SetFields(TypeDefEntry[] typeDefEntries, FieldEntry[] fieldEntries, int typeDefIndex, TypeDefEntry typeDefEntry, TypeDefinition type)
-        {
-            if (fieldEntries == null)
-            {
-                type.Fields = null;
-            }
-            else
-            {
-                uint firstFieldIndex = typeDefEntry.FieldList;
-                if (firstFieldIndex > fieldEntries.Length)
+                if (iType < typeDefEntries.Length - 1)
                 {
-                    type.Fields = null;
+                    var nextTypeDef = typeDefEntries[iType + 1];
+                    nextFieldIndex = nextTypeDef.FieldList - 1;
+                    nextMethodIndex = nextTypeDef.MethodList - 1;
                 }
                 else
                 {
-                    uint fieldCount;
-                    if (typeDefIndex < typeDefEntries.Length - 1)
+                    nextFieldIndex = (uint)fieldEntries.Length;
+                    nextMethodIndex = (uint)methodDefEntries.Length;
+                }
+
+                type.Fields = nextFieldIndex - fieldIndex == 0 ? EmptyFields : new FieldDefinition[nextFieldIndex - fieldIndex];
+                for (int iField = 0; iField < type.Fields.Length; iField++)
+                {
+                    type.Fields[iField] = fieldEntries[fieldIndex + iField].FieldDefinition;
+                }
+
+                type.Methods = nextMethodIndex - methodIndex == 0 ? EmptyMethods : new MethodDefinition[nextMethodIndex - methodIndex];
+                for (int iMethod = 0; iMethod < type.Methods.Length; iMethod++)
+                {
+                    var methodDef = methodDefEntries[methodIndex + iMethod];
+                    var method = methodDef.MethodDefinition;
+
+                    uint paramIndex = methodDef.ParamList - 1;
+                    uint nextParamIndex;
+
+                    if (methodIndex + iMethod < methodDefEntries.Length - 1)
                     {
-                        fieldCount = typeDefEntries[typeDefIndex + 1].FieldList - typeDefEntry.FieldList;
+                        var nextMethodDef = methodDefEntries[methodIndex + iMethod + 1];
+                        nextParamIndex = nextMethodDef.ParamList - 1;
                     }
                     else
                     {
-                        fieldCount = 0;
+                        nextParamIndex = (uint)paramDefEntries.Length;
                     }
 
-                    type.Fields = new FieldDefinition[fieldCount];
-
-                    if (firstFieldIndex + fieldCount > fieldEntries.Length)
-                        fieldCount = (uint)fieldEntries.Length - firstFieldIndex;
-
-                    for (uint i = 0; i < fieldCount; i++)
+                    method.Parameters = nextParamIndex - paramIndex == 0 ? EmptyParameters : new ParameterDefinition[nextParamIndex - paramIndex];
+                    for (int iParam = 0; iParam < method.Parameters.Length; iParam++)
                     {
-                        uint fieldIndex = typeDefEntry.FieldList + i;
-
-                        if (fieldIndex == 0)
-                        {
-                            type.Fields[i] = null;
-                            continue;
-                        }
-
-                        fieldIndex--;
-
-                        var fieldDefEntry = fieldEntries[fieldIndex];
-
-                        type.Fields[i] = fieldDefEntry.FieldDefinition;
+                        method.Parameters[iParam] = paramDefEntries[paramIndex + iParam].ParameterDefinition;
                     }
+
+                    type.Methods[iMethod] = method;
                 }
-            }
-        }
 
-        static void SetMethods(TypeDefEntry[] typeDefEntries, MethodDefEntry[] methodDefEntries, int typeDefIndex, TypeDefEntry typeDefEntry, TypeDefinition type)
-        {
-            if (methodDefEntries == null)
-            {
-                type.Methods = null;
-            }
-            else
-            {
-                uint firstMethodIndex = typeDefEntry.MethodList;
-                if (firstMethodIndex > methodDefEntries.Length)
-                {
-                    type.Methods = null;
-                }
-                else
-                {
-                    uint methodCount;
-                    if (typeDefIndex < typeDefEntries.Length - 1)
-                    {
-                        methodCount = typeDefEntries[typeDefIndex + 1].MethodList - typeDefEntry.MethodList;
-                    }
-                    else
-                    {
-                        methodCount = 0;
-                    }
-
-                    type.Methods = new MethodDefinition[methodCount];
-
-                    if (firstMethodIndex + methodCount > methodDefEntries.Length)
-                        methodCount = (uint)methodDefEntries.Length - firstMethodIndex;
-
-                    for (uint i = 0; i < methodCount; i++)
-                    {
-                        uint methodIndex = typeDefEntry.MethodList + i;
-
-                        if (methodIndex == 0)
-                        {
-                            type.Methods[i] = null;
-                            continue;
-                        }
-
-                        methodIndex--;
-
-                        var methodDefEntry = methodDefEntries[methodIndex];
-
-                        type.Methods[i] = methodDefEntry.MethodDefinition; // + " "+methodDefEntry.Flags + " " + methodDefEntry.ImplFlags;
-                    }
-                }
+                this.module.Types[typeIndex] = type;
             }
         }
 

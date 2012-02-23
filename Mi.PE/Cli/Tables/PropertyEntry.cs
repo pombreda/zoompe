@@ -22,15 +22,7 @@ namespace Mi.PE.Cli.Tables
     /// </remarks>
     public struct PropertyEntry
     {
-        /// <summary>
-        /// A 2-byte bitmask of type <see cref="PropertyAttributes"/>, ECMA-335 §23.1.14.
-        /// </summary>
-        public PropertyAttributes Flags;
-
-        /// <summary>
-        /// Name shall index a non-empty string in the String heap. [ERROR]
-        /// </summary>
-        public string Name;
+        public PropertyDefinition PropertyDefinition;
 
         /// <summary>
         /// An index into the Blob heap.
@@ -47,8 +39,9 @@ namespace Mi.PE.Cli.Tables
 
         public void Read(ClrModuleReader reader)
         {
-            this.Flags = (PropertyAttributes)reader.Binary.ReadUInt16();
-            this.Name = reader.ReadString();
+            this.PropertyDefinition = new PropertyDefinition();
+            this.PropertyDefinition.Attributes = (PropertyAttributes)reader.Binary.ReadUInt16();
+            this.PropertyDefinition.Name = reader.ReadString();
             this.Type = reader.ReadPropertySignature();
         }
     }
