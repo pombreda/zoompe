@@ -13,13 +13,16 @@ namespace Mi.PE.Cli
         public TypeReference BaseType;
         public FieldDefinition[] Fields;
         public MethodDefinition[] Methods;
+        public PropertyDefinition[] Properties;
 
         public override string ToString()
         {
             return
                 string.IsNullOrEmpty(this.Namespace) ? this.Name :
                 this.Namespace + "." + this.Name +
-                (this.Fields == null ? null : " : Fields["+this.Fields.Length+"]");
+                (this.Fields == null ? null : " : Fields["+this.Fields.Length+"]") +
+                (this.Methods == null ? null : " : Methods[" + this.Methods.Length + "]") +
+                (this.Properties == null ? null : " : Properties[" + this.Properties.Length + "]");
         }
     }
 }

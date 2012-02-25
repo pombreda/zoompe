@@ -546,6 +546,8 @@ namespace Mi.PE.Cli
 
                 this.module.Types[typeIndex] = type;
             }
+
+            
         }
 
         TypeReference GetTypeReference(CodedIndex<TypeDefOrRef> typeDefOrRef)
