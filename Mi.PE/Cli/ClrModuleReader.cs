@@ -551,25 +551,28 @@ namespace Mi.PE.Cli
             var propertyEntries = (PropertyEntry[])tableStream.Tables[(int)TableKind.Property];
             var propertyMapEntries = (PropertyMapEntry[])tableStream.Tables[(int)TableKind.PropertyMap];
 
-            for (int propertyMapIndex = 0; propertyMapIndex < propertyMapEntries.Length; propertyMapIndex++)
+            if (propertyMapEntries != null)
             {
-                uint propertyEntryIndex = propertyMapEntries[propertyMapIndex].PropertyList - 1;
-                uint nextPropertyEntryIndex = propertyMapIndex < propertyMapEntries.Length - 1 ?
-                    propertyMapEntries[propertyMapIndex + 1].PropertyList - 1 :
-                    (uint)propertyEntries.Length;
-
-                PropertyDefinition[] properties = nextPropertyEntryIndex == propertyEntryIndex + 1 ?
-                    EmptyProperties :
-                    new PropertyDefinition[nextPropertyEntryIndex - propertyEntryIndex - 1];
-
-                for (int iProperty = 0; iProperty < properties.Length; iProperty++)
+                for (int propertyMapIndex = 0; propertyMapIndex < propertyMapEntries.Length; propertyMapIndex++)
                 {
-                    properties[iProperty] = propertyEntries[propertyEntryIndex + iProperty].PropertyDefinition;
-                }
+                    uint propertyEntryIndex = propertyMapEntries[propertyMapIndex].PropertyList - 1;
+                    uint nextPropertyEntryIndex = propertyMapIndex < propertyMapEntries.Length - 1 ?
+                        propertyMapEntries[propertyMapIndex + 1].PropertyList - 1 :
+                        (uint)propertyEntries.Length;
 
-                uint typeDefIndex = propertyMapEntries[propertyMapIndex].Parent - 1;
-                typeDefEntries[typeDefIndex].TypeDefinition.Properties = properties;
-            }            
+                    PropertyDefinition[] properties = nextPropertyEntryIndex == propertyEntryIndex + 1 ?
+                        EmptyProperties :
+                        new PropertyDefinition[nextPropertyEntryIndex - propertyEntryIndex - 1];
+
+                    for (int iProperty = 0; iProperty < properties.Length; iProperty++)
+                    {
+                        properties[iProperty] = propertyEntries[propertyEntryIndex + iProperty].PropertyDefinition;
+                    }
+
+                    uint typeDefIndex = propertyMapEntries[propertyMapIndex].Parent - 1;
+                    typeDefEntries[typeDefIndex].TypeDefinition.Properties = properties;
+                }
+            }
         }
 
         TypeReference GetTypeReference(CodedIndex<TypeDefOrRef> typeDefOrRef)
