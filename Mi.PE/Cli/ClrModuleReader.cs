@@ -564,7 +564,7 @@ namespace Mi.PE.Cli
 
                 for (int iProperty = 0; iProperty < properties.Length; iProperty++)
                 {
-                    properties[iProperty] = propertyEntries[propertyEntryIndex + iProperty];
+                    properties[iProperty] = propertyEntries[propertyEntryIndex + iProperty].PropertyDefinition;
                 }
 
                 uint typeDefIndex = propertyMapEntries[propertyMapIndex].Parent - 1;
