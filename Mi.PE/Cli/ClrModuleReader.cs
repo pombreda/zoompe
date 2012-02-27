@@ -18,6 +18,7 @@ namespace Mi.PE.Cli
         static readonly FieldDefinition[] EmptyFields = new FieldDefinition[] {};
         static readonly MethodDefinition[] EmptyMethods = new MethodDefinition[] { };
         static readonly ParameterDefinition[] EmptyParameters = new ParameterDefinition[] { };
+        static readonly PropertyDefinition[] EmptyProperties = new PropertyDefinition[] { };
 
         readonly BinaryStreamReader m_Binary;
         readonly ModuleDefinition module;
@@ -547,7 +548,28 @@ namespace Mi.PE.Cli
                 this.module.Types[typeIndex] = type;
             }
 
-            
+            var propertyEntries = (PropertyEntry[])tableStream.Tables[(int)TableKind.Property];
+            var propertyMapEntries = (PropertyMapEntry[])tableStream.Tables[(int)TableKind.PropertyMap];
+
+            for (int propertyMapIndex = 0; propertyMapIndex < propertyMapEntries.Length; propertyMapIndex++)
+            {
+                uint propertyEntryIndex = propertyMapEntries[propertyMapIndex].PropertyList - 1;
+                uint nextPropertyEntryIndex = propertyMapIndex < propertyMapEntries.Length - 1 ?
+                    propertyMapEntries[propertyMapIndex + 1].PropertyList - 1 :
+                    (uint)propertyEntries.Length;
+
+                PropertyDefinition[] properties = nextPropertyEntryIndex == propertyEntryIndex + 1 ?
+                    EmptyProperties :
+                    new PropertyDefinition[nextPropertyEntryIndex - propertyEntryIndex - 1];
+
+                for (int iProperty = 0; iProperty < properties.Length; iProperty++)
+                {
+                    properties[iProperty] = propertyEntries[propertyEntryIndex + iProperty];
+                }
+
+                uint typeDefIndex = propertyMapEntries[propertyMapIndex].Parent - 1;
+                typeDefEntries[typeDefIndex].TypeDefinition.Properties = properties;
+            }            
         }
 
         TypeReference GetTypeReference(CodedIndex<TypeDefOrRef> typeDefOrRef)
